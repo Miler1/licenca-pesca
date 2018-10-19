@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.util.Date;
 
 /**
- * Converte datas em string para Date
+ * Converte datas em string para Date.
+ *
+ * @since 0.1
  */
 public class DateSerializer extends JsonSerializer<Date> {
 

@@ -8,6 +8,9 @@ import org.springframework.core.env.Environment;
 
 /**
  * Classe de configurações globais da aplicação.
+ *
+ * @author Highlander Paiva
+ * @since 0.1
  */
 @Configuration
 @PropertySource(value = {"classpath:application.properties"})

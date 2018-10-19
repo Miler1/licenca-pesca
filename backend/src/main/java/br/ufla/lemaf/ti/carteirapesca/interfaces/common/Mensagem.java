@@ -11,6 +11,8 @@ import java.util.Locale;
 /**
  * Gera mensagens para o usuario a partir de
  * <b>messages.properties</b>
+ *
+ * @since 0.1
  */
 @Component
 public class Mensagem {

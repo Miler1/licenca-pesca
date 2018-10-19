@@ -21,6 +21,9 @@ import java.util.Collections;
  * Detalhes:
  * - http://www.baeldung.com/swagger-2-documentation-for-spring-rest-api
  * - https://springframework.guru/spring-boot-restful-api-documentation-with-swagger-2/
+ *
+ * @author Highlander Paiva
+ * @since 0.1
  */
 @Configuration
 @EnableSwagger2

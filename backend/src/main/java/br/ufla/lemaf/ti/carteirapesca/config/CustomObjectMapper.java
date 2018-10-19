@@ -1,5 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.config;
 
+import br.ufla.lemaf.ti.carteirapesca.interfaces.deserializers.DateDeserializer;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.deserializers.StringDeserializer;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.serializers.DateSerializer;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

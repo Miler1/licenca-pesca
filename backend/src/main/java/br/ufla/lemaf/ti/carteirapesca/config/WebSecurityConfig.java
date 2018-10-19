@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * Spring: Getting Started Guide "Securing a Web Application"</a>
  * Para definir usuários com acesso básico de autenticação
  * e para acessar URIs controladas.
+ *
+ * @author Highlander Paiva
+ * @since 0.1
  */
 @Configuration
 @EnableWebSecurity
