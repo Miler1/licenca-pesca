@@ -168,11 +168,11 @@
         </dependency>
 
         <!--Cadastro Unificado-->
-        <!--<dependency>-->
-        <!--<groupId>br.ufla.lemaf</groupId>-->
-        <!--<artifactId>cadastro-unificado-oauth-client</artifactId>-->
-        <!--<version>1.1.16</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>br.ufla.lemaf</groupId>
+            <artifactId>cadastro-unificado-oauth-client</artifactId>
+            <version>1.1.16</version>
+        </dependency>
 
         <!-- Hibernate Spatial -->
         <dependency>
@@ -403,10 +403,10 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <!--<repository>-->
-            <!--<id>br.ufla.lemaf</id>-->
-            <!--<url>http://repo.ti.lemaf.ufla.br/repository/public</url>-->
-        <!--</repository>-->
+        <repository>
+            <id>br.ufla.lemaf</id>
+            <url>http://repo.ti.lemaf.ufla.br/repository/public</url>
+        </repository>
     </repositories>
 
 
