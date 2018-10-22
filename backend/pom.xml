@@ -18,7 +18,7 @@
             <name>Highlander Paiva</name>
             <organization>LEMAF</organization>
             <organizationUrl>http://www.lemaf.com.br</organizationUrl>
-            <timezone>+3</timezone>
+            <timezone>-3</timezone>
         </developer>
     </developers>
 
