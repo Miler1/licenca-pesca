@@ -1,0 +1,42 @@
+server:
+  port: 6669
+
+logging:
+  level:
+    br.ufla.lemaf.ti: DEBUG
+    org.hibernate: DEBUG
+  file: /var/log/application/carteira_pesca.log
+
+spring:
+
+  application:
+    name: Glide
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+
+  datasource:
+    url: jdbc:hsqldb:mem:carteira_pesca_test
+    username: sa
+    password:
+
+  jpa:
+    properties:
+
+      hibernate:
+        show_sql: true
+        format_sql: true
+        type: trace
+        dialect: org.hsqldb.jdbcDriver
+        jdbc.lob.non_contextual_creation: true
+        ddl-auto: validate
+
+  flyway:
+    outOfOrder: true
+    baseline-on-migrate: true
+
+  jackson:
+    time-zone: UTC
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
