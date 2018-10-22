@@ -7,7 +7,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
  * apenas o método {@link #isSatisfiedBy(Object)} precisa ser implementado.
  *
  * @author Highlander Paiva
- * @since 0.1
+ * @since 1.0
  */
 public interface Specification<T> {
 

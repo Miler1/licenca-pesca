@@ -6,7 +6,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
  * Usada para criar uma nova specification que é a operação OR de outras duas specifications.
  *
  * @author Highlander Paiva
- * @since 0.1
+ * @since 1.0
  */
 public class OrSpecification<T> extends AbstractSpecification<T> {
 

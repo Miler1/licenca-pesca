@@ -5,7 +5,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
  * implementações padrões para {@code and}, {@code or} e {@code not}.
  *
  * @author Highlander Paiva
- * @since 0.1
+ * @since 1.0
  */
 public abstract class AbstractSpecification<T> implements Specification<T> {
 

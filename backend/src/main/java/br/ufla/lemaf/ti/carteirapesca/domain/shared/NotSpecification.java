@@ -6,7 +6,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
  * Usado para criar uma nova specification que é o inverso (NOT) da specification dada.
  *
  * @author Highlander Paiva
- * @since 0.1
+ * @since 1.0
  */
 public class NotSpecification<T> extends AbstractSpecification<T> {
 

@@ -6,7 +6,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
  * nome id.
  *
  * @author Highlander Paiva
- * @since 0.1
+ * @since 1.0
  */
 public interface Entity<T, ID> {
 

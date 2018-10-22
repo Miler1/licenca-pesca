@@ -6,7 +6,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
  * Um Value Object não possui um identificador e é imutável.
  *
  * @author Highlander Paiva
- * @since 0.1
+ * @since 1.0
  */
 public interface ValueObject<T> {
 

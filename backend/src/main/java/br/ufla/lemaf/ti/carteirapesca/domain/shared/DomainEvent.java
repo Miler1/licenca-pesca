@@ -7,7 +7,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
  * como onde, quando e o que aconteceu.
  *
  * @author Highlander Paiva
- * @since 0.1
+ * @since 1.0
  */
 public interface DomainEvent<T> {
 

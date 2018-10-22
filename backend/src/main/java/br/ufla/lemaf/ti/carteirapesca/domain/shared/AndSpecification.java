@@ -6,7 +6,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
  * Usada para criar uma nova specification que são AND de duas outras specifications.
  *
  * @author Highlander Paiva
- * @since 0.1
+ * @since 1.0
  */
 public class AndSpecification<T> extends AbstractSpecification<T> {
 
