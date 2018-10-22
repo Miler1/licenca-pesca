@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 
 /**
- * Implementação abstrata base para compor {@link Specification} com
+ * Classe abstrata base para compor {@link Specification} com
  * implementações padrões para {@code and}, {@code or} e {@code not}.
  *
  * @param <T> A specification.

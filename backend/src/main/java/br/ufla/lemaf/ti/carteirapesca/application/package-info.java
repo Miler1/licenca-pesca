@@ -2,7 +2,7 @@
  * Camada de Aplicação.
  * <p>
  * A camada de aplicação é responsável por "orquestrar" o
- * fluxo da aplicação, casando com os casos de uso.
+ * fluxo da aplicação, alinhando com os casos de uso.
  * Essas operações são interface-independent e podem ser
  * synchronous ou message-driven.
  * Essa camada é bem adequada para transações abrangentes,

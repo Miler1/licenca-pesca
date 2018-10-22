@@ -1,10 +1,15 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 
 /**
- * Interface para a entidade, como explicado no livro "Domain Driven Design".
+ * Interface para a entidade.
  * <p>
- * Todas as entidades do projeto possuem um atributo de
- * indentidade do tipo {@link Long} e nome id.
+ * Todas {@link Entity} possui um identificador e
+ * são distiguidas pelo mesmo, ainda que suas propriedades
+ * sejam as mesmas, se sue identificador for distinto
+ * as duas Entidades são consideradas distintas.
+ * <p>
+ * Uma {@link Entity} não é imutável,
+ * ou seja, pode ser modificada.
  *
  * @param <T>  A Entidade.
  * @param <ID> O Identificador da entidade.

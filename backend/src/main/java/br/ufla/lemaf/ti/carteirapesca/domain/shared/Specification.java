@@ -24,7 +24,8 @@ public interface Specification<T> {
 	 * Cria uma nova specification que é a operação AND da
 	 * specification de {@code this} e outra specification.
 	 *
-	 * @param specification Specification para AND a esta specification.
+	 * @param specification Specification para compor via
+	 *                      AND a esta specification.
 	 * @return Uma nova specification.
 	 */
 	Specification<T> and(Specification<T> specification);
@@ -33,7 +34,8 @@ public interface Specification<T> {
 	 * Cria uma nova specification que é a operação OR da
 	 * specification de {@code this} e outra specification.
 	 *
-	 * @param specification Specification para OR a esta specification.
+	 * @param specification Specification para compor via
+	 *                      OR a esta specification.
 	 * @return Uma nova specification.
 	 */
 	Specification<T> or(Specification<T> specification);
@@ -42,7 +44,8 @@ public interface Specification<T> {
 	 * Cria uma nova specification que é a operação NOT da
 	 * specification de {@code this} e outra specification.
 	 *
-	 * @param specification Specification para NOT a esta specification.
+	 * @param specification Specification para compor via
+	 *                      NOT a esta specification.
 	 * @return Uma nova specification.
 	 */
 	Specification<T> not(Specification<T> specification);

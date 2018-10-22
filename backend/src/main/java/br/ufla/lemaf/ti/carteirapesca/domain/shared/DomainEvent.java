@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 
 /**
- * Um domain event é algo que é inico, mas não possui um lifecycle.
+ * Um domain event é algo que é único, mas não possui um lifecycle.
  * <p>
  * A identidade pode ser explícita, por exemplo, o número de sequência
  * de um pagamento ou pode ser derivada de vários aspectos do evento,

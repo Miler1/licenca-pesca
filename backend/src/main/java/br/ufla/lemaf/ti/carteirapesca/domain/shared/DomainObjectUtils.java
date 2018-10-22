@@ -10,7 +10,7 @@ public final class DomainObjectUtils {
 
 	/**
 	 * Dado um valor atual, checa se o mesmo é nulo, em caso negativo
-	 * o devolve, em caso positivo retorna o valor {@code safe}.
+	 * o devolve, em caso positivo retorna o valor {@param safe}.
 	 *
 	 * @param actual O valor atual.
 	 * @param safe   Um valor null-safe.

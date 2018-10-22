@@ -3,7 +3,11 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 /**
  * Interface para Value Objects.
  * <p>
- * Um Value Object não possui um identificador e é imutável.
+ * Um Value Object não possui um identificador e é imutável, e
+ * é distinguido apenas pelo estado de suas propriedades.
+ * Difererente de uma {@link Entity}, um {@link ValueObject}
+ * não possui um identificador e dois {@link ValueObject}
+ * são considerados idênticos se suas propriedades forem as mesmas.
  *
  * @param <T> O Value Object.
  * @author Highlander Paiva

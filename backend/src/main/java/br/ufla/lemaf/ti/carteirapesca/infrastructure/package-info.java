@@ -6,10 +6,10 @@
  * infraestrutura. Esta suporta todas as três camadas de formas diferente,
  * facilitando a comunicação entre as camadas.
  * Em termos simples, a infraestrutura consiste em tudo que existe
- * independente da aplicação: bibliotecas externas, motored de banco,
+ * independente da aplicação: bibliotecas externas, motores de banco,
  * servidores de aplicação, messaging backend e etc.
  * <p>
- * Também consideramos aruivos de configuração como
+ * Também consideramos arquivos de configuração como
  * parte da camada de infraestrutura. Olhando por exemplo pelo
  * aspecto de persistência, as definições de esquema
  * de banco de dados, configurações e arquivos de mapeamento do
