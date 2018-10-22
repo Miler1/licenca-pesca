@@ -2,9 +2,11 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 
 /**
  * NOT Specification.
+ * <p>
+ * Usado para criar uma nova specification que é o inverso (NOT)
+ * da specification dada.
  *
- * Usado para criar uma nova specification que é o inverso (NOT) da specification dada.
- *
+ * @param <T> A specification.
  * @author Highlander Paiva
  * @since 1.0
  */

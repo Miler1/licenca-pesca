@@ -11,6 +11,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CarteiraPescaApplication {
 
+	/**
+	 * Classe main.
+	 *
+	 * @param args Os argumentos.
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(CarteiraPescaApplication.class, args);
 	}
