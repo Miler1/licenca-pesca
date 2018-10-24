@@ -5,7 +5,7 @@ _(Work In Progress)_
 ## Configuração do projeto
 
 ```
- spring-boot-vuejs
+ carteira-pesca
 ├─┬ backend     → backend module
 │ ├── src
 │ └── pom.xml
