@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--Sistema -->
+    <groupId>br.ufla.lemaf.ti</groupId>
+    <artifactId>carteira-pesca</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>carteira-pesca</name>
+    <description>Sistema de Emissão de Licença de Pesca do Amazonas.</description>
+
+    <!--Equipe de Desenvolvimento backend-->
+    <developers>
+        <developer>
+            <id>highlander_paiva</id>
+            <name>Highlander Paiva</name>
+            <organization>LEMAF</organization>
+            <organizationUrl>http://www.lemaf.com.br</organizationUrl>
+            <timezone>-3</timezone>
+        </developer>
+    </developers>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.6.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+    <properties>
+        <main.basedir>${project.basedir}</main.basedir>
+
+		<!-- Ferramentas de análise para CI -->
+		<build-plugin.jacoco.version>0.8.2</build-plugin.jacoco.version>
+		<build-plugin.coveralls.version>4.3.0</build-plugin.coveralls.version>
+    </properties>
+	
+	<modules>
+        <module>frontend</module>
+        <module>backend</module>
+    </modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${build-plugin.jacoco.version}</version>
+				<executions>
+					<!-- Prepara a propriedade apontando para o JaCoCo runtime agent que a
+					mesma à VM como argumentos quando o plugin do Maven Surefire for executado. -->
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<!-- Garante o code coverage report para os testes unitários está criado
+					antes que os mesmos rodem. -->
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>${build-plugin.coveralls.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

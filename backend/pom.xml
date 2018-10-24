@@ -3,31 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!--Sistema -->
-    <groupId>br.ufla.lemaf.ti</groupId>
-    <artifactId>carteira-pesca</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <name>carteira-pesca</name>
-    <description>Sistema para cadastrar a pessoa interessada em tirar a carteira de pesca.</description>
-
-    <!--Equipe de Desenvolvimento backend-->
-    <developers>
-        <developer>
-            <id>highlander_paiva</id>
-            <name>Highlander Paiva</name>
-            <organization>LEMAF</organization>
-            <organizationUrl>http://www.lemaf.com.br</organizationUrl>
-            <timezone>-3</timezone>
-        </developer>
-    </developers>
+    <artifactId>backend</artifactId>
+	<packaging>jar</packaging>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.6.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
+		<groupId>br.ufla.lemaf.ti</groupId>
+		<artifactId>carteira-pesca</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+	</parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -153,6 +136,7 @@
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
         </dependency>
 
         <!--HSQLDB (para testes unitários)-->
@@ -207,13 +191,43 @@
             <!-- CheckStyle report -->
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
                 <configuration>
                     <configLocation>src/main/config/checkstyle.xml</configLocation>
                 </configuration>
             </plugin>
+            
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- Copia o frontend pro backend -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy Vue.js frontend content</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>src/main/resources/public</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${project.parent.basedir}/frontend/target/dist</directory>
+                                    <includes>
+                                        <include>static/</include>
+                                        <include>index.html</include>
+										<include>favicon.ico</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!-- Disable Maven Compiler Plugin for production sources following
             https://stackoverflow.com/questions/14614446/how-do-i-disable-the-maven-compiler-plugin -->
