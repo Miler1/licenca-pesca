@@ -40,4 +40,4 @@
  * <b>Uma advertência:</b> a utilidade dos DTOs pode variar com o grau de
  * separação vertical na aplicação.
  */
-package br.ufla.lemaf.ti.carteirapesca.interfaces.cadastro.facade.dto;
+package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;

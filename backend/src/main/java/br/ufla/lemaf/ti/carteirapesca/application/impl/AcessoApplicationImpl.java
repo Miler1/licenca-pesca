@@ -2,7 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.cadastro.facade.dto.pessoa.UsuarioDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.UsuarioDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.Validate;

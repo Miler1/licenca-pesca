@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.interfaces.cadastro.facade.dto.pessoa;
+package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa;
 
 /**
  * DTO de Municipio.

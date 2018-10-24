@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.application;
 
-import br.ufla.lemaf.ti.carteirapesca.interfaces.cadastro.facade.dto.pessoa.UsuarioDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.UsuarioDTO;
 
 /**
  * Serviço de Acesso.
