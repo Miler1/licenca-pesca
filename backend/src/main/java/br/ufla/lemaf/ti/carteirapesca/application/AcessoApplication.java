@@ -1,29 +1,27 @@
 package br.ufla.lemaf.ti.carteirapesca.application;
 
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.UsuarioDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
+import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import org.springframework.stereotype.Service;
 
 /**
- * Serviço de Acesso.
+ * Serviço de Acesso da camada de application.
+ * <p>
+ * Gerencia o acesso de usuários autenticados ou acesso publico.
+ *
+ * @author Highlander Paiva
+ * @since 1.0
  */
+@Service
 public interface AcessoApplication {
 
 	/**
-	 * Confere se dado usuario, representado por seu cpf
-	 * possui ou não um cadastro na base de dados.
+	 * Identifica e valida o acesso de determinado usuário,
+	 * identificando-o por seu CPF ou Passaporte.
 	 *
-	 * @param cpf O CPF do usuário.
-	 * @return {@code true} se o usuário existir na
-	 * base de dados.
+	 * @param acessoResource O Recurso para acesso.
+	 * @return {@link Pessoa}
 	 */
-	Boolean existeUsuario(String cpf);
-
-	/**
-	 * Busca um usuario do Cadastro Unificado do
-	 * Entrada Única.
-	 *
-	 * @param cpf O CPF do Usuário.
-	 * @return O {@link UsuarioDTO}
-	 */
-	UsuarioDTO buscarUsuario(String cpf);
+	Pessoa identificar(AcessoResource acessoResource);
 
 }

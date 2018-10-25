@@ -1,9 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
+import br.com.caelum.stella.tinytype.CPF;
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.UsuarioDTO;
-import lombok.extern.slf4j.Slf4j;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
+import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.Validate;
 
@@ -13,31 +14,57 @@ import org.apache.commons.lang3.Validate;
  * @author Highlander Paiva
  * @since 1.0
  */
-@Slf4j
 public class AcessoApplicationImpl implements AcessoApplication {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean existeUsuario(final String cpf) {
-		log.info("Buscando usuário.");
-		Validate.notNull(
-			CadastroUnificadoService.ws,
-			"Serviço indisponível."
-		);
-		Validate.notNull(cpf, "CPF é obrigatório.");
+	public Pessoa identificar(final AcessoResource acessoResource) {
+		// TODO
+		throw new NotImplementedException("Serviço não implementado ainda.");
+	}
 
-		return CadastroUnificadoService.ws.existeUsuario(cpf);
+	/**
+	 * Confere se dado usuario, representado por seu cpf
+	 * possui ou não um cadastro na base de dados.
+	 *
+	 * @param cpf O CPF do usuário.
+	 * @return {@code true} se o usuário existir na
+	 * base de dados.
+	 */
+	private static Boolean existeUsuario(final CPF cpf) {
+
+		validarWebService();
+
+		return CadastroUnificadoService.ws.existeUsuario(cpf.getNumero());
 
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Busca um usuario do Cadastro Unificado do
+	 * Entrada Única.
+	 *
+	 * @param cpf O CPF do Usuário.
+	 * @return O {@link Pessoa}
 	 */
-	@Override
-	public UsuarioDTO buscarUsuario(final String cpf) {
-		// TODO
-		throw new NotImplementedException("Não implementado ainda!");
+	private static Pessoa buscarUsuario(final CPF cpf) {
+
+		validarWebService();
+
+		return CadastroUnificadoService.ws.buscarUsuario(cpf.getNumero());
+
+	}
+
+	/**
+	 * Valida o Web Service do Entrada Unica.
+	 */
+	private static void validarWebService() {
+
+		// Validar Web Service
+		Validate.notNull(
+			CadastroUnificadoService.ws, "Serviço indisponível."
+		);
+
 	}
 }
