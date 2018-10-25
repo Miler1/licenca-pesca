@@ -2,9 +2,9 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * DTO de Pessoa.
@@ -14,11 +14,9 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class PessoaDTO {
+public class PessoaDTO extends ResourceSupport {
 
 	private Boolean estrangeiro;
-
-	private UsuarioDTO usuario;
 
 	private String nome;
 
@@ -30,10 +28,41 @@ public class PessoaDTO {
 
 	private String nomeMae;
 
-	private String naturalidade;
+	private ContatoDTO contato;
 
 	private Boolean isUsuario;
 
-	private List<EnderecoDTO> enderecos;
+	private EnderecoDTO enderecoPrincipal;
 
+	private EnderecoDTO enderecoCorrespondencia;
+
+	/**
+	 * Construtor.
+	 *
+	 * @param estrangeiro    {@code true} se for estrangeiro.
+	 * @param nome           O nome da pessoa.
+	 * @param cpf            O CPF da pessoa.
+	 * @param dataNascimento A data de nascimento da pessoa.
+	 * @param sexo           O sexo da pessoa.
+	 * @param nomeMae        O nome da mãe.
+	 * @param contato        O contato da pessoa.
+	 * @param isUsuario      {@code true} se pessoa for um usuario.
+	 */
+	public PessoaDTO(final Boolean estrangeiro,
+	                 final String nome,
+	                 final String cpf,
+	                 final Date dataNascimento,
+	                 final SexoDTO sexo,
+	                 final String nomeMae,
+	                 final ContatoDTO contato,
+	                 final Boolean isUsuario) {
+		this.estrangeiro = estrangeiro;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.sexo = sexo;
+		this.nomeMae = nomeMae;
+		this.contato = contato;
+		this.isUsuario = isUsuario;
+	}
 }

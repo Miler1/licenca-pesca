@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
  * DTO de Endereço.
@@ -11,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class EnderecoDTO {
+class EnderecoDTO extends ResourceSupport {
 
 	private Integer tipo;
 
@@ -23,7 +24,7 @@ public class EnderecoDTO {
 
 	private String logradouro;
 
-	private String numero;
+	private Integer numero;
 
 	private String bairro;
 

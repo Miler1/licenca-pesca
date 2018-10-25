@@ -2,20 +2,19 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.hateoas.ResourceSupport;
 
 /**
- * DTO de Usuario.
+ * DTO do Tipo de Contato.
  *
  * @author Highlander Paiva
  * @since 1.0
  */
 @Data
 @AllArgsConstructor
-class UsuarioDTO extends ResourceSupport {
+class TipoContatoDTO {
 
-	private String email;
+	private Integer id;
 
-	private String login;
+	private String descricao;
 
 }
