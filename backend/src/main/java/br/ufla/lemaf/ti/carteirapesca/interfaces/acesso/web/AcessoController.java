@@ -1,24 +1,20 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
-import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.UsuarioDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.PessoaDTO;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.NotImplementedException;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Manipula o acesso de usuarios.
@@ -29,63 +25,70 @@ import java.util.Date;
 @Slf4j
 @Controller
 @Transactional
-@RequestMapping("/")
+@RequestMapping("/api")
 public class AcessoController {
 
-	private AcessoApplication acessoApplication;
+	private AcessoServiceFacade acessoServiceFacade;
 
 	/**
-	 * @param request A requisição.
-	 * @param binder  O Data binder.
-	 * @throws Exception Exceção.
+	 * Injeta a dependencia da controller.
+	 *
+	 * @param acessoServiceFacade Serviço de Facade da camada
+	 *                            de interface.
 	 */
-	@InitBinder
-	protected void initBinder(HttpServletRequest request,
-	                          ServletRequestDataBinder binder) throws Exception {
-		binder.registerCustomEditor(
-			Date.class,
-			new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm"), false)
-		);
+	@Autowired
+	public AcessoController(final AcessoServiceFacade acessoServiceFacade) {
+		this.acessoServiceFacade = acessoServiceFacade;
 	}
 
+
 	/**
-	 * Controler de acesso.
+	 * Controller para o acesso público. Recebe como parâmetro
+	 * obrigatório o CPF do usuário.
+	 * <p>
+	 * Caso o mesmo tenha cadastro no entrada única, retorna seus dados,
+	 * e se o mesmo não tiver cadastro, retornará {@link PessoaDTO} vazio.
 	 *
-	 * @param request  A requisição.
-	 * @param response A resposta.
-	 * @param command  O comando de Acesso.
-	 * @throws IOException Se a entrada não for entregue.
+	 * @param acessoResource Paramêtro com o recurso de
+	 *                       acesso do Usuário.
+	 * @param method         O método HTTP usado no web request.
+	 * @param request        O web request.
+	 * @return {@link PessoaDTO} Pessoa vazia caso não exista a mesma na
+	 * base de dados, ou a pessoa instanciada com
+	 * seus dados caso exista. Em forma de {@link ResponseEntity}
 	 */
-	@GetMapping("acessar")
+	@PostMapping("/acessar")
 	@ApiOperation(value = "Dado o valor de CPF, garante acesso à"
 		+ " aplicação, seguindo para a tela de cadastro, caso o mesmo"
 		+ " não seja cadastrado ou mostrar seus dados caso esse já"
 		+ " tenha cadastro.", authorizations = {
 		@Authorization(value = "BASIC_AUTH")
 	})
-	public void acessar(HttpServletRequest request,
-	                    HttpServletResponse response,
-	                    AcessoCommand command) throws IOException {
+	public ResponseEntity<PessoaDTO> acessar(@RequestBody final AcessoResource acessoResource,
+	                                         @ApiParam(hidden = true) final HttpMethod method,
+	                                         final WebRequest request) {
 
-		UsuarioDTO usuario;
+		logInfo(method, request);
 
-		if (acessoApplication.existeUsuario(command.getCpf()))
-			usuario = acessoApplication.buscarUsuario(command.getCpf());
+		// TODO - HATEOAS
 
-
-		// TODO
-		throw new NotImplementedException("Não implementado ainda!");
-
+		return new ResponseEntity<>(
+			acessoServiceFacade.acessar(acessoResource),
+			HttpStatus.ACCEPTED
+		);
 
 	}
 
 	/**
-	 * Método Setter de {@link AcessoApplication}.
+	 * Log das chamadas da HTTP.
 	 *
-	 * @param acessoApplication O Serviço de AcessoApplication.
+	 * @param method  O método HTTP usado no web request.
+	 * @param request O web request.
 	 */
-	public void setAcessoApplication(AcessoApplication acessoApplication) {
-		this.acessoApplication = acessoApplication;
+	private static void logInfo(final HttpMethod method, final WebRequest request) {
+
+		log.info("%s %s\n", method, request);
+
 	}
 
 }
