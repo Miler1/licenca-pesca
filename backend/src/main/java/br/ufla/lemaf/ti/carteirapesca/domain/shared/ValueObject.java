@@ -1,5 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 
+import java.io.Serializable;
+
 /**
  * Interface para Value Objects.
  * <p>
@@ -13,7 +15,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
  * @author Highlander Paiva
  * @since 1.0
  */
-public interface ValueObject<T> {
+public interface ValueObject<T> extends Serializable {
 
 	/**
 	 * Value Objects são comparados por seus atributos,
