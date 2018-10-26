@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AcessoApplicationImpl implements AcessoApplication {
 
-	static final Pessoa EMPTY_PESSOA = new Pessoa();
+	private static final Pessoa EMPTY_PESSOA = new Pessoa();
 
 	/**
 	 * {@inheritDoc}

@@ -4,7 +4,6 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.ApplicationGlobalPro
 import lombok.extern.slf4j.Slf4j;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Timer;
 import java.util.TimerTask;
