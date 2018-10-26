@@ -56,7 +56,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		// Caso contrario, reinstancia o
 		// recursoValidado com os valores de
 		// resource.
-		if (resource.getPassaporte() != null)
+		if (resource.getCpf() != null)
 			recursoValidado = new AcessoResource(
 				cpfFacade(resource.getCpf()),
 				resource.getPassaporte()
