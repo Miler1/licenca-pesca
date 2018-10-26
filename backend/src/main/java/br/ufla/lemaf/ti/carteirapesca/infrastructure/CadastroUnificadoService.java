@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.ApplicationGlobalProperties;
 import lombok.extern.slf4j.Slf4j;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
@@ -21,18 +22,6 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	private static final int TMR_PERIOD_CONNECTION = 30000; //30s
 
 	private static final String LOG_PREFIX = "[CADASTRO-UNIFICADO-WS]";
-
-	@Value("${entradaUnica.clienteId}")
-	private static String ENTRADA_UNICA_CLIENTE_ID;
-
-	@Value("${entradaUnica.clienteId}")
-	private static String ENTRADA_UNICA_CLIENTE_SECRET;
-
-	@Value("${entradaUnica.clienteId}")
-	private static String ENTRADA_UNICA_URL_PORTAL_SEGURANCA;
-
-	@Value("${entradaUnica.clienteId}")
-	private static String ENTRADA_UNICA_URL_CADASTRO_UNIFICADO;
 
 	private static TimerTask taskTryConnection = new TimerTask() {
 		@Override
@@ -84,10 +73,10 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	 */
 	private static synchronized void tryConnection() {
 		ws = new CadastroUnificadoService(
-			ENTRADA_UNICA_CLIENTE_ID,
-			ENTRADA_UNICA_CLIENTE_SECRET,
-			ENTRADA_UNICA_URL_PORTAL_SEGURANCA,
-			ENTRADA_UNICA_URL_CADASTRO_UNIFICADO
+			ApplicationGlobalProperties.ENTRADA_UNICA_CLIENTE_ID,
+			ApplicationGlobalProperties.ENTRADA_UNICA_CLIENTE_SECRET,
+			ApplicationGlobalProperties.ENTRADA_UNICA_URL_PORTAL_SEGURANCA,
+			ApplicationGlobalProperties.ENTRADA_UNICA_URL_CADASTRO_UNIFICADO
 		);
 	}
 
