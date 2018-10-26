@@ -2,7 +2,6 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.hateoas.ResourceSupport;
 
 /**
  * DTO de Sexo.
@@ -12,7 +11,7 @@ import org.springframework.hateoas.ResourceSupport;
  */
 @Data
 @AllArgsConstructor
-class SexoDTO extends ResourceSupport {
+class SexoDTO {
 
 	private String nome;
 

@@ -2,7 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.hateoas.ResourceSupport;
+import lombok.EqualsAndHashCode;
 
 /**
  * DTO de País.
@@ -12,7 +12,8 @@ import org.springframework.hateoas.ResourceSupport;
  */
 @Data
 @AllArgsConstructor
-class PaisDTO extends ResourceSupport {
+@EqualsAndHashCode(callSuper = false)
+class PaisDTO {
 
 	private Integer id;
 
