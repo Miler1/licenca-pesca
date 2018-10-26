@@ -1,9 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.PessoaDTO;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,6 @@ public class AcessoController {
 	 *
 	 * @param acessoResource Paramêtro com o recurso de
 	 *                       acesso do Usuário.
-	 * @param method         O método HTTP usado no web request.
-	 * @param request        O web request.
 	 * @return {@link PessoaDTO} Pessoa vazia caso não exista a mesma na
 	 * base de dados, ou a pessoa instanciada com
 	 * seus dados caso exista. Em forma de {@link ResponseEntity}
@@ -64,18 +63,14 @@ public class AcessoController {
 		+ " tenha cadastro.", authorizations = {
 		@Authorization(value = "BASIC_AUTH")
 	})
-	public ResponseEntity<PessoaDTO> acessar(@RequestBody final AcessoResource acessoResource,
-	                                         @ApiParam(hidden = true) final HttpMethod method,
-	                                         final WebRequest request) {
+	public ResponseEntity<PessoaDTO> acessar(@RequestBody final AcessoResource acessoResource) {
 
-		logInfo(method, request);
+		PessoaDTO pessoa = acessoServiceFacade.acessar(acessoResource);
+		pessoa.add(linkTo(methodOn(AcessoController.class)
+			.acessar(acessoResource))
+			.withSelfRel());
 
-		// TODO - HATEOAS
-
-		return new ResponseEntity<>(
-			acessoServiceFacade.acessar(acessoResource),
-			HttpStatus.ACCEPTED
-		);
+		return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
 
 	}
 
