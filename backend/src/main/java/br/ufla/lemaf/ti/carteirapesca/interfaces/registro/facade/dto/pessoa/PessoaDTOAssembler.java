@@ -28,17 +28,28 @@ public class PessoaDTOAssembler {
 			pessoa.estrangeiro,
 			pessoa.nome,
 			pessoa.cpf,
+			pessoa.passaporte == null
+				? null
+				: pessoa.passaporte.toString(),
 			pessoa.dataNascimento,
-			new SexoDTO(
+			pessoa.sexo == null
+				? null
+				: new SexoDTO(
 				pessoa.sexo.nome,
 				pessoa.sexo.codigo,
 				pessoa.sexo.descricao
 			),
 			pessoa.nomeMae,
-			toContatoDTO(pessoa.contatos.get(ID_EMAIL)),
+			pessoa.contatos == null
+				? null
+				: toContatoDTO(pessoa.contatos.get(ID_EMAIL)),
 			pessoa.isUsuario,
-			toEnderecoDTO(pessoa.enderecos.get(ID_ENDERECO_PRINCIPAL)),
-			toEnderecoDTO(pessoa.enderecos.get(ID_ENDERECO_CORRESPONDENCIA))
+			pessoa.enderecos == null
+				? null
+				: toEnderecoDTO(pessoa.enderecos.get(ID_ENDERECO_PRINCIPAL)),
+			pessoa.enderecos == null
+				? null
+				: toEnderecoDTO(pessoa.enderecos.get(ID_ENDERECO_CORRESPONDENCIA))
 		);
 	}
 
@@ -52,7 +63,9 @@ public class PessoaDTOAssembler {
 
 		return new ContatoDTO(
 			contato.id,
-			new TipoContatoDTO(
+			contato.tipo == null
+				? null
+				: new TipoContatoDTO(
 				contato.tipo.id,
 				contato.tipo.descricao
 			),
@@ -69,15 +82,20 @@ public class PessoaDTOAssembler {
 	 * @return DTO de endereco.
 	 */
 	private static EnderecoDTO toEnderecoDTO(final Endereco endereco) {
+		if (endereco == null) return null;
 
 		return new EnderecoDTO(
 			endereco.tipo.id,
-			new ZonaLocalizacaoDTO(
+			endereco.zonaLocalizacao == null
+				? null
+				: new ZonaLocalizacaoDTO(
 				endereco.zonaLocalizacao.nome,
 				endereco.zonaLocalizacao.codigo,
 				endereco.zonaLocalizacao.descricao
 			),
-			new PaisDTO(
+			endereco.pais == null
+				? null
+				: new PaisDTO(
 				endereco.pais.id,
 				endereco.pais.nome,
 				endereco.pais.sigla
@@ -88,10 +106,14 @@ public class PessoaDTOAssembler {
 			endereco.bairro,
 			endereco.complemento,
 			endereco.cep,
-			new MunicipioDTO(
+			endereco.municipio == null
+				? null
+				: new MunicipioDTO(
 				endereco.municipio.id,
 				endereco.municipio.nome,
-				new EstadoDTO(
+				endereco.municipio.estado == null
+					? null
+					: new EstadoDTO(
 					endereco.municipio.estado.id,
 					endereco.municipio.estado.sigla,
 					endereco.municipio.estado.nome
