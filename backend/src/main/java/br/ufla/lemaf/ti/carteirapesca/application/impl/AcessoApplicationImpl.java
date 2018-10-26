@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AcessoApplicationImpl implements AcessoApplication {
 
+	static final Pessoa EMPTY_PESSOA = new Pessoa();
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -66,7 +68,8 @@ public class AcessoApplicationImpl implements AcessoApplication {
 
 		} else {
 
-			pessoa = new Pessoa();
+			pessoa = EMPTY_PESSOA;
+			pessoa.cpf = cpf.getNumeroFormatado();
 
 		}
 
@@ -94,7 +97,8 @@ public class AcessoApplicationImpl implements AcessoApplication {
 
 		} else {
 
-			pessoa = new Pessoa();
+			pessoa = EMPTY_PESSOA;
+			pessoa.passaporte = passaporte.getNumero();
 
 		}
 
