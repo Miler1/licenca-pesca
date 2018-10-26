@@ -1,5 +1,5 @@
 server:
-  port: 6669
+  port: 9666
 
 logging:
   level:
