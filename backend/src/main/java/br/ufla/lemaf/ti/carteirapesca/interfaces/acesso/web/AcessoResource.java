@@ -1,7 +1,8 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -11,7 +12,6 @@ import lombok.Data;
  * @since 1.0
  */
 @Data
-@AllArgsConstructor
 public class AcessoResource {
 
 	@ApiModelProperty(notes = "O CPF do usuário")
@@ -19,6 +19,21 @@ public class AcessoResource {
 
 	@ApiModelProperty(notes = "O passaporte do usuário")
 	private String passaporte;
+
+	/**
+	 * Construtor.
+	 *
+	 * @param cpf        O CPF para o acesso
+	 * @param passaporte O Passaprte para o acesso
+	 * @apiNote Necessário a implementação para mostrar
+	 * ao JSON como serializar o objeto.
+	 */
+	@JsonCreator
+	public AcessoResource(@JsonProperty("cpf") String cpf,
+	                      @JsonProperty("passaporte") String passaporte) {
+		this.cpf = cpf;
+		this.passaporte = passaporte;
+	}
 
 	@Override
 	public String toString() {
