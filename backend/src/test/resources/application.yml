@@ -40,3 +40,9 @@ spring:
   jackson:
     time-zone: UTC
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+
+entradaUnica:
+  clienteId: e8b569c50d179803cf304c5467ccfe756224fd57578af990155710332b25cc6230399ecbd9412ff38ef7ca59214d9443a5068418c068622e52a05302c9db7275
+  clienteSecret: 8eb5149338ee047990b563ee8538974713b17ae8a0e73ced0fba453702e9b8016f226393949ec264de6e2951fa6d75e46130ce6feff43d9344917403bc1c8c62
+  portalSeguranca: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
+  cadastroUnificado: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
