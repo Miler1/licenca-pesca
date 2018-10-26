@@ -22,6 +22,8 @@ public class PessoaDTO extends ResourceSupport {
 
 	private String cpf;
 
+	private String passaporte;
+
 	private Date dataNascimento;
 
 	private SexoDTO sexo;
