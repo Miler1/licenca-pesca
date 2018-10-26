@@ -7,6 +7,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.PessoaDTOAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
 
@@ -16,6 +17,7 @@ import javax.validation.ValidationException;
  * @author Highlander Paiva
  * @since 1.0
  */
+@Service
 public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 	private AcessoApplication acessoApplication;

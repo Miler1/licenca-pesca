@@ -2,7 +2,6 @@ package br.ufla.lemaf.ti.carteirapesca.application;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
-import org.springframework.stereotype.Service;
 
 /**
  * Serviço de Acesso da camada de application.
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
  * @author Highlander Paiva
  * @since 1.0
  */
-@Service
 public interface AcessoApplication {
 
 	/**
