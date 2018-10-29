@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AcessoApplicationImpl implements AcessoApplication {
 
-	private static final Pessoa EMPTY_PESSOA = new Pessoa();
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -27,24 +25,21 @@ public class AcessoApplicationImpl implements AcessoApplication {
 	public Pessoa identificar(final AcessoResource acessoResource) {
 		CPF cpf;
 		Passaporte passaporte;
-		Pessoa pessoa;
 
 		// Confere se a busca é por CPF ou Passaporte
 		if (acessoResource.getCpf() != null) {
 
 			cpf = new CPF(acessoResource.getCpf());
 
-			pessoa = buscarPessoa(cpf);
+			return buscarPessoa(cpf);
 
 		} else {
 
 			passaporte = new Passaporte(acessoResource.getPassaporte());
 
-			pessoa = buscarPessoa(passaporte);
+			return buscarPessoa(passaporte);
 
 		}
-
-		return pessoa;
 
 	}
 
@@ -68,7 +63,7 @@ public class AcessoApplicationImpl implements AcessoApplication {
 
 		} else {
 
-			pessoa = EMPTY_PESSOA;
+			pessoa = new Pessoa();
 			pessoa.cpf = cpf.getNumeroFormatado();
 
 		}
@@ -97,7 +92,7 @@ public class AcessoApplicationImpl implements AcessoApplication {
 
 		} else {
 
-			pessoa = EMPTY_PESSOA;
+			pessoa = new Pessoa();
 			pessoa.passaporte = passaporte.getNumero();
 
 		}
