@@ -40,7 +40,6 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	@Override
 	public PessoaDTO acessar(final AcessoResource resource) {
 
-		CPFValidator cpfValidator = new CPFValidator();
 		PessoaDTOAssembler pessoaDTOAssembler = new PessoaDTOAssembler();
 		AcessoResource recursoValidado;
 

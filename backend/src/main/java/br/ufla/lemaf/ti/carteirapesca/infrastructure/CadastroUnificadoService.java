@@ -20,7 +20,7 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	private static final int TMR_INIT_CONNECTION = 5000; //5s
 	private static final int TMR_PERIOD_CONNECTION = 30000; //30s
 
-	private static final String LOG_PREFIX = "[CADASTRO-UNIFICADO-WS]";
+	private static final String LOG_PREFIX = "[CADASTRO-UNIFICADO-WS] - ";
 
 	private static TimerTask taskTryConnection = new TimerTask() {
 		@Override
@@ -31,15 +31,13 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 				cancel();
 				log.info(
 					LOG_PREFIX
-						+ " - conexão estabelecida"
-						+ "com sucesso."
+						+ "conexão estabelecida com sucesso."
 				);
 			} catch (Exception e) {
 				ws = null;
 				log.error(
 					LOG_PREFIX
-						+ " - erro ao tentar"
-						+ "estabelecer a conexão."
+						+ "erro ao tentar estabelecer a conexão."
 				);
 			}
 		}
@@ -50,7 +48,6 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	static {
 
 		try {
-
 			tryConnection();
 		} catch (Exception ex) {
 
@@ -103,6 +100,7 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	 * @return O Usuario cadastrado.
 	 */
 	public Pessoa buscarUsuario(final String cpf) {
+		log.info(LOG_PREFIX + "Buscando Usuário: " + cpf);
 
 		return this.buscarPessoaFisicaPeloCpf(cpf);
 
@@ -116,6 +114,8 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	 * @return {@code true} se a pessoa for um usuário.
 	 */
 	public Boolean existeUsuario(final String cpf) {
+		log.info(LOG_PREFIX + "Verificando se o Usuário do CPF: "
+			+ cpf + " existe");
 
 		return this.isUser(cpf);
 

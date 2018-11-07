@@ -12,10 +12,24 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.Pess
 public interface AcessoServiceFacade {
 
 	/**
-	 * Acessar.
+	 * Facade de acesso.
+	 * <p>
+	 * Converte e encapsula os dados da camada de interface,
+	 * bem como valida-os.
+	 * <p>
+	 * O Serviço {@code #acessar()} do facade da interface de
+	 * acesso tem como principal objetivo, garantir a integridade
+	 * dos dados oriundos da controller e convertê-los na linguagem
+	 * em que a camada de application possa entender. Ou seja,
+	 * dado o {@link AcessoResource}, valida cada um de seus parâmetros
+	 * e ao receber o dado da service de application no formato
+	 * {@link main.java.br.ufla.lemaf.beans.pessoa.Pessoa} converte-o
+	 * em {@link PessoaDTO} com o
+	 * {@link
+	 * br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.PessoaDTOAssembler}.
 	 *
 	 * @param resource O recurso de acesso do usuário.
-	 * @return A pessoa.
+	 * @return A DTO de Pessoa.
 	 */
 	PessoaDTO acessar(AcessoResource resource);
 
