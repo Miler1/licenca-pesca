@@ -2,8 +2,8 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObject;
 import lombok.Getter;
-import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.NotImplementedException;
+import org.apache.commons.lang3.Validate;
 
 import java.util.regex.Pattern;
 
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * @since 1.0
  */
 @Getter
-public final class ProtocoloLicenca implements ValueObject<ProtocoloLicenca> {
+public final class Protocolo implements ValueObject<Protocolo> {
 
 	private String numero;
 
@@ -27,7 +27,7 @@ public final class ProtocoloLicenca implements ValueObject<ProtocoloLicenca> {
 	 *
 	 * @param numero O número do protocolo.
 	 */
-	public ProtocoloLicenca(String numero) {
+	public Protocolo(String numero) {
 		Validate.notNull(numero);
 		Validate.isTrue(VALID_PATTERN.matcher(numero).matches(), "Protocolo Inválido.");
 		this.numero = numero.toUpperCase();
@@ -37,7 +37,7 @@ public final class ProtocoloLicenca implements ValueObject<ProtocoloLicenca> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean sameValueAs(ProtocoloLicenca other) {
+	public boolean sameValueAs(Protocolo other) {
 		throw new NotImplementedException("Não implementado.");
 	}
 
@@ -45,7 +45,7 @@ public final class ProtocoloLicenca implements ValueObject<ProtocoloLicenca> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ProtocoloLicenca copy() {
+	public Protocolo copy() {
 		throw new NotImplementedException("Não implementado.");
 	}
 }
