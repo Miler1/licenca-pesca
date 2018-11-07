@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web;
 
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.RegistroServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.facade.RegistroServiceFacade;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;

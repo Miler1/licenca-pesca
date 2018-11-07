@@ -1,7 +1,7 @@
-package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.facade.internal;
+package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.internal;
 
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.RegistroServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.facade.RegistroServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;

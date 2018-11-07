@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.facade;
+package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
