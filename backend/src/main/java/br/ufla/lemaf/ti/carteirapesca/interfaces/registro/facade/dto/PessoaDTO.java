@@ -1,6 +1,8 @@
-package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa;
+package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -13,7 +15,7 @@ import java.util.Date;
  * @since 1.0
  */
 @EqualsAndHashCode(callSuper = false, doNotUseGetters = true)
-public class PessoaDTO extends ResourceSupport {
+public final class PessoaDTO extends ResourceSupport {
 
 	private Boolean estrangeiro;
 
@@ -23,15 +25,14 @@ public class PessoaDTO extends ResourceSupport {
 
 	private String passaporte;
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 
-	private SexoDTO sexo;
+	private String sexo;
 
 	private String nomeMae;
 
-	private ContatoDTO contato;
-
-	private Boolean isUsuario;
+	private String email;
 
 	private EnderecoDTO enderecoPrincipal;
 
@@ -47,23 +48,21 @@ public class PessoaDTO extends ResourceSupport {
 	 * @param dataNascimento          A data de nascimento da pessoa.
 	 * @param sexo                    O sexo da pessoa.
 	 * @param nomeMae                 O nome da mãe.
-	 * @param contato                 O contato da pessoa.
-	 * @param isUsuario               {@code true} se pessoa for um usuario.
+	 * @param email                   O email da pessoa.
 	 * @param enderecoPrincipal       O Endereço principal da passoa.
 	 * @param enderecoCorrespondencia O Endereço de correspondência.
 	 */
 	@JsonCreator
-	PessoaDTO(final Boolean estrangeiro,
-	          final String nome,
-	          final String cpf,
-	          final String passaporte,
-	          final Date dataNascimento,
-	          final SexoDTO sexo,
-	          final String nomeMae,
-	          final ContatoDTO contato,
-	          final Boolean isUsuario,
-	          final EnderecoDTO enderecoPrincipal,
-	          final EnderecoDTO enderecoCorrespondencia) {
+	PessoaDTO(@JsonProperty("estrangeiro") final Boolean estrangeiro,
+	          @JsonProperty("nome") final String nome,
+	          @JsonProperty("cpf") final String cpf,
+	          @JsonProperty("passaporte") final String passaporte,
+	          @JsonProperty("dataNascimento") final Date dataNascimento,
+	          @JsonProperty("sexo") final String sexo,
+	          @JsonProperty("nomeMae") final String nomeMae,
+	          @JsonProperty("email") final String email,
+	          @JsonProperty("enderecoPrincipal") final EnderecoDTO enderecoPrincipal,
+	          @JsonProperty("enderecoCorrespondencia") final EnderecoDTO enderecoCorrespondencia) {
 		this.estrangeiro = estrangeiro;
 		this.nome = nome;
 		this.cpf = cpf;
@@ -71,10 +70,30 @@ public class PessoaDTO extends ResourceSupport {
 		setDataNascimento(dataNascimento);
 		this.sexo = sexo;
 		this.nomeMae = nomeMae;
-		this.contato = contato;
-		this.isUsuario = isUsuario;
+		this.email = email;
 		this.enderecoPrincipal = enderecoPrincipal;
 		this.enderecoCorrespondencia = enderecoCorrespondencia;
+	}
+
+	/**
+	 * Construtor.
+	 * <p>
+	 * Usado para criar PessoaDTO com CPF formatado.
+	 *
+	 * @param pessoa A Pessoa
+	 * @param cpf    O CPF
+	 */
+	public PessoaDTO(final PessoaDTO pessoa, final String cpf) {
+		this.estrangeiro = pessoa.estrangeiro;
+		this.nome = pessoa.nome;
+		this.cpf = cpf;
+		this.passaporte = pessoa.passaporte;
+		setDataNascimento(pessoa.dataNascimento);
+		this.sexo = pessoa.sexo;
+		this.nomeMae = pessoa.nomeMae;
+		this.email = pessoa.email;
+		this.enderecoPrincipal = pessoa.enderecoPrincipal;
+		this.enderecoCorrespondencia = pessoa.enderecoCorrespondencia;
 	}
 
 	/**
@@ -129,7 +148,7 @@ public class PessoaDTO extends ResourceSupport {
 	 *
 	 * @return O sexo
 	 */
-	public SexoDTO getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
@@ -142,22 +161,14 @@ public class PessoaDTO extends ResourceSupport {
 		return nomeMae;
 	}
 
-	/**
-	 * Getter do contato.
-	 *
-	 * @return O contato
-	 */
-	public ContatoDTO getContato() {
-		return contato;
-	}
 
 	/**
-	 * Getter do usuario.
+	 * Getter de email.
 	 *
-	 * @return O usuario
+	 * @return O email
 	 */
-	public Boolean getUsuario() {
-		return isUsuario;
+	public String getEmail() {
+		return email;
 	}
 
 	/**
@@ -190,5 +201,21 @@ public class PessoaDTO extends ResourceSupport {
 		} else {
 			this.dataNascimento = new Date(dataNascimento.getTime());
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "PessoaDTO{"
+			+ "estrangeiro=" + estrangeiro
+			+ ", nome='" + nome + '\''
+			+ ", cpf='" + cpf + '\''
+			+ ", passaporte='" + passaporte + '\''
+			+ ", dataNascimento=" + dataNascimento
+			+ ", sexo=" + sexo
+			+ ", nomeMae='" + nomeMae + '\''
+			+ ", email=" + email
+			+ ", enderecoPrincipal=" + enderecoPrincipal
+			+ ", enderecoCorrespondencia=" + enderecoCorrespondencia
+			+ '}';
 	}
 }
