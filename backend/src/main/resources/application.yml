@@ -41,7 +41,7 @@ spring:
 
   jackson:
     time-zone: UTC
-    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+    locale: pt_BR
 
 entradaUnica:
   clienteId: e8b569c50d179803cf304c5467ccfe756224fd57578af990155710332b25cc6230399ecbd9412ff38ef7ca59214d9443a5068418c068622e52a05302c9db7275
