@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure;
 
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.ApplicationGlobalProperties;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
@@ -69,10 +69,10 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	 */
 	private static synchronized void tryConnection() {
 		ws = new CadastroUnificadoService(
-			ApplicationGlobalProperties.ENTRADA_UNICA_CLIENTE_ID,
-			ApplicationGlobalProperties.ENTRADA_UNICA_CLIENTE_SECRET,
-			ApplicationGlobalProperties.ENTRADA_UNICA_URL_PORTAL_SEGURANCA,
-			ApplicationGlobalProperties.ENTRADA_UNICA_URL_CADASTRO_UNIFICADO
+			Config.ENTRADA_UNICA_CLIENTE_ID,
+			Config.ENTRADA_UNICA_CLIENTE_SECRET,
+			Config.ENTRADA_UNICA_URL_PORTAL_SEGURANCA,
+			Config.ENTRADA_UNICA_URL_CADASTRO_UNIFICADO
 		);
 	}
 

@@ -7,6 +7,7 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import lombok.extern.slf4j.Slf4j;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
 
@@ -153,7 +154,7 @@ public class AcessoApplicationImpl implements AcessoApplication {
 
 		validarWebService();
 
-		return CadastroUnificadoService.ws.existeUsuario(passaporte.getNumero());
+		throw new NotImplementedException("Serviço não implementado!");
 
 	}
 
@@ -168,7 +169,8 @@ public class AcessoApplicationImpl implements AcessoApplication {
 
 		validarWebService();
 
-		return CadastroUnificadoService.ws.buscarUsuario(passaporte.getNumero());
+		throw new NotImplementedException("Serviço não implementado!");
+
 
 	}
 
