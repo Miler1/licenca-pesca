@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web;
 
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.pessoa.PessoaDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.questionario.InformacaoComplementarDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.InformacaoComplementarDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,9 +29,9 @@ public class RegistroResource {
 	 * @param informacaoComplementar Dados complementares para a licença.
 	 */
 	@JsonCreator
-	public RegistroResource(@JsonProperty("usuario") PessoaDTO pessoa,
-	                        @JsonProperty("questionario")
-		                        InformacaoComplementarDTO informacaoComplementar) {
+	public RegistroResource(@JsonProperty("pessoa") final PessoaDTO pessoa,
+	                        @JsonProperty("informacaoComplementar")
+	                        final InformacaoComplementarDTO informacaoComplementar) {
 		this.pessoa = pessoa;
 		this.informacaoComplementar = informacaoComplementar;
 	}

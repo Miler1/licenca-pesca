@@ -65,7 +65,7 @@ public class RegistroController {
 		@RequestBody final RegistroResource registroResource) {
 
 		ProtocoloDTO protocoloLicenca = registroServiceFacade
-			.novaLicenca(registroResource);
+			.registrar(registroResource);
 
 		protocoloLicenca.add(linkTo(methodOn(RegistroController.class)
 			.registrar(registroResource))

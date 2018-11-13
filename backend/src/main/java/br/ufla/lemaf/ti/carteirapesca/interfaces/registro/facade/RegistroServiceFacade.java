@@ -13,7 +13,7 @@ public interface RegistroServiceFacade {
 
 
 	/**
-	 * Facade de registro de nova licença.
+	 * Facade de registro de licença.
 	 * <p>
 	 * Converte e encapsula os dados da camada de interface,
 	 * bem como valida-os.
@@ -31,6 +31,6 @@ public interface RegistroServiceFacade {
 	 * @param resource O recurso de registro do usuário.
 	 * @return O Protocolo da licença.
 	 */
-	ProtocoloDTO novaLicenca(RegistroResource resource);
+	ProtocoloDTO registrar(RegistroResource resource);
 
 }
