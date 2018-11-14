@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -13,6 +14,7 @@ import org.springframework.hateoas.ResourceSupport;
  */
 @Getter
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false, doNotUseGetters = true)
 public final class ProtocoloDTO extends ResourceSupport {
 
 	private String numero;
