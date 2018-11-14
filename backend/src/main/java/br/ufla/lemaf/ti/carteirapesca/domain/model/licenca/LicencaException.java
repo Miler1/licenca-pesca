@@ -8,7 +8,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
  * @author Highlander Paiva
  * @since 1.0
  */
-public class CannotCreateLicencaException extends BaseException {
+public class LicencaException extends BaseException {
 
 	/**
 	 * Construtor da exceção ao criar Licença.
@@ -16,7 +16,7 @@ public class CannotCreateLicencaException extends BaseException {
 	 * @param messageKey  Código da mensagem
 	 * @param messageArgs Argumentos da mensagem.
 	 */
-	public CannotCreateLicencaException(String messageKey, Object... messageArgs) {
+	public LicencaException(String messageKey, Object... messageArgs) {
 		super(messageKey, messageArgs);
 	}
 

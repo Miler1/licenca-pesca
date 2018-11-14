@@ -8,7 +8,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObject;
  * @author Highlander Paiva
  * @since 1.0
  */
-public enum LicencaStatus implements ValueObject<LicencaStatus> {
+public enum Status implements ValueObject<Status> {
 	AGUARDANDO, ATIVO, INVALIDADO;
 
 
@@ -16,7 +16,7 @@ public enum LicencaStatus implements ValueObject<LicencaStatus> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean sameValueAs(LicencaStatus other) {
+	public boolean sameValueAs(Status other) {
 		return this.equals(other);
 	}
 }
