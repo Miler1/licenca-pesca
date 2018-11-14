@@ -1,12 +1,15 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
 import java.util.regex.Pattern;
+
+import static br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade.*;
 
 /**
  * Value Object do Protocolo da Licensça de pesca.
@@ -21,7 +24,7 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	private String codigo;
 
 	private static final Pattern VALID_PATTERN = Pattern.compile(
-		"LP[ER]-[\\d]{4}/[\\d]{2}"
+		"LP([ER])-([\\d]{4})/([\\d]{2})"
 	);
 
 	/**
@@ -39,15 +42,17 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 * AA = ano
 	 * <b>Ex.:</b> LPR-0001/18
 	 *
-	 * @param codigo O código do protocolo.
+	 * @param modalidade O código do protocolo.
 	 */
-	public Protocolo(String codigo) {
+	public Protocolo(Modalidade modalidade) {
 		try {
+			ProtocoloFactory factory = new ProtocoloFactory();
+			String protocolo = factory.gerarProtocolo(modalidade);
 
-			Validate.notNull(codigo);
-			Validate.isTrue(VALID_PATTERN.matcher(codigo.toUpperCase()).matches());
+			Validate.notNull(protocolo);
+			Validate.isTrue(VALID_PATTERN.matcher(protocolo).matches());
 
-			this.codigo = codigo.toUpperCase();
+			this.codigo = protocolo;
 
 		} catch (NullPointerException | IllegalArgumentException ex) {
 
@@ -58,11 +63,47 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	}
 
 	/**
+	 * Busca a modalidade do protoco.
+	 *
+	 * @return A modalidade do protoco
+	 */
+	Modalidade modalidade() {
+		switch (VALID_PATTERN.matcher(codigo).group(1)) {
+			case "E":
+				return ESPORTIVA;
+			case "R":
+				return RECREATIVA;
+			default:
+				return UNKNOWN;
+		}
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
 		return codigo;
+	}
+
+	/**
+	 * Fábrica de Protocolo.
+	 *
+	 * @author Highlander Paiva
+	 * @since 1.0
+	 */
+	public static class ProtocoloFactory {
+
+		/**
+		 * Gerador de protocolo.
+		 *
+		 * @param modalidade A modalidade da licença
+		 * @return O Protocolo
+		 */
+		String gerarProtocolo(Modalidade modalidade) {
+			throw new NotImplementedException();
+		}
+
 	}
 
 }
