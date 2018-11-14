@@ -1,6 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.Entity;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.Validate;
@@ -15,8 +14,7 @@ import java.util.GregorianCalendar;
  * Classe central da Domain model, e raiz da agregação.
  * <p>
  * Uma licença tem como identificador único o {@link Protocolo},
- * possui um status de condição, {@link Status}, e um
- * {@link Solicitante}.
+ * possui um status de condição, {@link Status}.
  */
 @NoArgsConstructor
 public class Licenca implements Entity<Licenca, Protocolo> {
@@ -25,8 +23,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private static final Integer VENCIMENTO_LICENCA = 1;
 
 	private Protocolo protocolo;
-
-	private Solicitante solicitante;
 
 	private Modalidade modalidade;
 
@@ -44,18 +40,16 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 * modalidade da licença.
 	 *
 	 * @param protocolo   O número do protocolo
-	 * @param solicitante O Solicitante da licença
 	 * @param modalidade  A modalidade da Licença
 	 */
-	public Licenca(final Protocolo protocolo, final Solicitante solicitante, Modalidade modalidade) {
+	public Licenca(final Protocolo protocolo,
+	               final Modalidade modalidade) {
 		try {
 			Validate.notNull(protocolo);
-			Validate.notNull(solicitante);
 			Validate.notNull(modalidade);
 			Validate.isTrue(protocolo.modalidade().sameValueAs(modalidade));
 
 			this.protocolo = protocolo;
-			this.solicitante = solicitante;
 			this.modalidade = modalidade;
 			this.dataCriacao = new Date();
 			this.status = Status.AGUARDANDO;
@@ -108,13 +102,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 */
 	public Protocolo protocolo() {
 		return protocolo;
-	}
-
-	/**
-	 * @return O Solicitante
-	 */
-	public Solicitante buscaSolicitante() {
-		return solicitante;
 	}
 
 	/**
