@@ -9,7 +9,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObject;
  * @since 1.0
  */
 public enum Modalidade implements ValueObject<Modalidade> {
-	ESPORTIVA, RECREATIVA;
+	ESPORTIVA, RECREATIVA, UNKNOWN;
 
 
 	/**
