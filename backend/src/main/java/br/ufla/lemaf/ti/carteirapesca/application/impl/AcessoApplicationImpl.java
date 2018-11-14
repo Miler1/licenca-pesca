@@ -2,13 +2,13 @@ package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.com.caelum.stella.tinytype.CPF;
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
+import br.ufla.lemaf.ti.carteirapesca.application.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import lombok.extern.slf4j.Slf4j;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
-import org.apache.commons.lang3.NotImplementedException;
-import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,7 +123,7 @@ public class AcessoApplicationImpl implements AcessoApplication {
 	 */
 	private static Boolean existeUsuario(final CPF cpf) {
 
-		validarWebService();
+		WebServiceUtils.validarWebService();
 
 		return CadastroUnificadoService.ws.existeUsuario(cpf.getNumero());
 
@@ -138,7 +138,7 @@ public class AcessoApplicationImpl implements AcessoApplication {
 	 */
 	private static Pessoa buscarUsuario(final CPF cpf) {
 
-		validarWebService();
+		WebServiceUtils.validarWebService();
 
 		return CadastroUnificadoService.ws.buscarUsuario(cpf.getNumero());
 
@@ -154,9 +154,9 @@ public class AcessoApplicationImpl implements AcessoApplication {
 	 */
 	private static Boolean existeUsuario(final Passaporte passaporte) {
 
-		validarWebService();
+		WebServiceUtils.validarWebService();
 
-		throw new NotImplementedException("Serviço não implementado!");
+		throw new NotImplementedException();
 
 	}
 
@@ -169,24 +169,10 @@ public class AcessoApplicationImpl implements AcessoApplication {
 	 */
 	private static Pessoa buscarUsuario(final Passaporte passaporte) {
 
-		validarWebService();
+		WebServiceUtils.validarWebService();
 
-		throw new NotImplementedException("Serviço não implementado!");
+		throw new NotImplementedException();
 
-
-	}
-
-	/**
-	 * Valida o Web Service do Entrada Unica.
-	 */
-	private static void validarWebService() {
-		log.info(LOG_PREFIX + "Validando Web service do Entrada Unica.");
-
-		// Validar Web Service
-		Validate.notNull(
-			CadastroUnificadoService.ws,
-			LOG_PREFIX + "Serviço de Web Service do Entrada Unica indisponível."
-		);
 
 	}
 }
