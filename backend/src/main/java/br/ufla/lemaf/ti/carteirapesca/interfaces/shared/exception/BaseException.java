@@ -20,7 +20,7 @@ public class BaseException extends RuntimeException {
 	 * @param messageKey A mensagem de erro
 	 * @param args       Os argumentos da mensagem
 	 */
-	BaseException(String messageKey, Object... args) {
+	public BaseException(String messageKey, Object... args) {
 		super(Message.get(messageKey, args));
 		this.message = messageKey;
 		this.args = args;
@@ -31,7 +31,7 @@ public class BaseException extends RuntimeException {
 	 *
 	 * @return A Mensagem
 	 */
-	public String getUserMessage() {
+	String getUserMessage() {
 		return Message.get(message, args);
 	}
 }

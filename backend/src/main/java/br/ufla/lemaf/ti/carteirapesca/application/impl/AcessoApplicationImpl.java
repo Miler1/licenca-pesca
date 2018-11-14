@@ -2,7 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.com.caelum.stella.tinytype.CPF;
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Passaporte;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,7 @@ import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Serviço de Acesso Implemnentado.
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
+@Transactional
 public class AcessoApplicationImpl implements AcessoApplication {
 
 	private static final String LOG_PREFIX = "[ACESSO-SERVICE] - ";

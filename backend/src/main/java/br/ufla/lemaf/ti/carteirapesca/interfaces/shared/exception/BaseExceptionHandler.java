@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.CannotCreateLicencaException;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.ErrorResource;
 import lombok.extern.slf4j.Slf4j;
@@ -94,7 +95,8 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleConflict(BadRequestException ex, WebRequest request) {
 		log.error(ex.getMessage(), ex);
 
-		return handleExceptionInternal(ex,
+		return handleExceptionInternal(
+			ex,
 			new ErrorResource(HttpStatus.BAD_REQUEST, ex.getMessage(), ex),
 			new HttpHeaders(),
 			HttpStatus.BAD_REQUEST,
@@ -114,12 +116,33 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleConflict(NotImplementedException ex, WebRequest request) {
 		log.error(ex.getMessage(), ex);
 
-		return handleExceptionInternal(ex,
+		return handleExceptionInternal(
+			ex,
 			new ErrorResource(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex),
 			new HttpHeaders(),
 			HttpStatus.INTERNAL_SERVER_ERROR,
 			request
 		);
 
+	}
+	/**
+	 * Manipulador de CannotCreateLicencaException.
+	 *
+	 * @param ex      A exceção
+	 * @param request A requisição
+	 * @return Resposta HTTP com código 500 e a mensagem de erro do usuário
+	 */
+
+	@ExceptionHandler(value = {CannotCreateLicencaException.class})
+	protected ResponseEntity<Object> handleConflit(CannotCreateLicencaException ex, WebRequest request) {
+		log.error(ex.getMessage(), ex);
+
+		return handleExceptionInternal(
+			ex,
+			new ErrorResource(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex),
+			new HttpHeaders(),
+			HttpStatus.INTERNAL_SERVER_ERROR,
+			request
+		);
 	}
 }
