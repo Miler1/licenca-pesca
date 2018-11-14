@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Protocolo;
 
 /**
  * Assembler do DTO de Protocolo.
@@ -19,6 +19,6 @@ public class ProtocoloDTOAssembler {
 	public ProtocoloDTO toDTO(final Protocolo protocolo) {
 		if (protocolo == null) return null;
 
-		return new ProtocoloDTO(protocolo.getNumero());
+		return new ProtocoloDTO(protocolo.toString());
 	}
 }

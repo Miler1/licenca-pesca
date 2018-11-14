@@ -27,11 +27,4 @@ public interface ValueObject<T> extends Serializable {
 	 */
 	boolean sameValueAs(T other);
 
-	/**
-	 * Value objects podem ser copiados livrementes.
-	 *
-	 * @return Uma cópia deste Value Object.
-	 */
-	T copy();
-
 }

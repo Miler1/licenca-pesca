@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.application;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 
 /**
