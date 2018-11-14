@@ -1,6 +1,8 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
+import br.com.caelum.stella.tinytype.CPF;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.Entity;
@@ -25,10 +27,12 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	/**
 	 * Construtor de solicitante.
 	 *
-	 * @param identity A identificação do solicitante
+	 * @param cpf        O CPF do solicitante
+	 * @param passaporte O passaporte do Solicitante
 	 */
-	public Solicitante(final SolicitanteId identity) {
-		this.identity = identity;
+	public Solicitante(final CPF cpf, final Passaporte passaporte) {
+		SolicitanteIdFactory factory = new SolicitanteIdFactory();
+		this.identity = factory.gerarSolicitanteId(cpf, passaporte);
 	}
 
 	/**
@@ -80,7 +84,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean sameIdentityAs(Solicitante other) {
+	public boolean sameIdentityAs(final Solicitante other) {
 		return other != null && identity.sameValueAs(other.identity);
 	}
 
@@ -95,4 +99,25 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	// Surrugate key para o Hibernate
 	@SuppressWarnings("unused")
 	private Long id;
+
+	/**
+	 * Factory de SolicitanteId.
+	 *
+	 * @author Highlander Paiva
+	 * @since 1.0
+	 */
+	static class SolicitanteIdFactory {
+
+		/**
+		 * Gera o identificador do solicitante.
+		 *
+		 * @param cpf        O CPF
+		 * @param passaporte O Passaporte
+		 * @return O SolicitanteId
+		 */
+		SolicitanteId gerarSolicitanteId(final CPF cpf, final Passaporte passaporte) {
+			return new SolicitanteId(cpf, passaporte);
+		}
+
+	}
 }
