@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.shared;
+package br.ufla.lemaf.ti.carteirapesca.domain.utils;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

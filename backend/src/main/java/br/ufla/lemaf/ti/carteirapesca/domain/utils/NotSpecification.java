@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.shared;
+package br.ufla.lemaf.ti.carteirapesca.domain.utils;
 
 /**
  * NOT Specification.

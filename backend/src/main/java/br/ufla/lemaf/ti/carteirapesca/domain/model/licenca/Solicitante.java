@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
+import br.ufla.lemaf.ti.carteirapesca.domain.utils.Entity;
 import lombok.NoArgsConstructor;
 
 /**

@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
 import br.com.caelum.stella.tinytype.CPF;
-import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
+import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 

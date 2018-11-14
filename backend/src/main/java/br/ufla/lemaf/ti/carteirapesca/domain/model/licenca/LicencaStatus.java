@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObject;
+import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObject;
 
 /**
  * Status da Licença.

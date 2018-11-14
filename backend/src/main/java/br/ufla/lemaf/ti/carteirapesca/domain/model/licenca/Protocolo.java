@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
+import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

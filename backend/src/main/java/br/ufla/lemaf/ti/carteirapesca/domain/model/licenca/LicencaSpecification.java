@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.shared.AbstractSpecification;
-import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObject;
+import br.ufla.lemaf.ti.carteirapesca.domain.utils.AbstractSpecification;
+import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObject;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
