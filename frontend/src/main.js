@@ -11,6 +11,7 @@ import locale from "element-ui/lib/locale/lang/pt-br";
 import Vue2Filters from "vue2-filters";
 // CSS Imports
 import "mdi/scss/materialdesignicons.scss";
+import "@/theme/main.sass";
 
 // Vue Inits & Configs
 Vue.prototype.$bus = new Vue();
