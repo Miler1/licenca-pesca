@@ -3,7 +3,7 @@ import Vue from "vue";
 import App from "./components/App.vue";
 import router from "./router";
 import store from "./store";
-import "./registerServiceWorker";
+import "./utils/registerServiceWorker";
 import ApiService from "./services/shared/ApiService";
 // 3th Imports
 import ElementUI from "element-ui";
