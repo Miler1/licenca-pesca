@@ -1,8 +1,8 @@
 package br.ufla.lemaf.ti.carteirapesca.application;
 
-import br.com.caelum.stella.tinytype.CPF;
 import br.ufla.lemaf.ti.carteirapesca.application.impl.AcessoApplicationImpl;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Passaporte;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.CPF;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;

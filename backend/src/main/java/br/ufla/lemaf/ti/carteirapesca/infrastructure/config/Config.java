@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 1.0
  */
 @Component
+@SuppressWarnings("CheckStyle")
 @PropertySource("classpath:application.yml")
 public class Config {
 

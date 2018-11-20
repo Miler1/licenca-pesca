@@ -2,7 +2,6 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
 
 /**
  * Serviço de Facade de Acesso da camada de interface.
@@ -26,8 +25,7 @@ public interface AcessoServiceFacade {
 	 * e ao receber o dado da service de application no formato
 	 * {@link main.java.br.ufla.lemaf.beans.pessoa.Pessoa} converte-o
 	 * em {@link PessoaDTO} com o
-	 * {@link
-	 * PessoaDTOAssembler}.
+	 * {@link br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler}.
 	 *
 	 * @param resource O recurso de acesso do usuário.
 	 * @return A DTO de Pessoa.

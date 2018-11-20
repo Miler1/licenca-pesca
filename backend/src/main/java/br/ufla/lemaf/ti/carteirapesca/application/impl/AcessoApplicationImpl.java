@@ -1,9 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
-import br.com.caelum.stella.tinytype.CPF;
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.utils.WebServiceUtils;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Passaporte;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.CPF;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;

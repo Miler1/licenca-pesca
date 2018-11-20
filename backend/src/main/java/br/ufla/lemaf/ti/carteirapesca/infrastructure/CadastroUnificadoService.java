@@ -15,6 +15,7 @@ import java.util.TimerTask;
  * @since 1.0
  */
 @Slf4j
+@SuppressWarnings("CheckStyle")
 public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 
 	private static final int TMR_INIT_CONNECTION = 5000; //5s

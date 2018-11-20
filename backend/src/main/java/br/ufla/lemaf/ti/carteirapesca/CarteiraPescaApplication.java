@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Highlander Paiva
  */
 @SpringBootApplication
+@SuppressWarnings("CheckStyle")
 public class CarteiraPescaApplication {
 
 	/**
