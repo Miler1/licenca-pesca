@@ -11,7 +11,7 @@ import org.apache.commons.lang3.Validate;
  * @since 1.0
  */
 @Slf4j
-public class WebServiceUtils {
+public final class WebServiceUtils {
 
 	/**
 	 * Valida o Web Service do Entrada Unica.
