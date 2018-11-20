@@ -40,4 +40,13 @@ public class ErrorResource {
 		this.date = new Date();
 		this.exception = exception.getClass().getName();
 	}
+
+	/**
+	 * Gets date.
+	 *
+	 * @return the date
+	 */
+	public Date getDate() {
+		return (Date) date.clone();
+	}
 }
