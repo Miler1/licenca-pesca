@@ -1,9 +1,8 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
+package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.Validate;
 
 /**
@@ -13,10 +12,9 @@ import org.apache.commons.lang3.Validate;
  * @since 1.0
  */
 @Getter
-@NoArgsConstructor
 public final class Passaporte extends ValueObjectBase<Passaporte> {
 
-	private String numero;
+	private final String numero;
 
 	/**
 	 * Construtor de passaporte.
@@ -35,6 +33,22 @@ public final class Passaporte extends ValueObjectBase<Passaporte> {
 	@Override
 	public String toString() {
 		return numero;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 }

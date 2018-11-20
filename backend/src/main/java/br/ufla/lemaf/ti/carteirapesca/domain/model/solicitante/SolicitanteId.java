@@ -1,7 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
-import br.com.caelum.stella.tinytype.CPF;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
@@ -14,9 +12,9 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
  */
 final class SolicitanteId extends ValueObjectBase<SolicitanteId> {
 
-	private transient CPF cpf;
+	private final CPF cpf;
 
-	private Passaporte passaporte;
+	private final Passaporte passaporte;
 
 	/**
 	 * Contrutor do SolicitanteId.
@@ -61,5 +59,21 @@ final class SolicitanteId extends ValueObjectBase<SolicitanteId> {
 		} else {
 			return cpf.getNumero();
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 }

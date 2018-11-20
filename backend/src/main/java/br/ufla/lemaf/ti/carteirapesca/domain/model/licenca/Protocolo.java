@@ -106,4 +106,20 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
 }

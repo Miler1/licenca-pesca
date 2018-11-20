@@ -1,13 +1,12 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
-import br.com.caelum.stella.tinytype.CPF;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.Entity;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
 	private SolicitanteId identity;
 
-	private List<Licenca> licencas;
+	private List<Licenca> licencas = new ArrayList<>();
 
 	/**
 	 * Construtor de solicitante.
@@ -69,8 +68,9 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		if (!pussuiLicencaAtiva()) {
 			licencas.add(licenca);
 			return licenca.protocolo();
+		} else {
+			return null;
 		}
-		return null;
 	}
 
 	/**
