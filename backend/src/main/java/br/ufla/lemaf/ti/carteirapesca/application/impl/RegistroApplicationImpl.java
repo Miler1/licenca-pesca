@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RegistroApplicationImpl implements RegistroApplication {
 
-	private static final Integer ESPORTIVA = 0;
-	private static final Integer RECREATIVA = 1;
+	private static final Integer ESPORTIVA = Modalidade.ESPORTIVA.ordinal();
+	private static final Integer RECREATIVA = Modalidade.RECREATIVA.ordinal();
 
 	/**
 	 * {@inheritDoc}
