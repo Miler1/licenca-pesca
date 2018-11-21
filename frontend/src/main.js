@@ -10,6 +10,7 @@ import ElementUI from "element-ui";
 import locale from "element-ui/lib/locale/lang/pt-br";
 import Vue2Filters from "vue2-filters";
 // CSS Imports
+import "./assets/linearicons/style.css";
 import "mdi/scss/materialdesignicons.scss";
 import "@/theme/main.sass";
 
