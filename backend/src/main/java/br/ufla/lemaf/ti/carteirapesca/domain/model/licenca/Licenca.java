@@ -65,7 +65,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 */
 	public void ativar() {
 		if (!status.sameValueAs(Status.AGUARDANDO)) {
-			throw new LicencaException("licenca.statusInvalido.ativar");
+			throw new LicencaException("licenca.statusInvalido.ativar", status.name());
 		}
 		status = Status.ATIVO;
 		dataAtivacao = new Date();
@@ -86,12 +86,12 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 */
 	public Date dataVencimento() {
 		if (!status.sameValueAs(Status.ATIVO)) {
-			throw new LicencaException("licenca.statusInvalido.dataVencimento");
+			throw new LicencaException("licenca.statusInvalido.dataVencimento", status.name());
 		}
 		GregorianCalendar vencimento = new GregorianCalendar();
 		// Não referenciar, já que Date é um objeto mutável,
 		// e vamos alterar o valor de vencimento, mas não
-		// queremos alterar o valor de ativação
+		// queremos alterar o valor de ativação.
 		vencimento.setTime((Date) dataAtivacao.clone());
 		vencimento.add(Calendar.YEAR, VENCIMENTO_LICENCA);
 		return vencimento.getTime();
@@ -132,18 +132,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 */
 	public Status status() {
 		return status;
-	}
-
-	/**
-	 * @return A licença
-	 */
-	public Licenca self() {
-		if (dataVencimento().after(new Date())
-			&& status.sameValueAs(Status.ATIVO)) {
-			invalidar();
-		}
-
-		return this;
 	}
 
 	/**

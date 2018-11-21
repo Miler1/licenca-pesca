@@ -1,22 +1,22 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
+package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
 
 /**
- * Exceção ao Criar a Licença de Pesca.
+ * Exceção da agregação de Solicitante.
  *
  * @author Highlander Paiva
  * @since 1.0
  */
-class LicencaException extends BaseException {
+public class SolicitanteException extends BaseException {
 
 	/**
-	 * Construtor da exceção de Licença.
+	 * Construtor da exceção de Solicitante.
 	 *
 	 * @param messageKey  Código da mensagem
 	 * @param messageArgs Argumentos da mensagem.
 	 */
-	LicencaException(String messageKey, Object... messageArgs) {
+	SolicitanteException(String messageKey, Object... messageArgs) {
 		super(messageKey, messageArgs);
 	}
 

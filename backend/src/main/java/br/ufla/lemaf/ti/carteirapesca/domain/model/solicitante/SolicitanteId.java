@@ -1,7 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 
 /**
@@ -24,7 +23,7 @@ final class SolicitanteId extends ValueObjectBase<SolicitanteId> {
 	 */
 	SolicitanteId(final CPF cpf, final Passaporte passaporte) {
 		if (Validate.isNull(cpf) && Validate.isNull(passaporte))
-			throw new ValidationException("");
+			throw new SolicitanteException("solicitante.identity");
 
 		this.cpf = cpf;
 		this.passaporte = passaporte;

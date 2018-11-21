@@ -11,7 +11,6 @@ import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObject;
 public enum Status implements ValueObject<Status> {
 	AGUARDANDO, ATIVO, INVALIDADO;
 
-
 	/**
 	 * {@inheritDoc}
 	 */

@@ -56,7 +56,7 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 
 		} catch (NullPointerException | IllegalArgumentException ex) {
 
-			throw new ValidationException("model.protocoloInvalido", codigo);
+			throw new ValidationException("licenca.protocoloInvalido", codigo);
 
 		}
 

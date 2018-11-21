@@ -22,9 +22,16 @@ public final class Passaporte extends ValueObjectBase<Passaporte> {
 	 * @param numero O número do passaporte
 	 */
 	public Passaporte(String numero) {
-		Validate.notNull(numero, Message.get("passaporte.required"));
+		try {
 
-		this.numero = numero;
+			Validate.notNull(numero, Message.get("solicitante.passaporte"));
+			this.numero = numero;
+
+		} catch (NullPointerException ex) {
+
+			throw new SolicitanteException("solicitante.passaporte");
+
+		}
 	}
 
 	/**
