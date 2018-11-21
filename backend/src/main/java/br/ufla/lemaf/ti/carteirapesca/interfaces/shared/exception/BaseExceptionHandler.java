@@ -110,7 +110,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 	 *
 	 * @param ex      A exceção
 	 * @param request A requisição
-	 * @return Resposta HTTP com código 500 e a mensagem de erro do usuário
+	 * @return Resposta HTTP com código 501 e a mensagem de erro do usuário
 	 */
 	@ExceptionHandler(value = {NotImplementedException.class})
 	protected ResponseEntity<Object> handleConflict(NotImplementedException ex, WebRequest request) {
@@ -118,9 +118,9 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(
 			ex,
-			new ErrorResource(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex),
+			new ErrorResource(HttpStatus.NOT_IMPLEMENTED, ex.getMessage(), ex),
 			new HttpHeaders(),
-			HttpStatus.INTERNAL_SERVER_ERROR,
+			HttpStatus.NOT_IMPLEMENTED,
 			request
 		);
 
