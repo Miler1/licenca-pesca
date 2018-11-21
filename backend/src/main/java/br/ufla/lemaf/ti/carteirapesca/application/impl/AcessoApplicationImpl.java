@@ -24,8 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AcessoApplicationImpl implements AcessoApplication {
 
-	private static final String LOG_PREFIX = "[ACESSO-SERVICE] - ";
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -64,12 +62,10 @@ public class AcessoApplicationImpl implements AcessoApplication {
 		// caso contrário, retorna uma pessoa
 		// vazia
 		if (existeUsuario(cpf)) {
-			log.info(LOG_PREFIX + "Usuário do CPF: " + cpf + " existe no EU.");
 
 			pessoa = buscarUsuario(cpf);
 
 		} else {
-			log.info(LOG_PREFIX + "CPF: " + cpf + " não existe no EU.");
 
 			pessoa = new Pessoa();
 			pessoa.cpf = cpf.getNumeroFormatado();
@@ -95,13 +91,10 @@ public class AcessoApplicationImpl implements AcessoApplication {
 		// caso contrário, retorna uma pessoa
 		// vazia
 		if (existeUsuario(passaporte)) {
-			log.info(LOG_PREFIX + "Usuário do passaporte: "
-				+ passaporte + " existe no EU.");
 
 			pessoa = buscarUsuario(passaporte);
 
 		} else {
-			log.info(LOG_PREFIX + "Passaporte: " + passaporte + " não existe no EU.");
 
 			pessoa = new Pessoa();
 			pessoa.passaporte = passaporte.getNumero();
