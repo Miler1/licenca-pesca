@@ -5,6 +5,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplemented
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.val;
 import org.apache.commons.lang3.Validate;
 
 import java.util.regex.Pattern;
@@ -46,8 +47,8 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 */
 	public Protocolo(Modalidade modalidade) {
 		try {
-			ProtocoloFactory factory = new ProtocoloFactory();
-			String protocolo = factory.gerarProtocolo(modalidade);
+			val factory = new ProtocoloFactory();
+			val protocolo = factory.gerarProtocolo(modalidade);
 
 			Validate.notNull(protocolo);
 			Validate.isTrue(VALID_PATTERN.matcher(protocolo).matches());

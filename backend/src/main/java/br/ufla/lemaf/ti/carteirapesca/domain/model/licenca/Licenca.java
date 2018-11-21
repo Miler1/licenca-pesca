@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.Entity;
 import lombok.NoArgsConstructor;
+import lombok.var;
 import org.apache.commons.lang3.Validate;
 
 import java.util.Calendar;
@@ -88,7 +89,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		if (!status.sameValueAs(Status.ATIVO)) {
 			throw new LicencaException("licenca.statusInvalido.dataVencimento", status.name());
 		}
-		GregorianCalendar vencimento = new GregorianCalendar();
+		var vencimento = new GregorianCalendar();
 		// Não referenciar, já que Date é um objeto mutável,
 		// e vamos alterar o valor de vencimento, mas não
 		// queremos alterar o valor de ativação.

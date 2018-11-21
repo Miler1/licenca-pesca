@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 import br.com.caelum.stella.format.CPFFormatter;
 import br.com.caelum.stella.validation.CPFValidator;
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
+import lombok.val;
 
 /**
  * Representa um Cadastro de Pessoa Física - CPF.
@@ -29,7 +30,7 @@ public final class CPF extends ValueObjectBase<CPF> {
 	 * @param numero O número do CPF
 	 */
 	public CPF(final String numero) {
-		CPFFormatter formatter = new CPFFormatter();
+		val formatter = new CPFFormatter();
 
 		if (formatter.isFormatted(numero)) {
 

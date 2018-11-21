@@ -12,6 +12,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,14 +37,14 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	public Protocolo registrar(final RegistroResource resource) {
 		cadastrarPessoa(resource.getPessoa());
 
-		Solicitante solicitante = new Solicitante(
+		var solicitante = new Solicitante(
 			new CPF(resource.getPessoa().getCpf()),
 			new Passaporte(resource.getPessoa().getPassaporte())
 		);
 
-		Modalidade modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidade());
-		Protocolo protocolo = new Protocolo(modalidade);
-		Licenca licenca = new Licenca(protocolo, modalidade);
+		var modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidade());
+		var protocolo = new Protocolo(modalidade);
+		var licenca = new Licenca(protocolo, modalidade);
 
 		solicitante.adicionarLicenca(licenca);
 

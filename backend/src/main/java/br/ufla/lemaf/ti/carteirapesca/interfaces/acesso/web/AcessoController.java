@@ -5,6 +5,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class AcessoController {
 	})
 	public ResponseEntity<PessoaDTO> acessar(@RequestBody final AcessoResource acessoResource) {
 
-		PessoaDTO pessoa = acessoServiceFacade.acessar(acessoResource);
+		var pessoa = acessoServiceFacade.acessar(acessoResource);
 		pessoa.add(linkTo(methodOn(AcessoController.class)
 			.acessar(acessoResource))
 			.withSelfRel());

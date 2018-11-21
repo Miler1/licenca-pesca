@@ -5,6 +5,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.Entity;
 import lombok.NoArgsConstructor;
+import lombok.val;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @param passaporte O passaporte do Solicitante
 	 */
 	public Solicitante(final CPF cpf, final Passaporte passaporte) {
-		SolicitanteIdFactory factory = new SolicitanteIdFactory();
+		val factory = new SolicitanteIdFactory();
 		this.identity = factory.gerarSolicitanteId(cpf, passaporte);
 	}
 
@@ -50,11 +51,9 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @return {@code true} se alguma licença estiver ativa
 	 */
 	public boolean pussuiLicencaAtiva() {
-		boolean flag = false;
-		for (Licenca licenca : licencas) {
-			flag = flag || licenca.status().sameValueAs(Status.ATIVO);
-		}
-		return flag;
+		return licencas
+			.stream()
+			.anyMatch(licenca -> licenca.status().sameValueAs(Status.ATIVO));
 	}
 
 	/**

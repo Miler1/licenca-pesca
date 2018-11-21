@@ -5,6 +5,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDT
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +65,7 @@ public class RegistroController {
 	public ResponseEntity<ProtocoloDTO> registrar(
 		@RequestBody final RegistroResource registroResource) {
 
-		ProtocoloDTO protocoloLicenca = registroServiceFacade
+		var protocoloLicenca = registroServiceFacade
 			.registrar(registroResource);
 
 		protocoloLicenca.add(linkTo(methodOn(RegistroController.class)

@@ -7,6 +7,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.CPFFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	@Override
 	public PessoaDTO acessar(final AcessoResource resource) {
 
-		PessoaDTOAssembler pessoaDTOAssembler = new PessoaDTOAssembler();
+		val pessoaDTOAssembler = new PessoaDTOAssembler();
 		AcessoResource recursoValidado;
 
 		// CPF e Passaporte não podem ser ambos nulos.

@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.application.utils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
 
@@ -13,12 +14,13 @@ import org.apache.commons.lang3.Validate;
  * @since 1.0
  */
 @Slf4j
-public final class WebServiceUtils {
+@UtilityClass
+public class WebServiceUtils {
 
 	/**
 	 * Valida o Web Service do Entrada Unica.
 	 */
-	public static void validarWebService() {
+	public void validarWebService() {
 
 		try {
 			Validate.notNull(
@@ -33,11 +35,4 @@ public final class WebServiceUtils {
 
 	}
 
-	/**
-	 * Construtor vazio para impedir
-	 * instanciação.
-	 */
-	@SuppressWarnings("unused")
-	private WebServiceUtils() {
-	}
 }

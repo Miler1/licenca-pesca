@@ -8,6 +8,7 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,19 +31,17 @@ public class AcessoApplicationImpl implements AcessoApplication {
 	 */
 	@Override
 	public Pessoa identificar(final AcessoResource acessoResource) {
-		CPF cpf;
-		Passaporte passaporte;
 
 		// Confere se a busca é por CPF ou Passaporte
 		if (acessoResource.getCpf() != null) {
 
-			cpf = new CPF(acessoResource.getCpf());
+			val cpf = new CPF(acessoResource.getCpf());
 
 			return buscarPessoa(cpf);
 
 		} else {
 
-			passaporte = new Passaporte(acessoResource.getPassaporte());
+			val passaporte = new Passaporte(acessoResource.getPassaporte());
 
 			return buscarPessoa(passaporte);
 

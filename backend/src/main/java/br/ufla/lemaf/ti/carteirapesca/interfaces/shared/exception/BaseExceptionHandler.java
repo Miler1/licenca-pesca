@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaException;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteException;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.ErrorResource;
 import lombok.extern.slf4j.Slf4j;
@@ -125,6 +126,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 		);
 
 	}
+
 	/**
 	 * Manipulador de LicencaException.
 	 *
@@ -135,6 +137,27 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = {LicencaException.class})
 	protected ResponseEntity<Object> handleConflit(LicencaException ex, WebRequest request) {
+		log.error(ex.getMessage(), ex);
+
+		return handleExceptionInternal(
+			ex,
+			new ErrorResource(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex),
+			new HttpHeaders(),
+			HttpStatus.INTERNAL_SERVER_ERROR,
+			request
+		);
+	}
+
+	/**
+	 * Manipulador de SolicitanteException.
+	 *
+	 * @param ex      A exceção
+	 * @param request A requisição
+	 * @return Resposta HTTP com código 500 e a mensagem de erro do usuário
+	 */
+
+	@ExceptionHandler(value = {SolicitanteException.class})
+	protected ResponseEntity<Object> handleConflit(SolicitanteException ex, WebRequest request) {
 		log.error(ex.getMessage(), ex);
 
 		return handleExceptionInternal(

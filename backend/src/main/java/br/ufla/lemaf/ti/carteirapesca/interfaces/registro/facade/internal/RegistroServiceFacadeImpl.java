@@ -9,6 +9,8 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.CPFFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
+import lombok.val;
+import lombok.var;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,11 +49,11 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	@Override
 	public ProtocoloDTO registrar(final RegistroResource resource) {
 
-		ProtocoloDTOAssembler assembler = new ProtocoloDTOAssembler();
+		val assembler = new ProtocoloDTOAssembler();
 
 		validateResource(resource);
 
-		PessoaDTO pessoaValidada = new PessoaDTO(
+		val pessoaValidada = new PessoaDTO(
 			resource.getPessoa(),
 			CPFFacade.unformat(resource.getPessoa().getCpf())
 		);
@@ -70,7 +72,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	 * @param resource O recurso
 	 */
 	private static void validateResource(final RegistroResource resource) {
-		List<String> descricaoErro = new ArrayList<>();
+		var descricaoErro = new ArrayList<String>();
 
 		descricaoErro.addAll(validatePessoa(resource.getPessoa()));
 		descricaoErro.addAll(validateInformacaoComplementar(resource.getInformacaoComplementar()));
@@ -97,8 +99,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	 * @return Lista com mensagens de erros
 	 */
 	private static List<String> validatePessoa(final PessoaDTO pessoa) {
-
-		List<String> camposInvalidos = new ArrayList<>();
+		var camposInvalidos = new ArrayList<String>();
 
 		if (Validate.isNull(pessoa.getCpf()) && Validate.isNull(pessoa.getPassaporte()))
 			camposInvalidos.add(Message.get(REGISTRO_ERROR_PREFIX + "cpfAndPassaporte"));
@@ -150,8 +151,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	 * @return Lista com mensagens de erros
 	 */
 	private static List<String> validateEndereco(final EnderecoDTO endereco) {
-
-		List<String> camposInvalidos = new ArrayList<>();
+		var camposInvalidos = new ArrayList<String>();
 
 		if (Validate.isNull(endereco.getZonaLocalizacao()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "zona de localização"));
@@ -195,8 +195,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	 * @return Lista com mensagens de erros
 	 */
 	private static List<String> validateInformacaoComplementar(final InformacaoComplementarDTO info) {
-
-		List<String> camposInvalidos = new ArrayList<>();
+		var camposInvalidos = new ArrayList<String>();
 
 		// Confere dados obrigatórios
 		if (Validate.isNull(info.getModalidade()))

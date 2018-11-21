@@ -8,7 +8,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
  * @author Highlander Paiva
  * @since 1.0
  */
-class LicencaException extends BaseException {
+public class LicencaException extends BaseException {
 
 	/**
 	 * Construtor da exceção de Licença.

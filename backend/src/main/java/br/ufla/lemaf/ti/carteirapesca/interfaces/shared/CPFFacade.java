@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.shared;
 import br.com.caelum.stella.format.CPFFormatter;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
+import lombok.val;
 
 /**
  * Facade de CPF.
@@ -28,7 +29,7 @@ public final class CPFFacade {
 	 */
 	public static String unformat(final String cpf) {
 
-		CPFFormatter formatter = new CPFFormatter();
+		val formatter = new CPFFormatter();
 		String novoCPF;
 
 		if (Validate.isCpfValid(cpf)) {
