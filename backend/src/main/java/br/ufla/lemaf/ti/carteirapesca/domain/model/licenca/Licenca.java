@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.var;
 import org.apache.commons.lang3.Validate;
 
+import javax.persistence.Id;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -154,6 +155,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	// --- Calculos internos
 
 	// Surrugate key para o Hibernate
+	@Id
 	@SuppressWarnings("unused")
 	private Long id;
 }

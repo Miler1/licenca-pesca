@@ -7,6 +7,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.utils.Entity;
 import lombok.NoArgsConstructor;
 import lombok.val;
 
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +97,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	}
 
 	// Surrugate key para o Hibernate
+	@Id
 	@SuppressWarnings("unused")
 	private Long id;
 
