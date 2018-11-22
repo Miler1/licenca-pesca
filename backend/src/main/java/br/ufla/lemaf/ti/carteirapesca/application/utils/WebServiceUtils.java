@@ -24,7 +24,7 @@ public class WebServiceUtils {
 
 		try {
 			Validate.notNull(
-				CadastroUnificadoService.ws,
+				CadastroUnificadoService.webService(),
 				Message.get("entradaUnica.servicoIndisponivel")
 			);
 		} catch (NullPointerException ex) {

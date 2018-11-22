@@ -117,7 +117,9 @@ public class AcessoApplicationImpl implements AcessoApplication {
 
 		WebServiceUtils.validarWebService();
 
-		return CadastroUnificadoService.ws.existeUsuario(cpf.getNumero());
+		return CadastroUnificadoService
+			.webService()
+			.existeUsuario(cpf.getNumero());
 
 	}
 
@@ -132,7 +134,9 @@ public class AcessoApplicationImpl implements AcessoApplication {
 
 		WebServiceUtils.validarWebService();
 
-		return CadastroUnificadoService.ws.buscarUsuario(cpf.getNumero());
+		return CadastroUnificadoService
+			.webService()
+			.buscarUsuario(cpf.getNumero());
 
 	}
 

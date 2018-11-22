@@ -4,7 +4,6 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import lombok.extern.slf4j.Slf4j;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,44 +15,44 @@ import java.util.TimerTask;
  * @since 1.0
  */
 @Slf4j
-@SuppressWarnings("CheckStyle")
-@EnableAutoConfiguration
-public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
+public final class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 
 	private static final String LOG_PREFIX = "[Cadastro Unificado] - ";
 	private static final int TMR_INIT_CONNECTION = 5000;
 	private static final int TMR_PERIOD_CONNECTION = 30000;
 
+	private static CadastroUnificadoService ws = null;
 
 	private static TimerTask taskTryConnection = new TimerTask() {
+
 		@Override
 		public void run() {
+
 			try {
 
 				tryConnection();
 				cancel();
-				log.info(
-					LOG_PREFIX + "Conexão estabelecida com sucesso."
-				);
+				log.info(LOG_PREFIX + "Conexão estabelecida com sucesso.");
+
 			} catch (Exception e) {
-				ws = null;
-				log.error(
-					LOG_PREFIX + "Erro ao tentar estabelecer a conexão."
-				);
+
+				resetWS();
+				log.error(LOG_PREFIX + "Erro ao tentar estabelecer a conexão.");
+
 			}
 		}
 	};
 
-	public static CadastroUnificadoService ws = null;
-
 	static {
 
 		try {
+
 			tryConnection();
+
 		} catch (Exception ex) {
 
 			log.error(ex.getLocalizedMessage());
-			ws = null;
+			resetWS();
 
 			// Inicia o timer para renovar
 			// a conexão com o Entrada Única
@@ -78,6 +77,20 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	}
 
 	/**
+	 * Reseta o Web Service.
+	 */
+	private static void resetWS() {
+		ws = null;
+	}
+
+	/**
+	 * @return O Web Service
+	 */
+	public static CadastroUnificadoService webService() {
+		return ws;
+	}
+
+	/**
 	 * Construtor.
 	 *
 	 * @param clientId     O ClientId.
@@ -85,10 +98,10 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	 * @param urlPortal    A url do Portal de Segurança.
 	 * @param urlCadastro  A url do Cadastro Unificado.
 	 */
-	public CadastroUnificadoService(final String clientId,
-	                                final String clientSecret,
-	                                final String urlPortal,
-	                                final String urlCadastro) {
+	private CadastroUnificadoService(final String clientId,
+	                                 final String clientSecret,
+	                                 final String urlPortal,
+	                                 final String urlCadastro) {
 
 		super(clientId, clientSecret, urlPortal, urlCadastro);
 
@@ -101,7 +114,7 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	 * @return O Usuario cadastrado.
 	 */
 	public Pessoa buscarUsuario(final String cpf) {
-		log.info(LOG_PREFIX + "Buscando Usuário: " + cpf);
+		log.debug(LOG_PREFIX + "Buscando Usuário: " + cpf);
 
 		return this.buscarPessoaFisicaPeloCpf(cpf);
 
@@ -115,8 +128,7 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	 * @return {@code true} se a pessoa for um usuário.
 	 */
 	public Boolean existeUsuario(final String cpf) {
-		log.info(LOG_PREFIX + "Verificando se o Usuário do CPF: "
-			+ cpf + " existe");
+		log.debug(LOG_PREFIX + "Verificando se o Usuário do CPF: " + cpf + " existe");
 
 		return this.isUser(cpf);
 
