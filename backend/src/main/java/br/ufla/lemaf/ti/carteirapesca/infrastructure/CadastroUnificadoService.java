@@ -1,9 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure;
 
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Config;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import lombok.extern.slf4j.Slf4j;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -16,12 +17,13 @@ import java.util.TimerTask;
  */
 @Slf4j
 @SuppressWarnings("CheckStyle")
+@EnableAutoConfiguration
 public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 
-	private static final int TMR_INIT_CONNECTION = 5000; //5s
-	private static final int TMR_PERIOD_CONNECTION = 30000; //30s
+	private static final String LOG_PREFIX = "[Cadastro Unificado] - ";
+	private static final int TMR_INIT_CONNECTION = 5000;
+	private static final int TMR_PERIOD_CONNECTION = 30000;
 
-	private static final String LOG_PREFIX = "[CADASTRO-UNIFICADO-WS] - ";
 
 	private static TimerTask taskTryConnection = new TimerTask() {
 		@Override
@@ -31,14 +33,12 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 				tryConnection();
 				cancel();
 				log.info(
-					LOG_PREFIX
-						+ "conexão estabelecida com sucesso."
+					LOG_PREFIX + "Conexão estabelecida com sucesso."
 				);
 			} catch (Exception e) {
 				ws = null;
 				log.error(
-					LOG_PREFIX
-						+ "erro ao tentar estabelecer a conexão."
+					LOG_PREFIX + "Erro ao tentar estabelecer a conexão."
 				);
 			}
 		}
@@ -52,7 +52,7 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 			tryConnection();
 		} catch (Exception ex) {
 
-			ex.printStackTrace();
+			log.error(ex.getLocalizedMessage());
 			ws = null;
 
 			// Inicia o timer para renovar
@@ -70,10 +70,10 @@ public class CadastroUnificadoService extends CadastroUnificadoPessoaService {
 	 */
 	private static synchronized void tryConnection() {
 		ws = new CadastroUnificadoService(
-			Config.ENTRADA_UNICA_CLIENTE_ID,
-			Config.ENTRADA_UNICA_CLIENTE_SECRET,
-			Config.ENTRADA_UNICA_URL_PORTAL_SEGURANCA,
-			Config.ENTRADA_UNICA_URL_CADASTRO_UNIFICADO
+			Properties.clientId(),
+			Properties.clientSecret(),
+			Properties.portalSegurancaUrl(),
+			Properties.cadastroUnificadoUrl()
 		);
 	}
 
