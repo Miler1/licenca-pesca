@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.infrastructure;
+package br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices;
 
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import lombok.extern.slf4j.Slf4j;

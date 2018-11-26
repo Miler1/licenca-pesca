@@ -4,7 +4,7 @@ import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.CPF;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Passaporte;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.CadastroUnificadoService;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import lombok.extern.slf4j.Slf4j;
