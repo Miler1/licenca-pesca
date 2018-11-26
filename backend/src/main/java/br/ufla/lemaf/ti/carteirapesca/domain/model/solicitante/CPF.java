@@ -75,7 +75,7 @@ public final class CPF extends ValueObjectBase<CPF> {
 	 * @return se o número do CPF é valido.
 	 * @see CPFValidator
 	 */
-	public boolean isValido() {
+	public boolean isValid() {
 		return new CPFValidator().invalidMessagesFor(numero).isEmpty();
 	}
 
@@ -83,7 +83,7 @@ public final class CPF extends ValueObjectBase<CPF> {
 	 * Retorna uma representação em string desse CPF. A intenção desse método
 	 * é ser usado para impressão e retorna o número no formato ddd.ddd.ddd-dd .
 	 *
-	 * @return número do CPF no formato ddd.ddd.ddd-dd.
+	 * @return número do CPF no formato ddd.ddd.ddd-dd
 	 */
 	@Override
 	public String toString() {
