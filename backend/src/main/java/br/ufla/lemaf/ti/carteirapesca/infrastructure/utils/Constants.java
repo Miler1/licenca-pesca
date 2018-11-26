@@ -19,4 +19,6 @@ public class Constants {
 
 	public static final Integer ZONA_RURAL = 2;
 
+	public static final String SCHEMA_CARTEIRA_PESCA = "carteira_pesca";
+
 }
