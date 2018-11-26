@@ -23,6 +23,15 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 
 	private String codigo;
 
+	/**
+	 * Padrão do protocolo da Licença: LPX-9999/99 .
+	 * <p>
+	 * No qual, X significa a letra E ou R e
+	 * 9 significa número.
+	 * <p>
+	 * {@see http://gitlab.ti.lemaf.ufla.br/ipaam/
+	 * carteira-de-pesca/wikis/licenca-pesca#1-cadastrar-licen%C3%A7a-de-pesca}
+	 */
 	private static final Pattern VALID_PATTERN = Pattern.compile(
 		"LP([ER])-([\\d]{4})/([\\d]{2})"
 	);
