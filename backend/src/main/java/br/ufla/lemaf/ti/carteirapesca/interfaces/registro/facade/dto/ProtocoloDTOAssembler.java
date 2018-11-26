@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 
 /**
  * Assembler do DTO de Protocolo.

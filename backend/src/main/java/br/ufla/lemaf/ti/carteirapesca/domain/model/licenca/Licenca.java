@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.Entity;
 import lombok.NoArgsConstructor;
 import lombok.var;
@@ -22,7 +23,7 @@ import java.util.GregorianCalendar;
 public class Licenca implements Entity<Licenca, Protocolo> {
 
 	// Anos para a licença vencer após ativada
-	private static final Integer VENCIMENTO_LICENCA = 1;
+	private static final Integer ANOS_VENCIMENTO_LICENCA = 1;
 
 	private Protocolo protocolo;
 
@@ -95,7 +96,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		// e vamos alterar o valor de vencimento, mas não
 		// queremos alterar o valor de ativação.
 		vencimento.setTime((Date) dataAtivacao.clone());
-		vencimento.add(Calendar.YEAR, VENCIMENTO_LICENCA);
+		vencimento.add(Calendar.YEAR, ANOS_VENCIMENTO_LICENCA);
 		return vencimento.getTime();
 	}
 

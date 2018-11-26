@@ -1,5 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+
 import java.util.List;
 
 /**

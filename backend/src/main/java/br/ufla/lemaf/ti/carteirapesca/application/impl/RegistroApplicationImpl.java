@@ -4,7 +4,7 @@ import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.CPF;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
