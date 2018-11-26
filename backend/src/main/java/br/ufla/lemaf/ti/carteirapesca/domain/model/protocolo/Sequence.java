@@ -28,10 +28,10 @@ final class Sequence implements ValueObject<Sequence> {
 	private static final Integer MAX_SEQUENCE_LENGTH = 9999;
 
 	@Column(name = "nom_sequence")
-	private String nomeSequence;
+	private String nome;
 
 	@Column(name = "val_sequence")
-	private Integer valorSequence;
+	private Integer valor;
 
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "idt_modalidade")
@@ -44,14 +44,14 @@ final class Sequence implements ValueObject<Sequence> {
 	 * Incrementa a sequência.
 	 */
 	void incremente() {
-		this.valorSequence++;
+		this.valor++;
 	}
 
 	/**
 	 * Reseta a sequência.
 	 */
 	void reset() {
-		this.valorSequence = 0;
+		this.valor = 0;
 
 		this.year = DateUtils.getThisYear();
 	}
@@ -60,7 +60,7 @@ final class Sequence implements ValueObject<Sequence> {
 	 * Valida se o número de sequência é válido.
 	 */
 	void validate() {
-		if (this.valorSequence > MAX_SEQUENCE_LENGTH)
+		if (this.valor > MAX_SEQUENCE_LENGTH)
 			throw new ProtocoloException("protocolo.sequence.max");
 	}
 

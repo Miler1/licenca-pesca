@@ -46,11 +46,11 @@ class ProtocoloBuilder {
 	 */
 	String gerarProtocolo(final Modalidade modalidade) {
 
-		return construirModalidade(modalidade)
+		return construirEtapaModalidade(modalidade)
 			+ DIVISOR_PRIMEIRA_PARTE
-			+ construirSequnce(modalidade)
+			+ construirEtapaSequence(modalidade)
 			+ DIVISOR_SEGUNDA_PARTE
-			+ construirAno();
+			+ construirEtapaAno();
 
 	}
 
@@ -62,7 +62,7 @@ class ProtocoloBuilder {
 	 * @param modalidade A modalidade da licença
 	 * @return String com a primeira parte do código do protocolo
 	 */
-	private static String construirModalidade(final Modalidade modalidade) {
+	private static String construirEtapaModalidade(final Modalidade modalidade) {
 
 		switch (modalidade) {
 			case ESPORTIVA:
@@ -83,7 +83,7 @@ class ProtocoloBuilder {
 	 * @param modalidade A modalidade da sequência
 	 * @return String contendo a sequencia
 	 */
-	private String construirSequnce(final Modalidade modalidade) {
+	private String construirEtapaSequence(final Modalidade modalidade) {
 
 		return generateSequenceString(incrementOrResetSequence(modalidade));
 
@@ -93,11 +93,11 @@ class ProtocoloBuilder {
 	 * Constrói a terceira parte do protocolo, com o ano.
 	 * <p>
 	 * Sendo apenas os dois últimos dígitos.
-	 * Es.: 2018 será apenas 18.
+	 * Ex.: 2018 será apenas 18.
 	 *
-	 * @return String contendo a sequencia
+	 * @return String contendo os dois últimos dígitos do ano
 	 */
-	private static String construirAno() {
+	private static String construirEtapaAno() {
 		var thisYear = DateUtils.getThisYear() + "";
 
 		return thisYear.substring(2);
@@ -139,7 +139,7 @@ class ProtocoloBuilder {
 	private static String generateSequenceString(final Sequence sequence) {
 
 		return StringUtils.leftPad(
-			sequence.getValorSequence().toString(),
+			sequence.getValor().toString(),
 			SEQUENCE_PADDING
 		);
 
