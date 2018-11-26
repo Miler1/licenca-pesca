@@ -5,8 +5,8 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFaca
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.CPFFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.utils.CPFUtils;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +53,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		 */
 		if (resource.getCpf() != null) {
 			recursoValidado = new AcessoResource(
-				CPFFacade.unformat(resource.getCpf()),
+				CPFUtils.unformat(resource.getCpf()),
 				resource.getPassaporte()
 			);
 		} else {

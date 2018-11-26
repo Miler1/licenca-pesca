@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.interfaces.shared;
+package br.ufla.lemaf.ti.carteirapesca.interfaces.shared.utils;
 
 import br.com.caelum.stella.format.CPFFormatter;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
@@ -13,12 +13,12 @@ import lombok.val;
  * @author Highlander Paiva
  * @since 1.0
  */
-public final class CPFFacade {
+public final class CPFUtils {
 
 	/**
 	 * Previne instanciação.
 	 */
-	private CPFFacade() {
+	private CPFUtils() {
 	}
 
 	/**

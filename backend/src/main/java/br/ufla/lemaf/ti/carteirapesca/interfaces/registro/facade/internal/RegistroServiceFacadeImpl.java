@@ -6,8 +6,8 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.RegistroServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.*;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.CPFFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.utils.CPFUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.val;
 import lombok.var;
@@ -55,7 +55,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 
 		val pessoaValidada = new PessoaDTO(
 			resource.getPessoa(),
-			CPFFacade.unformat(resource.getPessoa().getCpf())
+			CPFUtils.unformat(resource.getPessoa().getCpf())
 		);
 
 		return assembler.toDTO(registroApplication.registrar(

@@ -54,7 +54,9 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 * @param modalidade O código do protocolo.
 	 */
 	public Protocolo(Modalidade modalidade) {
+
 		try {
+
 			val factory = new ProtocoloBuilder();
 			val protocolo = factory.gerarProtocolo(modalidade);
 

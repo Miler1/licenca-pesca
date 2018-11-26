@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.interfaces.shared;
+package br.ufla.lemaf.ti.carteirapesca.interfaces.shared.utils;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
