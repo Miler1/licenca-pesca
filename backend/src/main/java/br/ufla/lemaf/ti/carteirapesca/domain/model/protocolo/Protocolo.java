@@ -1,8 +1,7 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
+package br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.val;
@@ -47,7 +46,7 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 */
 	public Protocolo(Modalidade modalidade) {
 		try {
-			val factory = new ProtocoloFactory();
+			val factory = new ProtocoloBuilder();
 			val protocolo = factory.gerarProtocolo(modalidade);
 
 			Validate.notNull(protocolo);
@@ -57,7 +56,7 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 
 		} catch (NullPointerException | IllegalArgumentException ex) {
 
-			throw new ValidationException("licenca.protocoloInvalido", codigo);
+			throw new ProtocoloException("protocolo.invalido", codigo);
 
 		}
 
@@ -68,7 +67,7 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 *
 	 * @return A modalidade do protoco
 	 */
-	Modalidade modalidade() {
+	public Modalidade modalidade() {
 		switch (VALID_PATTERN.matcher(codigo).group(1)) {
 			case "E":
 				return ESPORTIVA;
@@ -85,26 +84,6 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	@Override
 	public String toString() {
 		return codigo;
-	}
-
-	/**
-	 * Fábrica de Protocolo.
-	 *
-	 * @author Highlander Paiva
-	 * @since 1.0
-	 */
-	public static class ProtocoloFactory {
-
-		/**
-		 * Gerador de protocolo.
-		 *
-		 * @param modalidade A modalidade da licença
-		 * @return O Protocolo
-		 */
-		String gerarProtocolo(Modalidade modalidade) {
-			throw new NotImplementedException();
-		}
-
 	}
 
 	/**
