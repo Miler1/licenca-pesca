@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
+import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 
 /**

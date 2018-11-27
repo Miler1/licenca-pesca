@@ -1,6 +1,5 @@
-package br.ufla.lemaf.ti.carteirapesca.application.utils;
+package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
 import lombok.experimental.UtilityClass;

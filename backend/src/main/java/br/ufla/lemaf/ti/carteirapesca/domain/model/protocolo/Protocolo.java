@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
-import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
+import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.val;

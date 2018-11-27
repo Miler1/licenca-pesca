@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.utils;
+package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 
 /**
  * Um domain event é algo que é único, mas não possui um lifecycle.

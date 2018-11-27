@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.interfaces.shared.utils;
+package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 
 import br.com.caelum.stella.format.CPFFormatter;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
