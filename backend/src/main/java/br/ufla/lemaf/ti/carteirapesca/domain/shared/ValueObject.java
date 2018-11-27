@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.utils;
+package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 
 import java.io.Serializable;
 

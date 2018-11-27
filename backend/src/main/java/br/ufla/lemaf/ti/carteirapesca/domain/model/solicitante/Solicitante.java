@@ -3,7 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
-import br.ufla.lemaf.ti.carteirapesca.domain.utils.Entity;
+import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import lombok.NoArgsConstructor;
 import lombok.val;
 

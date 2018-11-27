@@ -2,8 +2,8 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaException;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteException;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ErrorResource;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.utils.ErrorResource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

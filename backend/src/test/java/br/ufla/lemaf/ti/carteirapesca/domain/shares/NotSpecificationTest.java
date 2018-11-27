@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.shares;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.utils.NotSpecification;
+import br.ufla.lemaf.ti.carteirapesca.domain.shared.NotSpecification;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

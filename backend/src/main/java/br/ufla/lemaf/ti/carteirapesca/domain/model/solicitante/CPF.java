@@ -2,7 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
 import br.com.caelum.stella.format.CPFFormatter;
 import br.com.caelum.stella.validation.CPFValidator;
-import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObjectBase;
+import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
 import lombok.val;
 
 /**

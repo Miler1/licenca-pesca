@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.utils;
+package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 
 /**
  * Classe abstrata base para compor {@link Specification} com
