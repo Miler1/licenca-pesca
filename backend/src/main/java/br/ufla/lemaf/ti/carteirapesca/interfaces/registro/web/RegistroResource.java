@@ -4,7 +4,6 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.InformacaoC
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -16,10 +15,8 @@ import lombok.Data;
 @Data
 public class RegistroResource {
 
-	@ApiModelProperty(notes = "Dados do usuário.")
 	private PessoaDTO pessoa;
 
-	@ApiModelProperty(notes = "Dados complementáres do usuario.")
 	private InformacaoComplementarDTO informacaoComplementar;
 
 	/**

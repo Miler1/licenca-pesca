@@ -2,8 +2,6 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.RegistroServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +54,6 @@ public class RegistroController {
 	 * de {@link ResponseEntity}
 	 */
 	@PostMapping("/registrar")
-	@ApiOperation(value = "Dado os dados do usuário e as informações"
-		+ " complementares, criará uma nova licença para o mesmo"
-		+ " respeitando as regras de validação para o requerimento"
-		+ " de uma nova licença.", authorizations = {
-		@Authorization(value = "BASIC_AUTH")
-	})
 	public ResponseEntity<ProtocoloDTO> registrar(
 		@RequestBody final RegistroResource registroResource) {
 

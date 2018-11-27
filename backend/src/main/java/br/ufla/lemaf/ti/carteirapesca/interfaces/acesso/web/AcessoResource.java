@@ -2,7 +2,6 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -14,10 +13,8 @@ import lombok.Data;
 @Data
 public class AcessoResource {
 
-	@ApiModelProperty(notes = "O CPF do usuário")
 	private String cpf;
 
-	@ApiModelProperty(notes = "O passaporte do usuário")
 	private String passaporte;
 
 	/**
