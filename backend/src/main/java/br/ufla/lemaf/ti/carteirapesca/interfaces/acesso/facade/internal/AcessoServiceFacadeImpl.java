@@ -1,12 +1,12 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.internal;
 
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.utils.CPFUtils;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

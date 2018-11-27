@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
-import br.ufla.lemaf.ti.carteirapesca.domain.utils.ValueObject;
+import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObject;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
 import lombok.AllArgsConstructor;
