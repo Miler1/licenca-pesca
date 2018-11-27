@@ -2,8 +2,6 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +57,6 @@ public class AcessoController {
 	 * seus dados caso exista. Em forma de {@link ResponseEntity}
 	 */
 	@PostMapping("/acessar")
-	@ApiOperation(value = "Dado o valor de CPF, garante acesso à"
-		+ " aplicação, seguindo para a tela de cadastro, caso o mesmo"
-		+ " não seja cadastrado ou mostrar seus dados caso esse já"
-		+ " tenha cadastro.", authorizations = {
-		@Authorization(value = "BASIC_AUTH")
-	})
 	public ResponseEntity<PessoaDTO> acessar(@RequestBody final AcessoResource acessoResource) {
 
 		var pessoa = acessoServiceFacade.acessar(acessoResource);

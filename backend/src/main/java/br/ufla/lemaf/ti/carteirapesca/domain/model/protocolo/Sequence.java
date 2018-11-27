@@ -72,4 +72,8 @@ final class Sequence implements ValueObject<Sequence> {
 		return this.equals(other);
 	}
 
+	// Surrogate key
+	@Id
+	Integer id;
+
 }
