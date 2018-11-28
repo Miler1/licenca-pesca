@@ -23,7 +23,8 @@ const ApiService = {
    * Adiciona o cabeçalho a todas as requisições HTTP.
    */
   setHeader() {
-    Vue.axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+    Vue.axios.defaults.headers.post["Content-Type"] =
+      "application/x-www-form-urlencoded";
   },
 
   /**
@@ -35,19 +36,16 @@ const ApiService = {
    */
   async query(resource, params) {
     try {
-      return await Vue.axios.get(
-        resource,
-        {
-          params,
-          paramsSerializer: ({ params }) => {
-            qs.stringify(params, {
-              skipNulls: true,
-              format: "RFC1738",
-              indices: false
-            });
-          }
+      return await Vue.axios.get(resource, {
+        params,
+        paramsSerializer: ({ params }) => {
+          qs.stringify(params, {
+            skipNulls: true,
+            format: "RFC1738",
+            indices: false
+          });
         }
-      );
+      });
     } catch (error) {
       return Promise.reject(new HttpException(error));
     }
@@ -127,7 +125,6 @@ const ApiService = {
       return Promise.reject(new HttpException(error));
     }
   }
-
 };
 
 export default ApiService;

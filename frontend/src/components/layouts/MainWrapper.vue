@@ -6,7 +6,7 @@
 </template>
 
 <script>
-	export default {
-      name: "MainWrapper",
-	}
+export default {
+  name: "MainWrapper"
+};
 </script>

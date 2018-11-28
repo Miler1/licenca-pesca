@@ -18,8 +18,8 @@ import { Notificator } from "./Notificator";
  * @since 1.0
  */
 export function Exception(options = null) {
-
-  const MENSAGEM_PADRAO = "Erro não identificado. Contate o adiministrador do sistema.";
+  const MENSAGEM_PADRAO =
+    "Erro não identificado. Contate o adiministrador do sistema.";
   const TITULO_PADRAO = "Erro do sistema";
 
   /*
@@ -37,5 +37,4 @@ export function Exception(options = null) {
   return {
     message: options && options.message ? options.message : MENSAGEM_PADRAO
   };
-
 }
