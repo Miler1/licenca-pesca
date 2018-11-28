@@ -19,7 +19,7 @@ export default {
 
 		.main
 			margin-top: 15px
-			width: 100%
+			width: 1200px
 			height: 100%
 			padding: 0 10px
 
