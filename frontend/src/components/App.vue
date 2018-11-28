@@ -1,19 +1,25 @@
 <template lang="pug">
 	#app
-		main-wrapper
+		main-page
+
 </template>
 
 <script>
-import MainWrapper from "./layouts/MainWrapper";
+import MainPage from "./layouts/MainPage";
 
 export default {
-  components: { MainWrapper }
+  components: { MainPage },
+  data() {
+    return {
+      langs: ["pt-BR", "en"]
+    };
+  }
 };
 </script>
 
 <style lang="sass">
 	@import "../theme/tools/variables"
-	@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600')
+	@import url('https://fonts.googleapis.com/css?family=Roboto')
 
 	// base
 	html, body
@@ -25,7 +31,7 @@ export default {
 		font-weight: 300
 		text-align: left
 
-		font-family: 'Open Sans', Helvetica, Arial, sans-serif
+		font-family: 'Roboto', Helvetica, Arial, sans-serif
 		-webkit-font-smoothing: antialiased
 		-moz-osx-font-smoothing: grayscale
 		color: $--cor-texto-primario

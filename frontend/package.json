@@ -42,6 +42,7 @@
     "qs": "^6.5.2",
     "sass-loader": "^7.0.1",
     "sinon": "^7.1.1",
+    "vue-i18n": "^8.3.2",
     "vue-template-compiler": "^2.5.17"
   },
   "gitHooks": {

@@ -1,7 +1,7 @@
 <template lang="pug">
 	#under-contruction
 		i.lnr.lnr-construction
-		h1 Página em desenvolvimento!
+		h1 {{ $t("message.underConstruction") }}
 </template>
 
 <style lang="sass">
