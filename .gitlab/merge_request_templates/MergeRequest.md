@@ -31,8 +31,8 @@ Closes <!-- Código da issue -->
 
 - Conforme os padrões de projeto
 
-    - [ ] Está conforme os padrões de código @highlander.paiva
+    - [ ] Está conforme os padrões de código
     
-    - [ ] Está conforme o padrão de banco de dados @fernandapossato
+    - [ ] Está conforme o padrão de banco de dados
     
-    - [ ] Está conforme definido pelo protótipo de interface @fernando.rocha
+    - [ ] Está conforme definido pelo protótipo de interface
