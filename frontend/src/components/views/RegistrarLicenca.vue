@@ -1,11 +1,14 @@
 <template lang="pug">
 	#registrar-licenca
 		h2 {{ $t("message.registerTitle") }}
+		card
 </template>
 
 <script>
+import Card from "../layouts/Card";
 export default {
-  name: "RegistrarLicenca"
+  name: "RegistrarLicenca",
+  components: { Card }
 };
 </script>
 
