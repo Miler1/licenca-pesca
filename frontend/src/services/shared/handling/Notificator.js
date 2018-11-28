@@ -12,7 +12,6 @@ const NOTIFICATION_TYPES = ["error", "warning", "info", "success"];
  * @since 1.0
  */
 export const Notificator = {
-
   /**
    * Mostra a notificação de interface se os argumentos forem válidos
    *
@@ -32,18 +31,17 @@ export const Notificator = {
       // Chama a devida função de exibir na interface, conforme exista duration
       this.show_duration(opt)
         ? this.display_duration_on(
-        opt.title,
-        opt.message,
-        opt.type,
-        opt.duration
-        )
+            opt.title,
+            opt.message,
+            opt.type,
+            opt.duration
+          )
         : this.display_duration_off(opt.title, opt.message, opt.type);
     } else {
       // Lança erro para o navegador, já que é um erro de dev e
       // não de usuário
       return new Error("Argumentos de notificação inválidos.");
     }
-
   },
 
   /**
@@ -141,5 +139,4 @@ export const Notificator = {
   valid_message(message) {
     return !_.isEmpty(message);
   }
-
 };
