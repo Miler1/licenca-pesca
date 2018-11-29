@@ -26,6 +26,7 @@ export const Notificator = {
    * @param {Object} opt Argumentos da notificação
    */
   show(opt) {
+    console.log(opt);
     // Valida argumentos
     if (this.valid(opt)) {
       // Chama a devida função de exibir na interface, conforme exista duration
@@ -67,7 +68,7 @@ export const Notificator = {
   display_duration_on(title, message, type, duration) {
     // Ativa componente de Notificação do element
     // https://element.eleme.io/#/en-US/component/notification
-    Vue.$notify({
+    Vue.prototype.$notify({
       title: title,
       message: message,
       type: type,
@@ -86,7 +87,7 @@ export const Notificator = {
   display_duration_off(title, message, type) {
     // Ativa componente de Notificação do element
     // https://element.eleme.io/#/en-US/component/notification
-    Vue.$notify({
+    Vue.prototype.$notify({
       title: title,
       message: message,
       type: type
@@ -101,6 +102,9 @@ export const Notificator = {
    * @return {boolean}
    */
   valid(opt) {
+    console.log("1", this.valid_type(opt.type));
+    console.log("2", this.valid_title(opt.title));
+    console.log("3", this.valid_message(opt.message));
     return (
       this.valid_type(opt.type) &&
       this.valid_title(opt.title) &&

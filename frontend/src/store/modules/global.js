@@ -1,9 +1,10 @@
 import { ACESSAR } from "../actions.type";
 import AcessoService from "../../services/AcessoService";
-import { SET_SOLICITANTE } from "../mutations.type";
+import { SET_ERROR, SET_SOLICITANTE } from "../mutations.type";
 
 const INITIAL_STATE = {
-  solicitante: null
+  solicitante: null,
+  errors: []
 };
 
 export const state = Object.assign({}, INITIAL_STATE);
@@ -20,7 +21,15 @@ export const getters = {
    * @param state
    * @return {getters.solicitante|(function(*))|null}
    */
-  solicitante: state => state.solicitante
+  solicitante: state => state.solicitante,
+
+  /**
+   * Retorna a lista de erros.
+   *
+   * @param state
+   * @return {*}
+   */
+  errors: state => state.errors
 };
 
 /**
@@ -45,7 +54,8 @@ export const actions = {
         commit(SET_SOLICITANTE, data);
       })
       .catch(error => {
-        throw new Error(error);
+        console.log({ error });
+        // throw new Error(error);
       });
   }
 };
@@ -64,7 +74,16 @@ export const mutations = {
    * @param data
    * @return {*}
    */
-  [SET_SOLICITANTE]: (state, data) => (state.solicitante = data)
+  [SET_SOLICITANTE]: (state, data) => (state.solicitante = data),
+
+  /**
+   * Adiciona à lista de erros.
+   *
+   * @param state
+   * @param error
+   * @return {*}
+   */
+  [SET_ERROR]: (state, error) => state.errors.add(error)
 };
 
 export default {
