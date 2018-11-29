@@ -96,6 +96,14 @@ export default {
 		.el-step:first-of-type
 			flex-basis: 33% !important
 
+		.el-button.el-button--default.is-disabled
+			background-color: $--cor-background
+			color: $--cor-texto-secundario
+
+		.el-button.el-button--default
+			background-color: $--cor-tema-primario
+			color: white
+
 		.search
 			margin-top: 10px
 			display: flex
