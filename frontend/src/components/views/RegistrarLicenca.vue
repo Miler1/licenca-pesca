@@ -13,7 +13,8 @@
 				:placeholder="$t('message.register.access.placeholder.cpf')"
 				v-model="resource"
 				v-if="type === '1'"
-				:mask="maskCPF")
+				:mask="maskCPF"
+				@enter="acessar")
 					el-select(v-model="type" slot="prepend" @change="resource = ''")
 						el-option(:label="$t('message.register.access.cpf')" value="1")
 						el-option(:label="$t('message.register.access.passport')" value="2")
@@ -22,7 +23,8 @@
 				:placeholder="$t('message.register.access.placeholder.passport')"
 				v-model="resource"
 				v-if="type !== '1'"
-				:mask="unmask")
+				:mask="unmask"
+				@enter="acessar")
 					el-select(v-model="type" slot="prepend" @change="resource = ''")
 						el-option(:label="$t('message.register.access.cpf')" value="1")
 						el-option(:label="$t('message.register.access.passport')" value="2")

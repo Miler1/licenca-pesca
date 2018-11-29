@@ -34,6 +34,7 @@
 					@blur="handleBlur"
 					@change="handleChange"
 					@keydown="handleKeydown"
+					@keypress="handleKeypress"
 					:aria-label="label"
 			>
 			<!-- 前置内容 -->
@@ -279,6 +280,10 @@ export default {
       this.maskState.previusValue = this.currentValue;
       this.maskState.previusCaretPos = this.getCaret();
       this.maskState.maskDigitPosMapOld = this.maskState.maskDigitPosMap;
+    },
+
+    handleKeypress(event) {
+      if (event.keyCode === 13) this.$emit("enter");
     },
 
     setCurrentValue(value) {
