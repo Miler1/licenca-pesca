@@ -5,8 +5,8 @@ module.exports = {
   // ver https://cli.vuejs.org/config/#devserver-proxy
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:6669',
+      "/api": {
+        target: "http://localhost:9666",
         ws: true,
         changeOrigin: true
       }
@@ -14,6 +14,6 @@ module.exports = {
   },
   // Mudando rota do build para ser compatível com o Maven
   // ver https://cli.vuejs.org/config/
-  outputDir: 'target/dist',
-  assetsDir: 'static'
-}
+  outputDir: "target/dist",
+  assetsDir: "static"
+};

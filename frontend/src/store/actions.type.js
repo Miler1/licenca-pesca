@@ -1,0 +1,1 @@
+export const ACESSAR = "ACESSAR";

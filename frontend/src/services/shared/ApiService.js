@@ -17,6 +17,7 @@ const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
     this.setHeader();
+    Vue.axios.defaults.baseURL = "http://localhost:9666";
   },
 
   /**
@@ -47,7 +48,7 @@ const ApiService = {
         }
       });
     } catch (error) {
-      return Promise.reject(new HttpException(error));
+      return Promise.reject(new HttpException.init(error, true));
     }
   },
 
@@ -62,7 +63,7 @@ const ApiService = {
     try {
       return await Vue.axios.get(`${resource}/${slug}`);
     } catch (error) {
-      return Promise.reject(new HttpException(error));
+      return Promise.reject(new HttpException.init(error, true));
     }
   },
 
@@ -77,7 +78,7 @@ const ApiService = {
     try {
       return await Vue.axios.post(`${resource}`, params);
     } catch (error) {
-      return Promise.reject(new HttpException(error));
+      return Promise.reject(new HttpException.init(error, true));
     }
   },
 
@@ -93,7 +94,7 @@ const ApiService = {
     try {
       return await Vue.axios.put(`${resource}/${slug}`, params);
     } catch (error) {
-      return Promise.reject(new HttpException(error));
+      return Promise.reject(new HttpException.init(error, true));
     }
   },
 
@@ -108,7 +109,7 @@ const ApiService = {
     try {
       return await Vue.axios.put(`${resource}`, params);
     } catch (error) {
-      return Promise.reject(new HttpException(error));
+      return Promise.reject(new HttpException.init(error, true));
     }
   },
 
@@ -122,7 +123,7 @@ const ApiService = {
     try {
       return await Vue.axios.delete(resource);
     } catch (error) {
-      return Promise.reject(new HttpException(error));
+      return Promise.reject(new HttpException.init(error, true));
     }
   }
 };

@@ -30,7 +30,7 @@ export function Exception(options = null) {
   if (options && options.show)
     Notificator.show({
       title: options.title ? options.title : TITULO_PADRAO,
-      massage: options.message ? options.message : MENSAGEM_PADRAO,
+      message: options.message ? options.message : MENSAGEM_PADRAO,
       type: options.type ? options.type : "error"
     });
 
