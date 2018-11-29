@@ -12,7 +12,7 @@ const AcessoService = {
    * @param acessoResource
    * @return {*|Promise<*>}
    */
-  acessar: acessoResource => ApiService.post("", acessoResource)
+  acessar: acessoResource => ApiService.post("/api/acessar", acessoResource)
 };
 
 export default AcessoService;

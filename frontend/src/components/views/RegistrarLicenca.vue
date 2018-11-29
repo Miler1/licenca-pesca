@@ -61,7 +61,7 @@ export default {
     generateAcessoResource(resource) {
       let cpf = null;
       let passaporte = null;
-      if (resource.toString().length === 11) {
+      if (this.type === "1") {
         cpf = resource;
       } else {
         passaporte = resource;
