@@ -26,7 +26,7 @@ export default {
 <style lang="sass">
 	@import "../../theme/tools/variables"
 
-	@import url('https://fonts.googleapis.com/css?family=Lato:900');
+	@import url('https://fonts.googleapis.com/css?family=Lato:900')
 
 	#menu-header
 		width: 100%
@@ -47,10 +47,10 @@ export default {
 				.logo-image
 					color: white
 					height: 50px
-					width: 200px
+					width: 50px
 					margin-right: 10px
 					margin-left: 10px
-					background-color: $--cor-tema-primario
+					background: url("../../assets/ipaam-logo.png") no-repeat center
 					background-size: contain
 
 				.logo-text
