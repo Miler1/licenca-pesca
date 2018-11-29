@@ -12,6 +12,7 @@ import ElementUI from "element-ui";
 import locale from "element-ui/lib/locale/lang/pt-br";
 import Vue2Filters from "vue2-filters";
 import VueI18n from "vue-i18n";
+import VueTheMask from "vue-the-mask";
 
 // CSS Imports
 import "./assets/linearicons/style.css";
@@ -24,6 +25,7 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI, { locale });
 Vue.use(Vue2Filters);
 Vue.use(VueI18n);
+Vue.use(VueTheMask);
 ApiService.init();
 const i18n = new VueI18n({
   locale: "PT-BR",
