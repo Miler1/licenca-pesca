@@ -1,0 +1,1 @@
+export const SET_SOLICITANTE = "SET_SOLICITANTE";

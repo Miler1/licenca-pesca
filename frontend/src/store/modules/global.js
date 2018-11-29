@@ -1,4 +1,10 @@
-const INITIAL_STATE = {};
+import { ACESSAR } from "../actions.type";
+import AcessoService from "../../services/AcessoService";
+import { SET_SOLICITANTE } from "../mutations.type";
+
+const INITIAL_STATE = {
+  solicitante: null
+};
 
 export const state = Object.assign({}, INITIAL_STATE);
 
@@ -6,10 +12,16 @@ export const state = Object.assign({}, INITIAL_STATE);
  * Métodos GETTERS da STORE.
  *
  * Buscam o atual estado da store.
- *
- * @type {Function}
  */
-export const getters = {};
+export const getters = {
+  /**
+   * Retorna o solicitante.
+   *
+   * @param state
+   * @return {getters.solicitante|(function(*))|null}
+   */
+  solicitante: state => state.solicitante
+};
 
 /**
  * ACTIONS da STORE.
@@ -17,20 +29,43 @@ export const getters = {};
  * Responsável pelas chamadas de serviços,
  * comunicação com os componentes e commitar
  * mutations.
- *
- * @type {Function}
  */
-export const actions = {};
+export const actions = {
+  /**
+   * Action de acesso da aplicação.
+   *
+   * Busca o solicitante dado o CPF ou passaporte.
+   *
+   * @param commit
+   * @param acessoResource
+   */
+  [ACESSAR]: ({ commit }, acessoResource) => {
+    AcessoService.acessar(acessoResource)
+      .then(({ data }) => {
+        commit(SET_SOLICITANTE, data);
+      })
+      .catch(error => {
+        throw new Error(error);
+      });
+  }
+};
 
 /**
  * As MUTATIONS da STORE.
  *
  * Entidade responsável por alterar o estado
  * da STORE.
- *
- * @type {Function}
  */
-export const mutations = {};
+export const mutations = {
+  /**
+   * Inclui o solicitante na store.
+   *
+   * @param state
+   * @param data
+   * @return {*}
+   */
+  [SET_SOLICITANTE]: (state, data) => (state.solicitante = data)
+};
 
 export default {
   state,
