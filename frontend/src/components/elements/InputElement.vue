@@ -8,13 +8,14 @@
       'el-input-group--append': $slots.append,
       'el-input-group--prepend': $slots.prepend,
       'el-input--prefix': $slots.prefix || prefixIcon,
-      'el-input--suffix': $slots.suffix || suffixIcon || clearable
+      'el-input--suffix': $slots.suffix || suffixIcon
     }
     ]"
 	     @mouseenter="hovering = true"
 	     @mouseleave="hovering = false"
 	>
 		<template v-if="type !== 'textarea'">
+			<!-- 前置元素 -->
 			<div class="el-input-group__prepend" v-if="$slots.prepend">
 				<slot name="prepend"></slot>
 			</div>
@@ -25,29 +26,29 @@
 					v-bind="$attrs"
 					:type="type"
 					:disabled="inputDisabled"
-					:readonly="readonly"
-					:autocomplete="autoComplete || autocomplete"
-					:value="nativeInputValue"
+					:autocomplete="autoComplete"
+					:value="currentValue"
 					ref="input"
-					@compositionstart="handleComposition"
-					@compositionupdate="handleComposition"
-					@compositionend="handleComposition"
 					@input="handleInput"
 					@focus="handleFocus"
 					@blur="handleBlur"
 					@change="handleChange"
+					@keydown="handleKeydown"
 					:aria-label="label"
 			>
-			<span class="el-input__prefix" v-if="$slots.prefix || prefixIcon">
+			<!-- 前置内容 -->
+			<span class="el-input__prefix" v-if="$slots.prefix || prefixIcon" :style="prefixOffset">
         <slot name="prefix"></slot>
         <i class="el-input__icon"
            v-if="prefixIcon"
            :class="prefixIcon">
         </i>
       </span>
+			<!-- 后置内容 -->
 			<span
 					class="el-input__suffix"
-					v-if="$slots.suffix || suffixIcon || showClear || validateState && needStatusIcon">
+					v-if="$slots.suffix || suffixIcon || showClear || validateState && needStatusIcon"
+					:style="suffixOffset">
         <span class="el-input__suffix-inner">
           <template v-if="!showClear">
             <slot name="suffix"></slot>
@@ -66,6 +67,7 @@
            :class="['el-input__validateIcon', validateIcon]">
         </i>
       </span>
+			<!-- 后置元素 -->
 			<div class="el-input-group__append" v-if="$slots.append">
 				<slot name="append"></slot>
 			</div>
@@ -74,16 +76,11 @@
 				v-else
 				:tabindex="tabindex"
 				class="el-textarea__inner"
-				:value="nativeInputValue"
-				@compositionstart="handleComposition"
-				@compositionupdate="handleComposition"
-				@compositionend="handleComposition"
+				:value="currentValue"
 				@input="handleInput"
 				ref="textarea"
 				v-bind="$attrs"
 				:disabled="inputDisabled"
-				:readonly="readonly"
-				:autocomplete="autoComplete || autocomplete"
 				:style="textareaStyle"
 				@focus="handleFocus"
 				@blur="handleBlur"
@@ -93,22 +90,18 @@
     </textarea>
 	</div>
 </template>
-
 <script>
 import emitter from "element-ui/src/mixins/emitter";
 import Migrating from "element-ui/src/mixins/migrating";
-import merge from "element-ui/src/utils/merge";
 import calcTextareaHeight from "../../utils/helpers/calcTextareaHeight";
+import merge from "element-ui/src/utils/merge";
+import mask from "../../utils/helpers/mask";
 
 export default {
-  name: "InputElement",
-
-  componentName: "InputElement",
-
-  mixins: [emitter, Migrating],
-
+  name: "ElInput",
+  componentName: "ElInput",
+  mixins: [emitter, Migrating, mask],
   inheritAttrs: false,
-
   inject: {
     elForm: {
       default: ""
@@ -117,23 +110,22 @@ export default {
       default: ""
     }
   },
-
   data() {
     return {
+      currentValue: this.value,
       textareaCalcStyle: {},
+      prefixOffset: null,
+      suffixOffset: null,
       hovering: false,
-      focused: false,
-      isOnComposition: false
+      focused: false
     };
   },
-
   props: {
     value: [String, Number],
     size: String,
     resize: String,
     form: String,
     disabled: Boolean,
-    readonly: Boolean,
     type: {
       type: String,
       default: "text"
@@ -142,20 +134,9 @@ export default {
       type: [Boolean, Object],
       default: false
     },
-    autocomplete: {
-      type: String,
-      default: "off"
-    },
-    /** @Deprecated in next major version */
     autoComplete: {
       type: String,
-      validator(val = true) {
-        process.env.NODE_ENV !== "production" &&
-          console.warn(
-            "[Element Warn][Input]'auto-complete' property will be deprecated in next major version. please use 'autocomplete' instead."
-          );
-        return val;
-      }
+      default: "off"
     },
     validateEvent: {
       type: Boolean,
@@ -170,7 +151,6 @@ export default {
     },
     tabindex: String
   },
-
   computed: {
     _elFormItemSize() {
       return (this.elFormItem || {}).elFormItemSize;
@@ -197,25 +177,24 @@ export default {
     inputDisabled() {
       return this.disabled || (this.elForm || {}).disabled;
     },
-    nativeInputValue() {
-      return this.value === null || this.value === undefined ? "" : this.value;
+    isGroup() {
+      return this.$slots.prepend || this.$slots.append;
     },
     showClear() {
       return (
         this.clearable &&
-        !this.inputDisabled &&
-        !this.readonly &&
-        this.nativeInputValue &&
+        !this.disabled &&
+        this.currentValue !== "" &&
         (this.focused || this.hovering)
       );
     }
   },
-
   watch: {
-    value(val) {
-      this.$nextTick(this.resizeTextarea);
-      if (this.validateEvent) {
-        this.dispatch("ElFormItem", "el.form.change", [val]);
+    value(val, oldValue) {
+      if (!this.maskOptions) {
+        this.setCurrentValue(val);
+      } else {
+        this.maskBehaviour(val);
       }
     }
   },
@@ -240,8 +219,17 @@ export default {
     handleBlur(event) {
       this.focused = false;
       this.$emit("blur", event);
+
+      if (
+        this.maskOptions &&
+        this.maskOptions.clearIfNotMatch &&
+        !this.maskState.regexMask.test(this.currentValue)
+      ) {
+        this.clear();
+      }
+
       if (this.validateEvent) {
-        this.dispatch("ElFormItem", "el.form.blur", [this.value]);
+        this.dispatch("ElFormItem", "el.form.blur", [this.currentValue]);
       }
     },
     select() {
@@ -269,64 +257,60 @@ export default {
       this.focused = true;
       this.$emit("focus", event);
     },
-    handleComposition(event) {
-      if (event.type === "compositionstart") {
-        this.isOnComposition = true;
-      }
-      if (event.type === "compositionend") {
-        this.isOnComposition = false;
-        this.handleInput(event);
-      }
-    },
     handleInput(event) {
-      if (this.isOnComposition) return;
-      // hack for https://github.com/ElemeFE/element/issues/8548
-      // should remove the following line when we don't support IE
-      if (event.target.value === this.nativeInputValue) return;
-      this.$emit("input", event.target.value);
-      // set input's value, in case parent refuses the change
-      // see: https://github.com/ElemeFE/element/issues/12850
-      this.$nextTick(() => {
-        this.$refs.input.value = this.value;
-      });
+      if (this.maskOptions && this.maskOptions.mask) {
+        const value = this.maskBehaviour();
+
+        if (value !== null) {
+          this.$emit("input", value);
+        }
+      } else {
+        const value = event.target.value;
+        this.$emit("input", value);
+        this.setCurrentValue(value);
+      }
     },
     handleChange(event) {
       this.$emit("change", event.target.value);
     },
-    calcIconOffset(place) {
-      let elList = [].slice.call(
-        this.$el.querySelectorAll(`.el-input__${place}`) || []
-      );
-      if (!elList.length) return;
-      let el = null;
-      for (let i = 0; i < elList.length; i++) {
-        if (elList[i].parentNode === this.$el) {
-          el = elList[i];
-          break;
-        }
+
+    handleKeydown(event) {
+      this.maskState.keycode = event.keyCode || event.which;
+      this.maskState.previusValue = this.currentValue;
+      this.maskState.previusCaretPos = this.getCaret();
+      this.maskState.maskDigitPosMapOld = this.maskState.maskDigitPosMap;
+    },
+
+    setCurrentValue(value) {
+      if (value === this.currentValue) return;
+      this.$nextTick(_ => {
+        this.resizeTextarea();
+      });
+      this.currentValue = value;
+      if (this.validateEvent) {
+        this.dispatch("ElFormItem", "el.form.change", [value]);
       }
-      if (!el) return;
+    },
+    calcIconOffset(place) {
       const pendantMap = {
-        suffix: "append",
-        prefix: "prepend"
+        suf: "append",
+        pre: "prepend"
       };
       const pendant = pendantMap[place];
       if (this.$slots[pendant]) {
-        el.style.transform = `translateX(${place === "suffix" ? "-" : ""}${
-          this.$el.querySelector(`.el-input-group__${pendant}`).offsetWidth
-        }px)`;
-      } else {
-        el.removeAttribute("style");
+        return {
+          transform: `translateX(${place === "suf" ? "-" : ""}${
+            this.$el.querySelector(`.el-input-group__${pendant}`).offsetWidth
+          }px)`
+        };
       }
-    },
-    updateIconOffset() {
-      this.calcIconOffset("prefix");
-      this.calcIconOffset("suffix");
     },
     clear() {
       this.$emit("input", "");
       this.$emit("change", "");
       this.$emit("clear");
+      this.setCurrentValue("");
+      this.focus();
     }
   },
   created() {
@@ -334,10 +318,10 @@ export default {
   },
   mounted() {
     this.resizeTextarea();
-    this.updateIconOffset();
-  },
-  updated() {
-    this.$nextTick(this.updateIconOffset);
+    if (this.isGroup) {
+      this.prefixOffset = this.calcIconOffset("pre");
+      this.suffixOffset = this.calcIconOffset("suf");
+    }
   }
 };
 </script>
