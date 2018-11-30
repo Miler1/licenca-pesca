@@ -5,7 +5,7 @@ import router from "./router";
 import store from "./store";
 import "./utils/registerServiceWorker";
 import ApiService from "./services/shared/ApiService";
-import messages from "./messages";
+import messages from "./utils/messages/messages";
 
 // 3th Imports
 import ElementUI from "element-ui";
@@ -31,6 +31,7 @@ const i18n = new VueI18n({
   locale: "PT-BR",
   messages
 });
+Vue.prototype.$translator = i18n;
 
 // Instância Vue
 new Vue({
