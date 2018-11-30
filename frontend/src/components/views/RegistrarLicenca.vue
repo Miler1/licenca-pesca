@@ -1,47 +1,48 @@
 <template lang="pug">
 	#registrar-licenca
-		h2 {{ $t("message.registerTitle") }}
+		h2 {{ $t("interface.registrar.geral.titulo") }}
 		card
 			el-steps(:active="step" :space="500" simple)
-				el-step(:title="$t('message.register.steps.identification')" icon="el-icon-search")
-				el-step(:title="$t('message.register.steps.info')" icon="el-icon-edit-outline")
-				el-step(:title="$t('message.register.steps.summary')" icon="el-icon-document")
+				el-step(:title="$t('interface.registrar.geral.steps.indices.identificacao')" icon="el-icon-search")
+				el-step(:title="$t('interface.registrar.geral.steps.indices.informacoes')" icon="el-icon-edit-outline")
+				el-step(:title="$t('interface.registrar.geral.steps.indices.resumo')" icon="el-icon-document")
 
-			h4.label-search {{ $t("message.register.access.search") }}
+			h4.label-search {{ $t("interface.registrar.identificacao.acesso.label.search") }}
 			.search
 				input-element(
-				:placeholder="$t('message.register.access.placeholder.cpf')"
+				:placeholder="$t('interface.registrar.identificacao.acesso.placeholder.cpf')"
 				v-model="resource"
 				v-if="type === '1'"
 				:mask="maskCPF"
 				@enter="acessar")
 					el-select(v-model="type" slot="prepend" @change="resource = ''")
-						el-option(:label="$t('message.register.access.cpf')" value="1")
-						el-option(:label="$t('message.register.access.passport')" value="2")
+						el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="1")
+						el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="2")
 					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 				input-element(
-				:placeholder="$t('message.register.access.placeholder.passport')"
+				:placeholder="$t('interface.registrar.identificacao.acesso.placeholder.passaporte')"
 				v-model="resource"
 				v-if="type !== '1'"
 				:mask="unmask"
 				@enter="acessar")
 					el-select(v-model="type" slot="prepend" @change="resource = ''")
-						el-option(:label="$t('message.register.access.cpf')" value="1")
-						el-option(:label="$t('message.register.access.passport')" value="2")
+						el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="1")
+						el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="2")
 					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 
 			.data
+				cadastrar-dados-pessoa
 				visualizar-dados-pessoa(:pessoa="solicitante" v-if="existSolicitante && step === 0")
 
 			.footer-card
 				.left
-					el-button(icon="el-icon-arrow-left" type="primary" plain @click="prevStep" v-if="step !== 0") {{ $t("message.register.buttons.back") }}
-					el-button(icon="el-icon-close") {{ $t("message.register.buttons.cancel") }}
+					el-button(icon="el-icon-arrow-left" type="primary" plain @click="prevStep" v-if="step !== 0") {{ $t("interface.registrar.geral.steps.botoes.voltar") }}
+					el-button(icon="el-icon-close") {{ $t("interface.registrar.geral.steps.botoes.cancelar") }}
 				.center
-					h4.footer-label {{ $t("message.register.footerLabel", [2, 4]) }}
+					h4.footer-label {{ $t("interface.registrar.geral.steps.label", [step + 1, 3]) }}
 				.right
-					el-button(icon="el-icon-check" type="primary" v-if="step === 2") {{ $t("message.register.buttons.done") }}
-					el-button(icon="el-icon-arrow-right" type="primary" @click="nextStep" v-if="step !== 2") {{ $t("message.register.buttons.next") }}
+					el-button(icon="el-icon-check" type="primary" v-if="step === 2") {{ $t("interface.registrar.geral.steps.botoes.concluir") }}
+					el-button(icon="el-icon-arrow-right" type="primary" @click="nextStep" v-if="step !== 2") {{ $t("interface.registrar.geral.steps.botoes.proxima") }}
 </template>
 
 <script>
@@ -50,10 +51,16 @@ import { ACESSAR } from "../../store/actions.type";
 import InputElement from "../elements/InputElement";
 import VisualizarDadosPessoa from "../data/VisualizarDadosPessoa";
 import { mapGetters } from "vuex";
+import CadastrarDadosPessoa from "../data/CadastrarDadosPessoa";
 
 export default {
   name: "RegistrarLicenca",
-  components: { VisualizarDadosPessoa, InputElement, Card },
+  components: {
+    CadastrarDadosPessoa,
+    VisualizarDadosPessoa,
+    InputElement,
+    Card
+  },
   data() {
     return {
       resource: "",

@@ -1,145 +1,146 @@
 <template lang="pug">
 	#visualizar-dados-pessoa
-		h3.title {{ $t("message.register.data.titles.person") }}
+		h3.title {{ $t("interface.registrar.identificacao.visualizar.titulo.dadosPessoais") }}
 
 		el-row.section(:gutter="20")
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.name") }}
-					h4(:class="{'not-informed': exist(pessoa.nome)}") {{ pessoa.nome | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.nome") }}
+					h4(:class="{'not-informed': exist(pessoa.nome)}") {{ pessoa.nome | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.cpf") }}
-					h4(:class="{'not-informed': exist(pessoa.cpf)}") {{ pessoa.cpf | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.cpf") }}
+					h4(:class="{'not-informed': exist(pessoa.cpf)}") {{ pessoa.cpf | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.passport") }}
-					h4(:class="{'not-informed': exist(pessoa.passaporte)}") {{ pessoa.passaporte | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.passaporte") }}
+					h4(:class="{'not-informed': exist(pessoa.passaporte)}") {{ pessoa.passaporte | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.sex") }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.sexo") }}
 					h4(
 						:class="{'not-informed': exist(pessoa.sexo)}"
-					) {{ getSexo(pessoa.sexo) !== null ? $t(`message.register.data.labels.gender.${getSexo(pessoa.sexo)}`) : null | placeholder($t("message.notInformed")) }}
+					) {{ getSexo(pessoa.sexo) | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 		el-row.section(:gutter="20")
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.birthday") }}
-					h4(:class="{'not-informed': exist(pessoa.dataNascimento)}") {{ localizeDate(pessoa.dataNascimento) !== null ? $t("date", localizeDate(pessoa.dataNascimento)) : null | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.dataNascimento") }}
+					h4(:class="{'not-informed': exist(pessoa.dataNascimento)}") {{ localizeDate(pessoa.dataNascimento) | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.mother") }}
-					h4(:class="{'not-informed': exist(pessoa.nomeMae)}") {{ pessoa.nomeMae | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.nomeMae") }}
+					h4(:class="{'not-informed': exist(pessoa.nomeMae)}") {{ pessoa.nomeMae | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
-		h3.title {{ $t("message.register.data.titles.mainAddress") }}
+		h3.title {{ $t("interface.registrar.identificacao.visualizar.titulo.enderecoPrincipal") }}
 
 		el-row.section(:gutter="20")
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.location") }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.localizacao") }}
 					h4(
 						:class="{'not-informed': exist(pessoa.enderecoPrincipal.zonaLocalizacao)}"
-					) {{ getZonaLocalizacao(pessoa.enderecoPrincipal.zonaLocalizacao) !== null ? $t(`message.register.data.labels.${getZonaLocalizacao(pessoa.enderecoPrincipal.zonaLocalizacao)}`) : null | placeholder($t("message.notInformed")) }}
+					) {{ getZonaLocalizacao(pessoa.enderecoPrincipal.zonaLocalizacao) | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.street") }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.logradouro)}") {{ pessoa.enderecoPrincipal.logradouro | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.logradouro") }}
+					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.logradouro)}") {{ pessoa.enderecoPrincipal.logradouro | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.number") }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.numero)}") {{ pessoa.enderecoPrincipal.numero | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.numero") }}
+					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.numero)}") {{ pessoa.enderecoPrincipal.numero | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.neighborhood") }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.bairro)}") {{ pessoa.enderecoPrincipal.bairro | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.bairro") }}
+					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.bairro)}") {{ pessoa.enderecoPrincipal.bairro | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 		el-row.section(:gutter="20")
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.complement") }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.complemento)}") {{ pessoa.enderecoPrincipal.complemento | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.complemento") }}
+					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.complemento)}") {{ pessoa.enderecoPrincipal.complemento | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.cep") }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.cep)}") {{ pessoa.enderecoPrincipal.cep | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.cep") }}
+					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.cep)}") {{ pessoa.enderecoPrincipal.cep | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.city") }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.municipio)}") {{ pessoa.enderecoPrincipal.municipio | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.municipio") }}
+					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.municipio)}") {{ pessoa.enderecoPrincipal.municipio | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-col(:span="6")
 				.align
-					h4.label {{ $t("message.register.data.labels.uf") }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.uf)}") {{ pessoa.enderecoPrincipal.uf | placeholder($t("message.notInformed")) }}
+					h4.label {{ $t("interface.registrar.identificacao.visualizar.label.uf") }}
+					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.uf)}") {{ pessoa.enderecoPrincipal.uf | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
-		.enderecoCorrespondencia(v-if="getZonaLocalizacao(pessoa.enderecoPrincipal.zonaLocalizacao) === 'rural'")
-			h3.title {{ $t("message.register.data.titles.mailingAddress") }}
+		.enderecoCorrespondencia(v-if="pessoa.enderecoPrincipal.zonaLocalizacao === 1")
+			h3.title {{ $t("interface.registrar.identificacao.visualizar.titulo.enderecoCorrespondencia") }}
 
 			el-row.section(:gutter="20")
 
 				el-col(:span="6")
 					.align
-						h4.label {{ $t("message.register.data.labels.location") }}
+						h4.label {{ $t("interface.registrar.identificacao.visualizar.label.localizacao") }}
 						h4(
 						:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.zonaLocalizacao)}"
-						) {{ getZonaLocalizacao(pessoa.enderecoCorrespondencia.zonaLocalizacao) !== null ? $t(`message.register.data.labels.${getZonaLocalizacao(pessoa.enderecoCorrespondencia.zonaLocalizacao)}`) : null | placeholder($t("message.notInformed")) }}
+						) {{ getZonaLocalizacao(pessoa.enderecoCorrespondencia.zonaLocalizacao) | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 				el-col(:span="6")
 					.align
-						h4.label {{ $t("message.register.data.labels.street") }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.logradouro)}") {{ pessoa.enderecoCorrespondencia.logradouro | placeholder($t("message.notInformed")) }}
+						h4.label {{ $t("interface.registrar.identificacao.visualizar.label.logradouro") }}
+						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.logradouro)}") {{ pessoa.enderecoCorrespondencia.logradouro | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 				el-col(:span="6")
 					.align
-						h4.label {{ $t("message.register.data.labels.number") }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.numero)}") {{ pessoa.enderecoCorrespondencia.numero | placeholder($t("message.notInformed")) }}
+						h4.label {{ $t("interface.registrar.identificacao.visualizar.label.numero") }}
+						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.numero)}") {{ pessoa.enderecoCorrespondencia.numero | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 				el-col(:span="6")
 					.align
-						h4.label {{ $t("message.register.data.labels.neighborhood") }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.bairro)}") {{ pessoa.enderecoCorrespondencia.bairro | placeholder($t("message.notInformed")) }}
+						h4.label {{ $t("interface.registrar.identificacao.visualizar.label.bairro") }}
+						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.bairro)}") {{ pessoa.enderecoCorrespondencia.bairro | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 			el-row.section(:gutter="20")
 
 				el-col(:span="6")
 					.align
-						h4.label {{ $t("message.register.data.labels.complement") }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.complemento)}") {{ pessoa.enderecoCorrespondencia.complemento | placeholder($t("message.notInformed")) }}
+						h4.label {{ $t("interface.registrar.identificacao.visualizar.label.complemento") }}
+						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.complemento)}") {{ pessoa.enderecoCorrespondencia.complemento | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 				el-col(:span="6")
 					.align
-						h4.label {{ $t("message.register.data.labels.cep") }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.cep)}") {{ pessoa.enderecoCorrespondencia.cep | placeholder($t("message.notInformed")) }}
+						h4.label {{ $t("interface.registrar.identificacao.visualizar.label.cep") }}
+						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.cep)}") {{ pessoa.enderecoCorrespondencia.cep | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 				el-col(:span="6")
 					.align
-						h4.label {{ $t("message.register.data.labels.city") }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.municipio)}") {{ pessoa.enderecoCorrespondencia.municipio | placeholder($t("message.notInformed")) }}
+						h4.label {{ $t("interface.registrar.identificacao.visualizar.label.municipio") }}
+						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.municipio)}") {{ pessoa.enderecoCorrespondencia.municipio | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 				el-col(:span="6")
 					.align
-						h4.label {{ $t("message.register.data.labels.uf") }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.uf)}") {{ pessoa.enderecoCorrespondencia.uf | placeholder($t("message.notInformed")) }}
+						h4.label {{ $t("interface.registrar.identificacao.visualizar.label.uf") }}
+						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.uf)}") {{ pessoa.enderecoCorrespondencia.uf | placeholder($t("interface.registrar.identificacao.visualizar.naoInformado")) }}
 
 </template>
 
 <script>
 import * as _ from "lodash";
 import { ZONA_LOCALIZACAO, SEXO } from "../../model/constantes";
+import Vue from "vue";
 
 export default {
   name: "VisualizarDadosPessoa",
@@ -162,18 +163,24 @@ export default {
     localizeDate(strDate) {
       if (strDate === null) return null;
 
-      return [
+      let data = [
         strDate.substring(0, 2), // dia
         strDate.substring(3, 5), // mes
         strDate.substring(6) // ano
       ];
+
+      return Vue.prototype.$translator.t("interface.geral.data", data);
     },
 
     getZonaLocalizacao(localizacao) {
       if (localizacao === ZONA_LOCALIZACAO.URBANA) {
-        return "urban";
+        return Vue.prototype.$translator.t(
+          "interface.registrar.identificacao.visualizar.dados.zonaLocalizacao.urbana"
+        );
       } else if (localizacao === ZONA_LOCALIZACAO.RURAL) {
-        return "rural";
+        return Vue.prototype.$translator.t(
+          "interface.registrar.identificacao.visualizar.dados.zonaLocalizacao.rural"
+        );
       } else {
         return null;
       }
@@ -182,11 +189,17 @@ export default {
     getSexo(sexo) {
       switch (sexo) {
         case SEXO.MASCULINO:
-          return "male";
+          return Vue.prototype.$translator.t(
+            "interface.registrar.identificacao.visualizar.dados.genero.masculino"
+          );
         case SEXO.FEMININO:
-          return "fem";
+          return Vue.prototype.$translator.t(
+            "interface.registrar.identificacao.visualizar.dados.genero.feminino"
+          );
         case SEXO.OUTROS:
-          return "other";
+          return Vue.prototype.$translator.t(
+            "interface.registrar.identificacao.visualizar.dados.genero.outros"
+          );
         default:
           return null;
       }

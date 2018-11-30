@@ -6,7 +6,7 @@
 			el-main
 				view-layout
 					router-view
-			el-footer {{ $t("message.footer") }}
+			el-footer {{ $t("interface.geral.footer") }}
 </template>
 
 <script>
