@@ -2,7 +2,7 @@
 	#registrar-licenca
 		h2 {{ $t("message.registerTitle") }}
 		card
-			el-steps(:active="0" :space="500" simple)
+			el-steps(:active="step" :space="500" simple)
 				el-step(:title="$t('message.register.steps.identification')" icon="el-icon-search")
 				el-step(:title="$t('message.register.steps.info')" icon="el-icon-edit-outline")
 				el-step(:title="$t('message.register.steps.summary')" icon="el-icon-document")
@@ -18,7 +18,7 @@
 					el-select(v-model="type" slot="prepend" @change="resource = ''")
 						el-option(:label="$t('message.register.access.cpf')" value="1")
 						el-option(:label="$t('message.register.access.passport')" value="2")
-					el-button(slot="append" icon="el-icon-search" @click="acessar" :disabled="resource === ''")
+					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 				input-element(
 				:placeholder="$t('message.register.access.placeholder.passport')"
 				v-model="resource"
@@ -28,10 +28,20 @@
 					el-select(v-model="type" slot="prepend" @change="resource = ''")
 						el-option(:label="$t('message.register.access.cpf')" value="1")
 						el-option(:label="$t('message.register.access.passport')" value="2")
-					el-button(slot="append" icon="el-icon-search" @click="acessar" :disabled="resource === ''")
+					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 
 			.data
-				visualizar-dados-pessoa(:pessoa="solicitante" v-if="existSolicitante")
+				visualizar-dados-pessoa(:pessoa="solicitante" v-if="existSolicitante && step === 0")
+
+			.footer-card
+				.left
+					el-button(icon="el-icon-arrow-left" type="primary" plain @click="prevStep" v-if="step !== 0") {{ $t("message.register.buttons.back") }}
+					el-button(icon="el-icon-close") {{ $t("message.register.buttons.cancel") }}
+				.center
+					h4.footer-label {{ $t("message.register.footerLabel", [2, 4]) }}
+				.right
+					el-button(icon="el-icon-check" type="primary" v-if="step === 2") {{ $t("message.register.buttons.done") }}
+					el-button(icon="el-icon-arrow-right" type="primary" @click="nextStep" v-if="step !== 2") {{ $t("message.register.buttons.next") }}
 </template>
 
 <script>
@@ -54,7 +64,8 @@ export default {
       },
       unmask: {
         mask: "AAAAAAAAAAAAAAAAAAAAA"
-      }
+      },
+      step: 0
     };
   },
 
@@ -82,8 +93,12 @@ export default {
       return { cpf, passaporte };
     },
 
-    formatar() {
-      this.resource = "this.resource";
+    nextStep() {
+      if (this.step++ >= 2) this.step = 2;
+    },
+
+    prevStep() {
+      if (this.step-- <= 0) this.step = 0;
     }
   }
 };
@@ -108,11 +123,11 @@ export default {
 		.el-step:first-of-type
 			flex-basis: 33% !important
 
-		.el-button.el-button--default.is-disabled
+		.search-button.is-disabled
 			background-color: $--cor-background
 			color: $--cor-texto-secundario
 
-		.el-button.el-button--default
+		.search-button
 			background-color: $--cor-tema-primario
 			color: white
 
@@ -122,5 +137,17 @@ export default {
 
 			.el-select
 				width: 150px
+
+		.footer-card
+			margin-top: 30px
+			border-top: $--cor-borda 1px solid
+			padding-top: 20px
+			display: flex
+			align-items: center
+			justify-content: space-between
+
+			.footer-label
+				font-size: $--fonte-pequena
+				color: $--cor-texto-secundario
 
 </style>
