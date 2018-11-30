@@ -6,8 +6,8 @@
 				el-step(:title="$t('message.register.steps.identification')" icon="el-icon-search")
 				el-step(:title="$t('message.register.steps.info')" icon="el-icon-edit-outline")
 				el-step(:title="$t('message.register.steps.summary')" icon="el-icon-document")
-			h4 {{ $t("message.register.access.search") }}
 
+			h4.label-search {{ $t("message.register.access.search") }}
 			.search
 				input-element(
 				:placeholder="$t('message.register.access.placeholder.cpf')"
@@ -29,16 +29,21 @@
 						el-option(:label="$t('message.register.access.cpf')" value="1")
 						el-option(:label="$t('message.register.access.passport')" value="2")
 					el-button(slot="append" icon="el-icon-search" @click="acessar" :disabled="resource === ''")
+
+			.data
+				visualizar-dados-pessoa(:pessoa="solicitante" v-if="existSolicitante")
 </template>
 
 <script>
 import Card from "../layouts/Card";
 import { ACESSAR } from "../../store/actions.type";
 import InputElement from "../elements/InputElement";
+import VisualizarDadosPessoa from "../data/VisualizarDadosPessoa";
+import { mapGetters } from "vuex";
 
 export default {
   name: "RegistrarLicenca",
-  components: { InputElement, Card },
+  components: { VisualizarDadosPessoa, InputElement, Card },
   data() {
     return {
       resource: "",
@@ -52,6 +57,11 @@ export default {
       }
     };
   },
+
+  computed: {
+    ...mapGetters(["solicitante", "existSolicitante"])
+  },
+
   methods: {
     /**
      * Método de acesso.
@@ -86,7 +96,7 @@ export default {
 		h1
 			font-weight: 500
 
-		h4
+		.label-search
 			margin-top: 30px
 
 		.el-steps

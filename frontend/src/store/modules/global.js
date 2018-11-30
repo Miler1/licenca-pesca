@@ -3,7 +3,42 @@ import AcessoService from "../../services/AcessoService";
 import { SET_ERROR, SET_SOLICITANTE } from "../mutations.type";
 
 const INITIAL_STATE = {
-  solicitante: null,
+  solicitante: {
+    estrangeiro: null,
+    nome: null,
+    cpf: null,
+    passaporte: null,
+    dataNascimento: null,
+    sexo: null,
+    nomeMae: null,
+    email: null,
+    enderecoPrincipal: {
+      tipo: null,
+      zonaLocalizacao: null,
+      semNumero: null,
+      logradouro: null,
+      numero: null,
+      bairro: null,
+      complemento: null,
+      cep: null,
+      uf: null,
+      municipio: null,
+      descricaoAcesso: null
+    },
+    enderecoCorrespondencia: {
+      tipo: null,
+      zonaLocalizacao: null,
+      semNumero: null,
+      logradouro: null,
+      numero: null,
+      bairro: null,
+      complemento: null,
+      cep: null,
+      uf: null,
+      municipio: null,
+      descricaoAcesso: null
+    }
+  },
   errors: []
 };
 
@@ -22,6 +57,14 @@ export const getters = {
    * @return {getters.solicitante|(function(*))|null}
    */
   solicitante: state => state.solicitante,
+
+  /**
+   * Retorna true se existir o solicitante e false se não existir.
+   *
+   * @param state
+   * @return {boolean}
+   */
+  existSolicitante: state => state.solicitante.nome !== null,
 
   /**
    * Retorna a lista de erros.
