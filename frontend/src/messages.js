@@ -50,7 +50,14 @@ const messages = {
             city: "County:",
             uf: "UF:"
           }
-        }
+        },
+        buttons: {
+          back: "Back",
+          next: "Next",
+          cancel: "Cancel",
+          done: "Done"
+        },
+        footerLabel: "Step {0} of {1}"
       }
     }
   },
@@ -107,7 +114,14 @@ const messages = {
             city: "Município:",
             uf: "UF:"
           }
-        }
+        },
+        buttons: {
+          back: "Voltar",
+          next: "Próxima",
+          cancel: "Cancelar",
+          done: "Concluir"
+        },
+        footerLabel: "Etapa {0} de {1}"
       }
     }
   }
