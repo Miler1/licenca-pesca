@@ -1,8 +1,4 @@
-import { SET_ERROR } from "../mutations.type";
-
-const INITIAL_STATE = {
-  errors: []
-};
+const INITIAL_STATE = {};
 
 export const state = Object.assign({}, INITIAL_STATE);
 
@@ -11,12 +7,7 @@ export const state = Object.assign({}, INITIAL_STATE);
  *
  * Buscam o atual estado da store.
  */
-export const getters = {
-  /**
-   * Retorna a lista de erros.
-   */
-  errors: state => state.errors
-};
+export const getters = {};
 
 /**
  * ACTIONS da STORE.
@@ -33,12 +24,7 @@ export const actions = {};
  * Entidade responsável por alterar o estado
  * da STORE.
  */
-export const mutations = {
-  /**
-   * Adiciona o erro à lista de erros.
-   */
-  [SET_ERROR]: (state, error) => state.errors.add(error)
-};
+export const mutations = {};
 
 export default {
   state,
