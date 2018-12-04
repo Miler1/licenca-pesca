@@ -19,7 +19,7 @@ export default {
 
 <style lang="sass">
 	@import "../theme/tools/variables"
-	@import url('https://fonts.googleapis.com/css?family=Roboto:400,500')
+	@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700')
 
 	// base
 	html, body
