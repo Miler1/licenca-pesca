@@ -1,4 +1,4 @@
-export const Pessoa = {
+export const Solicitante = {
   estrangeiro: null,
   nome: null,
   cpf: null,
