@@ -140,8 +140,8 @@
 <script>
 import Vue from "vue";
 import * as _ from "lodash";
-import { ZONA_LOCALIZACAO, SEXO } from "../../model/constantes";
-import { VISUALIZAR_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/identificacao/visualizar";
+import { ZONA_LOCALIZACAO, SEXO } from "../../../../model/constantes";
+import { VISUALIZAR_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/identificacao/visualizar";
 
 export default {
   name: "VisualizarDadosPessoa",
@@ -212,7 +212,7 @@ export default {
 </script>
 
 <style lang="sass">
-	@import "../../theme/tools/variables"
+	@import "../../../../theme/tools/variables"
 
 	#visualizar-dados-pessoa
 

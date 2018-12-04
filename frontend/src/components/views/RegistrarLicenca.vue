@@ -1,109 +1,51 @@
 <template lang="pug">
 	#registrar-licenca
-		h2 {{ $t("interface.registrar.geral.titulo") }}
+		h2 {{ $t(`${registrar_prefix}titulo`) }}
 		card
 			el-steps(:active="step" :space="500" simple)
-				el-step(:title="$t('interface.registrar.geral.steps.indices.identificacao')" icon="el-icon-search")
-				el-step(:title="$t('interface.registrar.geral.steps.indices.informacoes')" icon="el-icon-edit-outline")
-				el-step(:title="$t('interface.registrar.geral.steps.indices.resumo')" icon="el-icon-document")
+				el-step(:title="$t(`${registrar_prefix}steps.indices.identificacao`)" icon="el-icon-search")
+				el-step(:title="$t(`${registrar_prefix}steps.indices.informacoes`)" icon="el-icon-edit-outline")
+				el-step(:title="$t(`${registrar_prefix}steps.indices.resumo`)" icon="el-icon-document")
 
-			h4.label-search {{ $t("interface.registrar.identificacao.acesso.label.search") }}
-			.search
-				input-element(
-				:placeholder="$t('interface.registrar.identificacao.acesso.placeholder.cpf')"
-				v-model="resource"
-				v-if="type === '1'"
-				:mask="maskCPF"
-				@enter="acessar")
-					el-select(v-model="type" slot="prepend" @change="resource = ''")
-						el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="1")
-						el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="2")
-					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
-				input-element(
-				:placeholder="$t('interface.registrar.identificacao.acesso.placeholder.passaporte')"
-				v-model="resource"
-				v-if="type !== '1'"
-				:mask="passportMask"
-				@enter="acessar")
-					el-select(v-model="type" slot="prepend" @change="resource = ''")
-						el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="1")
-						el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="2")
-					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
+			identification-step(v-if="activeStep('IDENTIFICACAO')")
 
-			.data
-				cadastrar-dados-pessoa(v-if="showCadastro()")
-				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()")
+			step-controller(v-if="showStepsController" :step="step" @prevStep="prevStep" @nextStep="nextStep")
 
-			.footer-card(v-if="identificationDone")
-				.left
-					el-button(icon="el-icon-arrow-left" type="primary" plain @click="prevStep" v-if="step !== 0") {{ $t("interface.registrar.geral.steps.botoes.voltar") }}
-					el-button(icon="el-icon-close") {{ $t("interface.registrar.geral.steps.botoes.cancelar") }}
-				.center
-					h4.footer-label {{ $t("interface.registrar.geral.steps.label", [step + 1, 3]) }}
-				.right
-					el-button(icon="el-icon-check" type="primary" v-if="step === 2") {{ $t("interface.registrar.geral.steps.botoes.concluir") }}
-					el-button(icon="el-icon-arrow-right" type="primary" @click="nextStep" v-if="step !== 2") {{ $t("interface.registrar.geral.steps.botoes.proxima") }}
 </template>
 
 <script>
 import * as _ from "lodash";
 import { mapGetters } from "vuex";
-import { ACESSAR } from "../../store/actions.type";
 
+import Config from "../../config";
 import Card from "../layouts/Card";
 import InputElement from "../elements/InputElement";
-import VisualizarDadosPessoa from "../business/VisualizarDadosPessoa";
-import CadastrarDadosPessoa from "../business/CadastrarDadosPessoa";
-
-import { CPF_MASK, PASSAPORT_MASK } from "../../utils/layout/mascaras";
+import IdentificationStep from "../business/identificacao/IdentificacaoStep";
+import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
+import StepController from "../layouts/StepController";
 
 export default {
   name: "RegistrarLicenca",
+
   components: {
-    CadastrarDadosPessoa,
-    VisualizarDadosPessoa,
+    StepController,
+    IdentificationStep,
     InputElement,
     Card
   },
+
   data() {
     return {
-      resource: "",
-      type: "1",
-      maskCPF: CPF_MASK,
-      passportMask: PASSAPORT_MASK,
-      step: 0
+      step: 0,
+      registrar_prefix: REGISTRAR_GERAL_MESSAGES_PREFIX
     };
   },
 
   computed: {
-    ...mapGetters([
-      "solicitante",
-      "existSolicitante",
-      "cadastroCanActive",
-      "identificationDone"
-    ])
+    ...mapGetters(["showStepsController"])
   },
 
   methods: {
-    /**
-     * Método de acesso.
-     */
-    acessar() {
-      this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource));
-    },
-
-    generateAcessoResource(resource) {
-      let cpf = null;
-      let passaporte = null;
-      if (this.type === "1") {
-        cpf = resource;
-      } else {
-        passaporte = resource;
-      }
-
-      return { cpf, passaporte };
-    },
-
     nextStep() {
       if (this.checkValidation()) {
         if (this.step++ >= 2) this.step = 2;
@@ -115,21 +57,22 @@ export default {
     },
 
     checkValidation() {
-      let isValid = false;
+      let isValid = true;
 
-      if (!_.isEmpty(this.$cadastro.$refs && this.$cadastro.$refs.pessoa)) {
+      if (
+        this.$cadastro &&
+        !_.isEmpty(this.$cadastro.$refs && this.$cadastro.$refs.pessoa)
+      ) {
         this.$cadastro.$refs.pessoa.validate(v => (isValid = v));
       }
 
       return isValid;
     },
 
-    showCadastro() {
-      return this.cadastroCanActive && this.step === 0;
-    },
+    activeStep(step) {
+      const steps = Config.STEPS;
 
-    showVisualizar() {
-      return this.existSolicitante && this.step === 0;
+      return this.step === steps[step];
     }
   }
 };

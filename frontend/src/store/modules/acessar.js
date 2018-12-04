@@ -7,7 +7,7 @@ import AcessoService from "../../services/AcessoService";
 const INITIAL_STATE = {
   solicitante: Solicitante,
   cadastroCanActive: false,
-  identificationDone: false
+  showStepsController: true
 };
 
 export const state = Object.assign({}, INITIAL_STATE);
@@ -26,7 +26,7 @@ export const getters = {
   /**
    * Retorna true se existir o solicitante e false se não existir.
    */
-  existSolicitante: state => state.solicitante.nome !== null,
+  existeSolicitante: state => state.solicitante.nome !== null,
 
   /**
    * Retorna verdadeiro quando o cadastro do solicitante
@@ -37,7 +37,7 @@ export const getters = {
   /**
    * Retorna verdadeiro se a etapa de identificação estiver ok.
    */
-  identificationDone: state => state.identificationDone
+  showStepsController: state => state.showStepsController
 };
 
 /**

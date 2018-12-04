@@ -161,12 +161,12 @@
 
 <script>
 import Vue from "vue";
-import ElInput from "../elements/InputElement";
+import ElInput from "../../../elements/InputElement";
 import { mapGetters } from "vuex";
-import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
-import { PESSOA_RULES } from "../../utils/validations/pessoa_rules";
-import { GENERO_OPTIONS } from "../../utils/layout/selectOptions";
-import { CADASTRO_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/identificacao/cadastro";
+import { PessoaDTO, ZonaLocalizacaoDTO } from "../../../../model/PessoaDTO";
+import { PESSOA_RULES } from "../../../../utils/validations/pessoa_rules";
+import { GENERO_OPTIONS } from "../../../../utils/layout/selectOptions";
+import { CADASTRO_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/identificacao/cadastro";
 
 export default {
   name: "CadastrarDadosPessoa",
@@ -201,7 +201,7 @@ export default {
 </script>
 
 <style lang="sass">
-	@import "../../theme/tools/variables"
+	@import "../../../../theme/tools/variables"
 
 	#cadastrar-dados-pessoa
 		margin-top: 30px
