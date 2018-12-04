@@ -1,3 +1,5 @@
+export const REGISTRAR_GERAL_MESSAGES_PREFIX = "interface.registrar.geral.";
+
 export const EN_GERAL = {
   geral: {
     titulo: "Register Fishing License",

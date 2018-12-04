@@ -1,3 +1,6 @@
+export const VISUALIZAR_MESSAGES_PREFIX =
+  "interface.registrar.identificacao.visualizar.";
+
 export const EN_VISUALIZAR = {
   visualizar: {
     naoInformado: "Not informed.",

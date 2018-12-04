@@ -9,6 +9,8 @@ import { EN_GERAL, PT_GERAL } from "./geral";
 const merge = (identificacao, informacoes, resumo, geral) =>
   Object.assign({}, identificacao, informacoes, resumo, geral);
 
+export const REGISTRAR_MESSAGES_PREFIX = "interface.registrar.";
+
 export const EN_REGISTRAR = {
   registrar: merge(EN_IDENTIFICACAO, EN_INFORMACOES, EN_RESUMO, EN_GERAL)
 };

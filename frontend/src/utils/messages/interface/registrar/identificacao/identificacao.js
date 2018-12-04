@@ -5,6 +5,9 @@ import { EN_CADASTRO, PT_CADASTRO } from "./cadastro";
 const merge = (acesso, visualizar, cadastro) =>
   Object.assign({}, acesso, visualizar, cadastro);
 
+export const IDENTIFICADAO_MESSAGES_PREFIX =
+  "interface.registrar.identificacao.";
+
 export const EN_IDENTIFICACAO = {
   identificacao: merge(EN_ACESSO, EN_VISUALIZAR, EN_CADASTRO)
 };

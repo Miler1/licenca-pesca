@@ -1,3 +1,6 @@
+export const ACESSO_MESSAGES_PREFIX =
+  "interface.registrar.identificacao.acesso.";
+
 export const EN_ACESSO = {
   acesso: {
     label: {
