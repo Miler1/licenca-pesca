@@ -1,34 +1,24 @@
+import Config from "../../../../../config";
+import { handleMessage } from "../../../utils";
+
 export const ACESSO_MESSAGES_PREFIX =
   "interface.registrar.identificacao.acesso.";
 
-export const EN_ACESSO = {
+const ACESSO = {
   acesso: {
     label: {
-      search: "CPF or passport number:"
+      search: ["CPF ou número do passaporte:", "CPF or passport number:"]
     },
     select: {
-      cpf: "CPF",
-      passaporte: "Passport"
+      cpf: ["CPF", "CPF"],
+      passaporte: ["Passaporte", "Passport"]
     },
     placeholder: {
-      cpf: "Enter the CPF",
-      passaporte: "Enter the passport number"
+      cpf: ["Informe o CPF", "Enter the CPF"],
+      passaporte: ["Informe o passaporte", "Enter the passport number"]
     }
   }
 };
 
-export const PT_ACESSO = {
-  acesso: {
-    label: {
-      search: "CPF ou número do passaporte:"
-    },
-    select: {
-      cpf: "CPF",
-      passaporte: "Passaporte"
-    },
-    placeholder: {
-      cpf: "Informe o CPF",
-      passaporte: "Informe o passaporte"
-    }
-  }
-};
+export const EN_ACESSO = handleMessage(ACESSO, Config.LANGUAGE_INDEX.EN);
+export const PT_ACESSO = handleMessage(ACESSO, Config.LANGUAGE_INDEX.PT_BR);

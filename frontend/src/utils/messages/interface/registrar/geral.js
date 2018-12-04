@@ -1,41 +1,27 @@
+import Config from "../../../../config";
+import { handleMessage } from "../../utils";
+
 export const REGISTRAR_GERAL_MESSAGES_PREFIX = "interface.registrar.geral.";
 
-export const EN_GERAL = {
+const GERAL = {
   geral: {
-    titulo: "Register Fishing License",
+    titulo: ["Registrar Licença de Pesca", "Register Fishing License"],
     steps: {
       indices: {
-        identificacao: "Identification",
-        informacoes: "Additional information",
-        resumo: "Summary"
+        identificacao: ["Identificação", "Identification"],
+        informacoes: ["Informações complementares", "Additional information"],
+        resumo: ["Resumo", "Summary"]
       },
       botoes: {
-        cancelar: "Cancel",
-        voltar: "Back",
-        proxima: "Next",
-        concluir: "Done"
+        cancelar: ["Cancelar", "Cancel"],
+        voltar: ["Voltar", "Back"],
+        proxima: ["Próxima", "Next"],
+        concluir: ["Concluir", "Done"]
       },
-      label: "Step {0} of {1}"
+      label: ["Etapa {0} de {1}", "Step {0} of {1}"]
     }
   }
 };
 
-export const PT_GERAL = {
-  geral: {
-    titulo: "Registrar Licença de Pesca",
-    steps: {
-      indices: {
-        identificacao: "Identificação",
-        informacoes: "Informações complementares",
-        resumo: "Resumo"
-      },
-      botoes: {
-        cancelar: "Cancelar",
-        voltar: "Voltar",
-        proxima: "Próxima",
-        concluir: "Concluir"
-      },
-      label: "Etapa {0} de {1}"
-    }
-  }
-};
+export const EN_GERAL = handleMessage(GERAL, Config.LANGUAGE_INDEX.EN);
+export const PT_GERAL = handleMessage(GERAL, Config.LANGUAGE_INDEX.PT_BR);

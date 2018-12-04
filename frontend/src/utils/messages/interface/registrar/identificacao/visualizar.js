@@ -1,78 +1,56 @@
+import Config from "../../../../../config";
+import { handleMessage } from "../../../utils";
+
 export const VISUALIZAR_MESSAGES_PREFIX =
   "interface.registrar.identificacao.visualizar.";
 
-export const EN_VISUALIZAR = {
+const VISUALIZAR = {
   visualizar: {
-    naoInformado: "Not informed.",
+    naoInformado: ["Não informado", "Not informed."],
     titulo: {
-      dadosPessoais: "Personal Data",
-      enderecoPrincipal: "Main Address",
-      enderecoCorrespondencia: "Mailing Address"
+      dadosPessoais: ["Dados Pessoais", "Personal Data"],
+      enderecoPrincipal: ["Endereço Principal", "Main Address"],
+      enderecoCorrespondencia: [
+        "Endereço de Correspondência",
+        "Mailing Address"
+      ]
     },
     label: {
-      cpf: "CPF:",
-      nome: "Name:",
-      passaporte: "Passport:",
-      sexo: "Sex:",
-      dataNascimento: "Date of birth:",
-      nomeMae: "Mother's name:",
-      localizacao: "Location zone:",
-      logradouro: "Public place:",
-      bairro: "Neighborhood:",
-      numero: "Number:",
-      complemento: "Complement:",
-      cep: "Postal code:",
-      municipio: "County:",
-      uf: "UF:"
+      cpf: ["CPF:", "CPF:"],
+      nome: ["Nome:", "Name:"],
+      passaporte: ["Passaporte:", "Passport:"],
+      sexo: ["Sexo:", "Sex:"],
+      dataNascimento: ["Data de nascimento:", "Date of birth:"],
+      nomeMae: ["Nome da mãe:", "Mother's name:"],
+      localizacao: ["Zona de localização:", "Location zone:"],
+      logradouro: ["Logradouro:", "Public place:"],
+      bairro: ["Bairro:", "Neighborhood:"],
+      numero: ["Número:", "Number:"],
+      complemento: ["Complemento:", "Complement:"],
+      cep: ["CEP:", "Postal code:"],
+      municipio: ["Municipio:", "County:"],
+      uf: ["UF:", "UF:"]
     },
     dados: {
       genero: {
-        masculino: "Male",
-        feminino: "Female",
-        outros: "Others"
+        masculino: ["Masculino", "Male"],
+        feminino: ["Feminino", "Female"],
+        outros: ["Outros", "Others"]
       },
       zonaLocalizacao: {
-        urbana: "Urban",
-        rural: "Rural"
+        urbana: ["Urbana", "Urban"],
+        rural: ["Rural", "Rural"]
       }
     }
   }
 };
 
-export const PT_VISUALIZAR = {
-  visualizar: {
-    naoInformado: "Não informado",
-    titulo: {
-      dadosPessoais: "Dados Pessoais",
-      enderecoPrincipal: "Endereço Principal",
-      enderecoCorrespondencia: "Endereço de Correspondência"
-    },
-    label: {
-      cpf: "CPF:",
-      nome: "Nome:",
-      passaporte: "Passaporte:",
-      sexo: "Sexo:",
-      dataNascimento: "Data de nascimento:",
-      nomeMae: "Nome da mãe:",
-      localizacao: "Zona de localização:",
-      logradouro: "Logradouro:",
-      bairro: "Bairro:",
-      numero: "Número:",
-      complemento: "Complemento:",
-      cep: "CEP:",
-      municipio: "Municipio:",
-      uf: "UF:"
-    },
-    dados: {
-      genero: {
-        masculino: "Masculino",
-        feminino: "Feminino",
-        outros: "Outros"
-      },
-      zonaLocalizacao: {
-        urbana: "Urbana",
-        rural: "Rural"
-      }
-    }
-  }
-};
+export const EN_VISUALIZAR = handleMessage(
+  VISUALIZAR,
+  Config.LANGUAGE_INDEX.EN
+);
+
+export const PT_VISUALIZAR = handleMessage(
+  VISUALIZAR,
+  Config.LANGUAGE_INDEX.PT_BR
+);

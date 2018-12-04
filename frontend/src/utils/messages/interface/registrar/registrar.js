@@ -6,8 +6,7 @@ import { EN_INFORMACOES, PT_INFORMACOES } from "./informacoes/informacoes";
 import { EN_RESUMO, PT_RESUMO } from "./resumo/resumo";
 import { EN_GERAL, PT_GERAL } from "./geral";
 
-const merge = (identificacao, informacoes, resumo, geral) =>
-  Object.assign({}, identificacao, informacoes, resumo, geral);
+import { merge } from "../../utils";
 
 export const REGISTRAR_MESSAGES_PREFIX = "interface.registrar.";
 
