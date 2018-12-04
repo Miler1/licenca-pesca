@@ -23,7 +23,7 @@
 				:placeholder="$t('interface.registrar.identificacao.acesso.placeholder.passaporte')"
 				v-model="resource"
 				v-if="type !== '1'"
-				:mask="unmask"
+				:mask="passportMask"
 				@enter="acessar")
 					el-select(v-model="type" slot="prepend" @change="resource = ''")
 						el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="1")
@@ -31,10 +31,10 @@
 					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 
 			.data
-				cadastrar-dados-pessoa
-				visualizar-dados-pessoa(:pessoa="solicitante" v-if="existSolicitante && step === 0")
+				cadastrar-dados-pessoa(v-if="showCadastro()")
+				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()")
 
-			.footer-card
+			.footer-card(v-if="identificationDone")
 				.left
 					el-button(icon="el-icon-arrow-left" type="primary" plain @click="prevStep" v-if="step !== 0") {{ $t("interface.registrar.geral.steps.botoes.voltar") }}
 					el-button(icon="el-icon-close") {{ $t("interface.registrar.geral.steps.botoes.cancelar") }}
@@ -46,12 +46,16 @@
 </template>
 
 <script>
-import Card from "../layouts/Card";
-import { ACESSAR } from "../../store/actions.type";
-import InputElement from "../elements/InputElement";
-import VisualizarDadosPessoa from "../data/VisualizarDadosPessoa";
+import * as _ from "lodash";
 import { mapGetters } from "vuex";
-import CadastrarDadosPessoa from "../data/CadastrarDadosPessoa";
+import { ACESSAR } from "../../store/actions.type";
+
+import Card from "../layouts/Card";
+import InputElement from "../elements/InputElement";
+import VisualizarDadosPessoa from "../business/VisualizarDadosPessoa";
+import CadastrarDadosPessoa from "../business/CadastrarDadosPessoa";
+
+import { CPF_MASK, PASSAPORT_MASK } from "../../utils/layout/mascaras";
 
 export default {
   name: "RegistrarLicenca",
@@ -65,19 +69,19 @@ export default {
     return {
       resource: "",
       type: "1",
-      maskCPF: {
-        mask: "000.000.000-00",
-        clearIfNotMatch: true
-      },
-      unmask: {
-        mask: "AAAAAAAAAAAAAAAAAAAAA"
-      },
+      maskCPF: CPF_MASK,
+      passportMask: PASSAPORT_MASK,
       step: 0
     };
   },
 
   computed: {
-    ...mapGetters(["solicitante", "existSolicitante"])
+    ...mapGetters([
+      "solicitante",
+      "existSolicitante",
+      "cadastroCanActive",
+      "identificationDone"
+    ])
   },
 
   methods: {
@@ -101,11 +105,31 @@ export default {
     },
 
     nextStep() {
-      if (this.step++ >= 2) this.step = 2;
+      if (this.checkValidation()) {
+        if (this.step++ >= 2) this.step = 2;
+      }
     },
 
     prevStep() {
       if (this.step-- <= 0) this.step = 0;
+    },
+
+    checkValidation() {
+      let isValid = false;
+
+      if (!_.isEmpty(this.$cadastro.$refs && this.$cadastro.$refs.pessoa)) {
+        this.$cadastro.$refs.pessoa.validate(v => (isValid = v));
+      }
+
+      return isValid;
+    },
+
+    showCadastro() {
+      return this.cadastroCanActive && this.step === 0;
+    },
+
+    showVisualizar() {
+      return this.existSolicitante && this.step === 0;
     }
   }
 };
