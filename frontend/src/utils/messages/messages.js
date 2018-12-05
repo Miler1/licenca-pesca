@@ -10,5 +10,4 @@ const messages = {
   "PT-BR": merge(PT_INTERFACE, PT_VALIDATION, PT_ELEMENT)
 };
 
-console.log(messages);
 export default messages;

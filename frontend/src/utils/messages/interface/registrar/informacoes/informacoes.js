@@ -1,4 +1,4 @@
-import Config from "../../../../../config";
+import Properties from "../../../../../properties";
 import { handleMessage } from "../../../utils";
 
 export const INFORMACOES_PREFIX = "interface.registrar.informacoes.";
@@ -9,10 +9,10 @@ const INFORMACOES = {
 
 export const EN_INFORMACOES = handleMessage(
   INFORMACOES,
-  Config.LANGUAGE_INDEX.EN
+  Properties.LANGUAGE_INDEX.EN
 );
 
 export const PT_INFORMACOES = handleMessage(
   INFORMACOES,
-  Config.LANGUAGE_INDEX.PT_BR
+  Properties.LANGUAGE_INDEX.PT_BR
 );

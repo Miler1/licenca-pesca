@@ -1,25 +1,25 @@
-import Config from "../../../config";
+import Properties from "../../../properties";
 import { handleMessage } from "../utils";
 
-const required = (campo, language = Config.LANGUAGE_INDEX.PT_BR) => {
+const required = (campo, language = Properties.LANGUAGE_INDEX.PT_BR) => {
   switch (language) {
-    case Config.LANGUAGE_INDEX.PT_BR:
+    case Properties.LANGUAGE_INDEX.PT_BR:
       return `'${campo}' é um campo obrigatório.`;
-    case Config.LANGUAGE_INDEX.EN:
+    case Properties.LANGUAGE_INDEX.EN:
       return `'${campo}' is a required field.`;
   }
 };
 
-const invalid = (campo, language = Config.LANGUAGE_INDEX.PT_BR) => {
+const invalid = (campo, language = Properties.LANGUAGE_INDEX.PT_BR) => {
   switch (language) {
-    case Config.LANGUAGE_INDEX.PT_BR:
+    case Properties.LANGUAGE_INDEX.PT_BR:
       return `Você deve informar um '${campo}' válido.`;
-    case Config.LANGUAGE_INDEX.EN:
+    case Properties.LANGUAGE_INDEX.EN:
       return `You must inform a valid '${campo}'.`;
   }
 };
 
-const en = Config.LANGUAGE_INDEX.EN;
+const en = Properties.LANGUAGE_INDEX.EN;
 
 const VALIDATION = {
   validation: {
@@ -89,10 +89,10 @@ const VALIDATION = {
 
 export const EN_VALIDATION = handleMessage(
   VALIDATION,
-  Config.LANGUAGE_INDEX.EN
+  Properties.LANGUAGE_INDEX.EN
 );
 
 export const PT_VALIDATION = handleMessage(
   VALIDATION,
-  Config.LANGUAGE_INDEX.PT_BR
+  Properties.LANGUAGE_INDEX.PT_BR
 );

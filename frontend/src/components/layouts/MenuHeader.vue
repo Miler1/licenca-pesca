@@ -7,18 +7,25 @@
 			.right
 				.locale
 					i.mdi.mdi-translate
-					el-select(v-model="$i18n.locale")
+					el-select(v-model="$i18n.locale" @change="handleLocale")
 						el-option(v-for="(lang, i) in langs" :key="i" :value="lang") {{ lang }}
 
 
 </template>
 
 <script>
+import { localizeValidation } from "../../configs/validator";
+
 export default {
   name: "MenuHeader",
   mixins: [],
   data() {
     return { langs: ["PT-BR", "EN"] };
+  },
+  methods: {
+    handleLocale() {
+      localizeValidation();
+    }
   }
 };
 </script>

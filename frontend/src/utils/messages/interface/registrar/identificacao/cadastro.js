@@ -1,4 +1,4 @@
-import Config from "../../../../../config";
+import Properties from "../../../../../properties";
 import { handleMessage } from "../../../utils";
 
 export const CADASTRO_MESSAGES_PREFIX =
@@ -39,10 +39,13 @@ const CADASTRO = {
       }
     },
     titulos: {
-      dadosPessoais: "Dados pessoais",
-      dadosContato: "Dados de contato",
-      enderecoPrincipal: "Dados de endereço",
-      enderecoCorrespondencia: "Endereço de correspondência"
+      dadosPessoais: ["Dados pessoais", "Personal data"],
+      dadosContato: ["Dados de contato", "Contact data"],
+      enderecoPrincipal: ["Dados de endereço", "Address data"],
+      enderecoCorrespondencia: [
+        "Endereço de correspondência",
+        "Mailing address"
+      ]
     },
     format: {
       data: ["dd/MM/yyyy", "yyyy-MM-dd"]
@@ -56,5 +59,5 @@ const CADASTRO = {
   }
 };
 
-export const EN_CADASTRO = handleMessage(CADASTRO, Config.LANGUAGE_INDEX.EN);
-export const PT_CADASTRO = handleMessage(CADASTRO, Config.LANGUAGE_INDEX.PT_BR);
+export const EN_CADASTRO = handleMessage(CADASTRO, Properties.LANGUAGE_INDEX.EN);
+export const PT_CADASTRO = handleMessage(CADASTRO, Properties.LANGUAGE_INDEX.PT_BR);

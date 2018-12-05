@@ -1,6 +1,6 @@
-import Vue from "vue";
+import { translate } from "../helpers/internationalization";
 
-const locale = key => Vue.prototype.$translator.t(`validation.${key}`);
+const locale = key => translate(`validation.${key}`);
 
 export const required = (messageKey, trigger = "blur") =>
   Object.assign(

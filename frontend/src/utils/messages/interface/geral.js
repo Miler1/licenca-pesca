@@ -1,5 +1,5 @@
 import { handleMessage } from "../utils";
-import Config from "../../../config";
+import Properties from "../../../properties";
 
 export const INTERFACE_GERAL_PREFIX = "interface.geral.";
 
@@ -14,5 +14,5 @@ const GERAL = {
   }
 };
 
-export const PT_GERAL = handleMessage(GERAL, Config.LANGUAGE_INDEX.PT_BR);
-export const EN_GERAL = handleMessage(GERAL, Config.LANGUAGE_INDEX.EN);
+export const PT_GERAL = handleMessage(GERAL, Properties.LANGUAGE_INDEX.PT_BR);
+export const EN_GERAL = handleMessage(GERAL, Properties.LANGUAGE_INDEX.EN);

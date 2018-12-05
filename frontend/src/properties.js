@@ -4,7 +4,7 @@
  * @author Highlander Paiva
  * @since 1.0
  */
-const Config = {
+const Properties = {
   STEPS: {
     IDENTIFICACAO: 0,
     INFORMACOES_COMPLEMENTARES: 1,
@@ -16,4 +16,4 @@ const Config = {
   }
 };
 
-export default Config;
+export default Properties;

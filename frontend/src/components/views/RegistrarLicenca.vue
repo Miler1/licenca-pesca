@@ -18,7 +18,7 @@
 import * as _ from "lodash";
 import { mapGetters } from "vuex";
 
-import Config from "../../config";
+import Properties from "../../properties";
 import Card from "../layouts/Card";
 import InputElement from "../elements/InputElement";
 import IdentificationStep from "../business/identificacao/IdentificacaoStep";
@@ -66,14 +66,17 @@ export default {
         this.$cadastro &&
         !_.isEmpty(this.$cadastro.$refs && this.$cadastro.$refs.pessoa)
       ) {
-        this.$cadastro.$refs.pessoa.validate(v => (isValid = v));
+        this.$cadastro.$refs.pessoa.validate(v => {
+          console.log(v);
+
+        });
       }
 
       return isValid;
     },
 
     activeStep(step) {
-      const steps = Config.STEPS;
+      const steps = Properties.STEPS;
 
       return this.step === steps[step];
     }

@@ -1,4 +1,4 @@
-import Config from "../../../../../config";
+import Properties from "../../../../../properties";
 import { handleMessage } from "../../../utils";
 
 export const VISUALIZAR_MESSAGES_PREFIX =
@@ -47,10 +47,10 @@ const VISUALIZAR = {
 
 export const EN_VISUALIZAR = handleMessage(
   VISUALIZAR,
-  Config.LANGUAGE_INDEX.EN
+  Properties.LANGUAGE_INDEX.EN
 );
 
 export const PT_VISUALIZAR = handleMessage(
   VISUALIZAR,
-  Config.LANGUAGE_INDEX.PT_BR
+  Properties.LANGUAGE_INDEX.PT_BR
 );

@@ -1,4 +1,4 @@
-import Config from "../../../../../config";
+import Properties from "../../../../../properties";
 import { handleMessage } from "../../../utils";
 
 export const ACESSO_MESSAGES_PREFIX =
@@ -20,5 +20,5 @@ const ACESSO = {
   }
 };
 
-export const EN_ACESSO = handleMessage(ACESSO, Config.LANGUAGE_INDEX.EN);
-export const PT_ACESSO = handleMessage(ACESSO, Config.LANGUAGE_INDEX.PT_BR);
+export const EN_ACESSO = handleMessage(ACESSO, Properties.LANGUAGE_INDEX.EN);
+export const PT_ACESSO = handleMessage(ACESSO, Properties.LANGUAGE_INDEX.PT_BR);

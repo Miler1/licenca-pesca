@@ -8,12 +8,9 @@
 import MainPage from "./layouts/MainPage";
 
 export default {
-  components: { MainPage },
-  data() {
-    return {
-      langs: ["pt-BR", "en"]
-    };
-  }
+  name: "App",
+
+  components: { MainPage }
 };
 </script>
 
