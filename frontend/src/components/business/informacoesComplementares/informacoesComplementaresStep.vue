@@ -1,10 +1,11 @@
 <template lang="pug">
 	#informacoes-complementares-step
-		cadastro-info-complementares
+		.info-wrapper
+			cadastro-info-complementares
 </template>
 
 <script>
-import CadastroInfoComplementares from "./CadastroInfoComplementares";
+import CadastroInfoComplementares from "./dadosInformacoes/CadastroInfoComplementares";
 
 export default {
   name: "InformacaoesComplementaresStep",
@@ -15,5 +16,10 @@ export default {
 
 <style lang="sass">
 	#informacoes-complementares-step
+		display: flex
+		justify-content: center
+
+		.info-wrapper
+			width: 520px
 
 </style>
