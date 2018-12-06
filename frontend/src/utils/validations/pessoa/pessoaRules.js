@@ -1,5 +1,5 @@
 import { Validator } from "vee-validate";
-import { translate } from "../helpers/internationalization";
+import { translate } from "../../helpers/internationalization";
 
 const TODAY = new Date();
 

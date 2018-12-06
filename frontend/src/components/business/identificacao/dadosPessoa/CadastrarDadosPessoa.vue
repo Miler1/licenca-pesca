@@ -164,7 +164,7 @@ import Vue from "vue";
 import ElInput from "../../../elements/InputElement";
 import { mapGetters } from "vuex";
 import { PessoaDTO, ZonaLocalizacaoDTO } from "../../../../model/PessoaDTO";
-import { PESSOA_RULES } from "../../../../utils/validations/pessoa_rules";
+import { PESSOA_RULES } from "../../../../utils/validations/pessoa/pessoa_rules";
 import { GENERO_OPTIONS } from "../../../../utils/layout/selectOptions";
 import { CADASTRO_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/identificacao/cadastro";
 

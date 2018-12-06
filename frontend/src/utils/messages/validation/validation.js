@@ -83,7 +83,39 @@ const VALIDATION = {
         required("Descrição de acesso"),
         required("Access description", en)
       ]
-    }
+    },
+
+    modalidadePesca: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    localizacaoPreferencialPesca: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    rendaMensal: { required: [required("Este"), required("This", en)] },
+
+    diasPescaPorAno: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    gastoMedioPesca: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    faixaEtaria: { required: [required("Este"), required("This", en)] },
+
+    localPesca: { required: [required("Este"), required("This", en)] },
+
+    materialPesca: { required: [required("Este"), required("This", en)] },
+
+    tipoIsca: { required: [required("Este"), required("This", en)] },
+
+    modalidadeMaisPraticada: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    agenciaTurismo: { required: [required("Este", required("This", en))] }
   }
 };
 

@@ -1,4 +1,4 @@
-import "../helpers/formatacao";
+import "../../helpers/formatacao";
 import {
   numero,
   isEmail,
