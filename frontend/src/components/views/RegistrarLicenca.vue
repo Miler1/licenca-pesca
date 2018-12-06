@@ -8,6 +8,7 @@
 				el-step(:title="$t(`${registrar_prefix}steps.indices.resumo`)" icon="el-icon-document")
 
 			identification-step(v-if="activeStep('IDENTIFICACAO')")
+			informacaoes-complementares-step(v-if="activeStep('INFORMACOES_COMPLEMENTARES')")
 
 			step-controller(v-if="showStepsController" :step="step" @prevStep="prevStep" @nextStep="nextStep")
 
@@ -17,17 +18,19 @@
 import * as _ from "lodash";
 import { mapGetters } from "vuex";
 
-import Config from "../../config";
+import Properties from "../../properties";
 import Card from "../layouts/Card";
 import InputElement from "../elements/InputElement";
 import IdentificationStep from "../business/identificacao/IdentificacaoStep";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
 import StepController from "../layouts/StepController";
+import InformacaoesComplementaresStep from "../business/informacoesComplementares/informacoesComplementaresStep";
 
 export default {
   name: "RegistrarLicenca",
 
   components: {
+    InformacaoesComplementaresStep,
     StepController,
     IdentificationStep,
     InputElement,
@@ -63,14 +66,17 @@ export default {
         this.$cadastro &&
         !_.isEmpty(this.$cadastro.$refs && this.$cadastro.$refs.pessoa)
       ) {
-        this.$cadastro.$refs.pessoa.validate(v => (isValid = v));
+        this.$cadastro.$refs.pessoa.validate(v => {
+          console.log(v);
+
+        });
       }
 
       return isValid;
     },
 
     activeStep(step) {
-      const steps = Config.STEPS;
+      const steps = Properties.STEPS;
 
       return this.step === steps[step];
     }

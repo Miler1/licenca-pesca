@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Config from "../../config";
+import Properties from "../../properties";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
 
 export default {
@@ -26,13 +26,13 @@ export default {
   data() {
     return {
       registrar_prefix: REGISTRAR_GERAL_MESSAGES_PREFIX,
-      totalSteps: Object.keys(Config.STEPS).length
+      totalSteps: Object.keys(Properties.STEPS).length
     };
   },
 
   methods: {
     activeStep(step) {
-      const steps = Config.STEPS;
+      const steps = Properties.STEPS;
 
       return this.step === steps[step];
     },

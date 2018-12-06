@@ -2,8 +2,7 @@ import { EN_ACESSO, PT_ACESSO } from "./acesso";
 import { EN_VISUALIZAR, PT_VISUALIZAR } from "./visualizar";
 import { EN_CADASTRO, PT_CADASTRO } from "./cadastro";
 
-const merge = (acesso, visualizar, cadastro) =>
-  Object.assign({}, acesso, visualizar, cadastro);
+import { merge } from "../../../utils";
 
 export const IDENTIFICADAO_MESSAGES_PREFIX =
   "interface.registrar.identificacao.";

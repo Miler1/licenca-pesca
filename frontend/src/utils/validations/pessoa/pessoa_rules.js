@@ -1,4 +1,4 @@
-import { required, validate } from "./utils";
+import { required, validate } from "../utils";
 import {
   checkCPF,
   checkDate,

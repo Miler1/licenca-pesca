@@ -1,125 +1,130 @@
-const required = (campo, language = "pt-BR") =>
-  language === "pt-BR"
-    ? `'${campo}' é um campo obrigatório.`
-    : `'${campo}' is a required field.`;
+import Properties from "../../../properties";
+import { handleMessage } from "../utils";
 
-const invalid = (campo, language = "pt-BR") =>
-  language === "pt-BR"
-    ? `Você deve informar um '${campo}' válido.`
-    : `You must inform a valid '${campo}'.`;
+const required = (campo, language = Properties.LANGUAGE_INDEX.PT_BR) => {
+  switch (language) {
+    case Properties.LANGUAGE_INDEX.PT_BR:
+      return `'${campo}' é um campo obrigatório.`;
+    case Properties.LANGUAGE_INDEX.EN:
+      return `'${campo}' is a required field.`;
+  }
+};
 
-export const EN_VALIDATION = {
+const invalid = (campo, language = Properties.LANGUAGE_INDEX.PT_BR) => {
+  switch (language) {
+    case Properties.LANGUAGE_INDEX.PT_BR:
+      return `Você deve informar um '${campo}' válido.`;
+    case Properties.LANGUAGE_INDEX.EN:
+      return `You must inform a valid '${campo}'.`;
+  }
+};
+
+const en = Properties.LANGUAGE_INDEX.EN;
+
+const VALIDATION = {
   validation: {
     cpf: {
-      invalid: invalid("CPF", "en"),
-      required: required("CPF", "en")
+      invalid: [invalid("CPF"), invalid("CPF", en)],
+      required: [required("CPF"), required("CPF", en)]
     },
     nome: {
-      required: required("Name", "en")
+      required: [required("Nome"), required("Name", en)]
     },
     passaporte: {
-      required: required("Passport", "en")
+      required: [required("Passaporte"), required("Passport", en)]
     },
     dataNascimento: {
-      required: required("Date of birth", "en"),
-      past: "Date of birth cannot be in future."
+      required: [required("Data de nascimento"), required("Date of birth", en)],
+      past: [
+        "Data de nascimento não pode estar no futuro.",
+        "Date of birth cannot be in future."
+      ]
     },
     sexo: {
-      required: required("Sex", "en")
+      required: [required("Sexo"), required("Sex", en)]
     },
     nomeMae: {
-      required: required("Mother's name", "en")
+      required: [required("Nome da mãe"), required("Mother's name", en)]
     },
     email: {
-      required: required("Email", "en"),
-      invalid: invalid("Email", "en")
+      required: [required("E-mail"), required("Email", en)],
+      invalid: [invalid("E-mail"), invalid("Email", en)]
     },
     confirmarEmail: {
-      required: required("Confirm email", "en"),
-      check: "Email fields don't match."
+      required: [required("Confirmar e-mail"), required("Confirm email", en)],
+      check: ["Campos de email não batem.", "Email fields don't match."]
     },
     zonaLocalizacao: {
-      required: required("Location zone", "en")
+      required: [required("Zona de localização"), required("Location zone", en)]
     },
     logradouro: {
-      required: required("City place", "en")
+      required: [required("Logradouro"), required("Public place", en)]
     },
     numero: {
-      vazio:
+      vazio: [
+        "Os campos 'Sem número' e 'Número' não podem ambos estar preenchidos ou vazios.",
         "The 'No number' and 'Number' fields can not be both filled or empty."
+      ]
     },
     bairro: {
-      required: required("Neighborhood", "en")
+      required: [required("Bairro"), required("Neighborhood", en)]
     },
     cep: {
-      required: required("Postal code", "en")
+      required: [required("CEP"), required("Postal code", en)]
     },
     uf: {
-      required: required("UF", "en")
+      required: [required("UF"), required("UF", en)]
     },
     municipio: {
-      required: required("County", "en")
+      required: [required("Município"), required("County", en)]
     },
     descricaoAcesso: {
-      required: required("Access description", "en")
-    }
+      required: [
+        required("Descrição de acesso"),
+        required("Access description", en)
+      ]
+    },
+
+    modalidadePesca: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    localizacaoPreferencialPesca: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    rendaMensal: { required: [required("Este"), required("This", en)] },
+
+    diasPescaPorAno: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    gastoMedioPesca: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    faixaEtaria: { required: [required("Este"), required("This", en)] },
+
+    localPesca: { required: [required("Este"), required("This", en)] },
+
+    materialPesca: { required: [required("Este"), required("This", en)] },
+
+    tipoIsca: { required: [required("Este"), required("This", en)] },
+
+    modalidadeMaisPraticada: {
+      required: [required("Este"), required("This", en)]
+    },
+
+    agenciaTurismo: { required: [required("Este", required("This", en))] }
   }
 };
 
-export const PT_VALIDATION = {
-  validation: {
-    cpf: {
-      invalid: "Deve ser informado um CPF válido.",
-      required: required("CPF")
-    },
-    nome: {
-      required: required("Nome")
-    },
-    passaporte: {
-      required: required("Passaporte")
-    },
-    dataNascimento: {
-      required: required("Data de nascimento"),
-      past: "Data de nascimento não pode estar no futuro."
-    },
-    sexo: {
-      required: required("Sexo")
-    },
-    nomeMae: {
-      required: required("Nome da mãe")
-    },
-    email: {
-      required: required("Email"),
-      invalid: invalid("Email")
-    },
-    confirmarEmail: {
-      required: required("Confirmar email"),
-      check: "Campos de email não batem."
-    },
-    zonaLocalizacao: {
-      required: required("Zona de localização")
-    },
-    logradouro: {
-      required: required("Logradouro")
-    },
-    numero: {
-      vazio:
-        "Os campos 'Sem número' e 'Número' não podem ambos estar preenchidos ou vazios."
-    },
-    bairro: {
-      required: required("Bairro")
-    },
-    cep: {
-      required: required("CEP")
-    },
-    uf: {
-      required: required("UF")
-    },
-    municipio: {
-      required: required("Município")
-    },
-    descricaoAcesso: {
-      required: required("Descrição de acesso")
-    }
-  }
-};
+export const EN_VALIDATION = handleMessage(
+  VALIDATION,
+  Properties.LANGUAGE_INDEX.EN
+);
+
+export const PT_VALIDATION = handleMessage(
+  VALIDATION,
+  Properties.LANGUAGE_INDEX.PT_BR
+);
