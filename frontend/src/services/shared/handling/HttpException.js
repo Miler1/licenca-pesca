@@ -31,7 +31,6 @@ export const HttpException = {
  * @return {{message: (*|string)}}
  */
 function handleError(response, show) {
-  console.log("OI" + valid(response));
   if (valid(response)) {
     return generateMessage(response) !== null
       ? Exception({ message: generateMessage(response), show })

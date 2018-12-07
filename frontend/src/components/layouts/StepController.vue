@@ -2,11 +2,11 @@
 	#step-controller
 		.left
 			el-button(icon="el-icon-arrow-left" type="primary" plain @click="prevStep" v-if="!activeStep('IDENTIFICACAO')") {{ $t(`${registrar_prefix}steps.botoes.voltar`) }}
-			el-button(icon="el-icon-close") {{ $t(`${registrar_prefix}steps.botoes.cancelar`) }}
+			el-button(icon="el-icon-close" @click="cancelar") {{ $t(`${registrar_prefix}steps.botoes.cancelar`) }}
 		.center
 			h4.footer-label {{ $t(`${registrar_prefix}steps.label`, [step + 1, totalSteps]) }}
 		.right
-			el-button(icon="el-icon-check" type="primary" v-if="activeStep('RESUMO')") {{ $t(`${registrar_prefix}steps.botoes.concluir`) }}
+			el-button(icon="el-icon-check" type="primary" v-if="activeStep('RESUMO')" @click="concluir") {{ $t(`${registrar_prefix}steps.botoes.concluir`) }}
 			el-button(icon="el-icon-arrow-right" type="primary" @click="nextStep" v-if="!activeStep('RESUMO')") {{ $t(`${registrar_prefix}steps.botoes.proxima`) }}
 
 
@@ -43,6 +43,14 @@ export default {
 
     prevStep() {
       this.$emit("prevStep");
+    },
+
+    cancelar() {
+      this.$emit("cancelar");
+    },
+
+    concluir() {
+      this.$emit("concluir");
     }
   }
 };

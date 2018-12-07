@@ -37,7 +37,7 @@ export const mutations = {
   /**
    * Adiciona o erro à lista de erros.
    */
-  [SET_ERROR]: (state, error) => state.errors.add(error)
+  [SET_ERROR]: (state, error) => state.errors.push(error)
 };
 
 export default {

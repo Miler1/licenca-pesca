@@ -142,14 +142,13 @@ import Vue from "vue";
 import * as _ from "lodash";
 import { ZONA_LOCALIZACAO, SEXO } from "../../../../model/constantes";
 import { VISUALIZAR_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/identificacao/visualizar";
+import { translate } from "../../../../utils/helpers/internationalization";
 
 export default {
   name: "VisualizarDadosPessoa",
 
   props: {
-    pessoa: {
-      type: Object
-    }
+    pessoa: Object
   },
 
   data() {
@@ -172,16 +171,16 @@ export default {
         strDate.substring(6) // ano
       ];
 
-      return Vue.prototype.$translator.t("interface.geral.data", data);
+      return translate("interface.geral.data", data);
     },
 
     getZonaLocalizacao(localizacao) {
       if (localizacao === ZONA_LOCALIZACAO.URBANA) {
-        return Vue.prototype.$translator.t(
+        return translate(
           `${this.visualizar_prefix}dados.zonaLocalizacao.urbana`
         );
       } else if (localizacao === ZONA_LOCALIZACAO.RURAL) {
-        return Vue.prototype.$translator.t(
+        return translate(
           `${this.visualizar_prefix}dados.zonaLocalizacao.rural`
         );
       } else {
@@ -192,17 +191,11 @@ export default {
     getSexo(sexo) {
       switch (sexo) {
         case SEXO.MASCULINO:
-          return Vue.prototype.$translator.t(
-            `${this.visualizar_prefix}dados.genero.masculino`
-          );
+          return translate(`${this.visualizar_prefix}dados.genero.masculino`);
         case SEXO.FEMININO:
-          return Vue.prototype.$translator.t(
-            `${this.visualizar_prefix}dados.genero.feminino`
-          );
+          return translate(`${this.visualizar_prefix}dados.genero.feminino`);
         case SEXO.OUTROS:
-          return Vue.prototype.$translator.t(
-            `${this.visualizar_prefix}dados.genero.outros`
-          );
+          return translate(`${this.visualizar_prefix}dados.genero.outros`);
         default:
           return null;
       }

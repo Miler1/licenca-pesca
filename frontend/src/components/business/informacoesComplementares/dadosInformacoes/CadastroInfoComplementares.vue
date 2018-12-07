@@ -66,6 +66,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import {
   InformacoesComplementaresDTO,
   ModalidadeResource
@@ -92,6 +93,10 @@ export default {
   },
 
   methods: {
+    instantiate() {
+      Vue.prototype.$cadastroInfo = this;
+    },
+
     localizeField(field) {
       switch (this.$i18n.locale) {
         case "EN":
@@ -106,6 +111,10 @@ export default {
     changeToSelect(field) {
       return field.length > 4;
     }
+  },
+
+  created() {
+    this.instantiate();
   }
 };
 </script>

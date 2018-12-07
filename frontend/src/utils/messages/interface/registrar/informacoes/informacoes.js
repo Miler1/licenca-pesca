@@ -69,7 +69,16 @@ const INFORMACOES = {
         "Including means of transport, food, lodging, equipment and others. In Brazilian real.",
         "Incluyendo medios de transporte, alimentación, hospedaje, equipos y otros. En el Real brasileño."
       ]
-    }
+    },
+    titulos: {
+      informacoesComplementares: [
+        "Informações complementares",
+        "Additional information",
+        "Informaciones complementarias"
+      ]
+    },
+    dia: ["dia", "day", "día"],
+    naoInformado: ["Não informado", "Uninformed", "No informado"]
   }
 };
 

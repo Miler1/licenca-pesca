@@ -9,7 +9,7 @@ export const InformacoesComplementaresDTO = {
   materialPesca: null,
   tipoIsca: null,
   modalidadeMaisPraticada: null,
-  agenciaTurismo: false
+  agenciaTurismo: null
 };
 
 export const ModalidadeResource = {

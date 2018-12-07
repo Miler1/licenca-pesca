@@ -6,7 +6,7 @@ export const VISUALIZAR_MESSAGES_PREFIX =
 
 const VISUALIZAR = {
   visualizar: {
-    naoInformado: ["Não informado", "Not informed."],
+    naoInformado: ["Não informado", "Uninformed"],
     titulo: {
       dadosPessoais: ["Dados Pessoais", "Personal Data"],
       enderecoPrincipal: ["Endereço Principal", "Main Address"],

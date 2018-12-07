@@ -10,8 +10,7 @@ logging:
 spring:
 
   application:
-    name: Glide
-    version: @project.version@
+    name: Sistema de emissão de Licença de Pesca
 
   servlet:
     multipart:
@@ -45,9 +44,9 @@ spring:
 
   security:
     entradaUnica:
-      cliente-id: e8b569c50d179803cf304c5467ccfe756224fd57578af990155710332b25cc6230399ecbd9412ff38ef7ca59214d9443a5068418c068622e52a05302c9db7275
-      cliente-secret: 8eb5149338ee047990b563ee8538974713b17ae8a0e73ced0fba453702e9b8016f226393949ec264de6e2951fa6d75e46130ce6feff43d9344917403bc1c8c62
+      cliente-id: 669517306c170afbb057af56d8c7237d3bd7cc3c88abb6786b6288a670fb37acdac2125a78f36643069079427c735600c0fc1eb872322eb7a1b85eb30aa18e22
+      cliente-secret: 9aed47e0a741ba1e2f15db134e5aaf8fe2bcb67b714ff4be9bd64e7823af06526895b21a732218ad9867e85425e34e4f8e70297dd468dce69669f418d22a31ec
       portal-seguranca:
-        url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
+        url: http://java1.pa.ti.lemaf.ufla.br
       cadastro-unificado:
-        url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
+        url: http://java1.pa.ti.lemaf.ufla.br/cadastroUnificado

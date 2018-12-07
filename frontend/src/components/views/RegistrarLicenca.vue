@@ -9,8 +9,9 @@
 
 			identification-step(v-if="activeStep('IDENTIFICACAO')")
 			informacaoes-complementares-step(v-if="activeStep('INFORMACOES_COMPLEMENTARES')")
+			resumo-step(v-if="activeStep('RESUMO')")
 
-			step-controller(v-if="showStepsController" :step="step" @prevStep="prevStep" @nextStep="nextStep")
+			step-controller(v-if="showStepsController" :step="step" @prevStep="prevStep" @nextStep="nextStep" @concluir="concluir" @cancelar="cancelar")
 
 </template>
 
@@ -21,15 +22,19 @@ import { mapGetters } from "vuex";
 import Properties from "../../properties";
 import Card from "../layouts/Card";
 import InputElement from "../elements/InputElement";
+import ResumoStep from "../business/resumo/ResumoStep";
 import IdentificationStep from "../business/identificacao/IdentificacaoStep";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
 import StepController from "../layouts/StepController";
 import InformacaoesComplementaresStep from "../business/informacoesComplementares/informacoesComplementaresStep";
+import { translate } from "../../utils/helpers/internationalization";
+import { REGISTRAR } from "../../store/actions.type";
 
 export default {
   name: "RegistrarLicenca",
 
   components: {
+    ResumoStep,
     InformacaoesComplementaresStep,
     StepController,
     IdentificationStep,
@@ -50,9 +55,13 @@ export default {
 
   methods: {
     nextStep() {
-      if (this.checkValidation()) {
-        if (this.step++ >= 2) this.step = 2;
-      }
+      console.log(this.$cadastroPessoa);
+      console.log(this.$cadastroInfo);
+
+      if (this.step++ >= 2) this.step = 2;
+      // if (this.checkValidation()) {
+      //   if (this.step++ >= 2) this.step = 2;
+      // }
     },
 
     prevStep() {
@@ -68,7 +77,7 @@ export default {
       ) {
         this.$cadastro.$refs.pessoa.validate(v => {
           console.log(v);
-
+          isValid = v;
         });
       }
 
@@ -79,6 +88,38 @@ export default {
       const steps = Properties.STEPS;
 
       return this.step === steps[step];
+    },
+
+    concluir() {
+      this.$confirm(
+        translate(`${this.registrar_prefix}confirm.mensagem`),
+        translate(`${this.registrar_prefix}confirm.titulo`),
+        {
+          confirmButtonText: translate(
+            `${this.registrar_prefix}confirm.botoes.confirm`
+          ),
+          cancelButtonText: translate(
+            `${this.registrar_prefix}confirm.botoes.cancel`
+          )
+        }
+      )
+        .then(() => {
+          this.$store
+            .dispatch(REGISTRAR)
+            .then(() => {
+              this.$router.push("consultar");
+            })
+            .catch(() => {
+              // TODO
+            });
+        })
+        .catch(() => {
+          // DO nothing!
+        });
+    },
+
+    cancelar() {
+      // TODO
     }
   }
 };

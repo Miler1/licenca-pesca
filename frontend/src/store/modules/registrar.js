@@ -1,4 +1,6 @@
 import {
+  CADASTRAR_INFORMACOES_COMPLEMENTARES,
+  CADASTRAR_SOLICITANTE,
   SET_ERROR,
   SET_MODALIDADE_PESCA,
   SET_MUNICIPIOS,
@@ -7,7 +9,7 @@ import {
 import {
   FETCH_MODALIDADE_PESCA,
   FETCH_MUNICIPIOS,
-  FETCH_UFS
+  FETCH_UFS, REGISTRAR, SEND_INFORMACOES_COMPLEMENTARES, SEND_SOLICITANTE
 } from "../actions.type";
 import AcessoService from "../../services/AcessoService";
 import {
@@ -21,11 +23,13 @@ import {
   TIPO_ISCA_MOCK
 } from "../../utils/layout/mockData";
 import InformacoesComplementaresService from "../../services/InformacoesComplementaresService";
+import { Solicitante } from "../../model/Solicitante";
+import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 
 const INITIAL_STATE = {
   municipios: [],
   ufs: [],
-  informacoesComplementares: {
+  informacoesComplementaresResource: {
     modalidadePesca: MODALIDADE_PESCA_MOCK,
     localizacaoPreferencialPesca: LOCALIZACAO_PREF_PESCA_MOCK,
     rendaMensal: RENDA_MENSAL_MOCK,
@@ -35,6 +39,10 @@ const INITIAL_STATE = {
     tipoIsca: TIPO_ISCA_MOCK,
     modalidadeMaisPraticada: MODALIDADE_PESCA_MOCK,
     agenciaTurismo: AGENCIA_TURISMO_MOCK
+  },
+  registroResource: {
+    solicitante: Solicitante,
+    informacoesComplementares: InformacoesComplementaresDTO
   }
 };
 
@@ -59,7 +67,10 @@ export const getters = {
   /**
    * Retorna os dados das informacoes Complementares
    */
-  informacoesComplementaresResource: state => state.informacoesComplementares
+  informacoesComplementaresResource: state =>
+    state.informacoesComplementaresResource,
+
+  registroResource: state => state.registroResource
 };
 
 /**
@@ -70,6 +81,18 @@ export const getters = {
  * mutations.
  */
 export const actions = {
+  [REGISTRAR]: ({ commit }) => {
+
+  },
+
+  [SEND_SOLICITANTE]: ({ commit }, solicitante) => {
+    commit(CADASTRAR_SOLICITANTE, solicitante);
+  },
+
+  [SEND_INFORMACOES_COMPLEMENTARES]: ({ commit }, informacoesComplementares) => {
+    commit(CADASTRAR_INFORMACOES_COMPLEMENTARES, informacoesComplementares);
+  },
+
   /**
    * Busca a lista de municípios de determinado UF.
    *
@@ -124,7 +147,23 @@ export const mutations = {
   /**
    * Adiciona os UFs à state.
    */
-  [SET_UFS]: (state, ufs) => (state.ufs = ufs)
+  [SET_UFS]: (state, ufs) => (state.ufs = ufs),
+
+  /**
+   * Adiciona o solicitante à state.
+   *
+   * @param solicitante
+   */
+  [CADASTRAR_SOLICITANTE]: (state, solicitante) =>
+    (state.registroResource.solicitante = solicitante),
+
+  /**
+   * Adiciona as informações complementares à state.
+   *
+   * @param informacoesComplementares
+   */
+  [CADASTRAR_INFORMACOES_COMPLEMENTARES]: (state, informacoesComplementares) =>
+    (state.registroResource.informacoesComplementares = informacoesComplementares)
 };
 
 export default {

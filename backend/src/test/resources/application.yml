@@ -10,7 +10,7 @@ logging:
 spring:
 
   application:
-    name: Glide
+    name: Sistema de emissão de Licença de Pesca
 
   servlet:
     multipart:
@@ -43,8 +43,8 @@ spring:
 
   security:
     entradaUnica:
-      cliente-id: e8b569c50d179803cf304c5467ccfe756224fd57578af990155710332b25cc6230399ecbd9412ff38ef7ca59214d9443a5068418c068622e52a05302c9db7275
-      cliente-secret: 8eb5149338ee047990b563ee8538974713b17ae8a0e73ced0fba453702e9b8016f226393949ec264de6e2951fa6d75e46130ce6feff43d9344917403bc1c8c62
+      cliente-id: 88a34a2c9cd2c33d975f5f9b8600fa351f1c46c1f6b4d8f82b652cb3adf7e3652fbd112a88681aafe4619f6db005ae92362e8859c2002d65d96cee1ee1a9f4ec
+      cliente-secret: 95ec64e7efd212d17e3cdee01e2166eb364bd37696a1fefebbefa72986b0fcede00cbe83db765706bd890f8ae22bfcca5cabc340af2a8041c7519ff0247a18ea
       portal-seguranca:
         url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
       cadastro-unificado:

@@ -10,8 +10,7 @@ logging:
 spring:
 
   application:
-    name: Glide
-    version: @project.version@
+    name: Sistema de emissão de Licença de Pesca
 
   servlet:
     multipart:

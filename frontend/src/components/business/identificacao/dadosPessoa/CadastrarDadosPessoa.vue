@@ -185,7 +185,7 @@ export default {
   },
   methods: {
     instantiate() {
-      Vue.prototype.$cadastro = this;
+      Vue.prototype.$cadastroPessoa = this;
     },
     isEPUrbano() {
       return (
