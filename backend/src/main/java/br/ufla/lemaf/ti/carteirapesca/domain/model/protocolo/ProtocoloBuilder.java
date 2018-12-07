@@ -45,7 +45,13 @@ class ProtocoloBuilder {
 	 * @return O Protocolo
 	 */
 	String gerarProtocolo(final Modalidade modalidade) {
+		System.out.println("Construindo Protocolo da modalidade " + modalidade);
 
+		System.out.println(construirEtapaModalidade(modalidade)
+			+ DIVISOR_PRIMEIRA_PARTE
+			+ construirEtapaSequence(modalidade)
+			+ DIVISOR_SEGUNDA_PARTE
+			+ construirEtapaAno());
 		return construirEtapaModalidade(modalidade)
 			+ DIVISOR_PRIMEIRA_PARTE
 			+ construirEtapaSequence(modalidade)
@@ -63,6 +69,7 @@ class ProtocoloBuilder {
 	 * @return String com a primeira parte do código do protocolo
 	 */
 	private static String construirEtapaModalidade(final Modalidade modalidade) {
+		System.out.println("Etapa 1");
 
 		switch (modalidade) {
 			case ESPORTIVA:
@@ -84,6 +91,7 @@ class ProtocoloBuilder {
 	 * @return String contendo a sequencia
 	 */
 	private String construirEtapaSequence(final Modalidade modalidade) {
+		System.out.println("Etapa 2");
 
 		return generateSequenceString(incrementOrResetSequence(modalidade));
 
@@ -98,6 +106,7 @@ class ProtocoloBuilder {
 	 * @return String contendo os dois últimos dígitos do ano
 	 */
 	private static String construirEtapaAno() {
+		System.out.println("Etapa 3");
 		var thisYear = DateUtils.getThisYear() + "";
 
 		return thisYear.substring(2);

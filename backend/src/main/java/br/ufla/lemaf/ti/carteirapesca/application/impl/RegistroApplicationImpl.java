@@ -11,6 +11,7 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.stereotype.Service;
@@ -35,12 +36,16 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 */
 	@Override
 	public Protocolo registrar(final RegistroResource resource) {
-		cadastrarPessoa(resource.getPessoa());
+//		cadastrarPessoa(resource.getPessoa());
 
-		var solicitante = new Solicitante(
-			new CPF(resource.getPessoa().getCpf()),
-			new Passaporte(resource.getPessoa().getPassaporte())
-		);
+		var cpf = !Validate.isNull(resource.getPessoa().getCpf())
+			? new CPF(resource.getPessoa().getCpf())
+			: null;
+		var passaporte = !Validate.isNull(resource.getPessoa().getPassaporte())
+			? new Passaporte(resource.getPessoa().getPassaporte())
+			: null;
+
+		var solicitante = new Solicitante(cpf, passaporte);
 
 		var modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidade());
 		var protocolo = new Protocolo(modalidade);
