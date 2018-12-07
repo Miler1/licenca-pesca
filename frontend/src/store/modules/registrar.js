@@ -1,5 +1,14 @@
-import { SET_ERROR, SET_MUNICIPIOS, SET_UFS } from "../mutations.type";
-import { FETCH_MUNICIPIOS, FETCH_UFS } from "../actions.type";
+import {
+  SET_ERROR,
+  SET_MODALIDADE_PESCA,
+  SET_MUNICIPIOS,
+  SET_UFS
+} from "../mutations.type";
+import {
+  FETCH_MODALIDADE_PESCA,
+  FETCH_MUNICIPIOS,
+  FETCH_UFS
+} from "../actions.type";
 import AcessoService from "../../services/AcessoService";
 import {
   AGENCIA_TURISMO_MOCK,
@@ -11,6 +20,7 @@ import {
   RENDA_MENSAL_MOCK,
   TIPO_ISCA_MOCK
 } from "../../utils/layout/mockData";
+import InformacoesComplementaresService from "../../services/InformacoesComplementaresService";
 
 const INITIAL_STATE = {
   municipios: [],
@@ -82,6 +92,16 @@ export const actions = {
     AcessoService.fetchUfs()
       .then(({ data }) => {
         commit(SET_UFS, data);
+      })
+      .catch(error => {
+        commit(SET_ERROR, error);
+      });
+  },
+
+  [FETCH_MODALIDADE_PESCA]: ({ commit }) => {
+    InformacoesComplementaresService.fetchModalidadePesca()
+      .then(({ data }) => {
+        commit(SET_MODALIDADE_PESCA, data);
       })
       .catch(error => {
         commit(SET_ERROR, error);
