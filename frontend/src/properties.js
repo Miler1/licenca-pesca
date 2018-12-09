@@ -1,3 +1,11 @@
+const handleEnvironment = (devProperty, prodProperty) => {
+  if (process.env.NODE_ENV !== "production") {
+    return devProperty;
+  } else {
+    return prodProperty;
+  }
+};
+
 /**
  * Configurações base da aplicação.
  *
@@ -13,7 +21,9 @@ const Properties = {
   LANGUAGE_INDEX: {
     PT_BR: 0,
     EN: 1
-  }
+  },
+  BASE_URL: handleEnvironment("http://localhost:9666", ""),
+  IBGE_API: "https://servicodados.ibge.gov.br/api/v1/localidades"
 };
 
 export default Properties;

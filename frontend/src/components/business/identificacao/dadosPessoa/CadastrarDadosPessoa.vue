@@ -97,13 +97,13 @@
 
 				el-col(:span="3")
 					el-form-item(:label="$t(`${cadastrar_prefix}labels.uf`)" prop="enderecoPrincipal.uf")
-						el-select(v-model="pessoa.enderecoPrincipal.uf" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-							el-option(v-for="uf in ufs" :key="uf.cod" :value="uf.sigla" :label="uf.sigla")
+						el-select(v-model="pessoa.enderecoPrincipal.uf" :loading="ufSelectLoader" @change="fetchMunicipiosEnderecoPrincial"  :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
+							el-option(v-for="uf in ufs" :key="uf.id" :value="uf.id" :label="uf.sigla")
 
 				el-col(:span="6")
 					el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoPrincipal.municipio")
-						el-select(v-model="pessoa.enderecoPrincipal.municipio" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-							el-option(v-for="municipios in municipios" :key="municipios.id" :value="municipios.label" :label="municipios.label")
+						el-select(v-model="pessoa.enderecoPrincipal.municipio" :loading="municipioSelectLoader" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
+							el-option(v-for="municipios in municipios" :key="municipios.id" :value="municipios.id" :label="municipios.nome")
 
 			el-row(:gutter="20" v-if="!isEPUrbano()")
 
@@ -149,13 +149,13 @@
 
 					el-col(:span="3")
 						el-form-item(:label="$t(`${cadastrar_prefix}labels.uf`)" prop="enderecoCorrespondencia.uf")
-							el-select(v-model="pessoa.enderecoCorrespondencia.uf" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-								el-option(v-for="uf in ufs" :key="uf.cod" :value="uf.sigla" :label="uf.sigla")
+							el-select(v-model="pessoa.enderecoCorrespondencia.uf" :loading="ufSelectLoader" @change="fetchMunicipiosEnderecoCorrespondencia" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
+								el-option(v-for="uf in ufs" :key="uf.id" :value="uf.id" :label="uf.sigla")
 
 					el-col(:span="6")
 						el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoCorrespondencia.municipio")
-							el-select(v-model="pessoa.enderecoCorrespondencia.municipio" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-								el-option(v-for="municipios in municipios" :key="municipios.id" :value="municipios.label" :label="municipios.label")
+							el-select(v-model="pessoa.enderecoCorrespondencia.municipio" :loading="municipioSelectLoader" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
+								el-option(v-for="municipios in municipios" :key="municipios.id" :value="municipios.id" :label="municipios.nome")
 
 </template>
 
@@ -167,6 +167,7 @@ import { PessoaDTO, ZonaLocalizacaoDTO } from "../../../../model/PessoaDTO";
 import { PESSOA_RULES } from "../../../../utils/validations/pessoa/pessoa_rules";
 import { GENERO_OPTIONS } from "../../../../utils/layout/selectOptions";
 import { CADASTRO_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/identificacao/cadastro";
+import { FETCH_MUNICIPIOS, FETCH_UFS } from "../../../../store/actions.type";
 
 export default {
   name: "CadastrarDadosPessoa",
@@ -177,7 +178,9 @@ export default {
       zonaLocalizacao: ZonaLocalizacaoDTO,
       pessoaRules: PESSOA_RULES,
       genero_options: GENERO_OPTIONS,
-      cadastrar_prefix: CADASTRO_MESSAGES_PREFIX
+      cadastrar_prefix: CADASTRO_MESSAGES_PREFIX,
+      municipioSelectLoader: true,
+      ufSelectLoader: true
     };
   },
   computed: {
@@ -192,10 +195,34 @@ export default {
         this.pessoa.enderecoPrincipal.zonaLocalizacao ===
         this.zonaLocalizacao.urbana
       );
+    },
+    fetchUfs() {
+      this.ufSelectLoader = true;
+      this.$store
+        .dispatch(FETCH_UFS)
+        .finally(() => (this.ufSelectLoader = false));
+    },
+    fetchMunicipiosEnderecoPrincial(uf) {
+      this.municipioSelectLoader = true;
+      this.pessoa.enderecoPrincipal.municipio = null;
+      if (uf !== null)
+        this.$store
+          .dispatch(FETCH_MUNICIPIOS, uf)
+          .finally(() => (this.municipioSelectLoader = false));
+    },
+
+    fetchMunicipiosEnderecoCorrespondencia(uf) {
+      this.municipioSelectLoader = true;
+      this.pessoa.enderecoCorrespondencia.municipio = null;
+      if (uf !== null)
+        this.$store
+          .dispatch(FETCH_MUNICIPIOS, uf)
+          .finally(() => (this.municipioSelectLoader = false));
     }
   },
   created() {
     this.instantiate();
+    this.fetchUfs();
   }
 };
 </script>

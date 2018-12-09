@@ -1,5 +1,5 @@
 import { ACESSAR } from "../actions.type";
-import { Solicitante } from "../../model/Solicitante";
+import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE } from "../mutations.type";
 
 import AcessoService from "../../services/AcessoService";
@@ -77,7 +77,9 @@ export const mutations = {
    *
    * @param solicitante O solicitante do acesso
    */
-  [SET_SOLICITANTE]: (state, solicitante) => (state.solicitante = solicitante),
+  [SET_SOLICITANTE]: (state, solicitante) => {
+    state.solicitante = toSolicitanteDTO(solicitante);
+  },
 
   /**
    * Verifica se será necessário cadastrar o usuário.

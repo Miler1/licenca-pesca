@@ -1,3 +1,4 @@
+import Properties from "../properties";
 import ApiService from "./shared/ApiService";
 
 const AcessoService = {
@@ -9,17 +10,19 @@ const AcessoService = {
    * positivo, e trazendo um objeto PessoaDTO vazio em
    * caso negativo.
    */
-  acessar: acessoResource => ApiService.post("/api/acessar", acessoResource),
+  acessar: acessoResource =>
+    ApiService.post(`${Properties.BASE_URL}/api/acessar`, acessoResource),
 
   /**
    * Serviço que busca os munícípios de cada UF.
    */
-  fetchMunicipios: uf => ApiService.get("api/municipios", uf),
+  fetchMunicipios: uf =>
+    ApiService.get(`${Properties.IBGE_API}/estados/${uf}/municipios`),
 
   /**
    * Serviço que busca os UFs.
    */
-  fetchUfs: () => ApiService.get("api/ufs")
+  fetchUfs: () => ApiService.get(`${Properties.IBGE_API}/estados`)
 };
 
 export default AcessoService;

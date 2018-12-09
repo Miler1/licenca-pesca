@@ -115,11 +115,14 @@ public class AcessoApplicationImpl implements AcessoApplication {
 	 */
 	private static Boolean existeUsuario(final CPF cpf) {
 
-		WebServiceUtils.validarWebService();
+//		WebServiceUtils.validarWebService();
 
-		return CadastroUnificadoService
-			.webService()
-			.existeUsuario(cpf.getNumero());
+//		return CadastroUnificadoService
+//			.webService()
+//			.existeUsuario(cpf.getNumero());
+
+		// Mock para teste
+		return false;
 
 	}
 
@@ -149,8 +152,6 @@ public class AcessoApplicationImpl implements AcessoApplication {
 	 * base de dados.
 	 */
 	private static Boolean existeUsuario(final Passaporte passaporte) {
-
-		WebServiceUtils.validarWebService();
 
 		throw new NotImplementedException();
 

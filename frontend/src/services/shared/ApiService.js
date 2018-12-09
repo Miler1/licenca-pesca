@@ -17,7 +17,6 @@ const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
     this.setHeader();
-    Vue.axios.defaults.baseURL = "http://localhost:9666";
   },
 
   /**

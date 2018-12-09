@@ -81,9 +81,7 @@ export const getters = {
  * mutations.
  */
 export const actions = {
-  [REGISTRAR]: ({ commit }) => {
-
-  },
+  [REGISTRAR]: ({ commit }) => {},
 
   [SEND_SOLICITANTE]: ({ commit }, solicitante) => {
     commit(CADASTRAR_SOLICITANTE, solicitante);
