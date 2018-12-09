@@ -2,11 +2,12 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.NoArgsConstructor;
 import lombok.var;
 import org.apache.commons.lang3.Validate;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,19 +21,29 @@ import java.util.GregorianCalendar;
  * possui um status de condição, {@link Status}.
  */
 @NoArgsConstructor
+@javax.persistence.Entity
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "licenca")
 public class Licenca implements Entity<Licenca, Protocolo> {
 
 	// Anos para a licença vencer após ativada
 	private static final Integer ANOS_VENCIMENTO_LICENCA = 1;
 
+	@JoinColumn(name = "idt_protocolo")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Protocolo protocolo;
 
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name = "idt_modalidade")
 	private Modalidade modalidade;
 
+	@Column(name = "dat_criacao")
 	private Date dataCriacao;
 
+	@Column(name = "idt_status")
+	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
+	@Column(name = "dat_ativacao")
 	private Date dataAtivacao;
 
 	/**
@@ -50,7 +61,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		try {
 			Validate.notNull(protocolo);
 			Validate.notNull(modalidade);
-			Validate.isTrue(protocolo.modalidade().sameValueAs(modalidade));
+			// Validate.isTrue(protocolo.modalidade().sameValueAs(modalidade));
 
 			this.protocolo = protocolo;
 			this.modalidade = modalidade;
@@ -158,5 +169,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	// Surrugate key para o Hibernate
 	@Id
 	@SuppressWarnings("unused")
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 }

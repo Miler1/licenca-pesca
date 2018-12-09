@@ -23,7 +23,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "protocolo_sequence", schema = Constants.SCHEMA_CARTEIRA_PESCA)
-final class Sequence implements ValueObject<Sequence> {
+public final class Sequence implements ValueObject<Sequence> {
 
 	private static final Integer MAX_SEQUENCE_LENGTH = 9999;
 
@@ -43,14 +43,14 @@ final class Sequence implements ValueObject<Sequence> {
 	/**
 	 * Incrementa a sequência.
 	 */
-	void incremente() {
+	public void incremente() {
 		this.valor++;
 	}
 
 	/**
 	 * Reseta a sequência.
 	 */
-	void reset() {
+	public void reset() {
 		this.valor = 0;
 
 		this.year = DateUtils.getThisYear();
@@ -59,7 +59,7 @@ final class Sequence implements ValueObject<Sequence> {
 	/**
 	 * Valida se o número de sequência é válido.
 	 */
-	void validate() {
+	public void validate() {
 		if (this.valor > MAX_SEQUENCE_LENGTH)
 			throw new ProtocoloException("protocolo.sequence.max");
 	}
@@ -74,6 +74,6 @@ final class Sequence implements ValueObject<Sequence> {
 
 	// Surrogate key
 	@Id
-	Integer id;
+	private Integer id;
 
 }

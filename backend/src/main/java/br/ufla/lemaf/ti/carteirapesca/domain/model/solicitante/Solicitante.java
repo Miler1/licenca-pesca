@@ -4,10 +4,11 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.NoArgsConstructor;
 import lombok.val;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +20,16 @@ import java.util.List;
  * @since 1.0
  */
 @NoArgsConstructor
+@javax.persistence.Entity
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "solicitante")
 public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
+	@JoinColumn(name = "idt_solicitante_id")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private SolicitanteId identity;
 
+	@JoinColumn(name = "idt_solicitante")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Licenca> licencas = new ArrayList<>();
 
 	/**
@@ -99,7 +106,8 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	// Surrugate key para o Hibernate
 	@Id
 	@SuppressWarnings("unused")
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	/**
 	 * Factory de SolicitanteId.

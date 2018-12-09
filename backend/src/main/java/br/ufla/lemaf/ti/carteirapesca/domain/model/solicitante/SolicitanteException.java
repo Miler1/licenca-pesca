@@ -16,7 +16,7 @@ public class SolicitanteException extends BaseException {
 	 * @param messageKey  Código da mensagem
 	 * @param messageArgs Argumentos da mensagem.
 	 */
-	SolicitanteException(String messageKey, Object... messageArgs) {
+	public SolicitanteException(String messageKey, Object... messageArgs) {
 		super(messageKey, messageArgs);
 	}
 

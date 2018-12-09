@@ -1,18 +1,22 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo;
+package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.ProtocoloException;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Sequence;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.SequenceRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
 import lombok.var;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Fábrica de Protocolo.
- *
- * @author Highlander Paiva
- * @since 1.0
- */
-class ProtocoloBuilder {
+@Service
+@Transactional
+public class ProtocoloBuilderImpl implements ProtocoloBuilder {
+
+	private SequenceRepository repository;
 
 	private static final Integer SEQUENCE_PADDING = 4;
 
@@ -25,41 +29,21 @@ class ProtocoloBuilder {
 	private static final String PREFIX_RECREATIVA = "LPR";
 
 	@Autowired
-	private SequenceRepository repository;
+	public ProtocoloBuilderImpl(SequenceRepository sequenceRepository) {
+		this.repository = sequenceRepository;
+	}
 
 	/**
-	 * Gerador de protocolo. Cria o protocolo
-	 * seguindo o modelo em regra:
-	 * <p>
-	 * <b>LPX-9999/AA</b>
-	 * <ul>
-	 *   <li>
-	 *     <i>LPX: </i>Prefixo que informa a modalidade.
-	 *     <i>(Licença Pesca X, no qual X pode ser E, esportiva, ou R, recreativa)</i>
-	 *   </li>
-	 *   <li><i>9999: </i>A sequência da modalidade, sendo resetada a cada ano.</li>
-	 *   <li><i>AA: </i>Os ultimos dois digitos do ano.</li>
-	 * </ul>
-	 *
-	 * @param modalidade A modalidade da licença
-	 * @return O Protocolo
+	 * {@inheritDoc}
 	 */
-	String gerarProtocolo(final Modalidade modalidade) {
-		System.out.println("Construindo Protocolo da modalidade " + modalidade);
-
-		System.out.println(construirEtapaModalidade(modalidade)
-			+ DIVISOR_PRIMEIRA_PARTE
-			+ construirEtapaSequence(modalidade)
-			+ DIVISOR_SEGUNDA_PARTE
-			+ construirEtapaAno());
+	@Override
+	public String gerarProtocolo(Modalidade modalidade) {
 		return construirEtapaModalidade(modalidade)
 			+ DIVISOR_PRIMEIRA_PARTE
 			+ construirEtapaSequence(modalidade)
 			+ DIVISOR_SEGUNDA_PARTE
 			+ construirEtapaAno();
-
 	}
-
 	/**
 	 * Constrói a string com o prefixo do protocolo.
 	 * <p>
@@ -69,7 +53,6 @@ class ProtocoloBuilder {
 	 * @return String com a primeira parte do código do protocolo
 	 */
 	private static String construirEtapaModalidade(final Modalidade modalidade) {
-		System.out.println("Etapa 1");
 
 		switch (modalidade) {
 			case ESPORTIVA:
@@ -82,6 +65,7 @@ class ProtocoloBuilder {
 
 	}
 
+
 	/**
 	 * Constrói a segunda parte do protocolo, com o sequencial.
 	 * <p>
@@ -91,7 +75,6 @@ class ProtocoloBuilder {
 	 * @return String contendo a sequencia
 	 */
 	private String construirEtapaSequence(final Modalidade modalidade) {
-		System.out.println("Etapa 2");
 
 		return generateSequenceString(incrementOrResetSequence(modalidade));
 
@@ -106,7 +89,6 @@ class ProtocoloBuilder {
 	 * @return String contendo os dois últimos dígitos do ano
 	 */
 	private static String construirEtapaAno() {
-		System.out.println("Etapa 3");
 		var thisYear = DateUtils.getThisYear() + "";
 
 		return thisYear.substring(2);
@@ -149,9 +131,9 @@ class ProtocoloBuilder {
 
 		return StringUtils.leftPad(
 			sequence.getValor().toString(),
-			SEQUENCE_PADDING
+			SEQUENCE_PADDING,
+			"0"
 		);
 
 	}
-
 }

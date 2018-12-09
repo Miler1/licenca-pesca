@@ -2,11 +2,12 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.val;
 import org.apache.commons.lang3.Validate;
 
+import javax.persistence.*;
 import java.util.regex.Pattern;
 
 import static br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade.*;
@@ -18,9 +19,12 @@ import static br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade.*;
  * @since 1.0
  */
 @Getter
+@Entity
 @NoArgsConstructor
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "protocolo")
 public final class Protocolo extends ValueObjectBase<Protocolo> {
 
+	@Column(name = "val_codigo")
 	private String codigo;
 
 	/**
@@ -51,14 +55,11 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 * AA = ano
 	 * <b>Ex.:</b> LPR-0001/18
 	 *
-	 * @param modalidade O código do protocolo.
+	 * @param protocolo O código do protocolo.
 	 */
-	public Protocolo(Modalidade modalidade) {
+	public Protocolo(String protocolo) {
 
 		try {
-
-			val factory = new ProtocoloBuilder();
-			val protocolo = factory.gerarProtocolo(modalidade);
 
 			Validate.notNull(protocolo);
 			Validate.isTrue(VALID_PATTERN.matcher(protocolo).matches());
@@ -67,7 +68,7 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 
 		} catch (NullPointerException | IllegalArgumentException ex) {
 
-			throw new ProtocoloException("protocolo.invalido", codigo);
+			throw new ProtocoloException("protocolo.invalido", protocolo);
 
 		}
 
@@ -112,5 +113,11 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	public int hashCode() {
 		return super.hashCode();
 	}
+
+	// Surrugate key para o Hibernate
+	@Id
+	@SuppressWarnings("unused")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 }
