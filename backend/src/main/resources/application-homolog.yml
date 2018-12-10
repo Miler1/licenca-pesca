@@ -1,7 +1,7 @@
 server:
   port: 9600
-  servlet:
-    context-path: /carteira-pesca
+#  servlet:
+#    context-path: /carteira-pesca
 
 logging:
   level:
@@ -37,3 +37,12 @@ spring:
   jackson:
     time-zone: UTC
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+
+  security:
+    entradaUnica:
+      client-id: 039fe0a516e31a97f6f2c690d98b3b6a3324cf057d60be170f4777f518240f40459c3fdf7dcfa4f2afb6a1a7c08f54630f4bdc412daabbb2b9486487a7c4817f
+      client-secret: ffc787cec6a87111f4aa5bbde635988da4dc50ff0a24a231767935b8a9d55164944564c5b191b558eab04fa126280cc8fc4d80878774b4f2736bda5d6273f52f
+      portal-seguranca:
+        url: http://homologacao.ipaam.lemaf.com.br/homolog/portalSeguranca
+      cadastro-unificado:
+        url: http://homologacao.ipaam.lemaf.com.br/homolog/cadastroUnificado

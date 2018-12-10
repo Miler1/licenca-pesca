@@ -15,5 +15,6 @@ module.exports = {
   // Mudando rota do build para ser compatível com o Maven
   // ver https://cli.vuejs.org/config/
   outputDir: "target/dist",
-  assetsDir: "static"
+  assetsDir: "static",
+  baseUrl: process.env.NODE_ENV === 'production' ? '/carteira-pesca/' : '/'
 };

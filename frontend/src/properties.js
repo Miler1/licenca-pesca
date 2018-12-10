@@ -22,7 +22,7 @@ const Properties = {
     PT_BR: 0,
     EN: 1
   },
-  BASE_URL: handleEnvironment("http://localhost:9666", ""),
+  BASE_URL: handleEnvironment("http://localhost:9666", "http://homologacao.ipaam.lemaf.com.br/carteira-pesca"),
   IBGE_API: "https://servicodados.ibge.gov.br/api/v1/localidades"
 };
 

@@ -6,10 +6,10 @@
     <artifactId>backend</artifactId>
 	<packaging>jar</packaging>
 
-    <parent>
+  <parent>
 		<groupId>br.ufla.lemaf.ti</groupId>
 		<artifactId>carteira-pesca</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 	</parent>
 
     <properties>
