@@ -1,12 +1,20 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices;
 
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import lombok.extern.slf4j.Slf4j;
+import main.java.br.ufla.lemaf.beans.Message;
+import main.java.br.ufla.lemaf.beans.pessoa.Estado;
+import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
+import main.java.br.ufla.lemaf.beans.pessoa.Pais;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 /**
  * Web Service do Entrada Unica.
@@ -134,5 +142,26 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 
 	}
 
+	/**
+	 * Cadastra uma pessoa no Entrada Única
+	 * @param pessoa
+	 * @return
+	 */
+	public Message cadastrarPessoa(PessoaDTO pessoa) {
+
+		// Busca o município do EU pelo código do IBGE
+		Pais[] paisesEU = this.buscarPaises();
+		ArrayList<Pais> paisBrasil = (ArrayList<Pais>) Arrays.asList(paisesEU).stream().filter(pais -> pais.nome.equals("Brasil")).collect(Collectors.toList());
+
+		Estado[] estadosEU = this.buscarEstados(paisBrasil.get(0).id);
+		// TODO - Modificar a sigla do estado após terminar os testes e apresentação.
+		ArrayList<Estado> estadoSelecionado = (ArrayList<Estado>) Arrays.asList(estadosEU).stream().filter(estado -> estado.sigla.equals("PA")).collect(Collectors.toList());
+
+		Municipio[] municipiosEU = this.buscarMunicipio(estadoSelecionado.get(0).id);
+
+		Pessoa pessoaEU = pessoa.toPessoaEU(municipiosEU);
+
+		return this.cadastrarPessoaFisica(pessoaEU);
+	}
 
 }

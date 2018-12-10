@@ -34,4 +34,8 @@ public class WebServiceUtils {
 
 	}
 
+	public CadastroUnificadoService webService() {
+		return CadastroUnificadoService.webService();
+	}
+
 }

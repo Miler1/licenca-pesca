@@ -13,6 +13,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplemented
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,12 +93,9 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 */
 	private void cadastrarPessoa(PessoaDTO pessoa) {
 
-		// TODO Construir Objeto Pessoa
-
 		WebServiceUtils.validarWebService();
 
-		throw new NotImplementedException();
-
+		WebServiceUtils.webService().cadastrarPessoa(pessoa);
 	}
 
 	/**
@@ -150,7 +148,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		if (solicitante == null) {
 			solicitante = new Solicitante(cpf, passaporte);
-			// cadastrarPessoa(resource.getPessoa());
+			cadastrarPessoa(resource.getPessoa());
 		}
 
 		return solicitante;
