@@ -1,3 +1,9 @@
+const SexoDTO = {
+  0: "M",
+  1: "F",
+  2: "O"
+};
+
 export const Solicitante = {
   estrangeiro: null,
   nome: null,
@@ -10,7 +16,7 @@ export const Solicitante = {
   enderecoPrincipal: {
     tipo: null,
     zonaLocalizacao: null,
-    semNumero: null,
+    semNumero: false,
     logradouro: null,
     numero: null,
     bairro: null,
@@ -23,7 +29,7 @@ export const Solicitante = {
   enderecoCorrespondencia: {
     tipo: null,
     zonaLocalizacao: null,
-    semNumero: null,
+    semNumero: false,
     logradouro: null,
     numero: null,
     bairro: null,
@@ -37,12 +43,13 @@ export const Solicitante = {
 
 export const toSolicitanteDTO = solicitante => {
   return {
-    estrangeiro: solicitante.estrangeiro,
+    estrangeiro:
+      solicitante.estrangeiro === null ? false : solicitante.estrangeiro,
     nome: solicitante.nome,
     cpf: solicitante.cpf,
     passaporte: solicitante.passaporte,
-    dataNascimento: solicitante.dataNascimento,
-    sexo: solicitante.sexo,
+    dataNascimento: deserializarData(solicitante.dataNascimento),
+    sexo: toSexoDTO(solicitante.sexo),
     nomeMae: solicitante.nomeMae,
     email: solicitante.email,
     enderecoPrincipal: toEndereco(solicitante.enderecoPrincipal),
@@ -55,7 +62,7 @@ const toEndereco = endereco => {
     return {
       tipo: null,
       zonaLocalizacao: null,
-      semNumero: null,
+      semNumero: false,
       logradouro: null,
       numero: null,
       bairro: null,
@@ -70,7 +77,7 @@ const toEndereco = endereco => {
   return {
     tipo: endereco.tipo,
     zonaLocalizacao: endereco.zonaLocalizacao,
-    semNumero: endereco.semNumero,
+    semNumero: endereco.semNumero == null ? false : endereco.semNumero,
     logradouro: endereco.logradouro,
     numero: endereco.numero,
     bairro: endereco.bairro,
@@ -80,4 +87,12 @@ const toEndereco = endereco => {
     municipio: endereco.municipio,
     descricaoAcesso: endereco.descricaoAcesso
   };
+};
+
+const toSexoDTO = sexo => SexoDTO[sexo];
+
+const deserializarData = data => {
+  let date = new Date(data);
+
+  return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
 };

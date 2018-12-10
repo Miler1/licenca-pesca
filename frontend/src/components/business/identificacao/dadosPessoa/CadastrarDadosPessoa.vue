@@ -167,7 +167,11 @@ import { PessoaDTO, ZonaLocalizacaoDTO } from "../../../../model/PessoaDTO";
 import { PESSOA_RULES } from "../../../../utils/validations/pessoa/pessoa_rules";
 import { GENERO_OPTIONS } from "../../../../utils/layout/selectOptions";
 import { CADASTRO_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/identificacao/cadastro";
-import { FETCH_MUNICIPIOS, FETCH_UFS } from "../../../../store/actions.type";
+import {
+  FETCH_MUNICIPIOS,
+  FETCH_UFS,
+  SEND_SOLICITANTE
+} from "../../../../store/actions.type";
 
 export default {
   name: "CadastrarDadosPessoa",
@@ -223,6 +227,10 @@ export default {
   created() {
     this.instantiate();
     this.fetchUfs();
+  },
+
+  beforeDestroy() {
+    this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
   }
 };
 </script>

@@ -1,7 +1,7 @@
 export const SexoDTO = {
   masculino: 0,
   feminino: 1,
-  outros: 3
+  outros: 2
 };
 
 export const ZonaLocalizacaoDTO = {

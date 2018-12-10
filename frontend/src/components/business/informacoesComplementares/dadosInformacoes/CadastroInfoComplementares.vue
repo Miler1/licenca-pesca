@@ -8,7 +8,7 @@
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)" prop="modalidadePesca")
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePesca`) }}
-						info-select(@value="informacoesComplementares.modalidadePesca = $event" :list="informacoesComplementaresResource.modalidadePesca")
+						info-select(@value="informacoesComplementares.modalidade = $event" :list="informacoesComplementaresResource.modalidadePesca")
 
 				el-col(:span="24")
 
@@ -75,6 +75,7 @@ import { mapGetters } from "vuex";
 import InfoSelect from "../../../elements/InfoSelect";
 import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registrar/informacoes/informacoes";
 import { INFORMACOES_RULES } from "../../../../utils/validations/informacoes/informacoes_rules";
+import { SEND_INFORMACOES_COMPLEMENTARES } from "../../../../store/actions.type";
 
 export default {
   name: "CadastroInfoComplementares",
@@ -115,6 +116,13 @@ export default {
 
   created() {
     this.instantiate();
+  },
+
+  beforeDestroy() {
+    this.$store.dispatch(
+      SEND_INFORMACOES_COMPLEMENTARES,
+      this.informacoesComplementares
+    );
   }
 };
 </script>
