@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +54,7 @@ public class RegistroController {
 	 * @return {@link ProtocoloDTO} em forma
 	 * de {@link ResponseEntity}
 	 */
+	@CrossOrigin("*")
 	@PostMapping("/registrar")
 	public ResponseEntity<ProtocoloDTO> registrar(
 		@RequestBody final RegistroResource registroResource) {

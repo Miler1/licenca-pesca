@@ -16,19 +16,17 @@
 </template>
 
 <script>
-import * as _ from "lodash";
 import { mapGetters } from "vuex";
-
-import Properties from "../../properties";
 import Card from "../layouts/Card";
+import Properties from "../../properties";
 import InputElement from "../elements/InputElement";
+import { REGISTRAR } from "../../store/actions.type";
+import StepController from "../layouts/StepController";
 import ResumoStep from "../business/resumo/ResumoStep";
+import { translate } from "../../utils/helpers/internationalization";
 import IdentificationStep from "../business/identificacao/IdentificacaoStep";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
-import StepController from "../layouts/StepController";
 import InformacaoesComplementaresStep from "../business/informacoesComplementares/informacoesComplementaresStep";
-import { translate } from "../../utils/helpers/internationalization";
-import { REGISTRAR } from "../../store/actions.type";
 
 export default {
   name: "RegistrarLicenca",
@@ -50,14 +48,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["showStepsController"])
+    ...mapGetters(["showStepsController", "registroResource"])
   },
 
   methods: {
     nextStep() {
-      console.log(this.$cadastroPessoa);
-      console.log(this.$cadastroInfo);
-
       if (this.step++ >= 2) this.step = 2;
       // if (this.checkValidation()) {
       //   if (this.step++ >= 2) this.step = 2;
@@ -69,19 +64,7 @@ export default {
     },
 
     checkValidation() {
-      let isValid = true;
-
-      if (
-        this.$cadastro &&
-        !_.isEmpty(this.$cadastro.$refs && this.$cadastro.$refs.pessoa)
-      ) {
-        this.$cadastro.$refs.pessoa.validate(v => {
-          console.log(v);
-          isValid = v;
-        });
-      }
-
-      return isValid;
+      // TODO
     },
 
     activeStep(step) {
@@ -105,7 +88,7 @@ export default {
       )
         .then(() => {
           this.$store
-            .dispatch(REGISTRAR)
+            .dispatch(REGISTRAR, this.registroResource)
             .then(() => {
               this.$router.push("consultar");
             })

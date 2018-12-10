@@ -81,7 +81,7 @@ export default {
     },
 
     showVisualizar() {
-      return this.existeSolicitante;
+      return this.existeSolicitante && !this.cadastroCanActive;
     }
   }
 };

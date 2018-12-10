@@ -6,7 +6,7 @@
 			el-col(:span="24")
 				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.modalidadePesca`) }}
-					h4(:class="{'not-informed': !exist(info.modalidadePesca)}") {{ localeData(informacoesComplementaresResource.modalidadePesca, info.modalidadePesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+					h4(:class="{'not-informed': !exist(info.modalidade)}") {{ localeData(informacoesComplementaresResource.modalidadePesca, info.modalidade) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 		el-row.section(:gutter="20")
 			el-col(:span="24")

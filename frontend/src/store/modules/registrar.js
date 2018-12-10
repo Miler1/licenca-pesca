@@ -1,3 +1,4 @@
+import Vue from "vue";
 import {
   CADASTRAR_INFORMACOES_COMPLEMENTARES,
   CADASTRAR_SOLICITANTE,
@@ -9,7 +10,10 @@ import {
 import {
   FETCH_MODALIDADE_PESCA,
   FETCH_MUNICIPIOS,
-  FETCH_UFS, REGISTRAR, SEND_INFORMACOES_COMPLEMENTARES, SEND_SOLICITANTE
+  FETCH_UFS,
+  REGISTRAR,
+  SEND_INFORMACOES_COMPLEMENTARES,
+  SEND_SOLICITANTE
 } from "../actions.type";
 import AcessoService from "../../services/AcessoService";
 import {
@@ -23,8 +27,9 @@ import {
   TIPO_ISCA_MOCK
 } from "../../utils/layout/mockData";
 import InformacoesComplementaresService from "../../services/InformacoesComplementaresService";
-import { Solicitante } from "../../model/Solicitante";
+import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
+import RegistroService from "../../services/RegistroService";
 
 const INITIAL_STATE = {
   municipios: [],
@@ -41,8 +46,8 @@ const INITIAL_STATE = {
     agenciaTurismo: AGENCIA_TURISMO_MOCK
   },
   registroResource: {
-    solicitante: Solicitante,
-    informacoesComplementares: InformacoesComplementaresDTO
+    informacoesComplementares: InformacoesComplementaresDTO,
+    solicitante: Solicitante
   }
 };
 
@@ -81,7 +86,16 @@ export const getters = {
  * mutations.
  */
 export const actions = {
-  [REGISTRAR]: ({ commit }) => {},
+  [REGISTRAR]: ({ commit }, registroResource) => {
+    RegistroService.registrar({
+      pessoa: registroResource.solicitante,
+      informacaoComplementar: registroResource.informacoesComplementares
+    }).then(({ data }) => {
+      Vue.prototype.$message.success(
+        `A licença ${data.numero} foi criada com sucesso.`
+      );
+    });
+  },
 
   [SEND_SOLICITANTE]: ({ commit }, solicitante) => {
     commit(CADASTRAR_SOLICITANTE, solicitante);
@@ -152,8 +166,10 @@ export const mutations = {
    *
    * @param solicitante
    */
-  [CADASTRAR_SOLICITANTE]: (state, solicitante) =>
-    (state.registroResource.solicitante = solicitante),
+  [CADASTRAR_SOLICITANTE]: (state, solicitante) => {
+    delete solicitante.confirmarEmail;
+    state.registroResource.solicitante = toSolicitanteDTO(solicitante);
+  },
 
   /**
    * Adiciona as informações complementares à state.

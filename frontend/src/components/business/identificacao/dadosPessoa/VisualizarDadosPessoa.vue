@@ -164,12 +164,9 @@ export default {
 
     localizeDate(strDate) {
       if (strDate === null) return null;
+      let date = new Date(strDate);
 
-      let data = [
-        strDate.substring(0, 2), // dia
-        strDate.substring(3, 5), // mes
-        strDate.substring(6) // ano
-      ];
+      let data = [date.getDay(), date.getMonth(), date.getFullYear()];
 
       return translate("interface.geral.data", data);
     },
