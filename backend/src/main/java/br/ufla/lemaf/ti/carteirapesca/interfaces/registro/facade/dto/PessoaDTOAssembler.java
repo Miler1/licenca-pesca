@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import lombok.var;
 import main.java.br.ufla.lemaf.beans.pessoa.*;
 
 import java.util.List;
@@ -52,12 +53,12 @@ public class PessoaDTOAssembler {
 	 * Setter de sexo.
 	 *
 	 * @param sexo O objeto {@link Sexo}
-	 * @return A String sexo
+	 * @return O código do sexo
 	 */
-	private static String setSexo(final Sexo sexo) {
+	private static Integer setSexo(final Sexo sexo) {
 		if (sexo == null) return null;
 
-		return sexo.nome;
+		return sexo.codigo;
 	}
 
 	/**
@@ -69,7 +70,15 @@ public class PessoaDTOAssembler {
 	private static String setEmail(List<Contato> contatos) {
 		if (contatos == null || contatos.isEmpty()) return null;
 
-		return contatos.get(Constants.EMAIL).valor;
+		var contato = contatos
+			.stream()
+			.filter(cont -> cont.tipo.id.equals(Constants.EMAIL))
+			.findFirst();
+
+		return contato.isPresent()
+			? contato.get().valor
+			: null;
+
 	}
 
 	/**

@@ -1,4 +1,9 @@
-const INITIAL_STATE = {};
+import { STATUS_MOCK } from "../../utils/layout/mockData";
+
+const INITIAL_STATE = {
+  licencas: [],
+  status: STATUS_MOCK
+};
 
 export const state = Object.assign({}, INITIAL_STATE);
 
@@ -7,7 +12,9 @@ export const state = Object.assign({}, INITIAL_STATE);
  *
  * Buscam o atual estado da store.
  */
-export const getters = {};
+export const getters = {
+  status: state => state.status
+};
 
 /**
  * ACTIONS da STORE.

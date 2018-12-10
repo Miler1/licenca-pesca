@@ -19,9 +19,9 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5433/carteira_pesca
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://localhost:5432/carteira_pesca
+    username: carteira_pesca
+    password: carteira_pesca
 
   jpa:
     properties:
@@ -45,17 +45,14 @@ spring:
   security:
     entradaUnica:
       # Módulo - LP0 - HightLander
-      #client-id: b8411f828eaed83832c743d89c29cbfad15312e5f1549add05eb73973ca007039f1b9d9e2ee711782b0ac0889245bcca2271e203efeb6c5e5af37e1e01537234
-      #client-secret: 28d98d105cfcbba8d3be86447c9e5c28a932caa65d2a8c38e1d69cb7acb8f013c4495c9f31e6c46f4b87c08db7ddcf18d11203180a5b037d9fabcd9b898a38a6
+      client-id: b8411f828eaed83832c743d89c29cbfad15312e5f1549add05eb73973ca007039f1b9d9e2ee711782b0ac0889245bcca2271e203efeb6c5e5af37e1e01537234
+      client-secret: 28d98d105cfcbba8d3be86447c9e5c28a932caa65d2a8c38e1d69cb7acb8f013c4495c9f31e6c46f4b87c08db7ddcf18d11203180a5b037d9fabcd9b898a38a6
 
       # Módulo - LP1 - Márcio
-      client-id: a3489e7dee0ad4e82c5f46cd5b0829cab1310524014e043ea613c5f4ed55b3090d1844661fc0cce7ec9f48d6cd3568fcbc2bc81c9907fd75028c9f9318348579
-      client-secret: 2d34926193fb95719b5d54a2026e55ac37af00cb7bc98f06d3e203e19cfaa8bc8d0dfb11eb5ac9b7f38a391f34b43a309816e6f82f732ef9066898bb0ef251bb
+      #client-id: a3489e7dee0ad4e82c5f46cd5b0829cab1310524014e043ea613c5f4ed55b3090d1844661fc0cce7ec9f48d6cd3568fcbc2bc81c9907fd75028c9f9318348579
+      #client-secret: 2d34926193fb95719b5d54a2026e55ac37af00cb7bc98f06d3e203e19cfaa8bc8d0dfb11eb5ac9b7f38a391f34b43a309816e6f82f732ef9066898bb0ef251bb
 
       portal-seguranca:
         url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
       cadastro-unificado:
         url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
-
-  carteira-pesca:
-    base-path: arquivos/

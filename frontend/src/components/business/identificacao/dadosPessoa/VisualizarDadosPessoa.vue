@@ -138,11 +138,11 @@
 </template>
 
 <script>
-import Vue from "vue";
 import * as _ from "lodash";
 import { ZONA_LOCALIZACAO, SEXO } from "../../../../model/constantes";
 import { VISUALIZAR_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/identificacao/visualizar";
 import { translate } from "../../../../utils/helpers/internationalization";
+import { SEND_SOLICITANTE } from "../../../../store/actions.type";
 
 export default {
   name: "VisualizarDadosPessoa",
@@ -159,16 +159,29 @@ export default {
 
   methods: {
     exist(attr) {
-      return attr === null || _.isEmpty(attr.toString());
+      return attr === null || _.isNil(attr);
     },
 
     localizeDate(strDate) {
       if (strDate === null) return null;
-      let date = new Date(strDate);
 
-      let data = [date.getDay(), date.getMonth(), date.getFullYear()];
+      const DATE_PATTERN = new RegExp("([\\d]{2})\\/([\\d]{2})\\/([\\d]{4})");
 
-      return translate("interface.geral.data", data);
+      if (DATE_PATTERN.test(strDate)) {
+        return translate("interface.geral.data", [
+          strDate.substring(0, 2),
+          strDate.substring(3, 5),
+          strDate.substring(6)
+        ]);
+      } else {
+        let date = new Date(strDate);
+
+        return translate("interface.geral.data", [
+          date.getDay(),
+          date.getMonth(),
+          date.getFullYear()
+        ]);
+      }
     },
 
     getZonaLocalizacao(localizacao) {
@@ -197,6 +210,10 @@ export default {
           return null;
       }
     }
+  },
+
+  beforeDestroy() {
+    this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
   }
 };
 </script>

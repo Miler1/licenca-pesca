@@ -143,9 +143,10 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 	}
 
 	/**
-	 * Cadastra uma pessoa no Entrada Única
-	 * @param pessoa
-	 * @return
+	 * Cadastra uma pessoa no Entrada Única.
+	 *
+	 * @param pessoa O DTO de Pessoa
+	 * @return Mensagem do serviço de WS do EU
 	 */
 	public Message cadastrarPessoa(PessoaDTO pessoa) {
 
