@@ -30,7 +30,7 @@ public final class PessoaDTO extends ResourceSupport {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 
-	private String sexo;
+	private Integer sexo;
 
 	private String nomeMae;
 
@@ -60,7 +60,7 @@ public final class PessoaDTO extends ResourceSupport {
 	          @JsonProperty("cpf") final String cpf,
 	          @JsonProperty("passaporte") final String passaporte,
 	          @JsonProperty("dataNascimento") final Date dataNascimento,
-	          @JsonProperty("sexo") final String sexo,
+	          @JsonProperty("sexo") final Integer sexo,
 	          @JsonProperty("nomeMae") final String nomeMae,
 	          @JsonProperty("email") final String email,
 	          @JsonProperty("enderecoPrincipal") final EnderecoDTO enderecoPrincipal,
@@ -150,7 +150,7 @@ public final class PessoaDTO extends ResourceSupport {
 	 *
 	 * @return O sexo
 	 */
-	public String getSexo() {
+	public Integer getSexo() {
 		return sexo;
 	}
 
@@ -206,7 +206,9 @@ public final class PessoaDTO extends ResourceSupport {
 	}
 
 	/**
-	 * Converte pessoaDTO para Pessoa do cadastro únificado
+	 * Converte pessoaDTO para Pessoa do cadastro únificado.
+	 *
+	 * @param municipios A lista de municípios
 	 * @return
 	 */
 	public Pessoa toPessoaEU(Municipio[] municipios) {
@@ -219,11 +221,10 @@ public final class PessoaDTO extends ResourceSupport {
 		pessoaEU.dataNascimento = this.dataNascimento;
 		pessoaEU.sexo = new Sexo();
 
-		if(this.sexo.equals("M")) {
+		if (this.sexo.equals(0)) {
 			pessoaEU.sexo.codigo = 0;
 			pessoaEU.sexo.nome = "Masculino";
-		}
-		else {
+		} else {
 			pessoaEU.sexo.codigo = 1;
 			pessoaEU.sexo.nome = "Feminino";
 		}
@@ -242,13 +243,13 @@ public final class PessoaDTO extends ResourceSupport {
 		// Endereços
 		pessoaEU.enderecos = new ArrayList<>();
 
-		if(this.enderecoPrincipal != null)
+		if (this.enderecoPrincipal != null)
 			pessoaEU.enderecos.add(this.enderecoPrincipal.toEnderecoEU(municipios));
 
-		if(this.enderecoCorrespondencia != null)
+		if (this.enderecoCorrespondencia != null)
 			pessoaEU.enderecos.add(this.enderecoCorrespondencia.toEnderecoEU(municipios));
 
-		if(this.enderecoCorrespondencia == null) {
+		if (this.enderecoCorrespondencia == null) {
 
 			Endereco enderecoCorrespondencia = this.enderecoPrincipal.toEnderecoEU(municipios);
 			enderecoCorrespondencia.tipo.id = 2;

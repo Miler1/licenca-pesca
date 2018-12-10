@@ -1,5 +1,8 @@
 <template lang="pug">
 	#lista-licenca
+		.nome {{ licenca.protocolo }}
+		.status
+
 
 </template>
 

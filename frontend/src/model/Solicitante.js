@@ -49,7 +49,7 @@ export const toSolicitanteDTO = solicitante => {
     cpf: solicitante.cpf,
     passaporte: solicitante.passaporte,
     dataNascimento: deserializarData(solicitante.dataNascimento),
-    sexo: toSexoDTO(solicitante.sexo),
+    sexo: solicitante.sexo,
     nomeMae: solicitante.nomeMae,
     email: solicitante.email,
     enderecoPrincipal: toEndereco(solicitante.enderecoPrincipal),
@@ -92,7 +92,17 @@ const toEndereco = endereco => {
 const toSexoDTO = sexo => SexoDTO[sexo];
 
 const deserializarData = data => {
-  let date = new Date(data);
+  const DATE_PATTERN = new RegExp("([\\d]{2})\\/([\\d]{2})\\/([\\d]{4})");
 
-  return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
+  if (DATE_PATTERN.test(data)) {
+    return data;
+  } else {
+    let date = new Date(data);
+
+    return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
+  }
 };
+
+// const serializarData = data => {
+//   return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`;
+// };
