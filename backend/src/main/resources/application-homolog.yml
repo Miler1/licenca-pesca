@@ -1,5 +1,7 @@
 server:
-  port: 9666
+  port: 9600
+  servlet:
+    context-path: /carteira-pesca
 
 logging:
   level:

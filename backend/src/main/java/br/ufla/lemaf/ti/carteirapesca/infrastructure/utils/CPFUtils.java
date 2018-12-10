@@ -54,4 +54,30 @@ public final class CPFUtils {
 
 	}
 
+	/**
+	 * Formatação de CPF/CNPJ
+	 * @param cpfCnpj
+	 * @return
+	 */
+	public static String format(String cpfCnpj) {
+
+
+		if(cpfCnpj.length() == 11)
+			cpfCnpj = cpfCnpj.substring(0, 3) + "." + cpfCnpj.substring(3, 6) + "." + cpfCnpj.substring(6, 9) + "-" + cpfCnpj.substring(9, 11);
+
+		else if(cpfCnpj.length() == 14)
+			cpfCnpj = cpfCnpj.substring(0, 2) + "." + cpfCnpj.substring(2, 5) + "." + cpfCnpj.substring(5, 8) + "/" + cpfCnpj.substring(8, 12) + "-" + cpfCnpj.substring(12, 14);
+
+		else
+			throw new IllegalArgumentException("Parametro não é um cpf nem cnpj.") ;
+
+
+
+		return  cpfCnpj;
+
+	}
+
+
+
+
 }

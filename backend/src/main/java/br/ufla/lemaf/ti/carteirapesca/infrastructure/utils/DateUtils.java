@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -25,5 +26,20 @@ public class DateUtils {
 
 		return calendar.get(Calendar.YEAR);
 	}
+
+	/**
+	 *
+	 * @param data
+	 * @param formato
+	 * @return
+	 */
+	public static String formatDate(Date data, String formato) {
+
+		SimpleDateFormat sdf = new SimpleDateFormat(formato);
+
+		return sdf.format(data);
+
+	}
+
 
 }

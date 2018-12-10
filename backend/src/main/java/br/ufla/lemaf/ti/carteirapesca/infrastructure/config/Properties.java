@@ -67,4 +67,8 @@ public final class Properties {
 		return environment.getProperty("spring.security.entradaUnica.cadastro-unificado.url");
 	}
 
+	public static String pathCarteiraPesca() {
+		return environment.getProperty("spring.carteira-pesca.base-path");
+	}
+
 }
