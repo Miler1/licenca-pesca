@@ -209,7 +209,7 @@ public final class PessoaDTO extends ResourceSupport {
 	 * Converte pessoaDTO para Pessoa do cadastro únificado.
 	 *
 	 * @param municipios A lista de municípios
-	 * @return
+	 * @return Objeto Pessoa
 	 */
 	public Pessoa toPessoaEU(Municipio[] municipios) {
 
