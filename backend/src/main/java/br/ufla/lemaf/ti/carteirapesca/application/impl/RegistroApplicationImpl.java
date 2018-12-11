@@ -74,15 +74,6 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Protocolo protocolo;
 
-		if (!solicitante.pussuiLicencaAtiva()) {
-			var licenca = criarLicenca(resource);
-			protocolo = solicitante.adicionarLicenca(licenca);
-		} else {
-			throw new SolicitanteException("solicitante.licenca.ativa");
-		}
-
-		solicitanteRopository.save(solicitante);
-
 		String identificador = resource.getPessoa().getCpf() != null ? resource.getPessoa().getCpf() : resource.getPessoa().getPassaporte();
 
 		Pessoa pessoa = WebServiceUtils.webService().buscarPessoaFisicaPeloCpf(identificador);
@@ -90,15 +81,27 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			throw new RuntimeException("Pessoa não foi encontrada no Entrada Única com o cpf informado.");
 		}
 
-		// TODO - Armazenar o caminho do boleto para pagamento
-		// Gera o boleto para pagamento da carteira
-		GeradorBoleto geradorBoleto = new GeradorBoleto(pessoa, protocolo.toString());
-		String caminhoBoleto = geradorBoleto.gerarBoleto();
+		if (!solicitante.pussuiLicencaAtiva()) {
 
-		// TODO - Armazenar o caminho da carteira de pesca
-		String caminhoCarteiraDePesca = gerarCarteiraDePesca(pessoa,
-											protocolo.toString(),
-											solicitante.buscarTodasLicencas().get(0).modalidade().toString());
+			var licenca = criarLicenca(resource);
+
+			// TODO - Armazenar o caminho do boleto para pagamento
+			// Gera o boleto para pagamento da carteira
+			GeradorBoleto geradorBoleto = new GeradorBoleto(pessoa, licenca.protocolo().toString());
+			String caminhoBoleto = geradorBoleto.gerarBoleto();
+
+			// TODO - Armazenar o caminho da carteira de pesca
+			String caminhoCarteiraDePesca = gerarCarteiraDePesca(pessoa, licenca.protocolo().toString(), licenca.modalidade().toString());
+
+			protocolo = solicitante.adicionarLicenca(licenca);
+
+		} else {
+
+			throw new SolicitanteException("solicitante.licenca.ativa");
+		}
+
+		solicitanteRopository.save(solicitante);
+
 		return protocolo;
 	}
 
