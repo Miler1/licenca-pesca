@@ -6,6 +6,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.boletos.GeradorBoleto;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
@@ -84,10 +85,20 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		String identificador = resource.getPessoa().getCpf() != null ? resource.getPessoa().getCpf() : resource.getPessoa().getPassaporte();
 
-		gerarCarteiraDePesca(identificador,
-			protocolo.toString(),
-			solicitante.buscarTodasLicencas().get(0).modalidade().toString());
+		Pessoa pessoa = WebServiceUtils.webService().buscarPessoaFisicaPeloCpf(identificador);
+		if(pessoa == null){
+			throw new RuntimeException("Pessoa não foi encontrada no Entrada Única com o cpf informado.");
+		}
 
+		// TODO - Armazenar o caminho do boleto para pagamento
+		// Gera o boleto para pagamento da carteira
+		GeradorBoleto geradorBoleto = new GeradorBoleto(pessoa, protocolo.toString());
+		String caminhoBoleto = geradorBoleto.gerarBoleto();
+
+		// TODO - Armazenar o caminho da carteira de pesca
+		String caminhoCarteiraDePesca = gerarCarteiraDePesca(pessoa,
+											protocolo.toString(),
+											solicitante.buscarTodasLicencas().get(0).modalidade().toString());
 		return protocolo;
 	}
 
@@ -114,7 +125,12 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		WebServiceUtils.validarWebService();
 
-		WebServiceUtils.webService().cadastrarPessoa(pessoa);
+		Pessoa pessoaEU = WebServiceUtils.webService().buscarPessoaFisicaPeloCpf(pessoa.getCpf());
+
+		if(pessoaEU == null) {
+
+			WebServiceUtils.webService().cadastrarPessoa(pessoa);
+		}
 	}
 
 	/**
@@ -173,17 +189,11 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		return solicitante;
 	}
 
-	private void gerarCarteiraDePesca(String cpf, String protocolo, String modalidade) {
+	private String gerarCarteiraDePesca(Pessoa pessoa, String protocolo, String modalidade) {
 
 		try {
 
 			String protocoloSimples = protocolo.replace("-", "").replace("/", "");
-
-			Pessoa pessoa = WebServiceUtils.webService().buscarPessoaFisicaPeloCpf(cpf);
-			if(pessoa == null){
-
-				return;
-			}
 
 			ClassLoader classLoader = getClass().getClassLoader();
 
@@ -250,6 +260,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			row += 48;
 
 			// Valor
+			// TODO - Definir como será obtido o valor da carteira.
 			g.drawString("R$41,20", col1, row);
 
 			// Emissao
@@ -269,6 +280,8 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			}
 
 			ImageIO.write(bufferedImage, "png", carteiraPesca);
+
+			return caminhoCarteiraPesca.toString();
 
 		}
 		catch (Exception e) {
