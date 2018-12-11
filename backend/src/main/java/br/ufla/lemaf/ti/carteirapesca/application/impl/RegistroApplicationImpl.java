@@ -22,14 +22,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -178,8 +175,6 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 	private void gerarCarteiraDePesca(String cpf, String protocolo, String modalidade) {
 
-		log.info("gerarCarteiraDePesca() - init : " + cpf);
-
 		try {
 
 			String protocoloSimples = protocolo.replace("-", "").replace("/", "");
@@ -187,15 +182,12 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			Pessoa pessoa = WebServiceUtils.webService().buscarPessoaFisicaPeloCpf(cpf);
 			if(pessoa == null){
 
-				log.info("gerarCarteiraDePesca() - Pessoa não encontrada!!!");
 				return;
 			}
 
 			ClassLoader classLoader = getClass().getClassLoader();
 
-			log.info("gerarCarteiraDePesca() - passou no EU " + classLoader.getResource("public/template_carteira_pesca.png").getFile());
-
-			BufferedImage bufferedImage = ImageIO.read(classLoader.getResource("public/template_carteira_pesca.png").openStream());
+			BufferedImage bufferedImage = ImageIO.read(classLoader.getResource("templates/template_carteira_pesca.png").openStream());
 
 			Graphics g = bufferedImage.getGraphics();
 			g.setColor(Color.black);
@@ -278,41 +270,13 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 			ImageIO.write(bufferedImage, "png", carteiraPesca);
 
-			log.info("gerarCarteiraDePesca() - end");
-
 		}
 		catch (Exception e) {
+
 			e.printStackTrace();
+
+			throw new SolicitanteException("solicitante.erro.carteira.pesca");
 		}
 
 	}
-
-	/**
-	 * Converte uma imagem para string no formato base64
-	 * @param image
-	 * @param type
-	 * @return
-	 */
-	private String encodeImageToString(BufferedImage image, String type) {
-
-		String imageString = null;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-		try {
-			ImageIO.write(image, type, bos);
-			byte[] imageBytes = bos.toByteArray();
-
-			BASE64Encoder encoder = new BASE64Encoder();
-			imageString = encoder.encode(imageBytes);
-
-			bos.close();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-
-		return "data:image/jpeg;base64," + imageString;
-	}
-
 }

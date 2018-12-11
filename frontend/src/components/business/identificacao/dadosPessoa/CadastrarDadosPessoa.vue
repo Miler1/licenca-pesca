@@ -98,7 +98,7 @@
 				el-col(:span="3")
 					el-form-item(:label="$t(`${cadastrar_prefix}labels.uf`)" prop="enderecoPrincipal.uf")
 						el-select(v-model="pessoa.enderecoPrincipal.uf" :loading="ufSelectLoader" @change="fetchMunicipiosEnderecoPrincial"  :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-							el-option(v-for="uf in ufs" :key="uf.id" :value="uf.id" :label="uf.sigla")
+							el-option(v-for="uf in ufs" :key="uf.id" :value="uf.sigla" :label="uf.sigla")
 
 				el-col(:span="6")
 					el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoPrincipal.municipio")
@@ -150,7 +150,7 @@
 					el-col(:span="3")
 						el-form-item(:label="$t(`${cadastrar_prefix}labels.uf`)" prop="enderecoCorrespondencia.uf")
 							el-select(v-model="pessoa.enderecoCorrespondencia.uf" :loading="ufSelectLoader" @change="fetchMunicipiosEnderecoCorrespondencia" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-								el-option(v-for="uf in ufs" :key="uf.id" :value="uf.id" :label="uf.sigla")
+								el-option(v-for="uf in ufs" :key="uf.id" :value="uf.sigla" :label="uf.sigla")
 
 					el-col(:span="6")
 						el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoCorrespondencia.municipio")
@@ -209,19 +209,25 @@ export default {
     fetchMunicipiosEnderecoPrincial(uf) {
       this.municipioSelectLoader = true;
       this.pessoa.enderecoPrincipal.municipio = null;
-      if (uf !== null)
+      if (uf !== null) {
+        debugger;
+        let idUf = this.ufs.find(u => u.sigla === uf).id;
         this.$store
-          .dispatch(FETCH_MUNICIPIOS, uf)
+          .dispatch(FETCH_MUNICIPIOS, idUf)
           .finally(() => (this.municipioSelectLoader = false));
+      }
     },
 
     fetchMunicipiosEnderecoCorrespondencia(uf) {
       this.municipioSelectLoader = true;
       this.pessoa.enderecoCorrespondencia.municipio = null;
-      if (uf !== null)
+      if (uf !== null) {
+        debugger;
+        let idUf = this.ufs.find(u => u.sigla === uf).id;
         this.$store
-          .dispatch(FETCH_MUNICIPIOS, uf)
+          .dispatch(FETCH_MUNICIPIOS, idUf)
           .finally(() => (this.municipioSelectLoader = false));
+      }
     }
   },
   created() {
