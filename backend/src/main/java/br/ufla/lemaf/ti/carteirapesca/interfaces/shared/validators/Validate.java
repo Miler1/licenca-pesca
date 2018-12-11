@@ -1,7 +1,12 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators;
 
+import br.com.caelum.stella.format.CPFFormatter;
 import br.com.caelum.stella.validation.CPFValidator;
 import br.com.caelum.stella.validation.InvalidStateException;
+import br.com.caelum.stella.validation.Validator;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
+import lombok.var;
 
 import java.util.Date;
 import java.util.regex.Pattern;
@@ -59,13 +64,44 @@ public final class Validate {
 	 * @return {@code true} se o CPF for válido
 	 */
 	public static boolean isCpfValid(String cpf) {
-		CPFValidator cpfValidator = new CPFValidator();
+		var formatter = new CPFFormatter();
+		var cpfValidator = new CPFValidator(formatter.isFormatted(cpf));
+
+		return assertValid(cpfValidator, cpf);
+	}
+
+	/**
+	 * Checa se o CPF é válido.
+	 *
+	 * @param protocolo O cpf
+	 * @return {@code true} se o CPF for válido
+	 */
+	public static boolean isProtocoloValid(String protocolo) {
+		var formatter = new ProtocoloFormatter();
+		var protocoloValidator = new ProtocoloValidator(formatter.isFormatted(protocolo));
+
+		return assertValid(protocoloValidator, protocolo);
+	}
+
+	/**
+	 * Verifica se o valor para validar, passa pela regra do seu validador.
+	 *
+	 * @param validator O validador
+	 * @param toValidate O valor a se validar
+	 * @return {@code true} se válido
+	 */
+	private static boolean assertValid(final Validator validator, final String toValidate) {
 		try {
-			org.apache.commons.lang3.Validate.notNull(cpf);
-			cpfValidator.assertValid(cpf);
+
+			org.apache.commons.lang3.Validate.notNull(toValidate);
+			validator.assertValid(toValidate);
+
 			return true;
+
 		} catch (InvalidStateException | NullPointerException ex) {
+
 			return false;
+
 		}
 	}
 

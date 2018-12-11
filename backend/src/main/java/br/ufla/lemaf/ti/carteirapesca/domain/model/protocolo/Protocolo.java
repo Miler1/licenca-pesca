@@ -3,9 +3,10 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.Validate;
+import lombok.val;
 
 import javax.persistence.*;
 import java.util.regex.Pattern;
@@ -26,6 +27,9 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 
 	@Column(name = "val_codigo")
 	private String codigo;
+
+	@Transient
+	private String numeroNaoFormatado;
 
 	/**
 	 * Padrão do protocolo da Licença: LPX-9999/99 .
@@ -58,17 +62,22 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 * @param protocolo O código do protocolo.
 	 */
 	public Protocolo(String protocolo) {
+		val formatter = new ProtocoloFormatter();
 
-		try {
+		if (formatter.isFormatted(protocolo)) {
 
-			Validate.notNull(protocolo);
-			Validate.isTrue(VALID_PATTERN.matcher(protocolo).matches());
-
+			this.numeroNaoFormatado = formatter.unformat(protocolo);
 			this.codigo = protocolo;
 
-		} catch (NullPointerException | IllegalArgumentException ex) {
+		} else if (formatter.canBeFormatted(protocolo)) {
 
-			throw new ProtocoloException("protocolo.invalido", protocolo);
+			this.numeroNaoFormatado = protocolo;
+			this.codigo = formatter.format(protocolo);
+
+		} else {
+
+			this.codigo = protocolo;
+			this.numeroNaoFormatado = protocolo;
 
 		}
 
@@ -96,6 +105,15 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	@Override
 	public String toString() {
 		return codigo;
+	}
+
+	/**
+	 * Busca o código do protocolo sem formatação.
+	 *
+	 * @return O Protocolo sem formatação
+	 */
+	private String getProtocoloNaoFormatado() {
+		return numeroNaoFormatado;
 	}
 
 	/**

@@ -1,10 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * Repository de Licença.
@@ -18,8 +15,8 @@ public interface LicencaRepository extends JpaRepository<Licenca, Integer> {
 	/**
 	 * Busca uma licença pelo seu protocolo.
 	 *
-	 * @param protocolo O número de protocolo da licença
+	 * @param protocolo O número de protocolo formatado
 	 * @return A licença
 	 */
-	Licenca findByProtocolo(Protocolo protocolo);
+	Licenca findByProtocolo_Codigo(String protocolo);
 }

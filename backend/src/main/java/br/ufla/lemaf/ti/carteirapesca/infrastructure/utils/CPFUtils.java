@@ -55,29 +55,36 @@ public final class CPFUtils {
 	}
 
 	/**
-	 * Formatação de CPF/CNPJ
-	 * @param cpfCnpj
-	 * @return
+	 * Formatação de CPF/CNPJ.
+	 *
+	 * @param cpf O CPF
+	 * @return O CPF formatado
 	 */
-	public static String format(String cpfCnpj) {
+	public static String format(final String cpf) {
 
+		val formatter = new CPFFormatter();
+		String cpfFormatado;
 
-		if(cpfCnpj.length() == 11)
-			cpfCnpj = cpfCnpj.substring(0, 3) + "." + cpfCnpj.substring(3, 6) + "." + cpfCnpj.substring(6, 9) + "-" + cpfCnpj.substring(9, 11);
+		if (Validate.isCpfValid(cpf)) {
 
-		else if(cpfCnpj.length() == 14)
-			cpfCnpj = cpfCnpj.substring(0, 2) + "." + cpfCnpj.substring(2, 5) + "." + cpfCnpj.substring(5, 8) + "/" + cpfCnpj.substring(8, 12) + "-" + cpfCnpj.substring(12, 14);
+			if (formatter.isFormatted(cpf)) {
 
-		else
-			throw new IllegalArgumentException("Parametro não é um cpf nem cnpj.") ;
+				cpfFormatado = cpf;
 
+			} else {
 
+				cpfFormatado = formatter.format(cpf);
 
-		return  cpfCnpj;
+			}
+
+			return cpfFormatado;
+
+		} else {
+
+			throw new ValidationException("acesso.resourceInvalid.cpfInvalido", cpf);
+
+		}
 
 	}
-
-
-
 
 }
