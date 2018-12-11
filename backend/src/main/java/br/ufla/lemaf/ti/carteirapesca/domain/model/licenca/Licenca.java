@@ -46,6 +46,12 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@Column(name = "dat_ativacao")
 	private Date dataAtivacao;
 
+	@Column(name = "tx_caminho_boleto")
+	private String caminhoBoleto;
+
+	@Column(name = "tx_caminho_carteira")
+	private String caminhoCarteira;
+
 	/**
 	 * Construtor da Licenca de pesca.
 	 * <p>
@@ -130,6 +136,22 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 */
 	public Date dataCriacao() {
 		return (Date) dataCriacao.clone();
+	}
+
+	public String getCaminhoBoleto() {
+		return caminhoBoleto;
+	}
+
+	public void setCaminhoBoleto(String caminhoBoleto) {
+		this.caminhoBoleto = caminhoBoleto;
+	}
+
+	public String getCaminhoCarteira() {
+		return caminhoCarteira;
+	}
+
+	public void setCaminhoCarteira(String caminhoCarteira) {
+		this.caminhoCarteira = caminhoCarteira;
 	}
 
 	/**
