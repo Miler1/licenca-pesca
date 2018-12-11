@@ -58,4 +58,5 @@ spring:
         url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
 
   carteira-pesca:
-    base-path: arquivos/
+    base-path: arquivos/carteira/
+    path-boleto: arquivos/boleto/

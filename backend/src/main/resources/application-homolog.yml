@@ -54,4 +54,5 @@ spring:
         url: http://homologacao.ipaam.lemaf.com.br/homolog/cadastroUnificado
 
   carteira-pesca:
-    base-path: /dados/var/arquivos/carteira-pesca/
+    base-path: /dados/var/arquivos/carteira-pesca/carteira/
+    path-boleto: /dados/var/arquivos/carteira-pesca/boleto/

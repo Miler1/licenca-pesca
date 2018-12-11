@@ -71,4 +71,8 @@ public final class Properties {
 		return environment.getProperty("spring.carteira-pesca.base-path");
 	}
 
+	public static String pathBoletoPagamentoCarteiraPesca() {
+		return environment.getProperty("spring.carteira-pesca.path-boleto");
+	}
+
 }
