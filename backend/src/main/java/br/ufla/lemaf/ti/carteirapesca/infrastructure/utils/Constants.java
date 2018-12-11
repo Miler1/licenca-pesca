@@ -21,4 +21,8 @@ public class Constants {
 
 	public static final String SCHEMA_CARTEIRA_PESCA = "carteira_pesca";
 
+	public static final Integer BOLETO = 0;
+
+	public static final Integer CARTEIRA = 1;
+
 }

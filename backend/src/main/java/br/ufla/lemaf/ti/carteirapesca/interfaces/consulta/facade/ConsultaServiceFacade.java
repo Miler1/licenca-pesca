@@ -17,4 +17,14 @@ public interface ConsultaServiceFacade {
 	 * @return A licença.
 	 */
 	LicencaDTO consultar(String protocolo);
+
+	/**
+	 * Busca as rotas dos arquivos.
+	 *
+	 * @param protocolo O número do protocolo
+	 * @param tipo O tipo do arquivo
+	 * @return O caminho do arquivo
+	 */
+	String buscarCaminho(String protocolo, Integer tipo);
+
 }

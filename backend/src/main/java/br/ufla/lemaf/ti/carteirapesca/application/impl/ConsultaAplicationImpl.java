@@ -46,4 +46,32 @@ public class ConsultaAplicationImpl implements ConsultaApplication {
 		return licenca;
 
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String buscarCaminhoBoleto(Protocolo protocolo) {
+
+		var licenca = licencaRepository.findByProtocolo_Codigo(protocolo.getCodigo());
+
+		if (licenca == null) return null;
+
+		return licenca.getCaminhoBoleto();
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String buscarCaminhoCarteira(Protocolo protocolo) {
+
+		var licenca = licencaRepository.findByProtocolo_Codigo(protocolo.getCodigo());
+
+		if (licenca == null) return null;
+
+		return licenca.getCaminhoCarteira();
+
+	}
 }

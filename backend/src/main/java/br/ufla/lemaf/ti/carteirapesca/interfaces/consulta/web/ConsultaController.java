@@ -1,16 +1,24 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.web;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.ConsultaServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -60,6 +68,66 @@ public class ConsultaController {
 			.withSelfRel());
 
 		return new ResponseEntity<>(licenca, HttpStatus.OK);
+
+	}
+
+	/**
+	 * Download do boleto.
+	 *
+	 * @param protocolo O protocolo do Boleto
+	 * @return O arquivo
+	 */
+	@CrossOrigin("*")
+	@GetMapping("/boleto")
+	public ResponseEntity<InputStreamResource> downloadBoleto(@RequestParam String protocolo) {
+
+		try {
+
+			var rotaDoBoleto = facade.buscarCaminho(protocolo, Constants.BOLETO);
+			var boleto = new File(rotaDoBoleto);
+
+			var httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+
+			var isr = new InputStreamResource(new FileInputStream(boleto));
+
+			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
+
+		} catch (IOException e) {
+
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+		}
+
+	}
+
+	/**
+	 * Download da carteira de pesca.
+	 *
+	 * @param protocolo O protocolo da Carteira
+	 * @return O arquivo
+	 */
+	@CrossOrigin("*")
+	@GetMapping("/carteira")
+	public ResponseEntity<InputStreamResource> downloadCarteira(@RequestParam String protocolo) {
+
+		try {
+
+			var rotaDaCarteira = facade.buscarCaminho(protocolo, Constants.CARTEIRA);
+			var carteira = new File(rotaDaCarteira);
+
+			var httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaType.IMAGE_PNG);
+
+			var isr = new InputStreamResource(new FileInputStream(carteira));
+
+			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
+
+		} catch (IOException e) {
+
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+		}
 
 	}
 

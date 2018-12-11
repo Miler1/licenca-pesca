@@ -59,15 +59,14 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 * e o representante da modalidade de protocolo deve ser da mesma
 	 * modalidade da licença.
 	 *
-	 * @param protocolo   O número do protocolo
-	 * @param modalidade  A modalidade da Licença
+	 * @param protocolo  O número do protocolo
+	 * @param modalidade A modalidade da Licença
 	 */
 	public Licenca(final Protocolo protocolo,
 	               final Modalidade modalidade) {
 		try {
 			Validate.notNull(protocolo);
 			Validate.notNull(modalidade);
-			// Validate.isTrue(protocolo.modalidade().sameValueAs(modalidade));
 
 			this.protocolo = protocolo;
 			this.modalidade = modalidade;
@@ -102,6 +101,8 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	}
 
 	/**
+	 * Data vencimento date.
+	 *
 	 * @return Data de vencimento da Licença
 	 */
 	public Date dataVencimento() {
@@ -118,6 +119,8 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	}
 
 	/**
+	 * Protocolo protocolo.
+	 *
 	 * @return O Protocolo da licença
 	 */
 	public Protocolo protocolo() {
@@ -125,6 +128,8 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	}
 
 	/**
+	 * Modalidade modalidade.
+	 *
 	 * @return A modalidade da licença
 	 */
 	public Modalidade modalidade() {
@@ -132,29 +137,53 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	}
 
 	/**
+	 * Data criacao date.
+	 *
 	 * @return A data de criação da licença
 	 */
 	public Date dataCriacao() {
 		return (Date) dataCriacao.clone();
 	}
 
+	/**
+	 * Gets caminho boleto.
+	 *
+	 * @return the caminho boleto
+	 */
 	public String getCaminhoBoleto() {
 		return caminhoBoleto;
 	}
 
+	/**
+	 * Sets caminho boleto.
+	 *
+	 * @param caminhoBoleto the caminho boleto
+	 */
 	public void setCaminhoBoleto(String caminhoBoleto) {
 		this.caminhoBoleto = caminhoBoleto;
 	}
 
+	/**
+	 * Gets caminho carteira.
+	 *
+	 * @return the caminho carteira
+	 */
 	public String getCaminhoCarteira() {
 		return caminhoCarteira;
 	}
 
+	/**
+	 * Sets caminho carteira.
+	 *
+	 * @param caminhoCarteira the caminho carteira
+	 */
 	public void setCaminhoCarteira(String caminhoCarteira) {
 		this.caminhoCarteira = caminhoCarteira;
 	}
 
 	/**
+	 * Data ativacao date.
+	 *
 	 * @return Data de ativação da licença
 	 */
 	public Date dataAtivacao() {
@@ -164,6 +193,8 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	}
 
 	/**
+	 * Status status.
+	 *
 	 * @return O status da licença
 	 */
 	public Status status() {

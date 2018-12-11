@@ -19,4 +19,20 @@ public interface ConsultaApplication {
 	 */
 	Licenca consulta(Protocolo protocolo);
 
+	/**
+	 * Busca a rota do arquivo da carteira.
+	 *
+	 * @param protocolo O protocolo da licença
+	 * @return String com o caminho do arquivo
+	 */
+	String buscarCaminhoCarteira(Protocolo protocolo);
+
+	/**
+	 * Busca a rota do arquivo de boleto.
+	 *
+	 * @param protocolo O protocolo da licença
+	 * @return String com o caminho do arquivo
+	 */
+	String buscarCaminhoBoleto(Protocolo protocolo);
+
 }
