@@ -48,7 +48,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["showStepsController", "registroResource"])
+    ...mapGetters(["showStepsController", "registroResource", "protocolo"])
   },
 
   methods: {
@@ -87,14 +87,13 @@ export default {
         }
       )
         .then(() => {
-          this.$store
-            .dispatch(REGISTRAR, this.registroResource)
-            .then(() => {
-              this.$router.push("consultar");
-            })
-            .catch(() => {
-              // TODO
+          this.$store.dispatch(REGISTRAR, this.registroResource).then(p => {
+            let protocolo = p.replace("/", "").replace("-", "");
+            this.$router.push({
+              name: "consultar",
+              params: { protocolo: protocolo }
             });
+          });
         })
         .catch(() => {
           // DO nothing!

@@ -4,7 +4,7 @@ import {
   CADASTRAR_SOLICITANTE,
   SET_ERROR,
   SET_MODALIDADE_PESCA,
-  SET_MUNICIPIOS,
+  SET_MUNICIPIOS, SET_PROTOCOLO,
   SET_UFS
 } from "../mutations.type";
 import {
@@ -48,7 +48,8 @@ const INITIAL_STATE = {
   registroResource: {
     informacoesComplementares: InformacoesComplementaresDTO,
     solicitante: Solicitante
-  }
+  },
+  protocolo: null
 };
 
 export const state = Object.assign({}, INITIAL_STATE);
@@ -75,7 +76,9 @@ export const getters = {
   informacoesComplementaresResource: state =>
     state.informacoesComplementaresResource,
 
-  registroResource: state => state.registroResource
+  registroResource: state => state.registroResource,
+
+  protocolo: state => state.protocolo
 };
 
 /**
@@ -87,13 +90,15 @@ export const getters = {
  */
 export const actions = {
   [REGISTRAR]: ({ commit }, registroResource) => {
-    RegistroService.registrar({
+    return RegistroService.registrar({
       pessoa: registroResource.solicitante,
       informacaoComplementar: registroResource.informacoesComplementares
     }).then(({ data }) => {
+      commit(SET_PROTOCOLO, data.numero);
       Vue.prototype.$message.success(
         `A licença ${data.numero} foi criada com sucesso.`
       );
+      return data.numero;
     });
   },
 
@@ -177,7 +182,9 @@ export const mutations = {
    * @param informacoesComplementares
    */
   [CADASTRAR_INFORMACOES_COMPLEMENTARES]: (state, informacoesComplementares) =>
-    (state.registroResource.informacoesComplementares = informacoesComplementares)
+    (state.registroResource.informacoesComplementares = informacoesComplementares),
+
+  [SET_PROTOCOLO]: (state, protocolo) => (state.protocolo = protocolo)
 };
 
 export default {

@@ -7,7 +7,7 @@ export const routes = [
     component: RegistrarLicenca
   },
   {
-    path: "/consultar",
+    path: "/consultar/:protocolo",
     name: "consultar",
     // Lazy loading
     component: () => import("../components/views/ConsultarLicenca")
