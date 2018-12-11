@@ -84,7 +84,8 @@ public final class EnderecoDTO {
 
 		Endereco endereco = new Endereco();
 		endereco.tipo = new TipoEndereco();
-		endereco.tipo.id = this.tipo;
+		// TODO - Validar o DTO no frontend
+		endereco.tipo.id = this.tipo != null ? this.tipo : 1;
 		endereco.zonaLocalizacao = new ZonaLocalizacao();
 		endereco.zonaLocalizacao.codigo = this.zonaLocalizacao;
 

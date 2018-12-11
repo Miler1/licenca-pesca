@@ -246,10 +246,10 @@ public final class PessoaDTO extends ResourceSupport {
 		if (this.enderecoPrincipal != null)
 			pessoaEU.enderecos.add(this.enderecoPrincipal.toEnderecoEU(municipios));
 
-		if (this.enderecoCorrespondencia != null)
+		if (this.enderecoCorrespondencia != null && this.enderecoCorrespondencia.getLogradouro() != null) {
 			pessoaEU.enderecos.add(this.enderecoCorrespondencia.toEnderecoEU(municipios));
-
-		if (this.enderecoCorrespondencia == null) {
+		}
+		else {
 
 			Endereco enderecoCorrespondencia = this.enderecoPrincipal.toEnderecoEU(municipios);
 			enderecoCorrespondencia.tipo.id = 2;

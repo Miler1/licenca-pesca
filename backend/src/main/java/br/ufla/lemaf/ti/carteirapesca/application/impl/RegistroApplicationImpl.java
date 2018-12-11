@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,8 +83,13 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			throw new SolicitanteException("solicitante.licenca.ativa");
 		}
 
-
 		solicitanteRopository.save(solicitante);
+
+		String identificador = resource.getPessoa().getCpf() != null ? resource.getPessoa().getCpf() : resource.getPessoa().getPassaporte();
+
+		gerarCarteiraDePesca(identificador,
+			protocolo.toString(),
+			solicitante.buscarTodasLicencas().get(0).modalidade().toString());
 
 		return protocolo;
 	}
@@ -167,23 +173,29 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			cadastrarPessoa(resource.getPessoa());
 		}
 
-		String identificador = resource.getPessoa().getCpf() != null ? resource.getPessoa().getCpf() : resource.getPessoa().getPassaporte();
-
-		gerarCarteiraDePesca(identificador,
-			solicitante.buscarTodasLicencas().get(0).protocolo().toString(),
-			solicitante.buscarTodasLicencas().get(0).modalidade().toString());
-
 		return solicitante;
 	}
 
-	private void gerarCarteiraDePesca(String cpf, String licenca, String modalidade) {
+	private void gerarCarteiraDePesca(String cpf, String protocolo, String modalidade) {
+
+		log.info("gerarCarteiraDePesca() - init : " + cpf);
 
 		try {
 
+			String protocoloSimples = protocolo.replace("-", "").replace("/", "");
+
 			Pessoa pessoa = WebServiceUtils.webService().buscarPessoaFisicaPeloCpf(cpf);
+			if(pessoa == null){
+
+				log.info("gerarCarteiraDePesca() - Pessoa não encontrada!!!");
+				return;
+			}
 
 			ClassLoader classLoader = getClass().getClassLoader();
-			BufferedImage bufferedImage = ImageIO.read(new File(classLoader.getResource("public/template_carteira_pesca.png").getFile()));
+
+			log.info("gerarCarteiraDePesca() - passou no EU " + classLoader.getResource("public/template_carteira_pesca.png").getFile());
+
+			BufferedImage bufferedImage = ImageIO.read(classLoader.getResource("public/template_carteira_pesca.png").openStream());
 
 			Graphics g = bufferedImage.getGraphics();
 			g.setColor(Color.black);
@@ -208,7 +220,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			row += 50;
 
 			// Número da licença
-			g.drawString(licenca, col1, row);
+			g.drawString(protocolo, col1, row);
 
 			// Modalidade
 			g.drawString(modalidade, col2, row);
@@ -216,7 +228,14 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			row += 48;
 
 			// Endereço
-			Endereco endereco = pessoa.enderecos.get(0);
+			Endereco endereco = null;
+
+			for(Endereco e : pessoa.enderecos) {
+				if(!StringUtils.isBlank(e.logradouro) && !StringUtils.isBlank(e.cep)) {
+					endereco = e;
+				}
+			}
+
 			String strEndereco =  endereco.logradouro + ", Nº " + endereco.numero + " " + (endereco.complemento != null ? endereco.complemento : "") + ", " + endereco.bairro;
 			g.drawString(strEndereco, col1, row);
 
@@ -226,7 +245,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			g.drawString(endereco.municipio.nome + " / " + endereco.municipio.estado.sigla, col1, row);
 
 			// CEP
-			g.drawString(endereco.cep, col2, row);
+			g.drawString(endereco.cep != null ? endereco.cep : "-", col2, row);
 
 			row += 48;
 
@@ -245,12 +264,12 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			g.drawString(DateUtils.formatDate(new Date(), "dd/MM/yyyy"), col2, row);
 
 			// QRCode
-			BufferedImage qrCode = QRCodeUtils.createQRCodeImage(licenca);
+			BufferedImage qrCode = QRCodeUtils.createQRCodeImage(protocolo);
 			g.drawImage(qrCode, 1000, 80, null);
 
 			g.dispose();
 
-			Path caminhoCarteiraPesca = Paths.get(Properties.pathCarteiraPesca() + cpf + "/carteira_pesca_" + cpf + ".png");
+			Path caminhoCarteiraPesca = Paths.get(Properties.pathCarteiraPesca() + protocoloSimples + "/" + protocoloSimples + ".png");
 			File carteiraPesca = caminhoCarteiraPesca.toFile();
 
 			if(!carteiraPesca.exists()) {
@@ -258,6 +277,9 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			}
 
 			ImageIO.write(bufferedImage, "png", carteiraPesca);
+
+			log.info("gerarCarteiraDePesca() - end");
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
