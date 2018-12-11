@@ -51,6 +51,10 @@ public class ConsultaController {
 	public ResponseEntity<LicencaDTO> consultar(@RequestParam final String protocolo) {
 
 		var licenca = facade.consultar(protocolo);
+
+		if (licenca == null)
+			return new ResponseEntity<>(licenca, HttpStatus.NOT_FOUND);
+
 		licenca.add(linkTo(methodOn(ConsultaController.class)
 			.consultar(protocolo))
 			.withSelfRel());

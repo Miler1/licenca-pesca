@@ -13,11 +13,11 @@ public class Constants {
 
 	public static final Integer EMAIL = 1;
 
-	public static final Integer ENDERECO_PRINCIPAL = 0;
+	public static final Integer ENDERECO_PRINCIPAL = 1;
 
-	public static final Integer ENDERECO_CORRESPONDENCIA = 1;
+	public static final Integer ENDERECO_CORRESPONDENCIA = 2;
 
-	public static final Integer ZONA_RURAL = 2;
+	public static final Integer ZONA_RURAL = 1;
 
 	public static final String SCHEMA_CARTEIRA_PESCA = "carteira_pesca";
 

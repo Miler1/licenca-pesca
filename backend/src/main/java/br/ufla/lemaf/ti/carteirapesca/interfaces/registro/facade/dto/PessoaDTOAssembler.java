@@ -91,7 +91,12 @@ public class PessoaDTOAssembler {
 	private static EnderecoDTO searchEndereco(List<Endereco> enderecos, Integer tipoEndereco) {
 		if (enderecos == null || enderecos.isEmpty()) return null;
 
-		return toEnderecoDTO(enderecos.get(tipoEndereco));
+		var endereco = enderecos
+			.stream()
+			.filter(end -> end.tipo.id.equals(tipoEndereco))
+			.findFirst();
+
+		return toEnderecoDTO(endereco.isPresent() ? endereco.get() : null);
 	}
 
 	/**
