@@ -56,3 +56,6 @@ spring:
         url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
       cadastro-unificado:
         url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
+
+  carteira-pesca:
+    base-path: arquivos/

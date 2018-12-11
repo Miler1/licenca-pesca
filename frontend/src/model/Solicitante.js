@@ -14,7 +14,7 @@ export const Solicitante = {
   nomeMae: null,
   email: null,
   enderecoPrincipal: {
-    tipo: null,
+    tipo: 1,
     zonaLocalizacao: null,
     semNumero: false,
     logradouro: null,
@@ -27,7 +27,7 @@ export const Solicitante = {
     descricaoAcesso: null
   },
   enderecoCorrespondencia: {
-    tipo: null,
+    tipo: 2,
     zonaLocalizacao: null,
     semNumero: false,
     logradouro: null,

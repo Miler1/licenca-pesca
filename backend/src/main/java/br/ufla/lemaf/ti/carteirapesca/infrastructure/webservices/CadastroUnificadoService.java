@@ -156,13 +156,23 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 
 		Estado[] estadosEU = this.buscarEstados(paisBrasil.get(0).id);
 		// TODO - Modificar a sigla do estado após terminar os testes e apresentação.
-		ArrayList<Estado> estadoSelecionado = (ArrayList<Estado>) Arrays.asList(estadosEU).stream().filter(estado -> estado.sigla.equals("PA")).collect(Collectors.toList());
+		ArrayList<Estado> estadoSelecionado = (ArrayList<Estado>) Arrays.asList(estadosEU).stream().filter(estado -> estado.sigla.equals(pessoa.getEnderecoPrincipal().getUf())).collect(Collectors.toList());
 
 		Municipio[] municipiosEU = this.buscarMunicipio(estadoSelecionado.get(0).id);
 
+		if(municipiosEU.length == 0) {
+			throw new RuntimeException("Município não foi localizado no Entrada Única");
+		}
+
 		Pessoa pessoaEU = pessoa.toPessoaEU(municipiosEU);
 
-		return this.cadastrarPessoaFisica(pessoaEU);
+		Message result = this.cadastrarPessoaFisica(pessoaEU);
+
+		if(result == null) {
+			throw new RuntimeException("Erro ao tentar cadastrar a Pessoa no Entrada Única");
+		}
+
+		return result;
 	}
 
 }

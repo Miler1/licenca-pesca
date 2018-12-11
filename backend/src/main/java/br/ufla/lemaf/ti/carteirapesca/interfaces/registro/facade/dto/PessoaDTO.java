@@ -243,19 +243,20 @@ public final class PessoaDTO extends ResourceSupport {
 		// Endereços
 		pessoaEU.enderecos = new ArrayList<>();
 
-		if (this.enderecoPrincipal != null)
+		if (this.enderecoPrincipal != null && this.enderecoPrincipal.getLogradouro() != null) {
 			pessoaEU.enderecos.add(this.enderecoPrincipal.toEnderecoEU(municipios));
+		}
 
-		if (this.enderecoCorrespondencia != null)
+		if (this.enderecoCorrespondencia != null && this.enderecoCorrespondencia.getLogradouro() != null) {
 			pessoaEU.enderecos.add(this.enderecoCorrespondencia.toEnderecoEU(municipios));
+		}
+		else {
 
-		if (this.enderecoCorrespondencia == null) {
-
-			Endereco enderecoCorrespondencia = this.enderecoPrincipal.toEnderecoEU(municipios);
-			enderecoCorrespondencia.tipo.id = 2;
-			enderecoCorrespondencia.zonaLocalizacao.codigo = 0;
-			enderecoCorrespondencia.zonaLocalizacao.nome = "Urbana";
-			pessoaEU.enderecos.add(enderecoCorrespondencia);
+			Endereco endereco = this.enderecoPrincipal.toEnderecoEU(municipios);
+			endereco.tipo.id = 2;
+			endereco.zonaLocalizacao.codigo = 0;
+			endereco.zonaLocalizacao.nome = "Urbana";
+			pessoaEU.enderecos.add(endereco);
 		}
 
 		return pessoaEU;

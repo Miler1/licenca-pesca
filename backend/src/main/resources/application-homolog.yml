@@ -20,6 +20,12 @@ spring:
       enabled: true
       max-file-size: 10MB
 
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://192.168.100.7:5432/carteira_pesca
+    username: carteira_pesca
+    password: carteira_pesca
+
   jpa:
     properties:
 
@@ -46,3 +52,6 @@ spring:
         url: http://homologacao.ipaam.lemaf.com.br/homolog/portalSeguranca
       cadastro-unificado:
         url: http://homologacao.ipaam.lemaf.com.br/homolog/cadastroUnificado
+
+  carteira-pesca:
+    base-path: /dados/var/arquivos/carteira-pesca/
