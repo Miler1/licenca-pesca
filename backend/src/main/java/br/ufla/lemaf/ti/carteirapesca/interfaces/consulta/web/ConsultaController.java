@@ -93,7 +93,7 @@ public class ConsultaController {
 
 			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
@@ -123,7 +123,7 @@ public class ConsultaController {
 
 			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 

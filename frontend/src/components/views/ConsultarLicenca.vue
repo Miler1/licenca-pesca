@@ -5,8 +5,8 @@
 			.licenca
 				h2.titulo {{ licenca.protocolo }}
 				.buttons
-					el-button(icon="el-icon-download" type="primary") {{ $t(`${consultar_prefix}botoes.downloadBoleto`) }}
-					el-button(icon="el-icon-download" type="primary") {{ $t(`${consultar_prefix}botoes.downloadLicenca`) }}
+					el-button(icon="el-icon-download" v-if="licenca.status === 0" type="primary" @click="baixarBoleto(licenca.protocolo)") {{ $t(`${consultar_prefix}botoes.downloadBoleto`) }}
+					el-button(icon="el-icon-download" v-if="licenca.status === 1" type="primary" @click="baixarCarteira(licenca.protocolo)") {{ $t(`${consultar_prefix}botoes.downloadLicenca`) }}
 		.no-data(v-if="licenca === null")
 			h2 {{ $t(`${consultar_prefix}data.semLicenca`) }}
 
@@ -16,9 +16,10 @@
 <script>
 import { mapGetters } from "vuex";
 import ListaLicenca from "../elements/ListaLicenca";
-import { FETCH_LICENCA } from "../../store/actions.type";
+import { ATIVAR_LICENCA, FETCH_LICENCA } from "../../store/actions.type";
 import Card from "../layouts/Card";
 import { INTERFACE_CONSULTA_PREFIX } from "../../utils/messages/interface/consulta/consulta";
+import Properties from "../../properties";
 
 export default {
   name: "ConsultarLicenca",
@@ -42,6 +43,26 @@ export default {
   methods: {
     fetchData() {
       this.$store.dispatch(FETCH_LICENCA, this.$route.params.protocolo);
+    },
+
+    baixarBoleto(protocolo) {
+      let protocoloDesformatado = protocolo.replace("/", "").replace("-", "");
+      this.$store.dispatch(ATIVAR_LICENCA);
+
+      const href =
+        `${Properties.BASE_URL}/api/boleto?protocolo=` + protocoloDesformatado;
+
+      window.open(href, "_blank");
+    },
+
+    baixarCarteira(protocolo) {
+      let protocoloDesformatado = protocolo.replace("/", "").replace("-", "");
+
+      const href =
+        `${Properties.BASE_URL}/api/carteira?protocolo=` +
+        protocoloDesformatado;
+
+      window.open(href, "_blank");
     }
   },
 
