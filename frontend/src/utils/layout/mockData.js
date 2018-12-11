@@ -146,9 +146,9 @@ export const LOCAL_PESCA_MOCK = [
   },
   {
     cod: 1,
-    descricao_pt: "Rio",
-    descricao_en: "River",
-    descricao_es: "Río"
+    descricao_pt: "Água doce",
+    descricao_en: "Fresh water",
+    descricao_es: "Agua dulce"
   }
 ];
 

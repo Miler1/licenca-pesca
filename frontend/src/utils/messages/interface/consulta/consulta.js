@@ -14,6 +14,18 @@ const CONSULTA = {
         "This license does not exist!",
         "¡Esta licencia no existe!"
       ]
+    },
+    botoes: {
+      downloadLicenca: [
+        "Baixar a carteira de pesca",
+        "Download the fishing license",
+        "Descargar la cartera de pesca"
+      ],
+      downloadBoleto: [
+        "Baixar o boleto",
+        "Download the ticket",
+        "Descargar el boleto"
+      ]
     }
   }
 };

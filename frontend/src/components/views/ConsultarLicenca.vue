@@ -5,8 +5,8 @@
 			.licenca
 				h2.titulo {{ licenca.protocolo }}
 				.buttons
-					el-button(icon="el-icon-download" type="primary") Baixar o boleto
-					el-button(icon="el-icon-download" type="primary") Baixar a carteira de pesca
+					el-button(icon="el-icon-download" type="primary") {{ $t(`${consultar_prefix}botoes.downloadBoleto`) }}
+					el-button(icon="el-icon-download" type="primary") {{ $t(`${consultar_prefix}botoes.downloadLicenca`) }}
 		.no-data(v-if="licenca === null")
 			h2 {{ $t(`${consultar_prefix}data.semLicenca`) }}
 
