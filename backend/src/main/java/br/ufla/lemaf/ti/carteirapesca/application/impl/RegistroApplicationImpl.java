@@ -90,8 +90,12 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			GeradorBoleto geradorBoleto = new GeradorBoleto(pessoa, licenca.protocolo().toString());
 			String caminhoBoleto = geradorBoleto.gerarBoleto();
 
+			licenca.setCaminhoBoleto(caminhoBoleto);
+
 			// TODO - Armazenar o caminho da carteira de pesca
 			String caminhoCarteiraDePesca = gerarCarteiraDePesca(pessoa, licenca.protocolo().toString(), licenca.modalidade().toString());
+
+			licenca.setCaminhoCarteira(caminhoCarteiraDePesca);
 
 			protocolo = solicitante.adicionarLicenca(licenca);
 
