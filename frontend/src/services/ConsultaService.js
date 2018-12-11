@@ -7,7 +7,7 @@ const ConsultaService = {
    * dado o protocolo.
    */
   consultar: protocolo =>
-    ApiService.get(`${Properties.BASE_URL}/api/consultar`, protocolo)
+    ApiService.query(`${Properties.BASE_URL}/api/consultar`, { protocolo })
 };
 
 export default ConsultaService;

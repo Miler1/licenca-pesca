@@ -1,12 +1,14 @@
 <template lang="pug">
 	#consultar-licenca
-		h2 {{$t(`${consultar_prefix}titulos.licenca`)}}
-		card
+		h2 {{ $t(`${consultar_prefix}titulos.licenca`) }}
+		card(v-if="licenca !== null")
 			.licenca
-				h2.titulo LPE-0016/18
+				h2.titulo {{ licenca.protocolo }}
 				.buttons
 					el-button(icon="el-icon-download" type="primary") Baixar o boleto
 					el-button(icon="el-icon-download" type="primary") Baixar a carteira de pesca
+		.no-data(v-if="licenca === null")
+			h2 {{ $t(`${consultar_prefix}data.semLicenca`) }}
 
 
 </template>
@@ -16,6 +18,7 @@ import { mapGetters } from "vuex";
 import ListaLicenca from "../elements/ListaLicenca";
 import { FETCH_LICENCA } from "../../store/actions.type";
 import Card from "../layouts/Card";
+import { INTERFACE_CONSULTA_PREFIX } from "../../utils/messages/interface/consulta/consulta";
 
 export default {
   name: "ConsultarLicenca",
@@ -24,7 +27,7 @@ export default {
 
   data() {
     return {
-      consultar_prefix: ""
+      consultar_prefix: INTERFACE_CONSULTA_PREFIX
     };
   },
 
@@ -43,7 +46,7 @@ export default {
   },
 
   created() {
-    this.fetchData;
+    this.fetchData();
   }
 };
 </script>
@@ -57,5 +60,14 @@ export default {
 
 			.titulo
 				padding: 10px 0 10px 0
+
+		.no-data
+			height: 75vh
+			display: flex
+			justify-content: center
+			align-items: center
+
+			h2
+				color: #a9a9a9
 
 </style>

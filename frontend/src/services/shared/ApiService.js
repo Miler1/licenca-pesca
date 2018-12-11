@@ -37,14 +37,7 @@ const ApiService = {
   async query(resource, params) {
     try {
       return await Vue.axios.get(resource, {
-        params,
-        paramsSerializer: ({ params }) => {
-          qs.stringify(params, {
-            skipNulls: true,
-            format: "RFC1738",
-            indices: false
-          });
-        }
+        params
       });
     } catch (error) {
       return Promise.reject(new HttpException.init(error, true));

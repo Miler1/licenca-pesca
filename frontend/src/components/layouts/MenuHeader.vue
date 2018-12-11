@@ -2,8 +2,9 @@
 	#menu-header
 		.menu
 			.left
-				.logo-image
-				.logo-text IPAAM
+				router-link(to="/")
+					.logo-image
+					.logo-text IPAAM
 			.right
 				.locale
 					i.mdi.mdi-translate
@@ -50,6 +51,11 @@ export default {
 			.left
 				display: flex
 				align-items: center
+
+				.router-link-active
+					display: flex
+					align-items: center
+					text-decoration: none
 
 				.logo-image
 					color: white

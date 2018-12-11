@@ -27,7 +27,7 @@ public class GeradorBoleto implements Serializable {
 	public GeradorBoleto(Pessoa pessoa, String protocolo) {
 
 		this.pessoa = pessoa;
-		this.protocolo = protocolo.replace("-", "").replace("/", "");;
+		this.protocolo = protocolo.replace("-", "").replace("/", "");
 	}
 
 	/**

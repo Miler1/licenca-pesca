@@ -4,7 +4,7 @@ import { FETCH_LICENCA } from "../actions.type";
 import ConsultaService from "../../services/ConsultaService";
 
 const INITIAL_STATE = {
-  licencas: [],
+  licenca: null,
   status: STATUS_MOCK
 };
 
@@ -18,7 +18,7 @@ export const state = Object.assign({}, INITIAL_STATE);
 export const getters = {
   status: state => state.status,
 
-  licenca: state => state.licencas
+  licenca: state => state.licenca
 };
 
 /**
@@ -43,7 +43,7 @@ export const actions = {
  * da STORE.
  */
 export const mutations = {
-  [SET_LICENCA]: (state, licencas) => (state.licencas = licencas)
+  [SET_LICENCA]: (state, licenca) => (state.licenca = licenca)
 };
 
 export default {
