@@ -116,7 +116,9 @@ export default {
 
 	#visualizar-info-complementares
 		.title
-			margin-top: 30px
+			margin-top: 25px
+			border-top: 1px solid #ddd
+			padding-top: 20px
 
 		.section
 			margin-top: 20px

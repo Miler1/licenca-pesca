@@ -38,7 +38,7 @@
 					h4.label {{ $t(`${visualizar_prefix}label.nomeMae`) }}
 					h4(:class="{'not-informed': exist(pessoa.nomeMae)}") {{ pessoa.nomeMae | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-		h3.title {{ $t(`${visualizar_prefix}titulo.enderecoPrincipal`) }}
+		h3.title.withDivisor {{ $t(`${visualizar_prefix}titulo.enderecoPrincipal`) }}
 
 		el-row.section(:gutter="20")
 
@@ -87,7 +87,7 @@
 					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.uf)}") {{ pessoa.enderecoPrincipal.uf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 		.enderecoCorrespondencia(v-if="pessoa.enderecoPrincipal.zonaLocalizacao === 1")
-			h3.title {{ $t(`${visualizar_prefix}titulo.enderecoCorrespondencia`) }}
+			h3.title.withDivisor {{ $t(`${visualizar_prefix}titulo.enderecoCorrespondencia`) }}
 
 			el-row.section(:gutter="20")
 
@@ -225,6 +225,11 @@ export default {
 
 		.title
 			margin-top: 30px
+
+		.withDivisor
+			margin-top: 25px
+			border-top: 1px solid #ddd
+			padding-top: 20px
 
 		.section
 			margin-top: 20px
