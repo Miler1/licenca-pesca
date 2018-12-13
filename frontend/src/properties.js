@@ -1,8 +1,10 @@
-const handleEnvironment = (devProperty, prodProperty) => {
-  if (process.env.NODE_ENV !== "production") {
-    return devProperty;
-  } else {
+const handleEnvironment = (devProperty, prodProperty, homologProperty) => {
+  if (process.env.NODE_ENV === "production") {
     return prodProperty;
+  } else if (process.env.NODE_ENV === "homologacao") {
+    return homologProperty;
+  } else {
+    return devProperty;
   }
 };
 
@@ -22,7 +24,11 @@ const Properties = {
     PT_BR: 0,
     EN: 1
   },
-  BASE_URL: handleEnvironment("http://localhost:9666", "http://homologacao.ipaam.lemaf.com.br/carteira-pesca"),
+  BASE_URL: handleEnvironment(
+    "http://localhost:9666",
+    "",
+    "http://homologacao.ipaam.lemaf.com.br/carteira-pesca"
+  ),
   IBGE_API: "https://servicodados.ibge.gov.br/api/v1/localidades"
 };
 
