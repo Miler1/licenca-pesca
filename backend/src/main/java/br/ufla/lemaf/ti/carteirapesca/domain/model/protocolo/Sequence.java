@@ -22,22 +22,22 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "protocolo_sequence", schema = Constants.SCHEMA_CARTEIRA_PESCA)
+@Table(name = "sequencia_protocolo", schema = Constants.SCHEMA_CARTEIRA_PESCA)
 public final class Sequence implements ValueObject<Sequence> {
 
 	private static final Integer MAX_SEQUENCE_LENGTH = 9999;
 
-	@Column(name = "nom_sequence")
+	@Column(name = "nm_sequencia")
 	private String nome;
 
-	@Column(name = "val_sequence")
+	@Column(name = "vl_sequencia")
 	private Integer valor;
 
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "idt_modalidade")
+	@Column(name = "id_modalidade")
 	private Modalidade modalidade;
 
-	@Column(name = "val_sequence_year")
+	@Column(name = "nu_ano_sequencia")
 	private int year;
 
 	/**

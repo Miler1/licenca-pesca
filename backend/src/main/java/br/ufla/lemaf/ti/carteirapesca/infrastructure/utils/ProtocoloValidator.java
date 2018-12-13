@@ -19,6 +19,15 @@ import java.util.regex.Pattern;
  */
 public class ProtocoloValidator implements Validator<String> {
 
+	/**
+	 * Padrão do protocolo da Licença: LPX-9999/99 .
+	 * <p>
+	 * No qual, X significa a letra E ou R e
+	 * 9 significa número.
+	 * <p>
+	 * {@see http://gitlab.ti.lemaf.ufla.br/ipaam/
+	 * carteira-de-pesca/wikis/licenca-pesca#1-cadastrar-licen%C3%A7a-de-pesca}
+	 */
 	public static final Pattern FORMATED = Pattern.compile("(LP[ER])-([\\d]{4})/([\\d]{2})");
 	public static final Pattern UNFORMATED = Pattern.compile("(LP[ER])([\\d]{4})([\\d]{2})");
 

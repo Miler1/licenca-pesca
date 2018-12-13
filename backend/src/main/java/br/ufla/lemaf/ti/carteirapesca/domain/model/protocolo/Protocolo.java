@@ -2,14 +2,13 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.val;
 
 import javax.persistence.*;
-import java.util.regex.Pattern;
 
 import static br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade.*;
 
@@ -20,29 +19,15 @@ import static br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade.*;
  * @since 1.0
  */
 @Getter
-@Entity
+@Embeddable
 @NoArgsConstructor
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "protocolo")
 public final class Protocolo extends ValueObjectBase<Protocolo> {
 
-	@Column(name = "val_codigo")
-	private String codigo;
+	@Column(name = "tx_protocolo")
+	private String codigoFormatado;
 
 	@Transient
-	private String numeroNaoFormatado;
-
-	/**
-	 * Padrão do protocolo da Licença: LPX-9999/99 .
-	 * <p>
-	 * No qual, X significa a letra E ou R e
-	 * 9 significa número.
-	 * <p>
-	 * {@see http://gitlab.ti.lemaf.ufla.br/ipaam/
-	 * carteira-de-pesca/wikis/licenca-pesca#1-cadastrar-licen%C3%A7a-de-pesca}
-	 */
-	private static final Pattern VALID_PATTERN = Pattern.compile(
-		"LP([ER])-([\\d]{4})/([\\d]{2})"
-	);
+	private String codigo;
 
 	/**
 	 * Construtor do Protocolo de Licença.
@@ -66,18 +51,18 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 
 		if (formatter.isFormatted(protocolo)) {
 
-			this.numeroNaoFormatado = formatter.unformat(protocolo);
-			this.codigo = protocolo;
+			this.codigo = formatter.unformat(protocolo);
+			this.codigoFormatado = protocolo;
 
 		} else if (formatter.canBeFormatted(protocolo)) {
 
-			this.numeroNaoFormatado = protocolo;
-			this.codigo = formatter.format(protocolo);
+			this.codigo = protocolo;
+			this.codigoFormatado = formatter.format(protocolo);
 
 		} else {
 
+			this.codigoFormatado = protocolo;
 			this.codigo = protocolo;
-			this.numeroNaoFormatado = protocolo;
 
 		}
 
@@ -89,10 +74,10 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 * @return A modalidade do protoco
 	 */
 	public Modalidade modalidade() {
-		switch (VALID_PATTERN.matcher(codigo).group(1)) {
-			case "E":
+		switch (ProtocoloValidator.FORMATED.matcher(codigoFormatado).group(1)) {
+			case "LPE":
 				return ESPORTIVA;
-			case "R":
+			case "LPR":
 				return RECREATIVA;
 			default:
 				return UNKNOWN;
@@ -104,7 +89,7 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 */
 	@Override
 	public String toString() {
-		return codigo;
+		return codigoFormatado;
 	}
 
 	/**
@@ -112,8 +97,8 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 *
 	 * @return O Protocolo sem formatação
 	 */
-	private String getProtocoloNaoFormatado() {
-		return numeroNaoFormatado;
+	public String getProtocoloNaoFormatado() {
+		return codigo;
 	}
 
 	/**
@@ -131,11 +116,5 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	public int hashCode() {
 		return super.hashCode();
 	}
-
-	// Surrugate key para o Hibernate
-	@Id
-	@SuppressWarnings("unused")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 
 }

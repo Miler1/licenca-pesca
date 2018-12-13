@@ -12,6 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Buider de Protocolo.
+ * <p>
+ * Gera o código do protocolo da Licença.
+ *
+ * @author Highlander Paiva
+ * @since 1.0
+ */
 @Service
 @Transactional
 public class ProtocoloBuilderImpl implements ProtocoloBuilder {
@@ -28,6 +36,11 @@ public class ProtocoloBuilderImpl implements ProtocoloBuilder {
 
 	private static final String PREFIX_RECREATIVA = "LPR";
 
+	/**
+	 * Injetando dependências.
+	 *
+	 * @param sequenceRepository O repositório da sequêcia
+	 */
 	@Autowired
 	public ProtocoloBuilderImpl(SequenceRepository sequenceRepository) {
 		this.repository = sequenceRepository;
@@ -44,6 +57,7 @@ public class ProtocoloBuilderImpl implements ProtocoloBuilder {
 			+ DIVISOR_SEGUNDA_PARTE
 			+ construirEtapaAno();
 	}
+
 	/**
 	 * Constrói a string com o prefixo do protocolo.
 	 * <p>

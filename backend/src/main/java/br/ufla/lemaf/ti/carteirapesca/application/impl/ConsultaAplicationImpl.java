@@ -39,7 +39,7 @@ public class ConsultaAplicationImpl implements ConsultaApplication {
 	@Override
 	public Licenca consulta(Protocolo protocolo) {
 
-		var licenca =  licencaRepository.findByProtocolo_Codigo(protocolo.getCodigo());
+		var licenca =  licencaRepository.findByProtocolo_CodigoFormatado(protocolo.getCodigoFormatado());
 
 		if (licenca == null) return null;
 
@@ -53,7 +53,7 @@ public class ConsultaAplicationImpl implements ConsultaApplication {
 	@Override
 	public String buscarCaminhoBoleto(Protocolo protocolo) {
 
-		var licenca = licencaRepository.findByProtocolo_Codigo(protocolo.getCodigo());
+		var licenca = licencaRepository.findByProtocolo_CodigoFormatado(protocolo.getCodigoFormatado());
 
 		if (licenca == null) return null;
 
@@ -67,7 +67,7 @@ public class ConsultaAplicationImpl implements ConsultaApplication {
 	@Override
 	public String buscarCaminhoCarteira(Protocolo protocolo) {
 
-		var licenca = licencaRepository.findByProtocolo_Codigo(protocolo.getCodigo());
+		var licenca = licencaRepository.findByProtocolo_CodigoFormatado(protocolo.getCodigoFormatado());
 
 		if (licenca == null) return null;
 

@@ -1,7 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.NoArgsConstructor;
 
@@ -13,17 +12,16 @@ import javax.persistence.*;
  * @author Highlander Paiva
  * @since 1.0
  */
-@Entity
+@Embeddable
 @NoArgsConstructor
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "solicitante_id")
 final class SolicitanteId extends ValueObjectBase<SolicitanteId> {
 
-	@JoinColumn(name = "idt_cpf")
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Embedded
+	@AttributeOverride(name = "numero", column = @Column(name = "nu_cpf"))
 	private CPF cpf;
 
-	@JoinColumn(name = "idt_passaporte")
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Embedded
+	@AttributeOverride(name = "numero", column = @Column(name = "nu_passaporte"))
 	private Passaporte passaporte;
 
 	/**
@@ -87,8 +85,4 @@ final class SolicitanteId extends ValueObjectBase<SolicitanteId> {
 		return super.hashCode();
 	}
 
-	@Id
-	@SuppressWarnings("unused")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 }

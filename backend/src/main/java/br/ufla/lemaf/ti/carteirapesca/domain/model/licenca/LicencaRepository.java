@@ -13,10 +13,10 @@ import org.springframework.stereotype.Repository;
 public interface LicencaRepository extends JpaRepository<Licenca, Integer> {
 
 	/**
-	 * Busca uma licença pelo seu protocolo.
+	 * Busca uma licença pelo seu protocolo formatado.
 	 *
 	 * @param protocolo O número de protocolo formatado
 	 * @return A licença
 	 */
-	Licenca findByProtocolo_Codigo(String protocolo);
+	Licenca findByProtocolo_CodigoFormatado(String protocolo);
 }

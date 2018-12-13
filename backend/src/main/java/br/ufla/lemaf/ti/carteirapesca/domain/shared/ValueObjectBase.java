@@ -3,6 +3,8 @@ package br.ufla.lemaf.ti.carteirapesca.domain.shared;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.MappedSuperclass;
+
 /**
  * Implementação base para o Value Object.
  *
@@ -10,6 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author Highlander Paiva
  * @since 1.0
  */
+@MappedSuperclass
 public abstract class ValueObjectBase<T extends ValueObject> implements ValueObject<T> {
 
 	private transient int cashHashCode = 0;

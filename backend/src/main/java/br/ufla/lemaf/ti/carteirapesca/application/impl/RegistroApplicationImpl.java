@@ -183,7 +183,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		Solicitante solicitante = null;
 
 		if (cpf != null) {
-			solicitante = solicitanteRopository.findByIdentity_Cpf_Numero(cpf.getNumero());
+			solicitante = solicitanteRopository.findByIdentityCpfNumero(cpf.getNumero());
 		} else if (passaporte != null) {
 			solicitante = solicitanteRopository.findByIdentity_Passaporte_Numero(passaporte.getNumero());
 		}

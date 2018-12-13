@@ -22,7 +22,7 @@ public class LicencaDTOAssembler {
 		if (licenca == null) return null;
 
 		return new LicencaDTO(
-			licenca.protocolo().getCodigo(),
+			licenca.protocolo().getCodigoFormatado(),
 			licenca.modalidade().ordinal(),
 			licenca.status().ordinal(),
 			setDate(licenca.dataCriacao()),

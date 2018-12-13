@@ -28,22 +28,22 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	// Anos para a licença vencer após ativada
 	private static final Integer ANOS_VENCIMENTO_LICENCA = 1;
 
-	@JoinColumn(name = "idt_protocolo")
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Embedded
+	@AttributeOverride(name = "codigoFormatado", column = @Column(name = "tx_protocolo"))
 	private Protocolo protocolo;
 
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "idt_modalidade")
+	@Column(name = "id_modalidade")
 	private Modalidade modalidade;
 
-	@Column(name = "dat_criacao")
+	@Column(name = "dt_criacao")
 	private Date dataCriacao;
 
-	@Column(name = "idt_status")
+	@Column(name = "id_status")
 	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
-	@Column(name = "dat_ativacao")
+	@Column(name = "dt_ativacao")
 	private Date dataAtivacao;
 
 	@Column(name = "tx_caminho_boleto")

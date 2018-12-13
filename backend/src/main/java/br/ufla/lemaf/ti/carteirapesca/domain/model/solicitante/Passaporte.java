@@ -1,7 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +15,11 @@ import javax.persistence.*;
  * @since 1.0
  */
 @Getter
-@Entity
+@Embeddable
 @NoArgsConstructor
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "passaporte")
 public final class Passaporte extends ValueObjectBase<Passaporte> {
 
-	@Column(name = "val_numero")
+	@Column(name = "nu_passaporte")
 	private String numero;
 
 	/**
@@ -65,11 +63,5 @@ public final class Passaporte extends ValueObjectBase<Passaporte> {
 	public int hashCode() {
 		return super.hashCode();
 	}
-
-	// Surrugate key para o Hibernate
-	@Id
-	@SuppressWarnings("unused")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 
 }

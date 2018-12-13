@@ -3,7 +3,6 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 import br.com.caelum.stella.format.CPFFormatter;
 import br.com.caelum.stella.validation.CPFValidator;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObjectBase;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.NoArgsConstructor;
 import lombok.val;
 
@@ -19,9 +18,8 @@ import javax.persistence.*;
  * @author Highlander Paiva
  * @since 1.0
  */
-@Entity
+@Embeddable
 @NoArgsConstructor
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "cpf")
 public final class CPF extends ValueObjectBase<CPF> {
 
 	@Column(name = "val_numero_cpf")
@@ -115,9 +113,4 @@ public final class CPF extends ValueObjectBase<CPF> {
 		return super.hashCode();
 	}
 
-	// Surrugate key para o Hibernate
-	@Id
-	@SuppressWarnings("unused")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 }

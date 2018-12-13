@@ -24,11 +24,14 @@ import java.util.List;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "solicitante")
 public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
-	@JoinColumn(name = "idt_solicitante_id")
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "cpf.numero", column = @Column(name = "nu_cpf")),
+		@AttributeOverride(name = "passaporte.numero", column = @Column(name = "nu_passaporte"))
+	})
 	private SolicitanteId identity;
 
-	@JoinColumn(name = "idt_solicitante")
+	@JoinColumn(name = "id_solicitante")
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Licenca> licencas = new ArrayList<>();
 

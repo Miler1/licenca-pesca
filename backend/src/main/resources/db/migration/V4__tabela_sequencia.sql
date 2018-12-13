@@ -6,11 +6,7 @@ CREATE TABLE carteira_pesca.protocolo_sequence
   idt_modalidade            INTEGER NOT NULL,
   val_sequence_year         INTEGER NOT NULL,
 
-  CONSTRAINT pk_protocolo_sequence PRIMARY KEY (id),
-
-  CONSTRAINT fk_modalidade FOREIGN KEY (idt_modalidade)
-    REFERENCES carteira_pesca.modalidade MATCH SIMPLE
-    ON UPDATE RESTRICT ON DELETE RESTRICT
+  CONSTRAINT pk_protocolo_sequence PRIMARY KEY (id)
 
 ) WITH (OIDS = FALSE );
 

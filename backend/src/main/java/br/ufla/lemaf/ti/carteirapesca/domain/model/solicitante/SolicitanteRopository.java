@@ -18,7 +18,7 @@ public interface SolicitanteRopository extends JpaRepository<Solicitante, Intege
 	 * @param cpf O CPF buscado
 	 * @return O Solicitante
 	 */
-	Solicitante findByIdentity_Cpf_Numero(String cpf);
+	Solicitante findByIdentityCpfNumero(String cpf);
 
 	/**
 	 * Busca o solicitante pelo seu passaporte.
