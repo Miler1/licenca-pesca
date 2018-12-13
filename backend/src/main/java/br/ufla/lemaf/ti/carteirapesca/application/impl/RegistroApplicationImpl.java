@@ -74,10 +74,13 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Protocolo protocolo;
 
-		String identificador = resource.getPessoa().getCpf() != null ? resource.getPessoa().getCpf() : resource.getPessoa().getPassaporte();
+		var identificador = solicitante.identity();
 
-		Pessoa pessoa = WebServiceUtils.webService().buscarPessoaFisicaPeloCpf(identificador);
-		if(pessoa == null){
+		var pessoa = WebServiceUtils
+			.webService()
+			.buscarPessoaFisicaPeloCpf(identificador.valor());
+
+		if (pessoa == null) {
 			throw new RuntimeException("Pessoa não foi encontrada no Entrada Única com o cpf informado.");
 		}
 
@@ -132,11 +135,15 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		WebServiceUtils.validarWebService();
 
-		Pessoa pessoaEU = WebServiceUtils.webService().buscarPessoaFisicaPeloCpf(pessoa.getCpf());
+		var pessoaEU = WebServiceUtils
+			.webService()
+			.buscarPessoaFisicaPeloCpf(pessoa.getCpf());
 
-		if(pessoaEU == null) {
+		if (pessoaEU == null) {
 
-			WebServiceUtils.webService().cadastrarPessoa(pessoa);
+			WebServiceUtils
+				.webService()
+				.cadastrarPessoa(pessoa);
 		}
 	}
 

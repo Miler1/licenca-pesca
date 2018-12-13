@@ -2,6 +2,12 @@ package br.ufla.lemaf.ti.carteirapesca.domain.services;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 
+/**
+ * Interface do serviço de gerar o protocolo.
+ *
+ * @author Highlander Paiva
+ * @since 1.0
+ */
 public interface ProtocoloBuilder {
 
 	/**

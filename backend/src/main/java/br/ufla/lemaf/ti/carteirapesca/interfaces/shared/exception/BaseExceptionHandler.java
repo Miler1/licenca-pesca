@@ -168,4 +168,25 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 			request
 		);
 	}
+
+	/**
+	 * Manipulador de EntradaUnicaException.
+	 *
+	 * @param ex      A exceção
+	 * @param request A requisição
+	 * @return Resposta HTTP com código 500 e a mensagem de erro do usuário
+	 */
+
+	@ExceptionHandler(value = {EntradaUnicaException.class})
+	protected ResponseEntity<Object> handleConflit(EntradaUnicaException ex, WebRequest request) {
+		log.error(ex.getMessage(), ex);
+
+		return handleExceptionInternal(
+			ex,
+			new ErrorResource(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex),
+			new HttpHeaders(),
+			HttpStatus.INTERNAL_SERVER_ERROR,
+			request
+		);
+	}
 }

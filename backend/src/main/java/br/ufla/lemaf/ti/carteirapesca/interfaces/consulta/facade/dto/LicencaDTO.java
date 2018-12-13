@@ -1,7 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.ResourceSupport;

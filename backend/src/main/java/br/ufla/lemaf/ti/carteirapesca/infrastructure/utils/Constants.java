@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
  * @since 1.0
  */
 @UtilityClass
+@SuppressWarnings("CheckStyle")
 public class Constants {
 
 	public static final Integer EMAIL = 1;
@@ -17,6 +18,8 @@ public class Constants {
 
 	public static final Integer ENDERECO_CORRESPONDENCIA = 2;
 
+	public static final Integer ZONA_URBANA = 0;
+
 	public static final Integer ZONA_RURAL = 1;
 
 	public static final String SCHEMA_CARTEIRA_PESCA = "carteira_pesca";
@@ -24,5 +27,11 @@ public class Constants {
 	public static final Integer BOLETO = 0;
 
 	public static final Integer CARTEIRA = 1;
+
+	public static final Integer MASCULINO = 0;
+
+	public static final Integer FEMININO = 1;
+
+	public static final Integer BRASIL = 29;
 
 }

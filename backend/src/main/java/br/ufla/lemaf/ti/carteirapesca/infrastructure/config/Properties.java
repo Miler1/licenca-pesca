@@ -67,10 +67,15 @@ public final class Properties {
 		return environment.getProperty("spring.security.entradaUnica.cadastro-unificado.url");
 	}
 
+	/**
+	 * @return O caminho da carteira de pesca
+	 */
 	public static String pathCarteiraPesca() {
 		return environment.getProperty("spring.carteira-pesca.base-path");
 	}
-
+	/**
+	 * @return O caminho da do boleto da licença de pesca
+	 */
 	public static String pathBoletoPagamentoCarteiraPesca() {
 		return environment.getProperty("spring.carteira-pesca.path-boleto");
 	}

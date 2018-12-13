@@ -53,7 +53,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @return O identificador em string
 	 */
 	public String buscarIdentificadorUnico() {
-		return identity.buscarIdentificadorValido();
+		return identity.valor();
 	}
 
 	/**

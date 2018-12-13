@@ -2,19 +2,18 @@ package br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices;
 
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.EntradaUnicaException;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import lombok.var;
 import main.java.br.ufla.lemaf.beans.Message;
-import main.java.br.ufla.lemaf.beans.pessoa.Estado;
 import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
-import main.java.br.ufla.lemaf.beans.pessoa.Pais;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * Web Service do Entrada Unica.
@@ -145,34 +144,51 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 	/**
 	 * Cadastra uma pessoa no Entrada Única.
 	 *
-	 * @param pessoa O DTO de Pessoa
+	 * @param pessoaDTO O DTO de Pessoa
 	 * @return Mensagem do serviço de WS do EU
 	 */
-	public Message cadastrarPessoa(PessoaDTO pessoa) {
+	public Message cadastrarPessoa(PessoaDTO pessoaDTO) {
 
-		// Busca o município do EU pelo código do IBGE
-		Pais[] paisesEU = this.buscarPaises();
-		ArrayList<Pais> paisBrasil = (ArrayList<Pais>) Arrays.asList(paisesEU).stream().filter(pais -> pais.nome.equals("Brasil")).collect(Collectors.toList());
+		val assembler = new PessoaDTOAssembler();
 
-		Estado[] estadosEU = this.buscarEstados(paisBrasil.get(0).id);
-		// TODO - Modificar a sigla do estado após terminar os testes e apresentação.
-		ArrayList<Estado> estadoSelecionado = (ArrayList<Estado>) Arrays.asList(estadosEU).stream().filter(estado -> estado.sigla.equals(pessoa.getEnderecoPrincipal().getUf())).collect(Collectors.toList());
+		var pessoa = assembler.toPessoa(pessoaDTO);
 
-		Municipio[] municipiosEU = this.buscarMunicipio(estadoSelecionado.get(0).id);
+		Message result = this.cadastrarPessoaFisica(pessoa);
 
-		if(municipiosEU.length == 0) {
-			throw new RuntimeException("Município não foi localizado no Entrada Única");
-		}
-
-		Pessoa pessoaEU = pessoa.toPessoaEU(municipiosEU);
-
-		Message result = this.cadastrarPessoaFisica(pessoaEU);
-
-		if(result == null) {
-			throw new RuntimeException("Erro ao tentar cadastrar a Pessoa no Entrada Única");
+		if (result == null) {
+			throw new EntradaUnicaException("entradaUnica.erroCadastro");
 		}
 
 		return result;
+	}
+
+	/**
+	 * Busca a lista de municípios cadastrados no Entrada Única.
+	 *
+	 * @param siglaEstado A sigla do estado
+	 * @return Lista de municípios
+	 */
+	public List<Municipio> getMunicipiosByEstado(String siglaEstado) {
+
+		var paises = this.buscarPaises();
+		var brasil = Arrays.stream(paises)
+			.filter(pais -> pais.nome.equals("Brasil"))
+			.findFirst()
+			.orElseThrow(ResourceNotFoundException::new);
+
+		var estados = this.buscarEstados(brasil.id);
+		var estadoSelecionado = Arrays.stream(estados)
+			.filter(estado -> estado.sigla.equals(siglaEstado))
+			.findFirst()
+			.orElseThrow(ResourceNotFoundException::new);
+
+		var municipios = this.buscarMunicipio(estadoSelecionado.id);
+
+		if (municipios.length == 0)
+			throw new EntradaUnicaException("entradaUnica.municipiosNotFound");
+
+		return Arrays.asList(municipios);
+
 	}
 
 }

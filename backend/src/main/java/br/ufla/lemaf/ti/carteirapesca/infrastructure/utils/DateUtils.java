@@ -28,16 +28,17 @@ public class DateUtils {
 	}
 
 	/**
+	 * Formata uma data.
 	 *
-	 * @param data
-	 * @param formato
-	 * @return
+	 * @param data A data
+	 * @param formato O formato da data
+	 * @return String com a data formatada
 	 */
 	public static String formatDate(Date data, String formato) {
 
-		SimpleDateFormat sdf = new SimpleDateFormat(formato);
+		val dateFormat = new SimpleDateFormat(formato);
 
-		return sdf.format(data);
+		return dateFormat.format(data);
 
 	}
 

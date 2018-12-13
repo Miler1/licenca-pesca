@@ -18,5 +18,5 @@ public interface LicencaRepository extends JpaRepository<Licenca, Integer> {
 	 * @param protocolo O número de protocolo formatado
 	 * @return A licença
 	 */
-	Licenca findByProtocolo_CodigoFormatado(String protocolo);
+	Licenca findByProtocoloCodigoFormatado(String protocolo);
 }

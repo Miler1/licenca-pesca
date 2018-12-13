@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import main.java.br.ufla.lemaf.beans.pessoa.*;
-
-import java.util.Arrays;
 
 /**
  * DTO de Endereço.
@@ -80,46 +77,4 @@ public final class EnderecoDTO {
 		this.descricaoAcesso = descricaoAcesso;
 	}
 
-	public Endereco toEnderecoEU(Municipio[] municipios) {
-
-		Endereco endereco = new Endereco();
-		endereco.tipo = new TipoEndereco();
-		// TODO - Validar o DTO no frontend
-		endereco.tipo.id = this.tipo != null ? this.tipo : 1;
-		endereco.zonaLocalizacao = new ZonaLocalizacao();
-		endereco.zonaLocalizacao.codigo = this.zonaLocalizacao;
-
-		if(this.zonaLocalizacao.equals(0)) {
-			endereco.zonaLocalizacao.nome = "Urbana";
-		}
-		else {
-			endereco.zonaLocalizacao.nome = "Rural";
-		}
-
-		endereco.semNumero = this.semNumero;
-		endereco.logradouro = this.logradouro;
-		endereco.numero = this.numero;
-		endereco.bairro = this.bairro;
-		endereco.complemento = this.complemento;
-		endereco.cep = this.cep;
-		endereco.municipio = new Municipio();
-		endereco.municipio.estado = new Estado();
-		endereco.municipio.estado.sigla = this.uf;
-		endereco.municipio.codigoIbge = this.municipio;
-		endereco.descricaoAcesso = this.descricaoAcesso;
-		endereco.pais = new Pais();
-		endereco.pais.id = 29;
-
-		Arrays.stream(municipios).forEach(m -> {
-			if(m.codigoIbge.equals(municipio)) {
-				endereco.municipio = m;
-			}
-		});
-
-		return endereco;
-	}
-
-	public Integer getMunicipio() {
-		return this.municipio;
-	}
 }

@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
-import main.java.br.ufla.lemaf.beans.pessoa.*;
 import org.springframework.hateoas.ResourceSupport;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -203,63 +201,6 @@ public final class PessoaDTO extends ResourceSupport {
 		} else {
 			this.dataNascimento = new Date(dataNascimento.getTime());
 		}
-	}
-
-	/**
-	 * Converte pessoaDTO para Pessoa do cadastro únificado.
-	 *
-	 * @param municipios A lista de municípios
-	 * @return Objeto Pessoa
-	 */
-	public Pessoa toPessoaEU(Municipio[] municipios) {
-
-		Pessoa pessoaEU = new Pessoa();
-		pessoaEU.estrangeiro = this.estrangeiro;
-		pessoaEU.cpf = this.cpf;
-		pessoaEU.nome = this.nome;
-		pessoaEU.passaporte = this.passaporte;
-		pessoaEU.dataNascimento = this.dataNascimento;
-		pessoaEU.sexo = new Sexo();
-
-		if (this.sexo.equals(0)) {
-			pessoaEU.sexo.codigo = 0;
-			pessoaEU.sexo.nome = "Masculino";
-		} else {
-			pessoaEU.sexo.codigo = 1;
-			pessoaEU.sexo.nome = "Feminino";
-		}
-
-		pessoaEU.nomeMae = this.nomeMae;
-		pessoaEU.contatos = new ArrayList<>();
-
-		// Contato e-mail
-		Contato contatoEmail = new Contato();
-		contatoEmail.principal = true;
-		contatoEmail.tipo = new TipoContato();
-		contatoEmail.tipo.id = TipoContato.ID_EMAIL;
-		contatoEmail.valor = this.email;
-		pessoaEU.contatos.add(contatoEmail);
-
-		// Endereços
-		pessoaEU.enderecos = new ArrayList<>();
-
-		if (this.enderecoPrincipal != null && this.enderecoPrincipal.getLogradouro() != null) {
-			pessoaEU.enderecos.add(this.enderecoPrincipal.toEnderecoEU(municipios));
-		}
-
-		if (this.enderecoCorrespondencia != null && this.enderecoCorrespondencia.getLogradouro() != null) {
-			pessoaEU.enderecos.add(this.enderecoCorrespondencia.toEnderecoEU(municipios));
-		}
-		else {
-
-			Endereco endereco = this.enderecoPrincipal.toEnderecoEU(municipios);
-			endereco.tipo.id = 2;
-			endereco.zonaLocalizacao.codigo = 0;
-			endereco.zonaLocalizacao.nome = "Urbana";
-			pessoaEU.enderecos.add(endereco);
-		}
-
-		return pessoaEU;
 	}
 
 	@Override

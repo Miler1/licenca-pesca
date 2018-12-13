@@ -14,7 +14,7 @@ import javax.persistence.*;
  */
 @Embeddable
 @NoArgsConstructor
-final class SolicitanteId extends ValueObjectBase<SolicitanteId> {
+public final class SolicitanteId extends ValueObjectBase<SolicitanteId> {
 
 	@Embedded
 	@AttributeOverride(name = "numero", column = @Column(name = "nu_cpf"))
@@ -61,12 +61,26 @@ final class SolicitanteId extends ValueObjectBase<SolicitanteId> {
 	 *
 	 * @return String com o CPF ou Passaporte
 	 */
-	String buscarIdentificadorValido() {
+	public String valor() {
 		if (Validate.isNull(cpf)) {
 			return passaporte.toString();
 		} else {
 			return cpf.getNumero();
 		}
+	}
+
+	/**
+	 * @return Se o identificador é um CPF
+	 */
+	public boolean isCPF() {
+		return !Validate.isNull(cpf);
+	}
+
+	/**
+	 * @return Se o identificador é um CPF
+	 */
+	public boolean isPassaporte() {
+		return !Validate.isNull(passaporte);
 	}
 
 	/**

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @SpringBootApplication
+@SuppressWarnings("CheckStyle")
 public class CarteiraPescaApplication {
 
 	/**
