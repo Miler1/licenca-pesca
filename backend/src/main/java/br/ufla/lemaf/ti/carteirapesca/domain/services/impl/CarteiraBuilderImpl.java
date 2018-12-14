@@ -74,13 +74,14 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 
 			var carteiraPesca = caminhoCarteira.toFile();
 
-			if (!carteiraPesca.exists()) Files.createDirectories(caminhoCarteira.getParent());
+			if (!carteiraPesca.exists())
+				Files.createDirectories(caminhoCarteira.getParent());
 
 			ImageIO.write(carteiraLayout, FORMAT_CARTEIRA, carteiraPesca);
 
 			return caminhoCarteira.toString();
 
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 
 			log.error(e.getMessage());
 

@@ -5,9 +5,9 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.*;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.boletos.GeradorBoleto;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
@@ -37,6 +37,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 	private ProtocoloBuilder protocoloBuilder;
 	private CarteiraBuilder carteiraBuilder;
+	private BoletoBuilder boletoBuilder;
 
 	private SolicitanteRopository solicitanteRopository;
 
@@ -45,14 +46,17 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 *
 	 * @param protocoloBuilder O Builder de protocolo
 	 * @param carteiraBuilder O Builder do arquivo da carteira de pesca
+	 * @param boletoBuilder O Builder do boleto
 	 * @param solicitanteRopository O repositório do solicitante
 	 */
 	@Autowired
 	public RegistroApplicationImpl(final ProtocoloBuilder protocoloBuilder,
 	                               final CarteiraBuilder carteiraBuilder,
+	                               final BoletoBuilder boletoBuilder,
 	                               final SolicitanteRopository solicitanteRopository) {
 		this.protocoloBuilder = protocoloBuilder;
 		this.carteiraBuilder = carteiraBuilder;
+		this.boletoBuilder = boletoBuilder;
 		this.solicitanteRopository = solicitanteRopository;
 	}
 
@@ -66,26 +70,9 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Protocolo protocolo;
 
-		var identificador = solicitante.identity();
-
-		var pessoa = WebServiceUtils
-			.webServiceEU()
-			.buscarPessoaFisicaPeloCpf(identificador.valor());
-
-		if (pessoa == null) {
-			throw new RuntimeException("Pessoa não foi encontrada no Entrada Única com o cpf informado.");
-		}
-
 		if (!solicitante.pussuiLicencaAtiva()) {
 
 			var licenca = criarLicenca(resource);
-
-			// TODO - Armazenar o caminho do boleto para pagamento
-			// Gera o boleto para pagamento da carteira
-			GeradorBoleto geradorBoleto = new GeradorBoleto(pessoa, licenca.protocolo().toString());
-			String caminhoBoleto = geradorBoleto.gerarBoleto();
-
-			licenca.setCaminhoBoleto(caminhoBoleto);
 
 			protocolo = solicitante.adicionarLicenca(licenca);
 
@@ -113,8 +100,9 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		var pessoa = buscarDadosSolicitante(getSolicitante(resource));
 
 		var caminhoCarteira = carteiraBuilder.gerarCarteira(protocolo, modalidade, pessoa);
+		var caminhoBoleto = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
 
-		return new Licenca(protocolo, modalidade, caminhoCarteira);
+		return new Licenca(protocolo, modalidade, caminhoCarteira, caminhoBoleto);
 	}
 
 	/**

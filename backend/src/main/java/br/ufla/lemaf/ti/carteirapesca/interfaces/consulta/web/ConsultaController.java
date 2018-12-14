@@ -61,7 +61,7 @@ public class ConsultaController {
 		var licenca = facade.consultar(protocolo);
 
 		if (licenca == null)
-			return new ResponseEntity<>(licenca, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
 		licenca.add(linkTo(methodOn(ConsultaController.class)
 			.consultar(protocolo))
