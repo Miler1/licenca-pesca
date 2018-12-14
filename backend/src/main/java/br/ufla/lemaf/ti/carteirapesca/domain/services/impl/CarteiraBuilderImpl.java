@@ -45,7 +45,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	private static final Integer EIXO_X_COLUNA_1 = 52;
 	private static final Integer EIXO_X_COLUNA_2 = 320;
 
-	private static final Integer EIXO_Y_LINHA_1 = 320;
+	private static final Integer EIXO_Y_LINHA_1 = 92;
 	private static final Integer EIXO_Y_LINHA_2 = EIXO_Y_LINHA_1 + 50;
 	private static final Integer EIXO_Y_LINHA_3 = EIXO_Y_LINHA_2 + 48;
 	private static final Integer EIXO_Y_LINHA_4 = EIXO_Y_LINHA_3 + 48;
@@ -109,7 +109,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 			grafics.setColor(Color.BLACK);
 			grafics.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
 
-			grafics.drawString(pessoa.nome, EIXO_X_COLUNA_1, EIXO_Y_LINHA_1);
+			grafics.drawString(pessoa.nome.toUpperCase(), EIXO_X_COLUNA_1, EIXO_Y_LINHA_1);
 			grafics.drawString(identificadorPessoa(pessoa), EIXO_X_COLUNA_2, EIXO_Y_LINHA_1);
 
 			grafics.drawString(protocolo.getCodigoFormatado(), EIXO_X_COLUNA_1, EIXO_Y_LINHA_2);
@@ -126,7 +126,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 			grafics.drawString(campoValorCarteira(modalidade), EIXO_X_COLUNA_1, EIXO_Y_LINHA_6);
 			grafics.drawString(
 				DateUtils.formatDate(new Date(), Constants.DATE_FORMAT),
-				EIXO_X_COLUNA_1,
+				EIXO_X_COLUNA_2,
 				EIXO_Y_LINHA_6
 			);
 
@@ -188,8 +188,9 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @return O campo de endereço
 	 */
 	private static String campoEndereco(Endereco endereco) {
-		return endereco.logradouro + ", Nº " + endereco.numero + " "
-			+ (endereco.complemento != null ? endereco.complemento : "") + ", " + endereco.bairro;
+		return (endereco.logradouro + ", Nº " + endereco.numero + " "
+			+ (endereco.complemento != null ? endereco.complemento : "") + ", " + endereco.bairro)
+			.toUpperCase();
 	}
 
 	/**
@@ -199,7 +200,8 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @return O campo de município e UF
 	 */
 	private static String campoMunicipioUF(Endereco endereco) {
-		return endereco.municipio.nome + " / " + endereco.municipio.estado.sigla;
+		return (endereco.municipio.nome + " / " + endereco.municipio.estado.sigla)
+			.toUpperCase();
 	}
 
 	/**
