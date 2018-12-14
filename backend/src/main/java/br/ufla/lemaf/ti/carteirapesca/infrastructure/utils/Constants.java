@@ -1,16 +1,12 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 
-import lombok.experimental.UtilityClass;
-
 /**
  * Constantes da Aplicação.
  *
  * @author Highlander Paiva
  * @since 1.0
  */
-@UtilityClass
-@SuppressWarnings("CheckStyle")
-public class Constants {
+public final class Constants {
 
 	public static final Integer EMAIL = 1;
 
@@ -33,5 +29,13 @@ public class Constants {
 	public static final Integer FEMININO = 1;
 
 	public static final Integer BRASIL = 29;
+
+	public static  final String DATE_FORMAT = "dd/MM/yyyy";
+
+	/**
+	 * Para evitar instanciação.
+	 */
+	private Constants() {
+	}
 
 }

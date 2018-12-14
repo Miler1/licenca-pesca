@@ -10,6 +10,7 @@ import org.apache.commons.lang3.Validate;
  * Utils para o Web Service do Entrada Única.
  *
  * @author Highlander Paiva
+ * @author Marcio Azevedo
  * @since 1.0
  */
 @Slf4j
@@ -34,7 +35,12 @@ public class WebServiceUtils {
 
 	}
 
-	public CadastroUnificadoService webService() {
+	/**
+	 * Basicamente um encurtador, para melhor legibilidade.
+	 *
+	 * @return O web service do EU
+	 */
+	public CadastroUnificadoService webServiceEU() {
 		return CadastroUnificadoService.webService();
 	}
 

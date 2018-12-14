@@ -1,6 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 
@@ -25,7 +24,7 @@ public interface RegistroServiceFacade {
 	 * em que a camada de application possa entender. Ou seja,
 	 * dado o {@link RegistroResource}, valida cada um de seus parâmetros
 	 * e ao receber o dado da service de application no formato
-	 * {@link Protocolo} converte-o
+	 * {@link br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo} converte-o
 	 * em {@link ProtocoloDTO} com o
 	 * {@link br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTOAssembler}.
 	 *

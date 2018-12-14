@@ -19,9 +19,8 @@ public final class QRCodeUtils {
 	 * Retorna o codigo base64 da imagem do QRCode para o código informado
 	 * @param code
 	 * @return
-	 * @throws IOException
 	 */
-	public static BufferedImage createQRCodeImage(String code) throws IOException {
+	public static BufferedImage createQRCodeImage(String code) {
 
 		int size = 120;
 		try {
@@ -36,18 +35,18 @@ public final class QRCodeUtils {
 			QRCodeWriter qrCodeWriter = new QRCodeWriter();
 			BitMatrix byteMatrix = qrCodeWriter.encode(code, BarcodeFormat.QR_CODE, size,
 				size, hintMap);
-			int CrunchifyWidth = byteMatrix.getWidth();
-			BufferedImage image = new BufferedImage(CrunchifyWidth, CrunchifyWidth,
+			int crunchifyWidth = byteMatrix.getWidth();
+			BufferedImage image = new BufferedImage(crunchifyWidth, crunchifyWidth,
 				BufferedImage.TYPE_INT_RGB);
 			image.createGraphics();
 
 			Graphics2D graphics = (Graphics2D) image.getGraphics();
 			graphics.setColor(Color.WHITE);
-			graphics.fillRect(0, 0, CrunchifyWidth, CrunchifyWidth);
+			graphics.fillRect(0, 0, crunchifyWidth, crunchifyWidth);
 			graphics.setColor(Color.BLACK);
 
-			for (int i = 0; i < CrunchifyWidth; i++) {
-				for (int j = 0; j < CrunchifyWidth; j++) {
+			for (int i = 0; i < crunchifyWidth; i++) {
+				for (int j = 0; j < crunchifyWidth; j++) {
 					if (byteMatrix.get(i, j)) {
 						graphics.fillRect(i, j, 1, 1);
 					}

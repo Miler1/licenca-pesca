@@ -26,5 +26,5 @@ public interface SolicitanteRopository extends JpaRepository<Solicitante, Intege
 	 * @param passaporte O passaporte buscado
 	 * @return O Solicitante
 	 */
-	Solicitante findByIdentity_Passaporte_Numero(String passaporte);
+	Solicitante findByIdentityPassaporteNumero(String passaporte);
 }

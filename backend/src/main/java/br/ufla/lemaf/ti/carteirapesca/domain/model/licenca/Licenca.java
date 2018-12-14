@@ -61,17 +61,21 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 *
 	 * @param protocolo  O número do protocolo
 	 * @param modalidade A modalidade da Licença
+	 * @param caminhoCarteira O caminho do arquivo da carteira de pesca
 	 */
 	public Licenca(final Protocolo protocolo,
-	               final Modalidade modalidade) {
+	               final Modalidade modalidade,
+	               final String caminhoCarteira) {
 		try {
 			Validate.notNull(protocolo);
 			Validate.notNull(modalidade);
+			Validate.notBlank(caminhoCarteira);
 
 			this.protocolo = protocolo;
 			this.modalidade = modalidade;
 			this.dataCriacao = new Date();
 			this.status = Status.AGUARDANDO;
+			this.caminhoCarteira = caminhoCarteira;
 		} catch (IllegalArgumentException | NullPointerException ex) {
 
 			throw new LicencaException("licenca.creation");
@@ -170,15 +174,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 */
 	public String getCaminhoCarteira() {
 		return caminhoCarteira;
-	}
-
-	/**
-	 * Sets caminho carteira.
-	 *
-	 * @param caminhoCarteira the caminho carteira
-	 */
-	public void setCaminhoCarteira(String caminhoCarteira) {
-		this.caminhoCarteira = caminhoCarteira;
 	}
 
 	/**

@@ -19,6 +19,7 @@ import java.util.*;
  * Web Service do Entrada Unica.
  *
  * @author Highlander Paiva
+ * @author Marcio Azevedo
  * @since 1.0
  */
 @Slf4j
