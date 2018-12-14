@@ -86,7 +86,9 @@ public class PessoaDTOAssembler {
 
 			pessoa.enderecos.add(toEndereco(pessoaDTO.getEnderecoPrincipal()));
 
-		} else if (enderecoExiste(pessoaDTO.getEnderecoCorrespondencia())) {
+		}
+
+		if (enderecoExiste(pessoaDTO.getEnderecoCorrespondencia())) {
 
 			pessoa.enderecos.add(toEndereco(pessoaDTO.getEnderecoCorrespondencia()));
 
