@@ -1,4 +1,4 @@
-CREATE SCHEMA carteira_pesca;
+-- CREATE SCHEMA carteira_pesca;
 
 GRANT ALL ON SCHEMA carteira_pesca TO postgres;
 GRANT USAGE ON SCHEMA carteira_pesca TO carteira_pesca;
