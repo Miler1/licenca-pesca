@@ -1,6 +1,8 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaException;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
@@ -24,7 +26,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Buider da Carteira.
