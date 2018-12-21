@@ -19,7 +19,7 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/carteira_pesca_test
+    url: jdbc:postgresql://pg.java3-5.ti.lemaf.ufla.br:5432/carteira_pesca
     username: carteira_pesca
     password: carteira_pesca
 
@@ -37,7 +37,9 @@ spring:
   flyway:
     outOfOrder: true
     baseline-on-migrate: true
+    enabled: false
 
   jackson:
     time-zone: UTC
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+

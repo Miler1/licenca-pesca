@@ -26,4 +26,4 @@ yarn-error.log*
 /target/*
 /node/*
 package-lock.json
-/tests/unit/
+/tests/unit/*

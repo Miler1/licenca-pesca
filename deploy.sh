@@ -10,15 +10,17 @@ test)
     echo "Preparando os arquivos do frontend..."
     npm --prefix ./frontend run build
 
+
     echo "Preparando os arquivos do backend..."
-    mvn backend/ clean install
+    mvn clean install
+    
 
     echo "Executando operações no servidor..."
-    scp backend/target/central-colosso-2.0.4.RELEASE.jar deploy@java3-5.ti.lemaf.ufla.br:/var/application/pa/dev/backups
+    scp backend/target/backend-1.0.0-SNAPSHOT.jar  deploy@java3-5.ti.lemaf.ufla.br:/var/application/am/dev/backups
 
-    ssh -t deploy@java3-5.ti.lemaf.ufla.br 'sudo service central-colosso stop | sudo cp -rf /var/application/pa/dev/backups/central-colosso-2.0.4.RELEASE.jar /var/application/pa/dev/central-colosso/central-colosso-2.0.4.RELEASE.jar'
+    ssh -t deploy@java3-5.ti.lemaf.ufla.br 'sudo service carteira-pesca stop | sudo cp -rf /var/application/am/dev/backups/backend-1.0.0-SNAPSHOT.jar  /var/application/am/dev/carteira-pesca/carteira-pesca-1.0.0-SNAPSHOT.jar'
 
-    ssh -t deploy@java3-5.ti.lemaf.ufla.br 'sudo service central-colosso start'
+    ssh -t deploy@java3-5.ti.lemaf.ufla.br 'sudo service carteira-pesca start'
 
     echo "Deploy realizado com sucesso no ambiente de teste!" ;;
 
