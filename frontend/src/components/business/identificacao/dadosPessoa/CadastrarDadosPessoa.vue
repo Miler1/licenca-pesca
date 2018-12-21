@@ -210,7 +210,6 @@ export default {
       this.municipioSelectLoader = true;
       this.pessoa.enderecoPrincipal.municipio = null;
       if (uf !== null) {
-        debugger;
         let idUf = this.ufs.find(u => u.sigla === uf).id;
         this.$store
           .dispatch(FETCH_MUNICIPIOS, idUf)
@@ -222,7 +221,6 @@ export default {
       this.municipioSelectLoader = true;
       this.pessoa.enderecoCorrespondencia.municipio = null;
       if (uf !== null) {
-        debugger;
         let idUf = this.ufs.find(u => u.sigla === uf).id;
         this.$store
           .dispatch(FETCH_MUNICIPIOS, idUf)

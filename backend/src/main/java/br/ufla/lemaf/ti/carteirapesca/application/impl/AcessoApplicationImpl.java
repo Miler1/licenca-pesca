@@ -61,11 +61,8 @@ public class AcessoApplicationImpl implements AcessoApplication {
 		// Se existir o usuário, o retorna
 		// caso contrário, retorna uma pessoa
 		// vazia
-		if (existeUsuario(cpf)) {
-
-			pessoa = buscarUsuario(cpf);
-
-		} else {
+		pessoa = buscarUsuario(cpf);
+		if (pessoa == null) {
 
 			pessoa = new Pessoa();
 			pessoa.cpf = cpf.getNumeroFormatado();
