@@ -29,8 +29,16 @@
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.gastoMedioPesca`)" prop="gastoMedioPesca")
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.gastoMedioPesca`) }}
-						el-input.money-input(v-model="informacoesComplementares.gastoMedioPesca" type="number")
-							template(slot="prepend") R$
+						
+						//- money.el-input__inner.money-input(v-model="informacoesComplementares.gastoMedioPesca", v-bind="money")
+						//- 	template.el-input-group__append.el-input-group__prepend(slot="prepend") R$
+
+						//- el-input.money-input(v-model="informacoesComplementares.gastoMedioPesca"  v-bind='money')
+						//- 	template(slot="prepend") R$
+
+						.money-input.el-input.el-input-group.el-input-group--prepend
+							.el-input-group__prepend R$
+							money.v-money.el-input__inner.money-input(v-model="informacoesComplementares.gastoMedioPesca" , v-bind='money')
 
 				el-col(:span="24")
 
@@ -67,6 +75,8 @@
 
 <script>
 import Vue from "vue";
+import { Money } from "v-money";
+
 import {
   InformacoesComplementaresDTO,
   ModalidadeResource
@@ -79,9 +89,15 @@ import { SEND_INFORMACOES_COMPLEMENTARES } from "../../../../store/actions.type"
 
 export default {
   name: "CadastroInfoComplementares",
-  components: { InfoSelect },
+	components: { InfoSelect, money: Money },
   data() {
     return {
+			money: {
+				decimal: ",",
+				thousands: ".",
+				precision: 2,
+				masked: false
+			},
       informacoesComplementares: InformacoesComplementaresDTO,
       modalidade: ModalidadeResource,
       infoRules: INFORMACOES_RULES,
@@ -140,4 +156,5 @@ export default {
 
 		.money-input
 			width: 250px
+
 </style>

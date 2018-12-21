@@ -30,7 +30,7 @@
 			el-col(:span="24")
 				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.gastoMedioPesca`) }}
-					h4(:class="{'not-informed': !exist(info.gastoMedioPesca)}") {{ exist(info.gastoMedioPesca) ? `R$ ${info.gastoMedioPesca}` : $t(`${visualizar_prefix}naoInformado`) }}
+					h4(:class="{'not-informed': !exist(info.gastoMedioPesca)}") {{ exist(info.gastoMedioPesca) ? `R$ ${info.gastoMedioPesca.toFixed(2)}` : $t(`${visualizar_prefix}naoInformado`) }}
 
 		el-row.section(:gutter="20")
 			el-col(:span="24")
