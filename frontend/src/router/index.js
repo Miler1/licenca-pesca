@@ -6,6 +6,12 @@ export const routes = [
     name: "home",
     component: RegistrarLicenca
   },
+  // {
+  //   path: "/home/cadastrar",
+  //   name: "cadastrar",
+  //   component: () => import("../components/business/identificacao/dadosPessoa/CadastrarDadosPessoa")
+  // },
+
   {
     path: "/consultar/:protocolo",
     name: "consultar",
