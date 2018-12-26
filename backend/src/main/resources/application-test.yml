@@ -43,3 +43,14 @@ spring:
     time-zone: UTC
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 
+  security:
+    entradaUnica:
+      # Módulo - Teste
+      client-id: c8671b62b00f2c32015f78fac719a7e7e6da4f423366dd6b43f02e1536ac26cdc91b9c8c38a7b5ce1747495cf32bbf915e58281063dac35449d6a9542b215ea3
+      client-secret: 1c19f894bde9b539ad174308d8dbd02f7d26e03f0cbfbe4cf8295b7beaeee4a81c234e1b738daeef3bfbe1e55615901d028fdc7264de157f00b1212c63dc792e
+
+
+      portal-seguranca:
+        url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
+      cadastro-unificado:
+        url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
