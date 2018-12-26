@@ -453,7 +453,6 @@ Date.prototype.convertDateHour = function() {
 
   var data = [day, month, year].join('/')
   var hora = [hours, minutes, seconds].join(':')
-
   return data + ' ' + hora
 }
 
