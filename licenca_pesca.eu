@@ -1,0 +1,21 @@
+{
+	"nome": "Licença de Pesca (Teste)",
+	"sigla": "LPT",
+	"url": "http://java3-5.ti.lemaf.ufla.br/carteira-pesca/",
+	"descricao": "Módulo de emissão de Licença de Pesca (Highlander)",
+	"cadastrarPerfis": true,
+	"ips": "177.105.35.28",
+	"permissoes": [
+
+			{
+				"codigo": "MOD_LICENCA_PESCA",
+				"nome": "Licença de Pesca",
+				"perfis": [
+					{
+						"codigo": "MODULO_ATER",
+						"nome": "Módulo"
+					}
+				]
+			}
+	]
+}

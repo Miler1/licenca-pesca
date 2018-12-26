@@ -163,25 +163,23 @@ export default {
     },
 
     localizeDate(strDate) {
-      console.log(strDate.humanForm());
-      return strDate.humanForm();
-      // if (strDate === null) return null;
-      // const DATE_PATTERN = new RegExp("([\\d]{2})\\/([\\d]{2})\\/([\\d]{4})");
-      // if (DATE_PATTERN.test(strDate)) {
-      //   return translate("interface.geral.data", [
-      //     strDate.substring(0, 2),
-      //     strDate.substring(3, 5),
-      //     strDate.substring(6)
-      //   ]);
-      // } else {
-      //   let date = new Date(strDate);
+      if (strDate === null) return null;
+      const DATE_PATTERN = new RegExp("([\\d]{2})\\/([\\d]{2})\\/([\\d]{4})");
+      if (DATE_PATTERN.test(strDate)) {
+        return translate("interface.geral.data", [
+          strDate.substring(0, 2),
+          strDate.substring(3, 5),
+          strDate.substring(6)
+        ]);
+      } else {
+        let date = new Date(strDate);
 
-      //   return translate("interface.geral.data", [
-      //     date.getDay(),
-      //     date.getMonth(),
-      //     date.getFullYear()
-      //   ]);
-      // }
+        return translate("interface.geral.data", [
+          date.getDay(),
+          date.getMonth(),
+          date.getFullYear()
+        ]);
+      }
     },
 
     getZonaLocalizacao(localizacao) {
