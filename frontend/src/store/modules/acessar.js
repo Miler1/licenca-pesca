@@ -1,4 +1,4 @@
-import { ACESSAR } from "../actions.type";
+import { ACESSAR, CANCELAR } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE } from "../mutations.type";
 
@@ -62,6 +62,10 @@ export const actions = {
       .catch(error => {
         commit(SET_ERROR, error);
       });
+  },
+
+  [CANCELAR]: ({ commit }) => {
+    commit(ACTIVE_CADASTRO, null);
   }
 };
 
@@ -78,7 +82,11 @@ export const mutations = {
    * @param solicitante O solicitante do acesso
    */
   [SET_SOLICITANTE]: (state, solicitante) => {
-    state.solicitante = toSolicitanteDTO(solicitante);
+    if(solicitante !== null) {
+      state.solicitante = toSolicitanteDTO(solicitante);
+    } else {
+      state.solicitante = null;
+    }
   },
 
   /**

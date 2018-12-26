@@ -20,7 +20,7 @@ import { mapGetters } from "vuex";
 import Card from "../layouts/Card";
 import Properties from "../../properties";
 import InputElement from "../elements/InputElement";
-import { REGISTRAR } from "../../store/actions.type";
+import { REGISTRAR, CANCELAR } from "../../store/actions.type";
 import StepController from "../layouts/StepController";
 import ResumoStep from "../business/resumo/ResumoStep";
 import { translate } from "../../utils/helpers/internationalization";
@@ -48,7 +48,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["showStepsController", "registroResource", "protocolo"])
+    ...mapGetters(["showStepsController", "cadastroCanActive", "registroResource", "protocolo"])
   },
 
   methods: {
@@ -102,6 +102,11 @@ export default {
 
     cancelar() {
       this.step = 0;
+      this.$store.dispatch(CANCELAR).then(p => {
+        })
+        .catch(() => {
+          // DO nothing!
+        });
     }
   }
 };
