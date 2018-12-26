@@ -90,4 +90,5 @@ export const EN_INFORMACOES = handleMessage(
 export const PT_INFORMACOES = handleMessage(
   INFORMACOES,
   Properties.LANGUAGE_INDEX.PT_BR
+  
 );

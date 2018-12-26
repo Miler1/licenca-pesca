@@ -101,8 +101,7 @@ export default {
     },
 
     cancelar() {
-      this.$router.push({name: 'home'});
-      // TODO
+      this.step = 0;
     }
   }
 };

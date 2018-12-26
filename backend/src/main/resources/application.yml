@@ -43,7 +43,7 @@ spring:
     locale: pt_BR
 
   security:
-    entradaUnica:shuahsaushashu
+    entradaUnica:
       # Módulo - LP0 - Highlander
       client-id: b8411f828eaed83832c743d89c29cbfad15312e5f1549add05eb73973ca007039f1b9d9e2ee711782b0ac0889245bcca2271e203efeb6c5e5af37e1e01537234
       client-secret: 28d98d105cfcbba8d3be86447c9e5c28a932caa65d2a8c38e1d69cb7acb8f013c4495c9f31e6c46f4b87c08db7ddcf18d11203180a5b037d9fabcd9b898a38a6

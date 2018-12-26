@@ -1,17 +1,13 @@
 import RegistrarLicenca from "../components/views/RegistrarLicenca";
 
+import CadastrarDadosPessoa from "../components/business/identificacao/dadosPessoa/CadastrarDadosPessoa";
+
 export const routes = [
   {
     path: "/",
     name: "home",
     component: RegistrarLicenca
   },
-  // {
-  //   path: "/home/cadastrar",
-  //   name: "cadastrar",
-  //   component: () => import("../components/business/identificacao/dadosPessoa/CadastrarDadosPessoa")
-  // },
-
   {
     path: "/consultar/:protocolo",
     name: "consultar",
