@@ -1,139 +1,139 @@
 <template lang="pug">
-	#visualizar-dados-pessoa
-		h3.title {{ $t(`${visualizar_prefix}titulo.dadosPessoais`) }}
+  #visualizar-dados-pessoa
+    h3.title {{ $t(`${visualizar_prefix}titulo.dadosPessoais`) }}
 
-		el-row.section(:gutter="20")
+    el-row.section(:gutter="20")
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.nome`) }}
-					h4(:class="{'not-informed': exist(pessoa.nome)}") {{ pessoa.nome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.nome`) }}
+          h4(:class="{'not-informed': exist(pessoa.nome)}") {{ pessoa.nome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.cpf`) }}
-					h4(:class="{'not-informed': exist(pessoa.cpf)}") {{ pessoa.cpf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.cpf`) }}
+          h4(:class="{'not-informed': exist(pessoa.cpf)}") {{ pessoa.cpf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.passaporte`) }}
-					h4(:class="{'not-informed': exist(pessoa.passaporte)}") {{ pessoa.passaporte | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.passaporte`) }}
+          h4(:class="{'not-informed': exist(pessoa.passaporte)}") {{ pessoa.passaporte | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.sexo`) }}
-					h4(
-						:class="{'not-informed': exist(pessoa.sexo)}"
-					) {{ getSexo(pessoa.sexo) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.sexo`) }}
+          h4(
+            :class="{'not-informed': exist(pessoa.sexo)}"
+          ) {{ getSexo(pessoa.sexo) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-		el-row.section(:gutter="20")
+    el-row.section(:gutter="20")
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.dataNascimento`) }}
-					h4(:class="{'not-informed': exist(pessoa.dataNascimento)}") {{ localizeDate(pessoa.dataNascimento) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.dataNascimento`) }}
+          h4(:class="{'not-informed': exist(pessoa.dataNascimento)}") {{ localizeDate(pessoa.dataNascimento) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.nomeMae`) }}
-					h4(:class="{'not-informed': exist(pessoa.nomeMae)}") {{ pessoa.nomeMae | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.nomeMae`) }}
+          h4(:class="{'not-informed': exist(pessoa.nomeMae)}") {{ pessoa.nomeMae | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-		h3.title.withDivisor {{ $t(`${visualizar_prefix}titulo.enderecoPrincipal`) }}
+    h3.title.withDivisor {{ $t(`${visualizar_prefix}titulo.enderecoPrincipal`) }}
 
-		el-row.section(:gutter="20")
+    el-row.section(:gutter="20")
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.localizacao`) }}
-					h4(
-						:class="{'not-informed': exist(pessoa.enderecoPrincipal.zonaLocalizacao)}"
-					) {{ getZonaLocalizacao(pessoa.enderecoPrincipal.zonaLocalizacao) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.localizacao`) }}
+          h4(
+            :class="{'not-informed': exist(pessoa.enderecoPrincipal.zonaLocalizacao)}"
+          ) {{ getZonaLocalizacao(pessoa.enderecoPrincipal.zonaLocalizacao) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.logradouro`) }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.logradouro)}") {{ pessoa.enderecoPrincipal.logradouro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.logradouro`) }}
+          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.logradouro)}") {{ pessoa.enderecoPrincipal.logradouro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.numero`) }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.numero)}") {{ pessoa.enderecoPrincipal.numero | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.numero`) }}
+          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.numero)}") {{ pessoa.enderecoPrincipal.numero | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.bairro`) }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.bairro)}") {{ pessoa.enderecoPrincipal.bairro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.bairro`) }}
+          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.bairro)}") {{ pessoa.enderecoPrincipal.bairro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-		el-row.section(:gutter="20")
+    el-row.section(:gutter="20")
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.complemento`) }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.complemento)}") {{ pessoa.enderecoPrincipal.complemento | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.complemento`) }}
+          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.complemento)}") {{ pessoa.enderecoPrincipal.complemento | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.cep`) }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.cep)}") {{ pessoa.enderecoPrincipal.cep | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.cep`) }}
+          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.cep)}") {{ pessoa.enderecoPrincipal.cep | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.municipio`) }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.municipio)}") {{ pessoa.enderecoPrincipal.municipio | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.municipio`) }}
+          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.municipio)}") {{ pessoa.enderecoPrincipal.municipio | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-col(:span="6")
-				.align
-					h4.label {{ $t(`${visualizar_prefix}label.uf`) }}
-					h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.uf)}") {{ pessoa.enderecoPrincipal.uf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+      el-col(:span="6")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.uf`) }}
+          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.uf)}") {{ pessoa.enderecoPrincipal.uf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-		.enderecoCorrespondencia(v-if="pessoa.enderecoPrincipal.zonaLocalizacao === 1")
-			h3.title.withDivisor {{ $t(`${visualizar_prefix}titulo.enderecoCorrespondencia`) }}
+    .enderecoCorrespondencia(v-if="pessoa.enderecoPrincipal.zonaLocalizacao === 1")
+      h3.title.withDivisor {{ $t(`${visualizar_prefix}titulo.enderecoCorrespondencia`) }}
 
-			el-row.section(:gutter="20")
+      el-row.section(:gutter="20")
 
-				el-col(:span="6")
-					.align
-						h4.label {{ $t(`${visualizar_prefix}label.localizacao`) }}
-						h4(
-						:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.zonaLocalizacao)}"
-						) {{ getZonaLocalizacao(pessoa.enderecoCorrespondencia.zonaLocalizacao) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+        el-col(:span="6")
+          .align
+            h4.label {{ $t(`${visualizar_prefix}label.localizacao`) }}
+            h4(
+            :class="{'not-informed': exist(pessoa.enderecoCorrespondencia.zonaLocalizacao)}"
+            ) {{ getZonaLocalizacao(pessoa.enderecoCorrespondencia.zonaLocalizacao) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-				el-col(:span="6")
-					.align
-						h4.label {{ $t(`${visualizar_prefix}label.logradouro`) }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.logradouro)}") {{ pessoa.enderecoCorrespondencia.logradouro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+        el-col(:span="6")
+          .align
+            h4.label {{ $t(`${visualizar_prefix}label.logradouro`) }}
+            h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.logradouro)}") {{ pessoa.enderecoCorrespondencia.logradouro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-				el-col(:span="6")
-					.align
-						h4.label {{ $t(`${visualizar_prefix}label.numero`) }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.numero)}") {{ pessoa.enderecoCorrespondencia.numero | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+        el-col(:span="6")
+          .align
+            h4.label {{ $t(`${visualizar_prefix}label.numero`) }}
+            h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.numero)}") {{ pessoa.enderecoCorrespondencia.numero | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-				el-col(:span="6")
-					.align
-						h4.label {{ $t(`${visualizar_prefix}label.bairro`) }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.bairro)}") {{ pessoa.enderecoCorrespondencia.bairro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+        el-col(:span="6")
+          .align
+            h4.label {{ $t(`${visualizar_prefix}label.bairro`) }}
+            h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.bairro)}") {{ pessoa.enderecoCorrespondencia.bairro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-			el-row.section(:gutter="20")
+      el-row.section(:gutter="20")
 
-				el-col(:span="6")
-					.align
-						h4.label {{ $t(`${visualizar_prefix}label.complemento`) }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.complemento)}") {{ pessoa.enderecoCorrespondencia.complemento | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+        el-col(:span="6")
+          .align
+            h4.label {{ $t(`${visualizar_prefix}label.complemento`) }}
+            h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.complemento)}") {{ pessoa.enderecoCorrespondencia.complemento | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-				el-col(:span="6")
-					.align
-						h4.label {{ $t(`${visualizar_prefix}label.cep`) }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.cep)}") {{ pessoa.enderecoCorrespondencia.cep | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+        el-col(:span="6")
+          .align
+            h4.label {{ $t(`${visualizar_prefix}label.cep`) }}
+            h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.cep)}") {{ pessoa.enderecoCorrespondencia.cep | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-				el-col(:span="6")
-					.align
-						h4.label {{ $t(`${visualizar_prefix}label.municipio`) }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.municipio)}") {{ pessoa.enderecoCorrespondencia.municipio | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+        el-col(:span="6")
+          .align
+            h4.label {{ $t(`${visualizar_prefix}label.municipio`) }}
+            h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.municipio)}") {{ pessoa.enderecoCorrespondencia.municipio | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-				el-col(:span="6")
-					.align
-						h4.label {{ $t(`${visualizar_prefix}label.uf`) }}
-						h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.uf)}") {{ pessoa.enderecoCorrespondencia.uf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+        el-col(:span="6")
+          .align
+            h4.label {{ $t(`${visualizar_prefix}label.uf`) }}
+            h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.uf)}") {{ pessoa.enderecoCorrespondencia.uf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 </template>
 
@@ -163,25 +163,25 @@ export default {
     },
 
     localizeDate(strDate) {
-      if (strDate === null) return null;
+      console.log(strDate.humanForm());
+      return strDate.humanForm();
+      // if (strDate === null) return null;
+      // const DATE_PATTERN = new RegExp("([\\d]{2})\\/([\\d]{2})\\/([\\d]{4})");
+      // if (DATE_PATTERN.test(strDate)) {
+      //   return translate("interface.geral.data", [
+      //     strDate.substring(0, 2),
+      //     strDate.substring(3, 5),
+      //     strDate.substring(6)
+      //   ]);
+      // } else {
+      //   let date = new Date(strDate);
 
-      const DATE_PATTERN = new RegExp("([\\d]{2})\\/([\\d]{2})\\/([\\d]{4})");
-
-      if (DATE_PATTERN.test(strDate)) {
-        return translate("interface.geral.data", [
-          strDate.substring(0, 2),
-          strDate.substring(3, 5),
-          strDate.substring(6)
-        ]);
-      } else {
-        let date = new Date(strDate);
-
-        return translate("interface.geral.data", [
-          date.getDay(),
-          date.getMonth(),
-          date.getFullYear()
-        ]);
-      }
+      //   return translate("interface.geral.data", [
+      //     date.getDay(),
+      //     date.getMonth(),
+      //     date.getFullYear()
+      //   ]);
+      // }
     },
 
     getZonaLocalizacao(localizacao) {
@@ -219,30 +219,30 @@ export default {
 </script>
 
 <style lang="sass">
-	@import "../../../../theme/tools/variables"
+  @import "../../../../theme/tools/variables"
 
-	#visualizar-dados-pessoa
+  #visualizar-dados-pessoa
 
-		.title
-			margin-top: 30px
+    .title
+      margin-top: 30px
 
-		.withDivisor
-			margin-top: 25px
-			border-top: 1px solid #ddd
-			padding-top: 20px
+    .withDivisor
+      margin-top: 25px
+      border-top: 1px solid #ddd
+      padding-top: 20px
 
-		.section
-			margin-top: 20px
+    .section
+      margin-top: 20px
 
-		.align
-			display: flex
-			flex-direction: column
+    .align
+      display: flex
+      flex-direction: column
 
-			.label
-				margin-bottom: 5px
-				color: $--cor-texto-secundario
+      .label
+        margin-bottom: 5px
+        color: $--cor-texto-secundario
 
-		.not-informed
-			font-style: italic
+    .not-informed
+      font-style: italic
 
 </style>
