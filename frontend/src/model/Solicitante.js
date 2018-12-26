@@ -48,7 +48,7 @@ export const toSolicitanteDTO = solicitante => {
     nome: solicitante.nome,
     cpf: solicitante.cpf,
     passaporte: solicitante.passaporte,
-    dataNascimento: deserializarData(solicitante.dataNascimento),
+    dataNascimento: solicitante.dataNascimento,
     sexo: solicitante.sexo,
     nomeMae: solicitante.nomeMae,
     email: solicitante.email,

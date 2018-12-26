@@ -1,17 +1,17 @@
 <template lang="pug">
-	#registrar-licenca
-		h2 {{ $t(`${registrar_prefix}titulo`) }}
-		card
-			el-steps(:active="step" :space="500" simple)
-				el-step(:title="$t(`${registrar_prefix}steps.indices.identificacao`)" icon="el-icon-search")
-				el-step(:title="$t(`${registrar_prefix}steps.indices.informacoes`)" icon="el-icon-edit-outline")
-				el-step(:title="$t(`${registrar_prefix}steps.indices.resumo`)" icon="el-icon-document")
+  #registrar-licenca
+    h2 {{ $t(`${registrar_prefix}titulo`) }}
+    card
+      el-steps(:active="step" :space="500" simple)
+        el-step(:title="$t(`${registrar_prefix}steps.indices.identificacao`)" icon="el-icon-search")
+        el-step(:title="$t(`${registrar_prefix}steps.indices.informacoes`)" icon="el-icon-edit-outline")
+        el-step(:title="$t(`${registrar_prefix}steps.indices.resumo`)" icon="el-icon-document")
 
-			identification-step(v-if="activeStep('IDENTIFICACAO')")
-			informacaoes-complementares-step(v-if="activeStep('INFORMACOES_COMPLEMENTARES')")
-			resumo-step(v-if="activeStep('RESUMO')")
+      identification-step(v-if="activeStep('IDENTIFICACAO')")
+      informacaoes-complementares-step(v-if="activeStep('INFORMACOES_COMPLEMENTARES')")
+      resumo-step(v-if="activeStep('RESUMO')")
 
-			step-controller(v-if="showStepsController" :step="step" @prevStep="prevStep" @nextStep="nextStep" @concluir="concluir" @cancelar="cancelar")
+      step-controller(v-if="showStepsController" :step="step" @prevStep="prevStep" @nextStep="nextStep" @concluir="concluir" @cancelar="cancelar")
 
 </template>
 
@@ -113,49 +113,49 @@ export default {
 </script>
 
 <style lang="sass">
-	@import "../../theme/tools/variables"
+  @import "../../theme/tools/variables"
 
-	#registrar-licenca
-		h1
-			font-weight: 500
+  #registrar-licenca
+    h1
+      font-weight: 500
 
-		.label-search
-			margin-top: 30px
+    .label-search
+      margin-top: 30px
 
-		.el-steps
-			height: 30px
+    .el-steps
+      height: 30px
 
-		.el-input__icon.el-icon-search
-			color: $--cor-tema-primario
+    .el-input__icon.el-icon-search
+      color: $--cor-tema-primario
 
-		.el-step:first-of-type
-			flex-basis: 33% !important
+    .el-step:first-of-type
+      flex-basis: 33% !important
 
-		.search-button.is-disabled
-			background-color: $--cor-background
-			color: $--cor-texto-secundario
+    .search-button.is-disabled
+      background-color: $--cor-background
+      color: $--cor-texto-secundario
 
-		.search-button
-			background-color: $--cor-tema-primario
-			color: white
+    .search-button
+      background-color: $--cor-tema-primario
+      color: white
 
-		.search
-			margin-top: 10px
-			display: flex
+    .search
+      margin-top: 10px
+      display: flex
 
-			.el-select
-				width: 150px
+      .el-select
+        width: 150px
 
-		.footer-card
-			margin-top: 30px
-			border-top: $--cor-borda 1px solid
-			padding-top: 20px
-			display: flex
-			align-items: center
-			justify-content: space-between
+    .footer-card
+      margin-top: 30px
+      border-top: $--cor-borda 1px solid
+      padding-top: 20px
+      display: flex
+      align-items: center
+      justify-content: space-between
 
-			.footer-label
-				font-size: $--fonte-pequena
-				color: $--cor-texto-secundario
+      .footer-label
+        font-size: $--fonte-pequena
+        color: $--cor-texto-secundario
 
 </style>
