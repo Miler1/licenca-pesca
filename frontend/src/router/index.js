@@ -1,7 +1,5 @@
 import RegistrarLicenca from "../components/views/RegistrarLicenca";
 
-import CadastrarDadosPessoa from "../components/business/identificacao/dadosPessoa/CadastrarDadosPessoa";
-
 export const routes = [
   {
     path: "/",
