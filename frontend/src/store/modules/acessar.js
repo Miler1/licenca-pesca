@@ -65,6 +65,7 @@ export const actions = {
   },
 
   [CANCELAR]: ({ commit }) => {
+    //commit(SET_SOLICITANTE, null);
     commit(ACTIVE_CADASTRO, null);
   }
 };
