@@ -29,13 +29,6 @@
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.gastoMedioPesca`)" prop="gastoMedioPesca")
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.gastoMedioPesca`) }}
-						
-						//- money.el-input__inner.money-input(v-model="informacoesComplementares.gastoMedioPesca", v-bind="money")
-						//- 	template.el-input-group__append.el-input-group__prepend(slot="prepend") R$
-
-						//- el-input.money-input(v-model="informacoesComplementares.gastoMedioPesca"  v-bind='money')
-						//- 	template(slot="prepend") R$
-
 						.money-input.el-input.el-input-group.el-input-group--prepend
 							.el-input-group__prepend R$
 							money.v-money.el-input__inner.money-input(v-model="informacoesComplementares.gastoMedioPesca" , v-bind='money')
