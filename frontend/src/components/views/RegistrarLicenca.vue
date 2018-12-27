@@ -54,7 +54,6 @@ export default {
   methods: {
     nextStep() {
       if(this.activeStep('IDENTIFICACAO')) {
-        console.log(this.checkValidation());
         if(this.checkValidation()) {
           this.step++;
         }
