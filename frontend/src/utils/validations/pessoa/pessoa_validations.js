@@ -17,15 +17,11 @@ export const isSameEmail = email => {
 }
 
 export const semNumero = numero => {
-  return !_.isNil(numero) &&
-    Vue.prototype.$cadastroPessoa &&
-    Vue.prototype.$cadastroPessoa.pessoa &&
-    Vue.prototype.$cadastroPessoa.pessoa.enderecoPrincipal &&
-    !Vue.prototype.$cadastroPessoa.pessoa.enderecoPrincipal.semNumero;
+  return ((_.isNil(numero) || numero === "") && Vue.prototype.$cadastroPessoa.pessoa.enderecoPrincipal.semNumero) || 
+  (!(_.isNil(numero) || numero === "") && !Vue.prototype.$cadastroPessoa.pessoa.enderecoPrincipal.semNumero);
 }
 
 export const numero = semNumero => {
-
   return _.isNil(Vue.prototype.$cadastroPessoa.pessoa.enderecoPrincipal.numero)
     && semNumero;
 }

@@ -73,7 +73,7 @@
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoPrincipal.numero")
-            el-input(v-model="pessoa.enderecoPrincipal.numero" v-mask="'#########'")
+            el-input(v-model="pessoa.enderecoPrincipal.numero")
 
         el-col(:span="6")
           el-form-item(label="_" prop="enderecoPrincipal.semNumero")
@@ -198,6 +198,7 @@ export default {
     validate() {
       this.valid = false;
       this.$refs["pessoa"].validate((valid) => {
+        console.log('valid', valid);
         this.valid = valid;
       });
     },
