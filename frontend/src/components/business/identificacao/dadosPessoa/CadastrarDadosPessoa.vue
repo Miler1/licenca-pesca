@@ -12,7 +12,7 @@
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.nome`)" prop="nome")
-            el-input(v-model="pessoa.nome")
+            el-input(v-model="pessoa.nome", ref="nome")
 
         el-col(:span="6" v-if="pessoa.estrangeiro === false")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.cpf`)" prop="cpf")
@@ -184,7 +184,8 @@ export default {
       genero_options: GENERO_OPTIONS,
       cadastrar_prefix: CADASTRO_MESSAGES_PREFIX,
       municipioSelectLoader: true,
-      ufSelectLoader: true
+      ufSelectLoader: true,
+      valid: false
     };
   },
   computed: {
@@ -193,6 +194,15 @@ export default {
   methods: {
     instantiate() {
       Vue.prototype.$cadastroPessoa = this;
+    },
+    validate() {
+      this.valid = false;
+      this.$refs["pessoa"].validate((valid) => {
+        this.valid = valid;
+      });
+    },
+    getValidate() {
+      return this.valid;
     },
     isEPUrbano() {
       return (

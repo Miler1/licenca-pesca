@@ -7,7 +7,7 @@
         el-step(:title="$t(`${registrar_prefix}steps.indices.informacoes`)" icon="el-icon-edit-outline")
         el-step(:title="$t(`${registrar_prefix}steps.indices.resumo`)" icon="el-icon-document")
 
-      identification-step(v-if="activeStep('IDENTIFICACAO')")
+      identification-step(v-if="activeStep('IDENTIFICACAO')", ref="identificationStep")
       informacaoes-complementares-step(v-if="activeStep('INFORMACOES_COMPLEMENTARES')")
       resumo-step(v-if="activeStep('RESUMO')")
 
@@ -53,7 +53,14 @@ export default {
 
   methods: {
     nextStep() {
-      if (this.step++ >= 2) this.step = 2;
+      if(this.activeStep('IDENTIFICACAO')) {
+        if(this.checkValidation()) {
+          this.step++;
+        }
+      } else {
+
+        if (this.step++ >= 2) this.step = 2;
+      }
       // if (this.checkValidation()) {
       //   if (this.step++ >= 2) this.step = 2;
       // }
@@ -64,7 +71,8 @@ export default {
     },
 
     checkValidation() {
-      // TODO
+      
+      return this.$refs.identificationStep.getValidated();
     },
 
     activeStep(step) {

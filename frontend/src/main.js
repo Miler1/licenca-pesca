@@ -13,6 +13,7 @@ import VeeElement from "vee-element";
 import VueTheMask from "vue-the-mask";
 import Vue2Filters from "vue2-filters";
 import Element from "element-ui";
+
 // CSS Imports
 import "./assets/linearicons/style.css";
 import "mdi/scss/materialdesignicons.scss";
