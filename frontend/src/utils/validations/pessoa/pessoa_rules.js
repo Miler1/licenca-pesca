@@ -1,4 +1,6 @@
 import { required, validate } from "../utils";
+import Properties from "../../../properties";
+
 import {
   checkCPF,
   checkDate,
@@ -8,8 +10,10 @@ import {
   checkConfirmEmail
 } from "./pessoa_checks";
 
+const en = Properties.LANGUAGE_INDEX.EN;
+
 export const PESSOA_RULES = {
-  nome: [required("nome")],
+  nome: [required("nome"), required("name", en)],
 
   cpf: [required("cpf"), validate(checkCPF, "cpf.invalid")],
 

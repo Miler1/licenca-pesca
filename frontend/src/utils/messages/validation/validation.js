@@ -2,6 +2,7 @@ import Properties from "../../../properties";
 import { handleMessage } from "../utils";
 
 const required = (campo, language = Properties.LANGUAGE_INDEX.PT_BR) => {
+  console.log(language);
   switch (language) {
     case Properties.LANGUAGE_INDEX.PT_BR:
       return `'${campo}' é um campo obrigatório.`;
@@ -96,11 +97,14 @@ const VALIDATION = {
     rendaMensal: { required: [required("Este"), required("This", en)] },
 
     diasPescaPorAno: {
-      required: [required("Este"), required("This", en)]
+      required: [
+        required("Média de dias de pesca por ano"), required("This", en)
+        //invalid("E-mail"), invalid("Email", en)]
+      ]
     },
 
     gastoMedioPesca: {
-      required: [required("Este"), required("This", en)]
+      required: [required("Gasto médio com pesca"), required("This", en)]
     },
 
     faixaEtaria: { required: [required("Este"), required("This", en)] },

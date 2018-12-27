@@ -41,8 +41,8 @@
 		el-row.section(:gutter="20")
 			el-col(:span="24")
 				.align
-					h4.label {{ $t(`${visualizar_prefix}labels.localizacaoPreferencialPesca`) }}
-					h4(:class="{'not-informed': !exist(info.localizacaoPreferencialPesca)}") {{ localeData(informacoesComplementaresResource.localizacaoPreferencialPesca, info.localizacaoPreferencialPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+					h4.label {{ $t(`${visualizar_prefix}labels.localPesca`) }}
+					h4(:class="{'not-informed': !exist(info.localPesca)}") {{ localeData(informacoesComplementaresResource.localPesca, info.localPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 		el-row.section(:gutter="20")
 			el-col(:span="24")
@@ -55,6 +55,12 @@
 				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.tipoIsca`) }}
 					h4(:class="{'not-informed': !exist(info.tipoIsca)}") {{ localeData(informacoesComplementaresResource.tipoIsca, info.materialPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+
+		el-row.section(:gutter="20")
+			el-col(:span="24")
+				.align
+					h4.label {{ $t(`${visualizar_prefix}labels.modalidadeMaisPraticada`) }}
+					h4(:class="{'not-informed': !exist(info.modalidadeMaisPraticada)}") {{ localeData(informacoesComplementaresResource.modalidadeMaisPraticada, info.materialPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 		el-row.section(:gutter="20")
 			el-col(:span="24")
