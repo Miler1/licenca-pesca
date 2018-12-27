@@ -25,7 +25,7 @@
 					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 
 			.data
-				cadastrar-dados-pessoa(v-if="showCadastro()")
+				cadastrar-dados-pessoa(v-if="showCadastro()", ref="cadastroDadosPessoa")
 				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()")
 </template>
 
@@ -62,6 +62,14 @@ export default {
   methods: {
     acessar() {
       this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource));
+    },
+
+    getValidated () {
+      if(this.$refs.cadastroDadosPessoa) {
+        this.$refs.cadastroDadosPessoa.validate();
+        return this.$refs.cadastroDadosPessoa.getValidate();
+      }
+      return false;
     },
 
     generateAcessoResource(resource) {
