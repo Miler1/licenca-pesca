@@ -12,8 +12,9 @@ test)
 
 
     echo "Preparando os arquivos do backend..."
+    cd backend
     mvn clean install
-    
+    cd ..
 
     echo "Executando operações no servidor..."
     scp backend/target/backend-1.0.0-SNAPSHOT.jar  deploy@java3-5.ti.lemaf.ufla.br:/var/application/am/dev/backups

@@ -172,11 +172,15 @@ export default {
           strDate.substring(6)
         ]);
       } else {
-        let date = new Date(strDate);
-
+        let date;
+        if (strDate instanceof Date) {
+          date = new Date(strDate);
+        } else {
+          date = strDate;
+        }
         return translate("interface.geral.data", [
-          date.getDay(),
-          date.getMonth(),
+          date.getDate(),
+          date.getMonth() + 1,
           date.getFullYear()
         ]);
       }
