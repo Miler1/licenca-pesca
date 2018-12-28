@@ -15,6 +15,7 @@
 <script>
 import Properties from "../../properties";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
+import { numero } from '../../utils/validations/pessoa/pessoa_validations';
 
 export default {
   name: "StepController",

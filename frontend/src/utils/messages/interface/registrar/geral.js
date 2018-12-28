@@ -2,6 +2,7 @@ import Properties from "../../../../properties";
 import { handleMessage } from "../../utils";
 
 export const REGISTRAR_GERAL_MESSAGES_PREFIX = "interface.registrar.geral.";
+export const CONSULTAR_GERAL_MESSAGES_PREFIX = "interface.registrar.consultar.";
 
 const GERAL = {
   geral: {
@@ -35,6 +36,28 @@ const GERAL = {
         confirm: ["Confirmar", "Confirm", "Confirmar"],
         cancel: ["Cancelar", "Cancel", "Cancelar"]
       }
+    },
+    cancel: {
+      titulo: [
+        "Confirmar cancelamento",
+        "Confirm cancellation",
+        "Confirmar cancelación"
+      ],
+      mensagem: [
+        "Deseja realmente cancelar o cadastro? Ao selecionar a opção 'Confirmar', todos os dados até o momento serão perdidos.",
+        "Do you really want to cancel the registration? By selecting the 'Confirm' option, all data so far will be lost.",
+        "Desea realmente cancelar el registro? Al seleccionar la opción 'Confirmar', todos los datos hasta el momento se perderán."
+      ],
+      botoes: {
+        confirm: ["Confirmar", "Confirm", "Confirmar"],
+        cancel: ["Cancelar", "Cancel", "Cancelar"]
+      }
+    }
+  },
+  consultar: {
+    titulo: ["Buscar Licença de Pesca", "Search Fishing License"],
+    botoes: {
+      cadastrar: ["Cadastrar licença", "Register license"]
     }
   }
 };
