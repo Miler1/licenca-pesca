@@ -127,12 +127,27 @@ export default {
     },
 
     cancelar() {
-      this.step = 0;
-      this.$store.dispatch(CANCELAR).then(p => {
-        })
-        .catch(() => {
-          // DO nothing!
-        });
+      this.$confirm(
+        translate(`${this.registrar_prefix}cancel.mensagem`),
+        translate(`${this.registrar_prefix}cancel.titulo`),
+        {
+          confirmButtonText: translate(
+            `${this.registrar_prefix}cancel.botoes.confirm`
+          ),
+          cancelButtonText: translate(
+            `${this.registrar_prefix}cancel.botoes.cancel`
+          )
+        }
+      )
+          .then(() => {
+            this.$store.dispatch(CANCELAR).then(p => {
+              this.step = 0;
+              this.$router.push({name: 'home'});
+            });
+          })
+          .catch(() => {
+            // DO nothing!
+          });
     }
   }
 };
