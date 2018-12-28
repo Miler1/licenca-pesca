@@ -13,6 +13,11 @@ const check = (value, expression, callback, messageError = "Erro") => {
   }
 };
 
+const checkWithNull = (value, expression, callback, messageError = "Erro") => {
+    expression ? callback() : callback(new Error(messageError));
+};
+
+
 export const checkCPF = (rule, value, callback) => {
   check(value, value.isCPF(), callback, "CPF Inválido");
 };
@@ -30,7 +35,7 @@ export const checkConfirmEmail = (rule, value, callback) => {
 };
 
 export const checkNumero = (rule, value, callback) => {
-  check(value, semNumero(value), callback, "Numero / Sem número inválidos");
+  checkWithNull(value, semNumero(value), callback, "Numero / Sem número inválidos");
 };
 
 export const checkSemNumero = (rule, value, callback) => {

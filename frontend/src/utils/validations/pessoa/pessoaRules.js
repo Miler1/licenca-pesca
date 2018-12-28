@@ -8,7 +8,6 @@ Validator.extend("past", {
     return data <= TODAY;
   },
   getMessage(field, params, data) {
-    console.log(translate("validation.dataNascimento.past"));
     return translate("validation.dataNascimento.past");
   }
 });

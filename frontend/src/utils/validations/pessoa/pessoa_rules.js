@@ -42,7 +42,7 @@ export const PESSOA_RULES = {
 
     numero: [validate(checkNumero, "numero.vazio")],
 
-    semNumero: [validate(checkSemNumero, "numero.vazio", "change")],
+    // semNumero: [validate(checkSemNumero, "numero.vazio", "change")],
 
     bairro: [required("bairro")],
 
@@ -60,7 +60,7 @@ export const PESSOA_RULES = {
 
     numero: [validate(checkNumero, "numero.vazio")],
 
-    semNumero: [validate(checkSemNumero, "numero.vazio", "change")],
+    // semNumero: [validate(checkSemNumero, "numero.vazio", "change")],
 
     bairro: [required("bairro")],
 

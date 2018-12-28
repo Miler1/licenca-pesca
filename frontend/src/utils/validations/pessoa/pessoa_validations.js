@@ -10,15 +10,18 @@ export const isInPast = date => new Date(Date.parse(date)) < new Date();
 
 export const isEmail = email => EMAIL_PATTERN.test(email);
 
-export const isSameEmail = email =>
-  email === Vue.prototype.$cadastro.pessoa.email;
+export const isSameEmail = email => {
+  return Vue.prototype.$cadastroPessoa &&
+  Vue.prototype.$cadastroPessoa.pessoa &&
+  email === Vue.prototype.$cadastroPessoa.pessoa.email;
+}
 
-export const semNumero = numero =>
-  (!_.isNil(numero) ^
-    Vue.prototype.$cadastro.pessoa.enderecoPrincipal.semNumero) ===
-  1;
+export const semNumero = numero => {
+  return ((_.isNil(numero) || numero === "") && Vue.prototype.$cadastroPessoa.pessoa.enderecoPrincipal.semNumero) || 
+  (!(_.isNil(numero) || numero === "") && !Vue.prototype.$cadastroPessoa.pessoa.enderecoPrincipal.semNumero);
+}
 
-export const numero = semNumero =>
-  (!_.isNil(Vue.prototype.$cadastro.pessoa.enderecoPrincipal.numero) ^
-    semNumero) ===
-  1;
+export const numero = semNumero => {
+  return _.isNil(Vue.prototype.$cadastroPessoa.pessoa.enderecoPrincipal.numero)
+    && semNumero;
+}
