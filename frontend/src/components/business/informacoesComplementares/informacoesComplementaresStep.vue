@@ -1,7 +1,7 @@
 <template lang="pug">
 	#informacoes-complementares-step
 		.info-wrapper
-			cadastro-info-complementares
+			cadastro-info-complementares(ref="cadastroInfoComplementares")
 </template>
 
 <script>
@@ -10,7 +10,14 @@ import CadastroInfoComplementares from "./dadosInformacoes/CadastroInfoComplemen
 export default {
   name: "InformacaoesComplementaresStep",
 
-  components: { CadastroInfoComplementares }
+  components: { CadastroInfoComplementares },
+  methods: {
+	  validate() {
+		this.$refs.cadastroInfoComplementares.validate();
+		console.log('teste', this.$refs.cadastroInfoComplementares.getValid());
+		return this.$refs.cadastroInfoComplementares.getValid();
+	  }
+  }
 };
 </script>
 

@@ -13,7 +13,7 @@ const INFORMACOES = {
       ],
       localizacaoPreferencialPesca: [
         "Onde você costuma pescar?",
-        "Where do you usually fish?",
+        "Where do you usually go fishing?",
         "¿Dónde usted suele pescar?"
       ],
       rendaMensal: ["Renda mensal:", "Monthly income:", "Ingresos mensuales:"],
