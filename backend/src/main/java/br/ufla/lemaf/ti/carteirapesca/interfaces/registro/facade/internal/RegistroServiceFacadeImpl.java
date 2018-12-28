@@ -198,7 +198,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		var camposInvalidos = new ArrayList<String>();
 
 		// Confere dados obrigatórios
-		if (Validate.isNull(info.getModalidade()))
+		if (Validate.isNull(info.getModalidadePesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "modalidade de pesca"));
 
 		if (Validate.isNull(info.getLocalPesca()))

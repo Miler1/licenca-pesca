@@ -79,7 +79,7 @@
       el-col(:span="6")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.municipio`) }}
-          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.municipio)}") {{ pessoa.enderecoPrincipal.municipio | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.municipio)}") {{ pessoa.enderecoPrincipal.municipio.nome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
       el-col(:span="6")
         .align
@@ -128,7 +128,7 @@
         el-col(:span="6")
           .align
             h4.label {{ $t(`${visualizar_prefix}label.municipio`) }}
-            h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.municipio)}") {{ pessoa.enderecoCorrespondencia.municipio | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+            h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.municipio)}") {{ pessoa.enderecoCorrespondencia.municipio.nome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
         el-col(:span="6")
           .align

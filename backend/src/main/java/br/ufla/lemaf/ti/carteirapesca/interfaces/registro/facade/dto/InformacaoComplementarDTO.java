@@ -16,7 +16,7 @@ import org.springframework.hateoas.ResourceSupport;
 @EqualsAndHashCode(callSuper = false, doNotUseGetters = true)
 public final class InformacaoComplementarDTO extends ResourceSupport {
 
-	private Integer modalidade;
+	private Integer modalidadePesca;
 
 	private Integer localizacaoPreferencialPesca;
 
@@ -64,7 +64,7 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 	 *                                     prática
 	 */
 	@JsonCreator
-	InformacaoComplementarDTO(@JsonProperty("modalidade") final Integer modalidade,
+	InformacaoComplementarDTO(@JsonProperty("modalidadePesca") final Integer modalidade,
 	                          @JsonProperty("localizacaoPreferencialPesca")
 	                          final Integer localizacaoPreferencialPesca,
 	                          @JsonProperty("rendaMensal") final Integer rendaMensal,
@@ -76,7 +76,7 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 	                          @JsonProperty("tipoIsca") final Integer tipoIsca,
 	                          @JsonProperty("modalidadeMaisPraticada") final Integer modalidadeMaisPraticada,
 	                          @JsonProperty("agenciaTurismo") final Boolean agenciaTurismo) {
-		this.modalidade = modalidade;
+		this.modalidadePesca = modalidade;
 		this.localizacaoPreferencialPesca = localizacaoPreferencialPesca;
 		this.rendaMensal = rendaMensal;
 		this.diasPescaPorAno = diasPescaPorAno;

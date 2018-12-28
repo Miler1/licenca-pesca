@@ -23,7 +23,7 @@
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.diasPescaPorAno`)" prop="diasPescaPorAno")
-						el-input-number(v-model="informacoesComplementares.diasPescaPorAno" :min="0" :max="365")
+						el-input-number(v-model="informacoesComplementares.diasPescaPorAno" :min="1" :max="365")
 
 				el-col(:span="24")
 
@@ -111,7 +111,6 @@ export default {
 		validate() {
 			this.valid = false;
       this.$refs["informacoesComplementares"].validate((valid) => {
-				console.log('valide', valid);
         this.valid = valid;
       });
 		},
