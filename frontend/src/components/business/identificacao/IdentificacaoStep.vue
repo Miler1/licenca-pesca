@@ -26,7 +26,7 @@
 
 			.data
 				cadastrar-dados-pessoa(v-if="showCadastro()", ref="cadastroDadosPessoa")
-				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()")
+				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()", ref="visualizarDadosPessoa")
 </template>
 
 <script>
@@ -68,6 +68,8 @@ export default {
       if(this.$refs.cadastroDadosPessoa) {
         this.$refs.cadastroDadosPessoa.validate();
         return this.$refs.cadastroDadosPessoa.getValidate();
+      } else if(this.$refs.visualizarDadosPessoa){
+        return true;
       }
       return false;
     },

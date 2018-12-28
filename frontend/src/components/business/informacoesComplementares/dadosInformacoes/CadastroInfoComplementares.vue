@@ -1,6 +1,6 @@
 <template lang="pug">
 	#cadastro-info-complementares
-		el-form(:model="informacoesComplementares" :rules="infoRules" label-position="top")
+		el-form(:model="informacoesComplementares" :rules="infoRules" label-position="top" ref="informacoesComplementares")
 
 			el-row(:gutter="20")
 
@@ -8,7 +8,7 @@
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)" prop="modalidadePesca")
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePesca`) }}
-						info-select(@value="informacoesComplementares.modalidade = $event" :list="informacoesComplementaresResource.modalidadePesca")
+						info-select(@value="informacoesComplementares.modalidadePesca = $event" :list="informacoesComplementaresResource.modalidadePesca")
 
 				el-col(:span="24")
 
@@ -95,7 +95,8 @@ export default {
       informacoesComplementares: InformacoesComplementaresDTO,
       modalidade: ModalidadeResource,
       infoRules: INFORMACOES_RULES,
-      cadastrar_info_prefix: INFORMACOES_PREFIX
+			cadastrar_info_prefix: INFORMACOES_PREFIX,
+			valid: false
     };
   },
 
@@ -107,7 +108,16 @@ export default {
     instantiate() {
       Vue.prototype.$cadastroInfo = this;
     },
-
+		validate() {
+			this.valid = false;
+      this.$refs["informacoesComplementares"].validate((valid) => {
+				console.log('valide', valid);
+        this.valid = valid;
+      });
+		},
+		getValid() {
+			return this.valid;
+		},
     localizeField(field) {
       switch (this.$i18n.locale) {
         case "EN":

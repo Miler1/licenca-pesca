@@ -1,5 +1,5 @@
 export const InformacoesComplementaresDTO = {
-  modalidade: null,
+  modalidadePesca: null,
   localizacaoPreferencialPesca: null,
   rendaMensal: null,
   diasPescaPorAno: null,

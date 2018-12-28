@@ -198,7 +198,6 @@ export default {
     validate() {
       this.valid = false;
       this.$refs["pessoa"].validate((valid) => {
-        console.log('valid', valid);
         this.valid = valid;
       });
     },

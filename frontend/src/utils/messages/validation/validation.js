@@ -2,7 +2,6 @@ import Properties from "../../../properties";
 import { handleMessage } from "../utils";
 
 const required = (campo, language = Properties.LANGUAGE_INDEX.PT_BR) => {
-  console.log(language);
   switch (language) {
     case Properties.LANGUAGE_INDEX.PT_BR:
       return `'${campo}' é um campo obrigatório.`;
@@ -97,29 +96,26 @@ const VALIDATION = {
     rendaMensal: { required: [required("Este"), required("This", en)] },
 
     diasPescaPorAno: {
-      required: [
-        required("Média de dias de pesca por ano"), required("This", en)
-        //invalid("E-mail"), invalid("Email", en)]
-      ]
+      required: [required("Em média quantos dias por ano costuma pescar?"), required("On average how many days per year do you usually fish?", en)]
     },
 
     gastoMedioPesca: {
-      required: [required("Gasto médio com pesca"), required("This", en)]
+      required: [required("Qual o gasto médio com pesca?"), required("What is the average fishing spend?", en)]
     },
 
-    faixaEtaria: { required: [required("Este"), required("This", en)] },
+    faixaEtaria: { required: [required("Qual a sua faixa de idade?"), required("What is your age range?", en)] },
 
-    localPesca: { required: [required("Este"), required("This", en)] },
+    localPesca: { required: [required("Onde você prefere pescar?"), required("Where do you prefer to fish?", en)] },
 
-    materialPesca: { required: [required("Este"), required("This", en)] },
+    materialPesca: { required: [required("Qual o tipo de material / equipamento você utiliza?"), required("What kind of material / equipment do you use?", en)] },
 
-    tipoIsca: { required: [required("Este"), required("This", en)] },
+    tipoIsca: { required: [required("Qual tipo de isca você prefere?"), required("What kind of bait do you prefer?", en)] },
 
     modalidadeMaisPraticada: {
-      required: [required("Este"), required("This", en)]
+      required: [required("Qual modalidade de pesca você mais pratica?"), required("Which type of fishing do you practice most?", en)]
     },
 
-    agenciaTurismo: { required: [required("Este", required("This", en))] }
+    agenciaTurismo: { required: [required("Costuma programar suas pescarias com agências de turismo?"), required("Do you usually plan your fisheries with tourism agencies?", en)] }
   }
 };
 

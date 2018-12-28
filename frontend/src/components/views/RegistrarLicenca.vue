@@ -8,7 +8,7 @@
         el-step(:title="$t(`${registrar_prefix}steps.indices.resumo`)" icon="el-icon-document")
 
       identification-step(v-if="activeStep('IDENTIFICACAO')", ref="identificationStep")
-      informacaoes-complementares-step(v-if="activeStep('INFORMACOES_COMPLEMENTARES')")
+      informacaoes-complementares-step(v-if="activeStep('INFORMACOES_COMPLEMENTARES')", ref="informacoesComplementaresStep")
       resumo-step(v-if="activeStep('RESUMO')")
 
       step-controller(v-if="showStepsController" :step="step" @prevStep="prevStep" @nextStep="nextStep" @concluir="concluir" @cancelar="cancelar")
@@ -57,8 +57,12 @@ export default {
         if(this.checkValidation()) {
           this.step++;
         }
+      } else if(this.activeStep('INFORMACOES_COMPLEMENTARES')) {
+        console.log('valid1', this.checkValidationInformacoesComplementares());
+        if(this.checkValidationInformacoesComplementares()) {
+          this.step++;
+        }
       } else {
-
         if (this.step++ >= 2) this.step = 2;
       }
       // if (this.checkValidation()) {
@@ -69,7 +73,10 @@ export default {
     prevStep() {
       if (this.step-- <= 0) this.step = 0;
     },
-
+    checkValidationInformacoesComplementares() {
+      
+      return this.$refs.informacoesComplementaresStep.validate();
+    },
     checkValidation() {
       
       return this.$refs.identificationStep.getValidated();
