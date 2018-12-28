@@ -58,7 +58,6 @@ export default {
           this.step++;
         }
       } else if(this.activeStep('INFORMACOES_COMPLEMENTARES')) {
-        console.log('valid1', this.checkValidationInformacoesComplementares());
         if(this.checkValidationInformacoesComplementares()) {
           this.step++;
         }
@@ -102,7 +101,19 @@ export default {
         }
       )
         .then(() => {
-          this.$store.dispatch(REGISTRAR, this.registroResource).then(p => {
+          let registro = this.registroResource;
+          let date = this.registroResource.solicitante.dataNascimento;
+          registro.solicitante.dataNascimento =  date.getDate() + '/' + (date.getMonth() + 1)+ '/' + date.getFullYear();
+          if(registro.solicitante.enderecoPrincipal.municipio) {
+
+            registro.solicitante.enderecoPrincipal.municipio = registro.solicitante.enderecoPrincipal.municipio.id;
+          }
+          if(registro.solicitante.enderecoCorrespondencia.municipio) {
+
+            registro.solicitante.enderecoCorrespondencia.municipio = registro.solicitante.enderecoCorrespondencia.municipio.id;
+          }
+          
+          this.$store.dispatch(REGISTRAR, registro).then(p => {
             let protocolo = p.replace("/", "").replace("-", "");
             this.$router.push({
               name: "consultar",

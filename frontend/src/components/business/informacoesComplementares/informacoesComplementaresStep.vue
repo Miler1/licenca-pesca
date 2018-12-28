@@ -14,7 +14,6 @@ export default {
   methods: {
 	  validate() {
 		this.$refs.cadastroInfoComplementares.validate();
-		console.log('teste', this.$refs.cadastroInfoComplementares.getValid());
 		return this.$refs.cadastroInfoComplementares.getValid();
 	  }
   }

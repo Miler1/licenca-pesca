@@ -94,7 +94,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 */
 	private Licenca criarLicenca(final RegistroResource resource) {
 
-		var modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidade());
+		var modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
 		var protocolo = new Protocolo(protocoloBuilder.gerarProtocolo(modalidade));
 
 		var pessoa = buscarDadosSolicitante(getSolicitante(resource));
