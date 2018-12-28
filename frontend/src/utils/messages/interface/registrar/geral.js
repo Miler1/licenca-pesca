@@ -2,6 +2,7 @@ import Properties from "../../../../properties";
 import { handleMessage } from "../../utils";
 
 export const REGISTRAR_GERAL_MESSAGES_PREFIX = "interface.registrar.geral.";
+export const CONSULTAR_GERAL_MESSAGES_PREFIX = "interface.registrar.consultar.";
 
 const GERAL = {
   geral: {
@@ -51,6 +52,12 @@ const GERAL = {
         confirm: ["Confirmar", "Confirm", "Confirmar"],
         cancel: ["Cancelar", "Cancel", "Cancelar"]
       }
+    }
+  },
+  consultar: {
+    titulo: ["Buscar Licença de Pesca", "Search Fishing License"],
+    botoes: {
+      cadastrar: ["Cadastrar licença", "About us"]
     }
   }
 };

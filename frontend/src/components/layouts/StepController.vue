@@ -2,7 +2,7 @@
 	#step-controller
 		.left
 			el-button(icon="el-icon-arrow-left" type="primary" plain @click="prevStep" v-if="!activeStep('IDENTIFICACAO')") {{ $t(`${registrar_prefix}steps.botoes.voltar`) }}
-			el-button(icon="el-icon-close" @click="cancelar") {{ $t(`${registrar_prefix}steps.botoes.cancelar`) }}
+			el-button(icon="el-icon-close" @click="cancela") {{ $t(`${registrar_prefix}steps.botoes.cancelar`) }}
 		.center
 			h4.footer-label {{ $t(`${registrar_prefix}steps.label`, [step + 1, totalSteps]) }}
 		.right
@@ -15,6 +15,7 @@
 <script>
 import Properties from "../../properties";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
+import { numero } from '../../utils/validations/pessoa/pessoa_validations';
 
 export default {
   name: "StepController",
@@ -31,6 +32,10 @@ export default {
   },
 
   methods: {
+
+    activeTeste(){
+
+    },
     activeStep(step) {
       const steps = Properties.STEPS;
 

@@ -114,7 +114,6 @@ export default {
         }
       )
           .then(() => {
-
             this.$store.dispatch(CANCELAR).then(p => {
               this.step = 0;
             });

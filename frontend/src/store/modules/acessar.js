@@ -61,11 +61,12 @@ export const actions = {
       })
       .catch(error => {
         commit(SET_ERROR, error);
+        //commit(SET_SOLICITANTE, true);
       });
   },
 
   [CANCELAR]: ({ commit }) => {
-    //commit(SET_SOLICITANTE, null);
+    // commit(SET_SOLICITANTE, null);
     commit(ACTIVE_CADASTRO, null);
   }
 };
