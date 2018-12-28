@@ -13,7 +13,7 @@ import {
 const en = Properties.LANGUAGE_INDEX.EN;
 
 export const PESSOA_RULES = {
-  nome: [required("nome"), required("name", en)],
+  nome: [required("nome")],
 
   cpf: [required("cpf"), validate(checkCPF, "cpf.invalid")],
 

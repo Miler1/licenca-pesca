@@ -86,14 +86,14 @@ const VALIDATION = {
     },
 
     modalidadePesca: {
-      required: [required("Este"), required("This", en)]
+      required: [required("Modalidade de pesca"), required("Fishing mode", en)]
     },
 
     localizacaoPreferencialPesca: {
-      required: [required("Este"), required("This", en)]
+      required: [required("Onde você costuma pescar?"), required("Where do you usually go fishing?", en)]
     },
 
-    rendaMensal: { required: [required("Este"), required("This", en)] },
+    rendaMensal: { required: [required("Renda mensal"), required("Monthly income", en)] },
 
     diasPescaPorAno: {
       required: [required("Em média quantos dias por ano costuma pescar?"), required("On average how many days per year do you usually fish?", en)]

@@ -32,10 +32,6 @@ export default {
   },
 
   methods: {
-
-    activeTeste(){
-
-    },
     activeStep(step) {
       const steps = Properties.STEPS;
 
