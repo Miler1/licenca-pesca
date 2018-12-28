@@ -57,7 +57,7 @@ const GERAL = {
   consultar: {
     titulo: ["Buscar Licença de Pesca", "Search Fishing License"],
     botoes: {
-      cadastrar: ["Cadastrar licença", "About us"]
+      cadastrar: ["Cadastrar licença", "Register license"]
     }
   }
 };

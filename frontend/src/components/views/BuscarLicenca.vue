@@ -23,7 +23,7 @@ import { CONSULTAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/
 import InformacaoesComplementaresStep from "../business/informacoesComplementares/informacoesComplementaresStep";
 
 export default {
-  name: "ConsultarLicenca",
+  name: "BuscarLicenca",
 
   components: {
     ResumoStep,
@@ -45,7 +45,6 @@ export default {
 
     cadastrar(){
       this.$router.push({name: 'registrar'});
-      this.cadastroCanActive = false;
     }
   }
 };
