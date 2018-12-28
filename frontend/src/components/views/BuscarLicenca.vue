@@ -1,9 +1,10 @@
 <template lang="pug">
   #registrar-licenca
-    h2.texto {{ $t(`${consultar_prefix}titulo`) }}
-    .buttons
-      .right
-        el-button(icon="el-icon-plus" type="primary" @click="cadastrar" ) {{ $t(`${consultar_prefix}botoes.cadastrar`) }}
+    div.buscar
+      h2.texto {{ $t(`${consultar_prefix}titulo`) }}
+      .buttons
+        .right
+          el-button(icon="el-icon-plus" type="primary" @click="cadastrar" ) {{ $t(`${consultar_prefix}botoes.cadastrar`) }}
     card
       identification-step
     
@@ -65,6 +66,13 @@ export default {
 
     .left
       text-align: left
+    
+    .buscar
+      display: flex
+
+    .texto
+      flex: 1
+      padding-top: 7px
 
     .search-button.is-disabled
       background-color: $--cor-background
