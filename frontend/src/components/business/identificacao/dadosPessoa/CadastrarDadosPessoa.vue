@@ -105,13 +105,16 @@
             el-select(v-model="pessoa.enderecoPrincipal.municipio" :loading="municipioSelectLoader" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
               el-option(v-for="municipio in municipios" :key="municipio.nome" :value="municipio" :label="municipio.nome")
 
-      el-row(:gutter="20" v-if="!isEPUrbano()")
+      //- el-row(:gutter="20")
 
-        el-col(:span="24")
-          el-form-item(:label="$t(`${cadastrar_prefix}labels.descricaoAcesso`)" prop="enderecoPrincipal.descricaoAcesso")
-            el-input(type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="pessoa.enderecoPrincipal.descricaoAcesso")
+
 
       .enderecoCorrespondencia(v-if="!isEPUrbano()")
+        el-row(:gutter="20")
+          el-col(:span="24")
+            el-form-item(:label="$t(`${cadastrar_prefix}labels.descricaoAcesso`)" prop="enderecoPrincipal.descricaoAcesso")
+              el-input(v-model="pessoa.enderecoPrincipal.descricaoAcesso")
+
         el-row(:gutter="20")
 
           el-col(:span="24")
@@ -197,7 +200,7 @@ export default {
     },
     validate() {
       this.valid = false;
-      this.$refs["pessoa"].validate((valid) => {
+      this.$refs["pessoa"].validate(valid => {
         this.valid = valid;
       });
     },
