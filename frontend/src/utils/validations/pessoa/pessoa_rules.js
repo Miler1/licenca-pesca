@@ -52,7 +52,7 @@ export const PESSOA_RULES = {
 
     uf: [required("uf", "change")],
 
-    descricaoAcesso: [required("descricaoAcesso", "change")],
+    descricaoAcesso: [required("descricaoAcesso")]
   },
 
   enderecoCorrespondencia: {
