@@ -106,6 +106,65 @@ public class PessoaDTOAssembler {
 		return pessoa;
 	}
 
+	public Pessoa toPessoa(final PessoaEUDTO pessoaDTO) {
+		if (pessoaDTO == null) return null;
+
+		var pessoa = new Pessoa();
+		pessoa.estrangeiro = pessoaDTO.getEstrangeiro();
+		pessoa.cpf = pessoaDTO.getCpf();
+		pessoa.nome = pessoaDTO.getNome();
+		pessoa.passaporte = pessoaDTO.getPassaporte();
+		pessoa.dataNascimento = pessoaDTO.getDataNascimento();
+
+		pessoa.sexo = new Sexo();
+		if (pessoaDTO.getSexo().equals(Constants.MASCULINO)) {
+			pessoa.sexo.codigo = Constants.MASCULINO;
+			pessoa.sexo.nome = "Masculino";
+		} else if (pessoaDTO.getSexo().equals(Constants.FEMININO)) {
+			pessoa.sexo.codigo = Constants.FEMININO;
+			pessoa.sexo.nome = "Feminino";
+		} else {
+			pessoa.sexo.codigo = 2;
+			pessoa.sexo.nome = "Outro";
+		}
+
+		pessoa.nomeMae = pessoaDTO.getNomeMae();
+
+		pessoa.contatos = new ArrayList<>();
+
+		var contato = new Contato();
+		contato.principal = true;
+		contato.tipo = new TipoContato();
+		contato.tipo.id = TipoContato.ID_EMAIL;
+		contato.valor = pessoaDTO.getEmail();
+
+		pessoa.contatos.add(contato);
+
+		pessoa.enderecos = new ArrayList<>();
+		if (enderecoExiste(pessoaDTO.getEnderecoPrincipal())) {
+
+			pessoa.enderecos.add(toEndereco(pessoaDTO.getEnderecoPrincipal()));
+
+		}
+
+		if (enderecoExiste(pessoaDTO.getEnderecoCorrespondencia())) {
+
+			pessoa.enderecos.add(toEndereco(pessoaDTO.getEnderecoCorrespondencia()));
+
+		} else {
+
+			var endereco = toEndereco(pessoaDTO.getEnderecoPrincipal());
+			endereco.tipo.id = Constants.ENDERECO_CORRESPONDENCIA;
+			endereco.zonaLocalizacao.codigo = Constants.ZONA_URBANA;
+			endereco.zonaLocalizacao.nome = "Urbana";
+
+			pessoa.enderecos.add(endereco);
+
+		}
+
+		return pessoa;
+	}
+
 	/**
 	 * Constrói o objeto Endereço usado no Entrada Unica.
 	 *
@@ -138,10 +197,59 @@ public class PessoaDTOAssembler {
 		endereco.complemento = enderecoDTO.getComplemento();
 		endereco.cep = enderecoDTO.getCep();
 
+		endereco.municipio = enderecoDTO.getMunicipio();
+//		endereco.municipio.estado = new Estado();
+//		endereco.municipio.estado.sigla = enderecoDTO.getUf();
+//		endereco.municipio.codigoIbge = enderecoDTO.getMunicipio().codigoIbge;
+
+		WebServiceUtils.validarWebService();
+
+//		var municipios = buscarMunicipiosDoEU(enderecoDTO.getUf());
+//		endereco.municipio = municipios
+//			.stream()
+//			.filter(municipio -> municipio.codigoIbge
+//				.equals(enderecoDTO.getMunicipio()))
+//			.findFirst()
+//			.orElseThrow(ResourceNotFoundException::new);
+
+		endereco.descricaoAcesso = enderecoDTO.getDescricaoAcesso();
+
+		endereco.pais = new Pais();
+		endereco.pais.id = Constants.BRASIL;
+
+		return endereco;
+	}
+
+	private static Endereco toEndereco(EnderecoEUDTO enderecoDTO) {
+		if (enderecoDTO == null) return new Endereco();
+
+		var endereco = new Endereco();
+		endereco.tipo = new TipoEndereco();
+
+		endereco.tipo.id = enderecoDTO.getTipo() != null
+			? enderecoDTO.getTipo()
+			: Constants.ENDERECO_PRINCIPAL;
+
+		endereco.zonaLocalizacao = new ZonaLocalizacao();
+		endereco.zonaLocalizacao.codigo = enderecoDTO.getZonaLocalizacao();
+
+		if (enderecoDTO.getZonaLocalizacao().equals(Constants.ZONA_RURAL)) {
+			endereco.zonaLocalizacao.nome = "Rural";
+		} else {
+			endereco.zonaLocalizacao.nome = "Urbana";
+		}
+
+		endereco.semNumero = enderecoDTO.getSemNumero();
+		endereco.logradouro = enderecoDTO.getLogradouro();
+		endereco.numero = enderecoDTO.getNumero();
+		endereco.bairro = enderecoDTO.getBairro();
+		endereco.complemento = enderecoDTO.getComplemento();
+		endereco.cep = enderecoDTO.getCep();
+
 		endereco.municipio = new Municipio();
 		endereco.municipio.estado = new Estado();
 		endereco.municipio.estado.sigla = enderecoDTO.getUf();
-		endereco.municipio.codigoIbge = enderecoDTO.getMunicipio().codigoIbge;
+		endereco.municipio.codigoIbge = enderecoDTO.getMunicipio();
 
 		WebServiceUtils.validarWebService();
 
@@ -184,6 +292,10 @@ public class PessoaDTOAssembler {
 	 * @return {@code true} se o endereço existe
 	 */
 	private static boolean enderecoExiste(EnderecoDTO enderecoDTO) {
+		return enderecoDTO != null && enderecoDTO.getLogradouro() != null;
+	}
+
+	private static boolean enderecoExiste(EnderecoEUDTO enderecoDTO) {
 		return enderecoDTO != null && enderecoDTO.getLogradouro() != null;
 	}
 

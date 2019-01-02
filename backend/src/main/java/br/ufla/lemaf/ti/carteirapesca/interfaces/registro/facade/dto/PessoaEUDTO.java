@@ -8,14 +8,8 @@ import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Date;
 
-/**
- * DTO de Pessoa.
- *
- * @author Highlander Paiva
- * @since 1.0
- */
 @EqualsAndHashCode(callSuper = false, doNotUseGetters = true)
-public final class PessoaDTO extends ResourceSupport {
+public class PessoaEUDTO extends ResourceSupport {
 
 	private Boolean estrangeiro;
 
@@ -34,9 +28,9 @@ public final class PessoaDTO extends ResourceSupport {
 
 	private String email;
 
-	private EnderecoDTO enderecoPrincipal;
+	private EnderecoEUDTO enderecoPrincipal;
 
-	private EnderecoDTO enderecoCorrespondencia;
+	private EnderecoEUDTO enderecoCorrespondencia;
 
 	/**
 	 * Construtor.
@@ -53,16 +47,16 @@ public final class PessoaDTO extends ResourceSupport {
 	 * @param enderecoCorrespondencia O Endereço de correspondência.
 	 */
 	@JsonCreator
-	PessoaDTO(@JsonProperty("estrangeiro") final Boolean estrangeiro,
-	          @JsonProperty("nome") final String nome,
-	          @JsonProperty("cpf") final String cpf,
-	          @JsonProperty("passaporte") final String passaporte,
-	          @JsonProperty("dataNascimento") final Date dataNascimento,
-	          @JsonProperty("sexo") final Integer sexo,
-	          @JsonProperty("nomeMae") final String nomeMae,
-	          @JsonProperty("email") final String email,
-	          @JsonProperty("enderecoPrincipal") final EnderecoDTO enderecoPrincipal,
-	          @JsonProperty("enderecoCorrespondencia") final EnderecoDTO enderecoCorrespondencia) {
+	PessoaEUDTO(@JsonProperty("estrangeiro") final Boolean estrangeiro,
+			  @JsonProperty("nome") final String nome,
+			  @JsonProperty("cpf") final String cpf,
+			  @JsonProperty("passaporte") final String passaporte,
+			  @JsonProperty("dataNascimento") final Date dataNascimento,
+			  @JsonProperty("sexo") final Integer sexo,
+			  @JsonProperty("nomeMae") final String nomeMae,
+			  @JsonProperty("email") final String email,
+			  @JsonProperty("enderecoPrincipal") final EnderecoEUDTO enderecoPrincipal,
+			  @JsonProperty("enderecoCorrespondencia") final EnderecoEUDTO enderecoCorrespondencia) {
 		this.estrangeiro = estrangeiro;
 		this.nome = nome;
 		this.cpf = cpf;
@@ -75,6 +69,20 @@ public final class PessoaDTO extends ResourceSupport {
 		this.enderecoCorrespondencia = enderecoCorrespondencia;
 	}
 
+	PessoaEUDTO(PessoaDTO pessoaDTO) {
+		this.estrangeiro = pessoaDTO.getEstrangeiro();
+		this.nome = pessoaDTO.getNome();
+		this.cpf = pessoaDTO.getCpf();
+		this.passaporte = pessoaDTO.getPassaporte();
+		setDataNascimento(pessoaDTO.getDataNascimento());
+		this.sexo = pessoaDTO.getSexo();
+		this.nomeMae = pessoaDTO.getNomeMae();
+		this.email = pessoaDTO.getEmail();
+		this.enderecoPrincipal = pessoaDTO.getEnderecoPrincipal().toEUDTO();
+		this.enderecoCorrespondencia = pessoaDTO.getEnderecoCorrespondencia().toEUDTO();
+	}
+
+
 	/**
 	 * Construtor.
 	 * <p>
@@ -83,7 +91,7 @@ public final class PessoaDTO extends ResourceSupport {
 	 * @param pessoa A Pessoa
 	 * @param cpf    O CPF
 	 */
-	public PessoaDTO(final PessoaDTO pessoa, final String cpf) {
+	public PessoaEUDTO(final PessoaEUDTO pessoa, final String cpf) {
 		this.estrangeiro = pessoa.estrangeiro;
 		this.nome = pessoa.nome;
 		this.cpf = cpf;
@@ -176,7 +184,7 @@ public final class PessoaDTO extends ResourceSupport {
 	 *
 	 * @return O endereco principal
 	 */
-	public EnderecoDTO getEnderecoPrincipal() {
+	public EnderecoEUDTO getEnderecoPrincipal() {
 		return enderecoPrincipal;
 	}
 
@@ -185,7 +193,7 @@ public final class PessoaDTO extends ResourceSupport {
 	 *
 	 * @return O endereco correspondencia
 	 */
-	public EnderecoDTO getEnderecoCorrespondencia() {
+	public EnderecoEUDTO getEnderecoCorrespondencia() {
 		return enderecoCorrespondencia;
 	}
 
@@ -217,9 +225,5 @@ public final class PessoaDTO extends ResourceSupport {
 			+ ", enderecoPrincipal=" + enderecoPrincipal
 			+ ", enderecoCorrespondencia=" + enderecoCorrespondencia
 			+ '}';
-	}
-
-	public PessoaEUDTO toPessoaEUDTO(){
-		return new PessoaEUDTO(this);
 	}
 }

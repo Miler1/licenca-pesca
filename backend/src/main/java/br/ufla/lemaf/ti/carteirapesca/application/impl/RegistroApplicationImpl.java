@@ -10,6 +10,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
@@ -110,7 +111,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 *
 	 * @param pessoa A pessoa
 	 */
-	private void cadastrarPessoa(PessoaDTO pessoa) {
+	private void cadastrarPessoa(PessoaEUDTO pessoa) {
 
 		WebServiceUtils.validarWebService();
 
@@ -176,7 +177,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		if (solicitante == null) {
 			solicitante = new Solicitante(cpf, passaporte);
-			cadastrarPessoa(resource.getPessoa());
+			cadastrarPessoa(resource.getPessoa().toPessoaEUDTO());
 		}
 
 		return solicitante;
