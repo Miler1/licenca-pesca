@@ -141,7 +141,7 @@ public class PessoaDTOAssembler {
 		endereco.municipio = new Municipio();
 		endereco.municipio.estado = new Estado();
 		endereco.municipio.estado.sigla = enderecoDTO.getUf();
-		endereco.municipio.codigoIbge = enderecoDTO.getMunicipio();
+		endereco.municipio.codigoIbge = enderecoDTO.getMunicipio().codigoIbge;
 
 		WebServiceUtils.validarWebService();
 
@@ -268,7 +268,7 @@ public class PessoaDTOAssembler {
 			endereco.complemento,
 			endereco.cep,
 			setUF(endereco.municipio),
-			setMunicipio(endereco.municipio),
+			endereco.municipio,
 			setDescricaoAcesso(endereco.descricaoAcesso)
 		);
 

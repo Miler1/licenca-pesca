@@ -1,9 +1,11 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices.CadastroUnificadoService;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
 
 /**
  * DTO de Endereço.
@@ -33,7 +35,7 @@ public final class EnderecoDTO {
 
 	private String uf;
 
-	private Integer municipio;
+	private Municipio municipio;
 
 	private String descricaoAcesso;
 
@@ -62,7 +64,7 @@ public final class EnderecoDTO {
 	            @JsonProperty("complemento") final String complemento,
 	            @JsonProperty("cep") final String cep,
 	            @JsonProperty("uf") final String uf,
-	            @JsonProperty("municipio") final Integer municipio,
+	            @JsonProperty("municipio") final Municipio municipio,
 	            @JsonProperty("descricaoAcesso") final String descricaoAcesso) {
 		this.tipo = tipo;
 		this.zonaLocalizacao = zonaLocalizacao;
