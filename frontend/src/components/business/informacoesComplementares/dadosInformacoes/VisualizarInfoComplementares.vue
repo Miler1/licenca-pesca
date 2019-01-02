@@ -92,7 +92,7 @@ export default {
     },
 
     localeData(resource, data) {
-      if (data === null) return null;
+      if (data === null ||  data === undefined) return null;
 
       switch (this.$i18n.locale) {
         case "EN":
