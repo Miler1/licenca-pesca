@@ -6,7 +6,7 @@
 			el-col(:span="24")
 				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.modalidadePesca`) }}
-					h4(:class="{'not-informed': !exist(info.modalidade)}") {{ localeData(informacoesComplementaresResource.modalidadePesca, info.modalidade) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+					h4(:class="{'not-informed': !exist(info.modalidadePesca)}") {{ localeData(informacoesComplementaresResource.modalidadePesca, info.modalidadePesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 		el-row.section(:gutter="20")
 			el-col(:span="24")
@@ -48,19 +48,19 @@
 			el-col(:span="24")
 				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.tipoIsca`) }}
-					h4(:class="{'not-informed': !exist(info.tipoIsca)}") {{ localeData(informacoesComplementaresResource.tipoIsca, info.materialPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+					h4(:class="{'not-informed': !exist(info.tipoIsca)}") {{ localeData(informacoesComplementaresResource.tipoIsca, info.tipoIsca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 		el-row.section(:gutter="20")
 			el-col(:span="24")
 				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.modalidadeMaisPraticada`) }}
-					h4(:class="{'not-informed': !exist(info.modalidadeMaisPraticada)}") {{ localeData(informacoesComplementaresResource.modalidadeMaisPraticada, info.materialPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+					h4(:class="{'not-informed': !exist(info.modalidadeMaisPraticada)}") {{ localeData(informacoesComplementaresResource.modalidadeMaisPraticada, info.modalidadeMaisPraticada) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 		el-row.section(:gutter="20")
 			el-col(:span="24")
 				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.agenciaTurismo`) }}
-					h4(:class="{'not-informed': !exist(info.agenciaTurismo)}") {{ localeData(informacoesComplementaresResource.agenciaTurismo, info.materialPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+					h4(:class="{'not-informed': !exist(info.agenciaTurismo)}") {{ localeData(informacoesComplementaresResource.agenciaTurismo, info.agenciaTurismo) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 </template>
 
@@ -92,7 +92,7 @@ export default {
     },
 
     localeData(resource, data) {
-      if (data === null) return null;
+      if (data === null ||  data === undefined) return null;
 
       switch (this.$i18n.locale) {
         case "EN":
