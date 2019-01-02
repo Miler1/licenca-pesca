@@ -48,9 +48,9 @@ export const PESSOA_RULES = {
 
     cep: [required("cep")],
 
-    municipio: [required("municipio")],
+    municipio: [required("municipio", "change")],
 
-    uf: [required("uf")],
+    uf: [required("uf", "change")],
 
     descricaoAcesso: [required("descricaoAcesso")],
   },
@@ -66,8 +66,8 @@ export const PESSOA_RULES = {
 
     cep: [required("cep")],
 
-    municipio: [required("municipio")],
+    municipio: [required("municipio", "change")],
 
-    uf: [required("uf")]
+    uf: [required("uf", "change")]
   }
 };

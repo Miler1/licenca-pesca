@@ -1,25 +1,25 @@
 import { required } from "../utils";
 
 export const INFORMACOES_RULES = {
-  modalidadePesca: [required("modalidadePesca")],
+  modalidadePesca: [required("modalidadePesca", "change")],
 
-  localizacaoPreferencialPesca: [required("localizacaoPreferencialPesca")],
+  localizacaoPreferencialPesca: [required("localizacaoPreferencialPesca", "change")],
 
-  rendaMensal: [required("rendaMensal")],
+  rendaMensal: [required("rendaMensal", "change")],
 
-  diasPescaPorAno: [required("diasPescaPorAno")],
+  diasPescaPorAno: [required("diasPescaPorAno", "change")],
 
-  gastoMedioPesca: [required("gastoMedioPesca")],
+  gastoMedioPesca: [required("gastoMedioPesca", "change")],
 
-  faixaEtaria: [required("faixaEtaria")],
+  faixaEtaria: [required("faixaEtaria", "change")],
 
-  localPesca: [required("localPesca")],
+  localPesca: [required("localPesca", "change")],
 
-  materialPesca: [required("materialPesca")],
+  materialPesca: [required("materialPesca", "change")],
 
-  tipoIsca: [required("tipoIsca")],
+  tipoIsca: [required("tipoIsca", "change")],
 
-  modalidadeMaisPraticada: [required("modalidadeMaisPraticada")],
+  modalidadeMaisPraticada: [required("modalidadeMaisPraticada", "change")],
 
-  agenciaTurismo: [required("agenciaTurismo")]
+  agenciaTurismo: [required("agenciaTurismo", "change")]
 };

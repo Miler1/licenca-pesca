@@ -72,8 +72,8 @@
             el-input(v-model="pessoa.enderecoPrincipal.logradouro")
 
         el-col(:span="6")
-          el-form-item(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoPrincipal.numero")
-            el-input(v-model="pessoa.enderecoPrincipal.numero")
+          el-form-item.is-required(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoPrincipal.numero")
+            el-input(v-model="pessoa.enderecoPrincipal.numero" :disabled="pessoa.enderecoPrincipal.semNumero")
 
         el-col(:span="6")
           el-form-item(label="_" prop="enderecoPrincipal.semNumero")
@@ -124,8 +124,8 @@
               el-input(v-model="pessoa.enderecoCorrespondencia.logradouro")
 
           el-col(:span="6")
-            el-form-item(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoCorrespondencia.numero")
-              el-input(v-model="pessoa.enderecoCorrespondencia.numero" v-mask="'#########'")
+            el-form-item.is-required(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoCorrespondencia.numero")
+              el-input(v-model="pessoa.enderecoCorrespondencia.numero" v-mask="'#########'"  :disabled="pessoa.enderecoCorrespondencia.semNumero")
 
           el-col(:span="6")
             el-form-item(label="_" prop="enderecoCorrespondencia.semNumero")
