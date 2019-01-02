@@ -101,17 +101,21 @@ export default {
         }
       )
         .then(() => {
+          // debugger;
           let registro = this.registroResource;
           let date = this.registroResource.solicitante.dataNascimento;
-          registro.solicitante.dataNascimento =  date.getDate() + '/' + (date.getMonth() + 1)+ '/' + date.getFullYear();
-          if(registro.solicitante.enderecoPrincipal.municipio) {
+          if(typeof(date) !== "string"){
 
-            registro.solicitante.enderecoPrincipal.municipio = registro.solicitante.enderecoPrincipal.municipio.id;
+            registro.solicitante.dataNascimento =  date.getDate() + '/' + (date.getMonth() + 1)+ '/' + date.getFullYear();
           }
-          if(registro.solicitante.enderecoCorrespondencia.municipio) {
+          // if(registro.solicitante.enderecoPrincipal.municipio) {
 
-            registro.solicitante.enderecoCorrespondencia.municipio = registro.solicitante.enderecoCorrespondencia.municipio.id;
-          }
+          //   registro.solicitante.enderecoPrincipal.municipio = registro.solicitante.enderecoPrincipal.municipio.id;
+          // }
+          // if(registro.solicitante.enderecoCorrespondencia.municipio) {
+
+          //   registro.solicitante.enderecoCorrespondencia.municipio = registro.solicitante.enderecoCorrespondencia.municipio.id;
+          // }
           
           this.$store.dispatch(REGISTRAR, registro).then(p => {
             let protocolo = p.replace("/", "").replace("-", "");

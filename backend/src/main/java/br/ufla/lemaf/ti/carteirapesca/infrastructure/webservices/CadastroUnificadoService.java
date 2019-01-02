@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.EntradaUnicaException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -148,7 +149,7 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 	 * @param pessoaDTO O DTO de Pessoa
 	 * @return Mensagem do serviço de WS do EU
 	 */
-	public Message cadastrarPessoa(PessoaDTO pessoaDTO) {
+	public Message cadastrarPessoa(PessoaEUDTO pessoaDTO) {
 
 		val assembler = new PessoaDTOAssembler();
 

@@ -1,21 +1,13 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices.CadastroUnificadoService;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
 
-/**
- * DTO de Endereço.
- *
- * @author Highlander Paiva
- * @since 1.0
- */
 @Getter
 @EqualsAndHashCode(callSuper = false)
-public final class EnderecoDTO {
+public class EnderecoEUDTO {
 
 	private Integer tipo;
 
@@ -35,7 +27,7 @@ public final class EnderecoDTO {
 
 	private String uf;
 
-	private Municipio municipio;
+	private Integer municipio;
 
 	private String descricaoAcesso;
 
@@ -55,17 +47,17 @@ public final class EnderecoDTO {
 	 * @param descricaoAcesso A descrição de acesso
 	 */
 	@JsonCreator
-	EnderecoDTO(@JsonProperty("tipo") final Integer tipo,
-	            @JsonProperty("zonaLocalizacao") final Integer zonaLocalizacao,
-	            @JsonProperty("semNumero") final Boolean semNumero,
-	            @JsonProperty("logradouro") final String logradouro,
-	            @JsonProperty("numero") final Integer numero,
-	            @JsonProperty("bairro") final String bairro,
-	            @JsonProperty("complemento") final String complemento,
-	            @JsonProperty("cep") final String cep,
-	            @JsonProperty("uf") final String uf,
-	            @JsonProperty("municipio") final Municipio municipio,
-	            @JsonProperty("descricaoAcesso") final String descricaoAcesso) {
+	EnderecoEUDTO(@JsonProperty("tipo") final Integer tipo,
+				@JsonProperty("zonaLocalizacao") final Integer zonaLocalizacao,
+				@JsonProperty("semNumero") final Boolean semNumero,
+				@JsonProperty("logradouro") final String logradouro,
+				@JsonProperty("numero") final Integer numero,
+				@JsonProperty("bairro") final String bairro,
+				@JsonProperty("complemento") final String complemento,
+				@JsonProperty("cep") final String cep,
+				@JsonProperty("uf") final String uf,
+				@JsonProperty("municipio") final Integer municipio,
+				@JsonProperty("descricaoAcesso") final String descricaoAcesso) {
 		this.tipo = tipo;
 		this.zonaLocalizacao = zonaLocalizacao;
 		this.semNumero = semNumero;
@@ -77,24 +69,5 @@ public final class EnderecoDTO {
 		this.uf = uf;
 		this.municipio = municipio;
 		this.descricaoAcesso = descricaoAcesso;
-	}
-
-
-	public EnderecoEUDTO toEUDTO() {
-		if(this.getMunicipio() != null){
-
-			return new EnderecoEUDTO(this.tipo,
-				this.zonaLocalizacao,
-				this.semNumero,
-				this.logradouro,
-				this.numero,
-				this.bairro,
-				this.complemento,
-				this.cep,
-				this.uf,
-				this.getMunicipio().id,
-				this.getDescricaoAcesso());
-		}
-		return null;
 	}
 }
