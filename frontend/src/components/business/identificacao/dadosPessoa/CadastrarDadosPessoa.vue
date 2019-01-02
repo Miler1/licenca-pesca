@@ -77,7 +77,7 @@
 
         el-col(:span="6")
           el-form-item(label="_" prop="enderecoPrincipal.semNumero")
-            el-checkbox(v-model="pessoa.enderecoPrincipal.semNumero" :label="$t(`${cadastrar_prefix}labels.semNumero`)")
+            el-checkbox(v-model="pessoa.enderecoPrincipal.semNumero" @change="changeSemNumeroEndPrincipal()" :label="$t(`${cadastrar_prefix}labels.semNumero`)")
 
       el-row(:gutter="20" v-if="isEPUrbano()")
 
@@ -132,7 +132,7 @@
 
           el-col(:span="6")
             el-form-item(label="_" prop="enderecoCorrespondencia.semNumero")
-              el-checkbox(v-model="pessoa.enderecoCorrespondencia.semNumero" :label="$t(`${cadastrar_prefix}labels.semNumero`)")
+              el-checkbox(v-model="pessoa.enderecoCorrespondencia.semNumero" @change="changeSemNumeroEndCorrespondencia()" :label="$t(`${cadastrar_prefix}labels.semNumero`)")
 
         el-row(:gutter="20")
 
@@ -212,6 +212,12 @@ export default {
         this.pessoa.enderecoPrincipal.zonaLocalizacao ===
         this.zonaLocalizacao.urbana
       );
+    },
+    changeSemNumeroEndPrincipal() {
+      this.pessoa.enderecoPrincipal.numero = "";
+    },
+    changeSemNumeroEndCorrespondencia() {
+      this.pessoa.enderecoCorrespondencia.numero = "";
     },
     fetchUfs() {
       this.ufSelectLoader = true;

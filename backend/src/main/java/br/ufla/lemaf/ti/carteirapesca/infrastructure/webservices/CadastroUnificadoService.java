@@ -192,4 +192,20 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 
 	}
 
+	/**
+	 * Busca de municipio atraves do id de municipio e estado
+	 * @param idMunicipio
+	 * @param idEstado
+	 * @return
+	 */
+	public Municipio getMunicipio(Integer idMunicipio, Integer idEstado) {
+
+		var municipios = this.buscarMunicipio(idEstado);
+
+		var municipio = Arrays.stream(municipios)
+			.filter(municipioArray -> municipioArray.id.equals(idMunicipio))
+			.findFirst();
+
+		return municipio.get();
+	}
 }
