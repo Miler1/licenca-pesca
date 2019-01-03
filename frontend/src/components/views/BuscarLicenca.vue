@@ -72,7 +72,7 @@ export default {
   methods: {
     cadastrar() {
       this.$router.push({name: 'registrar'});
-    },
+    }
   }
 };
 </script>

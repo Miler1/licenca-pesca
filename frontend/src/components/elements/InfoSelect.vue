@@ -13,12 +13,13 @@ export default {
 
   data() {
     return {
-      model: null
+      // model: null
     };
   },
 
   props: {
-    list: Array
+    list: Array,
+    model: Object
   },
 
   watch: {

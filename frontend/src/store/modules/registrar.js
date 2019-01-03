@@ -70,6 +70,9 @@ export const getters = {
    */
   ufs: state => state.ufs,
 
+  informacoesComplementares: state =>
+    state.registroResource.informacoesComplementares,
+
   /**
    * Retorna os dados das informacoes Complementares
    */

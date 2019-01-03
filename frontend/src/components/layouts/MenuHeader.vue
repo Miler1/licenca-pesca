@@ -16,6 +16,7 @@
 
 <script>
 import { localizeValidation } from "../../configs/validator";
+import { CANCELAR } from "../../store/actions.type";
 
 export default {
   name: "MenuHeader",
@@ -26,7 +27,7 @@ export default {
   methods: {
     handleLocale() {
       localizeValidation();
-    }
+	}
   }
 };
 </script>
