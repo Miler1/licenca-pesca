@@ -61,7 +61,7 @@
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.zonaLocalizacao`)" prop="enderecoPrincipal.zonaLocalizacao")
-            el-radio-group(v-model="pessoa.enderecoPrincipal.zonaLocalizacao")
+            el-radio-group(v-model="pessoa.enderecoPrincipal.zonaLocalizacao" @change="changeZonaLocalizacao()")
               el-radio(:label="zonaLocalizacao.urbana") {{ $t(`${cadastrar_prefix}dados.zonaLocalizacao.urbana`) }}
               el-radio(:label="zonaLocalizacao.rural") {{ $t(`${cadastrar_prefix}dados.zonaLocalizacao.rural`) }}
 
@@ -231,6 +231,9 @@ export default {
       this.$store
         .dispatch(FETCH_UFS)
         .finally(() => (this.ufSelectLoader = false));
+    },
+    changeZonaLocalizacao () {
+      this.$refs["pessoa"].clearValidate();
     },
     fetchMunicipiosEnderecoPrincial(uf) {
       this.municipioSelectLoader = true;
