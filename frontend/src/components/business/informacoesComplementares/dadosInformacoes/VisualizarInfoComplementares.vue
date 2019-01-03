@@ -41,6 +41,12 @@
 		el-row.section(:gutter="20")
 			el-col(:span="24")
 				.align
+					h4.label {{ $t(`${visualizar_prefix}labels.localPesca`) }}
+					h4(:class="{'not-informed': !exist(info.localPesca)}") {{ localeData(informacoesComplementaresResource.localPesca, info.localPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}		
+		
+		el-row.section(:gutter="20")
+			el-col(:span="24")
+				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.materialPesca`) }}
 					h4(:class="{'not-informed': !exist(info.materialPesca)}") {{ localeData(informacoesComplementaresResource.materialPesca, info.materialPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
