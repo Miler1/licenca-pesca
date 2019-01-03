@@ -64,9 +64,6 @@ export default {
       } else {
         if (this.step++ >= 2) this.step = 2;
       }
-      // if (this.checkValidation()) {
-      //   if (this.step++ >= 2) this.step = 2;
-      // }
     },
 
     prevStep() {
@@ -101,7 +98,6 @@ export default {
         }
       )
         .then(() => {
-          // debugger;
           let registro = this.registroResource;
           let date = this.registroResource.solicitante.dataNascimento;
           if(typeof(date) !== "string"){

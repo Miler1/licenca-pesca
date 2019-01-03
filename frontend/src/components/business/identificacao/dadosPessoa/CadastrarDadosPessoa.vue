@@ -61,7 +61,7 @@
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.zonaLocalizacao`)" prop="enderecoPrincipal.zonaLocalizacao")
-            el-radio-group(v-model="pessoa.enderecoPrincipal.zonaLocalizacao")
+            el-radio-group(v-model="pessoa.enderecoPrincipal.zonaLocalizacao" @change="changeZonaLocalizacao()")
               el-radio(:label="zonaLocalizacao.urbana") {{ $t(`${cadastrar_prefix}dados.zonaLocalizacao.urbana`) }}
               el-radio(:label="zonaLocalizacao.rural") {{ $t(`${cadastrar_prefix}dados.zonaLocalizacao.rural`) }}
 
@@ -72,8 +72,8 @@
             el-input(v-model="pessoa.enderecoPrincipal.logradouro")
 
         el-col(:span="6")
-          el-form-item.is-required(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoPrincipal.numero")
-            el-input(v-model="pessoa.enderecoPrincipal.numero" :disabled="pessoa.enderecoPrincipal.semNumero")
+          el-form-item.is-required(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoPrincipal.numero" ref="numeroPrincipal")
+            el-input(v-model="pessoa.enderecoPrincipal.numero" v-mask="'#########'" :disabled="pessoa.enderecoPrincipal.semNumero" )
 
         el-col(:span="6")
           el-form-item(label="_" prop="enderecoPrincipal.semNumero")
@@ -126,7 +126,7 @@
               el-input(v-model="pessoa.enderecoCorrespondencia.logradouro")
 
           el-col(:span="6")
-            el-form-item.is-required(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoCorrespondencia.numero")
+            el-form-item.is-required(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoCorrespondencia.numero"  ref="numeroCorrespondencia")
               el-input(v-model="pessoa.enderecoCorrespondencia.numero" v-mask="'#########'"  :disabled="pessoa.enderecoCorrespondencia.semNumero")
 
           el-col(:span="6")
@@ -213,9 +213,16 @@ export default {
       );
     },
     changeSemNumeroEndPrincipal() {
+      this.removerMensagemErro("numeroPrincipal");
       this.pessoa.enderecoPrincipal.numero = "";
     },
+    removerMensagemErro(ref) {
+
+      this.$refs[ref].validateMessage = "";
+      this.$refs[ref].validateState = undefined;
+    },
     changeSemNumeroEndCorrespondencia() {
+      this.removerMensagemErro("numeroCorrespondencia");
       this.pessoa.enderecoCorrespondencia.numero = "";
     },
     fetchUfs() {
@@ -223,6 +230,9 @@ export default {
       this.$store
         .dispatch(FETCH_UFS)
         .finally(() => (this.ufSelectLoader = false));
+    },
+    changeZonaLocalizacao () {
+      this.$refs["pessoa"].clearValidate();
     },
     fetchMunicipiosEnderecoPrincial(uf) {
       this.municipioSelectLoader = true;

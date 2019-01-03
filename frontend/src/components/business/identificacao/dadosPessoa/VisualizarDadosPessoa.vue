@@ -4,22 +4,22 @@
 
     el-row.section(:gutter="20")
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.nome)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.nome`) }}
           h4(:class="{'not-informed': exist(pessoa.nome)}") {{ pessoa.nome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.cpf)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.cpf`) }}
           h4(:class="{'not-informed': exist(pessoa.cpf)}") {{ pessoa.cpf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.passaporte)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.passaporte`) }}
           h4(:class="{'not-informed': exist(pessoa.passaporte)}") {{ pessoa.passaporte | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6"  v-if="!exist(pessoa.sexo)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.sexo`) }}
           h4(
@@ -28,12 +28,12 @@
 
     el-row.section(:gutter="20")
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.dataNascimento)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.dataNascimento`) }}
           h4(:class="{'not-informed': exist(pessoa.dataNascimento)}") {{ localizeDate(pessoa.dataNascimento) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.nomeMae)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.nomeMae`) }}
           h4(:class="{'not-informed': exist(pessoa.nomeMae)}") {{ pessoa.nomeMae | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
@@ -42,46 +42,46 @@
 
     el-row.section(:gutter="20")
 
-      el-col(:span="6")
+      el-col(:span="6"  v-if="!exist(pessoa.enderecoPrincipal.zonaLocalizacao)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.localizacao`) }}
           h4(
             :class="{'not-informed': exist(pessoa.enderecoPrincipal.zonaLocalizacao)}"
           ) {{ getZonaLocalizacao(pessoa.enderecoPrincipal.zonaLocalizacao) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.enderecoPrincipal.logradouro)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.logradouro`) }}
           h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.logradouro)}") {{ pessoa.enderecoPrincipal.logradouro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.enderecoPrincipal.numero)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.numero`) }}
           h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.numero)}") {{ pessoa.enderecoPrincipal.numero | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.enderecoPrincipal.bairro)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.bairro`) }}
           h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.bairro)}") {{ pessoa.enderecoPrincipal.bairro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
     el-row.section(:gutter="20")
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.enderecoPrincipal.complemento)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.complemento`) }}
           h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.complemento)}") {{ pessoa.enderecoPrincipal.complemento | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.enderecoPrincipal.cep)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.cep`) }}
           h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.cep)}") {{ pessoa.enderecoPrincipal.cep | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.enderecoPrincipal.municipio)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.municipio`) }}
           h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.municipio)}") {{ pessoa.enderecoPrincipal.municipio.nome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-      el-col(:span="6")
+      el-col(:span="6" v-if="!exist(pessoa.enderecoPrincipal.uf)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.uf`) }}
           h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.uf)}") {{ pessoa.enderecoPrincipal.uf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
@@ -91,46 +91,46 @@
 
       el-row.section(:gutter="20")
 
-        el-col(:span="6")
+        el-col(:span="6" v-if="!exist(pessoa.enderecoCorrespondencia.zonaLocalizacao)")
           .align
             h4.label {{ $t(`${visualizar_prefix}label.localizacao`) }}
             h4(
             :class="{'not-informed': exist(pessoa.enderecoCorrespondencia.zonaLocalizacao)}"
             ) {{ getZonaLocalizacao(pessoa.enderecoCorrespondencia.zonaLocalizacao) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-        el-col(:span="6")
+        el-col(:span="6" v-if="!exist(pessoa.enderecoCorrespondencia.logradouro)")
           .align
             h4.label {{ $t(`${visualizar_prefix}label.logradouro`) }}
             h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.logradouro)}") {{ pessoa.enderecoCorrespondencia.logradouro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-        el-col(:span="6")
+        el-col(:span="6" v-if="!exist(pessoa.enderecoCorrespondencia.numero)")
           .align
             h4.label {{ $t(`${visualizar_prefix}label.numero`) }}
             h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.numero)}") {{ pessoa.enderecoCorrespondencia.numero | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-        el-col(:span="6")
+        el-col(:span="6" v-if="!exist(pessoa.enderecoCorrespondencia.bairro)")
           .align
             h4.label {{ $t(`${visualizar_prefix}label.bairro`) }}
             h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.bairro)}") {{ pessoa.enderecoCorrespondencia.bairro | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
       el-row.section(:gutter="20")
 
-        el-col(:span="6")
+        el-col(:span="6" v-if="!exist(pessoa.enderecoCorrespondencia.complemento)")
           .align
             h4.label {{ $t(`${visualizar_prefix}label.complemento`) }}
             h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.complemento)}") {{ pessoa.enderecoCorrespondencia.complemento | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-        el-col(:span="6")
+        el-col(:span="6" v-if="!exist(pessoa.enderecoCorrespondencia.cep)")
           .align
             h4.label {{ $t(`${visualizar_prefix}label.cep`) }}
             h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.cep)}") {{ pessoa.enderecoCorrespondencia.cep | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-        el-col(:span="6")
+        el-col(:span="6" v-if="!exist(pessoa.enderecoCorrespondencia.municipio)")
           .align
             h4.label {{ $t(`${visualizar_prefix}label.municipio`) }}
             h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.municipio)}") {{ pessoa.enderecoCorrespondencia.municipio.nome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
-        el-col(:span="6")
+        el-col(:span="6" v-if="!exist(pessoa.enderecoCorrespondencia.uf)")
           .align
             h4.label {{ $t(`${visualizar_prefix}label.uf`) }}
             h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.uf)}") {{ pessoa.enderecoCorrespondencia.uf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
