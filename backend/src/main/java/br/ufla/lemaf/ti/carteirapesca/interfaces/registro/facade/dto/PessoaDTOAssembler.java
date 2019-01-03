@@ -47,64 +47,64 @@ public class PessoaDTOAssembler {
 	 * @param pessoaDTO O DTO de Pessoa
 	 * @return A Pessoa
 	 */
-	public Pessoa toPessoa(final PessoaDTO pessoaDTO) {
-		if (pessoaDTO == null) return null;
-
-		var pessoa = new Pessoa();
-		pessoa.estrangeiro = pessoaDTO.getEstrangeiro();
-		pessoa.cpf = pessoaDTO.getCpf();
-		pessoa.nome = pessoaDTO.getNome();
-		pessoa.passaporte = pessoaDTO.getPassaporte();
-		pessoa.dataNascimento = pessoaDTO.getDataNascimento();
-
-		pessoa.sexo = new Sexo();
-		if (pessoaDTO.getSexo().equals(Constants.MASCULINO)) {
-			pessoa.sexo.codigo = Constants.MASCULINO;
-			pessoa.sexo.nome = "Masculino";
-		} else if (pessoaDTO.getSexo().equals(Constants.FEMININO)) {
-			pessoa.sexo.codigo = Constants.FEMININO;
-			pessoa.sexo.nome = "Feminino";
-		} else {
-			pessoa.sexo.codigo = 2;
-			pessoa.sexo.nome = "Outro";
-		}
-
-		pessoa.nomeMae = pessoaDTO.getNomeMae();
-
-		pessoa.contatos = new ArrayList<>();
-
-		var contato = new Contato();
-		contato.principal = true;
-		contato.tipo = new TipoContato();
-		contato.tipo.id = TipoContato.ID_EMAIL;
-		contato.valor = pessoaDTO.getEmail();
-
-		pessoa.contatos.add(contato);
-
-		pessoa.enderecos = new ArrayList<>();
-		if (enderecoExiste(pessoaDTO.getEnderecoPrincipal())) {
-
-			pessoa.enderecos.add(toEndereco(pessoaDTO.getEnderecoPrincipal()));
-
-		}
-
-		if (enderecoExiste(pessoaDTO.getEnderecoCorrespondencia())) {
-
-			pessoa.enderecos.add(toEndereco(pessoaDTO.getEnderecoCorrespondencia()));
-
-		} else {
-
-			var endereco = toEndereco(pessoaDTO.getEnderecoPrincipal());
-			endereco.tipo.id = Constants.ENDERECO_CORRESPONDENCIA;
-			endereco.zonaLocalizacao.codigo = Constants.ZONA_URBANA;
-			endereco.zonaLocalizacao.nome = "Urbana";
-
-			pessoa.enderecos.add(endereco);
-
-		}
-
-		return pessoa;
-	}
+//	public Pessoa toPessoa(final PessoaDTO pessoaDTO) {
+//		if (pessoaDTO == null) return null;
+//
+//		var pessoa = new Pessoa();
+//		pessoa.estrangeiro = pessoaDTO.getEstrangeiro();
+//		pessoa.cpf = pessoaDTO.getCpf();
+//		pessoa.nome = pessoaDTO.getNome();
+//		pessoa.passaporte = pessoaDTO.getPassaporte();
+//		pessoa.dataNascimento = pessoaDTO.getDataNascimento();
+//
+//		pessoa.sexo = new Sexo();
+//		if (pessoaDTO.getSexo().equals(Constants.MASCULINO)) {
+//			pessoa.sexo.codigo = Constants.MASCULINO;
+//			pessoa.sexo.nome = "Masculino";
+//		} else if (pessoaDTO.getSexo().equals(Constants.FEMININO)) {
+//			pessoa.sexo.codigo = Constants.FEMININO;
+//			pessoa.sexo.nome = "Feminino";
+//		} else {
+//			pessoa.sexo.codigo = 2;
+//			pessoa.sexo.nome = "Outro";
+//		}
+//
+//		pessoa.nomeMae = pessoaDTO.getNomeMae();
+//
+//		pessoa.contatos = new ArrayList<>();
+//
+//		var contato = new Contato();
+//		contato.principal = true;
+//		contato.tipo = new TipoContato();
+//		contato.tipo.id = TipoContato.ID_EMAIL;
+//		contato.valor = pessoaDTO.getEmail();
+//
+//		pessoa.contatos.add(contato);
+//
+//		pessoa.enderecos = new ArrayList<>();
+//		if (enderecoExiste(pessoaDTO.getEnderecoPrincipal())) {
+//
+//			pessoa.enderecos.add(toEndereco(pessoaDTO.getEnderecoPrincipal()));
+//
+//		}
+//
+//		if (enderecoExiste(pessoaDTO.getEnderecoCorrespondencia())) {
+//
+//			pessoa.enderecos.add(toEndereco(pessoaDTO.getEnderecoCorrespondencia()));
+//
+//		} else {
+//
+//			var endereco = toEndereco(pessoaDTO.getEnderecoPrincipal());
+//			endereco.tipo.id = Constants.ENDERECO_CORRESPONDENCIA;
+//			endereco.zonaLocalizacao.codigo = Constants.ZONA_URBANA;
+//			endereco.zonaLocalizacao.nome = "Urbana";
+//
+//			pessoa.enderecos.add(endereco);
+//
+//		}
+//
+//		return pessoa;
+//	}
 
 	public Pessoa toPessoa(final PessoaEUDTO pessoaDTO) {
 		if (pessoaDTO == null) return null;
@@ -148,8 +148,12 @@ public class PessoaDTOAssembler {
 		}
 
 		if (enderecoExiste(pessoaDTO.getEnderecoCorrespondencia())) {
-
-			pessoa.enderecos.add(toEndereco(pessoaDTO.getEnderecoCorrespondencia()));
+			Endereco endereco = toEndereco(pessoaDTO.getEnderecoPrincipal());
+			endereco.tipo.id =  Constants.ENDERECO_PRINCIPAL;
+			pessoa.enderecos.add(endereco);
+			Endereco endereco2 = toEndereco(pessoaDTO.getEnderecoCorrespondencia());
+			endereco2.tipo.id = Constants.ENDERECO_CORRESPONDENCIA;
+			pessoa.enderecos.add(endereco2);
 
 		} else {
 
