@@ -175,7 +175,7 @@ export const mutations = {
    * @param solicitante
    */
   [CADASTRAR_SOLICITANTE]: (state, solicitante) => {
-    delete solicitante.confirmarEmail;
+    // delete solicitante.confirmarEmail;
     state.registroResource.solicitante = toSolicitanteDTO(solicitante);
   },
 
