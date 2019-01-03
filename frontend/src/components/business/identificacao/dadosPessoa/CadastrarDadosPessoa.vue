@@ -157,7 +157,7 @@
           el-col(:span="6")
             el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoCorrespondencia.municipio")
               el-select(v-model="pessoa.enderecoCorrespondencia.municipio" :loading="municipioSelectLoader" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-                el-option(v-for="municipio in municipios" :key="municipio.id" :value="municipio" :label="municipio.nome")
+                el-option(v-for="municipio in municipios" :key="municipio" :value="municipio" :label="municipio.nome")
 
 </template>
 
