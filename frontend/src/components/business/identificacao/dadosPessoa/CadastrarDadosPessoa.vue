@@ -73,7 +73,7 @@
 
         el-col(:span="6")
           el-form-item.is-required(:label="$t(`${cadastrar_prefix}labels.numero`)" prop="enderecoPrincipal.numero" ref="numeroPrincipal")
-            el-input(v-model="pessoa.enderecoPrincipal.numero" :disabled="pessoa.enderecoPrincipal.semNumero" )
+            el-input(v-model="pessoa.enderecoPrincipal.numero" v-mask="'#########'" :disabled="pessoa.enderecoPrincipal.semNumero" )
 
         el-col(:span="6")
           el-form-item(label="_" prop="enderecoPrincipal.semNumero")
