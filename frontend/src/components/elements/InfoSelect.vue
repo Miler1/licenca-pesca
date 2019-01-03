@@ -13,7 +13,7 @@ export default {
 
   props: {
     list: Array,
-    model: Object
+    model: Number
   },
 
   watch: {

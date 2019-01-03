@@ -67,7 +67,6 @@ export const actions = {
 
   [CANCELAR]: ({ commit }) => {
     commit(ACTIVE_CADASTRO, false);
-    commit(SEND_INFORMACOES_COMPLEMENTARES, null);
   }
 };
 
