@@ -11,12 +11,6 @@
 export default {
   name: "InfoSelect",
 
-  data() {
-    return {
-      // model: null
-    };
-  },
-
   props: {
     list: Array,
     model: Object

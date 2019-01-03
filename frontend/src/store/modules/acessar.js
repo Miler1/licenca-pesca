@@ -1,4 +1,4 @@
-import { ACESSAR, CANCELAR } from "../actions.type";
+import { ACESSAR, CANCELAR, SEND_INFORMACOES_COMPLEMENTARES } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE } from "../mutations.type";
 
@@ -67,6 +67,7 @@ export const actions = {
 
   [CANCELAR]: ({ commit }) => {
     commit(ACTIVE_CADASTRO, false);
+    commit(SEND_INFORMACOES_COMPLEMENTARES, null);
   }
 };
 
