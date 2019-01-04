@@ -35,8 +35,8 @@ spring:
         ddl-auto: validate
 
   flyway:
-    enabled: true
-    baseline-on-migrate: true
+    enabled: false
+    baseline-on-migrate: false
 
   jackson:
     time-zone: UTC
