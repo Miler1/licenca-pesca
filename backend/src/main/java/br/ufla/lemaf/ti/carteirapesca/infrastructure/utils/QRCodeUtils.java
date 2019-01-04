@@ -22,7 +22,7 @@ import java.util.EnumMap;
 @Slf4j
 public final class QRCodeUtils {
 
-	private static final Integer QRCODE_SIZE = 120;
+	private static final Integer QRCODE_SIZE = 360;
 
 	/**
 	 * Retorna o codigo base64 da imagem do QRCode
