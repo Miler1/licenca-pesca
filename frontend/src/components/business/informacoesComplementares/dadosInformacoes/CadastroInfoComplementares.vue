@@ -23,7 +23,7 @@
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.diasPescaPorAno`)" prop="diasPescaPorAno")
-						el-input-number(:model="informacoesComplementares.diasPescaPorAno" :min="1" :max="365")
+						el-input-number(v-model="informacoesComplementares.diasPescaPorAno" :min="1" :max="365")
 
 				el-col(:span="24")
 
@@ -97,7 +97,7 @@ export default {
 				modalidadePesca: null,
 				localizacaoPreferencialPesca: null,
 				rendaMensal: null,
-				diasPescaPorAno: null,
+				diasPescaPorAno: 1,
 				gastoMedioPesca: 0,
 				faixaEtaria: null,
 				localPesca: null,
