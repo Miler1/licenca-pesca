@@ -1,9 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -11,11 +9,9 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Highlander Paiva
  */
-//@Configuration
-@EnableAutoConfiguration
-@ComponentScan(basePackages = {"br.ufla.lemaf.ti.carteirapesca"})
-//@SpringBootApplication
-//@SuppressWarnings("CheckStyle")
+@Configuration
+@SpringBootApplication
+@SuppressWarnings("CheckStyle")
 public class CarteiraPescaApplication {
 
 	/**
