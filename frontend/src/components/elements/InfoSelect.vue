@@ -11,14 +11,9 @@
 export default {
   name: "InfoSelect",
 
-  data() {
-    return {
-      model: null
-    };
-  },
-
   props: {
-    list: Array
+    list: Array,
+    model: Number
   },
 
   watch: {

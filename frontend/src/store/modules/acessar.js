@@ -1,12 +1,15 @@
-import { ACESSAR, CANCELAR } from "../actions.type";
+import { ACESSAR, CANCELAR, SEND_INFORMACOES_COMPLEMENTARES } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, CLEAN_SOLICITANTE } from "../mutations.type";
 
 import AcessoService from "../../services/AcessoService";
+import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
+import { stat } from "fs";
 
 const INITIAL_STATE = {
   solicitante: Solicitante,
   cadastroCanActive: false,
+  existeSolicitante: false,
   showStepsController: true
 };
 
@@ -61,13 +64,12 @@ export const actions = {
       })
       .catch(error => {
         commit(SET_ERROR, error);
-        //commit(SET_SOLICITANTE, true);
       });
   },
 
   [CANCELAR]: ({ commit }) => {
-    // commit(SET_SOLICITANTE, null);
-    commit(ACTIVE_CADASTRO, null);
+    commit(ACTIVE_CADASTRO, false);
+    commit(CLEAN_SOLICITANTE);
   }
 };
 
@@ -89,6 +91,10 @@ export const mutations = {
     } else {
       state.solicitante = null;
     }
+  },
+
+  [CLEAN_SOLICITANTE]: (state) => {
+    state.solicitante = Solicitante;
   },
 
   /**

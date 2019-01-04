@@ -26,7 +26,7 @@ export default {
   methods: {
     handleLocale() {
       localizeValidation();
-    }
+	}
   }
 };
 </script>

@@ -103,12 +103,10 @@
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoPrincipal.municipio")
             el-select(v-model="pessoa.enderecoPrincipal.municipio" :loading="municipioSelectLoader" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-              el-option(v-for="municipio in municipios" :key="municipio.nome" :value="municipio" :label="municipio.nome")
+              el-option(v-for="municipio in municipios" :key="municipio.id" :value="municipio" :label="municipio.nome")
 
       //- el-row(:gutter="20")
-
-
-
+     
       .enderecoCorrespondencia(v-if="!isEPUrbano()")
         el-row(:gutter="20")
           el-col(:span="24")

@@ -70,6 +70,9 @@ export const getters = {
    */
   ufs: state => state.ufs,
 
+  informacoesComplementares: state =>
+    state.registroResource.informacoesComplementares,
+
   /**
    * Retorna os dados das informacoes Complementares
    */
@@ -172,7 +175,7 @@ export const mutations = {
    * @param solicitante
    */
   [CADASTRAR_SOLICITANTE]: (state, solicitante) => {
-    delete solicitante.confirmarEmail;
+    // delete solicitante.confirmarEmail;
     state.registroResource.solicitante = toSolicitanteDTO(solicitante);
   },
 

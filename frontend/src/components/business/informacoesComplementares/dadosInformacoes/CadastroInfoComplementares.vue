@@ -8,17 +8,17 @@
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)" prop="modalidadePesca")
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePesca`) }}
-						info-select(@value="informacoesComplementares.modalidadePesca = $event" :list="informacoesComplementaresResource.modalidadePesca")
+						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca")
 
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localizacaoPreferencialPesca`)" prop="localizacaoPreferencialPesca")
-						info-select(@value="informacoesComplementares.localizacaoPreferencialPesca = $event" :list="informacoesComplementaresResource.localizacaoPreferencialPesca")
+						info-select(@value="informacoesComplementares.localizacaoPreferencialPesca = $event" :model="informacoesComplementares.localizacaoPreferencialPesca" :list="informacoesComplementaresResource.localizacaoPreferencialPesca")
 
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.rendaMensal`)" prop="rendaMensal")
-						info-select(@value="informacoesComplementares.rendaMensal = $event" :list="informacoesComplementaresResource.rendaMensal")
+						info-select(@value="informacoesComplementares.rendaMensal = $event" :model="informacoesComplementares.rendaMensal" :list="informacoesComplementaresResource.rendaMensal")
 
 				el-col(:span="24")
 
@@ -36,32 +36,32 @@
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.faixaEtaria`)" prop="faixaEtaria")
-						info-select(@value="informacoesComplementares.faixaEtaria = $event" :list="informacoesComplementaresResource.faixaEtaria")
+						info-select(@value="informacoesComplementares.faixaEtaria = $event" :model="informacoesComplementares.faixaEtaria" :list="informacoesComplementaresResource.faixaEtaria")
 
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localPesca`)" prop="localPesca")
-						info-select(@value="informacoesComplementares.localPesca = $event" :list="informacoesComplementaresResource.localPesca")
+						info-select(@value="informacoesComplementares.localPesca = $event" :model="informacoesComplementares.localPesca" :list="informacoesComplementaresResource.localPesca")
 
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.materialPesca`)" prop="materialPesca")
-						info-select(@value="informacoesComplementares.materialPesca = $event" :list="informacoesComplementaresResource.materialPesca")
+						info-select(@value="informacoesComplementares.materialPesca = $event" :model="informacoesComplementares.materialPesca" :list="informacoesComplementaresResource.materialPesca")
 
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
-						info-select(@value="informacoesComplementares.tipoIsca = $event" :list="informacoesComplementaresResource.tipoIsca")
+						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca")
 
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadeMaisPraticada`)" prop="modalidadeMaisPraticada")
-						info-select(@value="informacoesComplementares.modalidadeMaisPraticada = $event" :list="informacoesComplementaresResource.modalidadeMaisPraticada")
+						info-select(@value="informacoesComplementares.modalidadeMaisPraticada = $event" :model="informacoesComplementares.modalidadeMaisPraticada" :list="informacoesComplementaresResource.modalidadeMaisPraticada")
 
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
-							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :list="informacoesComplementaresResource.agenciaTurismo")
+							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :model="informacoesComplementares.agenciaTurismo" :list="informacoesComplementaresResource.agenciaTurismo")
 </template>
 
 <script>
@@ -89,7 +89,6 @@ export default {
 				precision: 2,
 				masked: false
 			},
-      informacoesComplementares: InformacoesComplementaresDTO,
       modalidade: ModalidadeResource,
       infoRules: INFORMACOES_RULES,
 			cadastrar_info_prefix: INFORMACOES_PREFIX,
@@ -98,7 +97,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["informacoesComplementaresResource"])
+    ...mapGetters(["informacoesComplementaresResource", "informacoesComplementares"])
   },
 
   methods: {

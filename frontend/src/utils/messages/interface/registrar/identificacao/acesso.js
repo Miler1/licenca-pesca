@@ -4,6 +4,8 @@ import { handleMessage } from "../../../utils";
 export const ACESSO_MESSAGES_PREFIX =
   "interface.registrar.identificacao.acesso.";
 
+  // interface.registrar.identificacao.tabela.label.tabela
+
 const ACESSO = {
   acesso: {
     label: {
@@ -16,6 +18,16 @@ const ACESSO = {
     placeholder: {
       cpf: ["Informe o CPF", "Enter the CPF"],
       passaporte: ["Informe o passaporte", "Enter the passport number"]
+    }
+  },
+  tabela: {
+    label: {
+      modalidade: ["Modalidade", "Modality"],
+      cadastro: ["Cadastro", "Register"],
+      ativacao: ["Ativação", "Activation"],
+      vencimento: ["Vencimento", "Maturity"],
+      situacao: ["Situação", "Situation"],
+      acoes: ["Ações", "Actions"]
     }
   }
 };
