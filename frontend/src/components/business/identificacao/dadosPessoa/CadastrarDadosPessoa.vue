@@ -106,8 +106,7 @@
               el-option(v-for="municipio in municipios" :key="municipio.id" :value="municipio" :label="municipio.nome")
 
       //- el-row(:gutter="20")
-
-
+     
       .enderecoCorrespondencia(v-if="!isEPUrbano()")
         el-row(:gutter="20")
           el-col(:span="24")
