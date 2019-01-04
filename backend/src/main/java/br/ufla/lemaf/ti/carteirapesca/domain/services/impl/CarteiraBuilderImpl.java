@@ -1,8 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaException;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
@@ -26,9 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Buider da Carteira.
@@ -43,21 +39,22 @@ import java.util.GregorianCalendar;
 @Service
 public class CarteiraBuilderImpl implements CarteiraBuilder {
 
-	private static final String TEMPLATE_CARTEIRA = "templates/template_carteira_pesca.png";
-	private static final Integer FONT_SIZE = 12;
+	private static final String TEMPLATE_CARTEIRA = "templates/template_carteira_pesca_ajustada.png";
+	private static final Integer FONT_SIZE = 15;
 
 	private static final Integer EIXO_X_COLUNA_1 = 52;
-	private static final Integer EIXO_X_COLUNA_2 = 320;
+	private static final Integer EIXO_X_COLUNA_2 = 500;
+	private static final Integer EIXO_X_COLUNA_3 = EIXO_X_COLUNA_2 + 490;
 
-	private static final Integer EIXO_Y_LINHA_1 = 92;
-	private static final Integer EIXO_Y_LINHA_2 = EIXO_Y_LINHA_1 + 50;
-	private static final Integer EIXO_Y_LINHA_3 = EIXO_Y_LINHA_2 + 48;
-	private static final Integer EIXO_Y_LINHA_4 = EIXO_Y_LINHA_3 + 48;
-	private static final Integer EIXO_Y_LINHA_5 = EIXO_Y_LINHA_4 + 48;
-	private static final Integer EIXO_Y_LINHA_6 = EIXO_Y_LINHA_5 + 48;
+	private static final Integer EIXO_Y_LINHA_1 = 225;
+	private static final Integer EIXO_Y_LINHA_2 = EIXO_Y_LINHA_1 + 70;
+	private static final Integer EIXO_Y_LINHA_3 = EIXO_Y_LINHA_2 + 70;
+	private static final Integer EIXO_Y_LINHA_4 = EIXO_Y_LINHA_3 + 70;
+	private static final Integer EIXO_Y_LINHA_5 = EIXO_Y_LINHA_4 + 70;
+	private static final Integer EIXO_Y_LINHA_6 = EIXO_Y_LINHA_5 + 70;
 
-	private static final Integer EIXO_X_QRCODE = 1000;
-	private static final Integer EIXO_Y_QRCODE = 80;
+	private static final Integer EIXO_X_QRCODE = 1460;
+	private static final Integer EIXO_Y_QRCODE = 34;
 
 	private static final String FORMAT_CARTEIRA = "png";
 
@@ -114,6 +111,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 			grafics.setColor(Color.BLACK);
 			grafics.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
 
+			// Nome
 			grafics.drawString(pessoa.nome.toUpperCase(), EIXO_X_COLUNA_1, EIXO_Y_LINHA_1);
 			grafics.drawString(identificadorPessoa(pessoa), EIXO_X_COLUNA_2, EIXO_Y_LINHA_1);
 
@@ -128,11 +126,23 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 			grafics.drawString("BRASIL", EIXO_X_COLUNA_1, EIXO_Y_LINHA_5);
 			grafics.drawString(campoLimiteCaptura(modalidade), EIXO_X_COLUNA_2, EIXO_Y_LINHA_5);
 
-			grafics.drawString(campoValorCarteira(modalidade), EIXO_X_COLUNA_1, EIXO_Y_LINHA_6);
+//			grafics.drawString(campoValorCarteira(modalidade), EIXO_X_COLUNA_1, EIXO_Y_LINHA_6);
+
+			Date validade = new Date();
+			validade.setYear(validade.getYear()+1);
+
+			// Validade
+			grafics.drawString(
+				DateUtils.formatDate(validade, Constants.DATE_FORMAT),
+				EIXO_X_COLUNA_3,
+				EIXO_Y_LINHA_3
+			);
+
+			// Emissao
 			grafics.drawString(
 				DateUtils.formatDate(new Date(), Constants.DATE_FORMAT),
-				EIXO_X_COLUNA_2,
-				EIXO_Y_LINHA_6
+				EIXO_X_COLUNA_3,
+				EIXO_Y_LINHA_4
 			);
 
 			grafics.drawImage(generateQRCode(protocolo), EIXO_X_QRCODE, EIXO_Y_QRCODE, null);
