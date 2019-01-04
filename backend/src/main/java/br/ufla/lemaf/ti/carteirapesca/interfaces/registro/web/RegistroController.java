@@ -28,7 +28,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Slf4j
 @Controller
 @Transactional
-@RequestMapping("/")
+@RequestMapping("/api")
 public class RegistroController {
 
 	private RegistroServiceFacade registroServiceFacade;
