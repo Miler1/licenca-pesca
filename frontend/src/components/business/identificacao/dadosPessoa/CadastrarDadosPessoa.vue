@@ -293,15 +293,17 @@ export default {
     }
   },
   created() {
-    console.log('teste');
     this.instantiate();
     this.fetchUfs();
   },
 
   beforeDestroy() {
-    console.log('beforaDestroy');
-  	this.pessoa.enderecoPrincipal.municipioNome = this.$refs["enderecoPrincipal"].selectedLabel;
-  	this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
+    if (this.$refs["enderecoPrincipal"]) {
+        this.pessoa.enderecoPrincipal.municipioNome = this.$refs["enderecoPrincipal"].selectedLabel;
+    }
+    if (this.$refs["enderecoCorrespondencia"]) {
+        this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
+    }
     this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
   }
 };
