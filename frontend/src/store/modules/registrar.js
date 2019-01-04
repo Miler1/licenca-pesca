@@ -5,7 +5,8 @@ import {
   SET_ERROR,
   SET_MODALIDADE_PESCA,
   SET_MUNICIPIOS, SET_PROTOCOLO,
-  SET_UFS
+  SET_UFS,
+  CLEAN_REGISTRO
 } from "../mutations.type";
 import {
   FETCH_MODALIDADE_PESCA,
@@ -30,6 +31,7 @@ import InformacoesComplementaresService from "../../services/InformacoesCompleme
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import RegistroService from "../../services/RegistroService";
+import { stat } from "fs";
 
 const INITIAL_STATE = {
   municipios: [],
@@ -112,7 +114,6 @@ export const actions = {
   [SEND_INFORMACOES_COMPLEMENTARES]: ({ commit }, informacoesComplementares) => {
     commit(CADASTRAR_INFORMACOES_COMPLEMENTARES, informacoesComplementares);
   },
-
   /**
    * Busca a lista de municípios de determinado UF.
    *
@@ -177,6 +178,11 @@ export const mutations = {
   [CADASTRAR_SOLICITANTE]: (state, solicitante) => {
     // delete solicitante.confirmarEmail;
     state.registroResource.solicitante = toSolicitanteDTO(solicitante);
+  },
+
+  [CLEAN_REGISTRO]: (state) => {
+    state.registroResource.informacoesComplementares = InformacoesComplementaresDTO;
+    state.registroResource.solicitante = Solicitante;
   },
 
   /**

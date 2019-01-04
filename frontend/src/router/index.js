@@ -1,7 +1,6 @@
 import RegistrarLicenca from "../components/views/RegistrarLicenca";
 import BuscarLicenca from "../components/views/BuscarLicenca";
 
-
 export const routes = [
   {
     path: "/",

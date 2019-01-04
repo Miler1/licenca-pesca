@@ -1,6 +1,6 @@
-import { ACESSAR, CANCELAR, SEND_INFORMACOES_COMPLEMENTARES } from "../actions.type";
+import { ACESSAR, CANCELAR } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, CLEAN_SOLICITANTE } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_INFORMACOES, CLEAN_SOLICITANTE, CLEAN_REGISTRO } from "../mutations.type";
 
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
@@ -70,6 +70,7 @@ export const actions = {
   [CANCELAR]: ({ commit }) => {
     commit(ACTIVE_CADASTRO, false);
     commit(CLEAN_SOLICITANTE);
+    commit(CLEAN_REGISTRO);
   }
 };
 
@@ -86,17 +87,16 @@ export const mutations = {
    * @param solicitante O solicitante do acesso
    */
   [SET_SOLICITANTE]: (state, solicitante) => {
-    if(solicitante !== null) {
+    if (solicitante !== null) {
       state.solicitante = toSolicitanteDTO(solicitante);
     } else {
       state.solicitante = null;
     }
   },
-
+  
   [CLEAN_SOLICITANTE]: (state) => {
     state.solicitante = Solicitante;
   },
-
   /**
    * Verifica se será necessário cadastrar o usuário.
    *

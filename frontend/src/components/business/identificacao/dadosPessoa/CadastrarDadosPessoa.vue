@@ -24,7 +24,7 @@
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.dataNascimento`)" prop="dataNascimento")
-            el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${cadastrar_prefix}format.data`)", @change="dateChangebirthday()")
+            el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${cadastrar_prefix}format.data`)")
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.sexo`)" prop="sexo")

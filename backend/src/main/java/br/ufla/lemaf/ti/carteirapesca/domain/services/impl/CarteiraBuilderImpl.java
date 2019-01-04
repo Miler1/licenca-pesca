@@ -39,22 +39,23 @@ import java.util.Date;
 @Service
 public class CarteiraBuilderImpl implements CarteiraBuilder {
 
-	private static final String TEMPLATE_CARTEIRA = "templates/template_carteira_pesca_ajustada.png";
-	private static final Integer FONT_SIZE = 15;
+	private static final String TEMPLATE_CARTEIRA = "templates/template_carteira_pesca.png";
+	private static final Integer FONT_SIZE = 26;
 
-	private static final Integer EIXO_X_COLUNA_1 = 52;
-	private static final Integer EIXO_X_COLUNA_2 = 500;
-	private static final Integer EIXO_X_COLUNA_3 = EIXO_X_COLUNA_2 + 490;
+	private static final Integer EIXO_X_COLUNA_1 = 80;
+	private static final Integer EIXO_X_COLUNA_2 = 710;
+	private static final Integer EIXO_X_COLUNA_3 = EIXO_X_COLUNA_2 + 720;
+	private static final Integer EIXO_X_COLUNA_4 = EIXO_X_COLUNA_3 + 630;
 
-	private static final Integer EIXO_Y_LINHA_1 = 225;
-	private static final Integer EIXO_Y_LINHA_2 = EIXO_Y_LINHA_1 + 70;
-	private static final Integer EIXO_Y_LINHA_3 = EIXO_Y_LINHA_2 + 70;
-	private static final Integer EIXO_Y_LINHA_4 = EIXO_Y_LINHA_3 + 70;
-	private static final Integer EIXO_Y_LINHA_5 = EIXO_Y_LINHA_4 + 70;
-	private static final Integer EIXO_Y_LINHA_6 = EIXO_Y_LINHA_5 + 70;
+	private static final Integer EIXO_Y_LINHA_1 = 280;
+	private static final Integer EIXO_Y_LINHA_2 = EIXO_Y_LINHA_1 + 100;
+	private static final Integer EIXO_Y_LINHA_3 = EIXO_Y_LINHA_2 + 100;
+	private static final Integer EIXO_Y_LINHA_4 = EIXO_Y_LINHA_3 + 100;
+	private static final Integer EIXO_Y_LINHA_5 = EIXO_Y_LINHA_4 + 100;
+	private static final Integer EIXO_Y_LINHA_1_COLUNA_2 = EIXO_Y_LINHA_3 + 60;
 
-	private static final Integer EIXO_X_QRCODE = 1460;
-	private static final Integer EIXO_Y_QRCODE = 34;
+	private static final Integer EIXO_X_QRCODE = 2200;
+	private static final Integer EIXO_Y_QRCODE = 100;
 
 	private static final String FORMAT_CARTEIRA = "png";
 
@@ -134,15 +135,15 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 			// Validade
 			grafics.drawString(
 				DateUtils.formatDate(validade, Constants.DATE_FORMAT),
-				EIXO_X_COLUNA_3,
-				EIXO_Y_LINHA_3
+				EIXO_X_COLUNA_4,
+				EIXO_Y_LINHA_1_COLUNA_2
 			);
 
 			// Emissao
 			grafics.drawString(
 				DateUtils.formatDate(new Date(), Constants.DATE_FORMAT),
 				EIXO_X_COLUNA_3,
-				EIXO_Y_LINHA_4
+				EIXO_Y_LINHA_1_COLUNA_2
 			);
 
 			grafics.drawImage(generateQRCode(protocolo), EIXO_X_QRCODE, EIXO_Y_QRCODE, null);
