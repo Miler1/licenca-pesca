@@ -2,7 +2,7 @@ export const InformacoesComplementaresDTO = {
   modalidadePesca: null,
   localizacaoPreferencialPesca: null,
   rendaMensal: null,
-  diasPescaPorAno: null,
+  diasPescaPorAno: 1,
   gastoMedioPesca: 0,
   faixaEtaria: null,
   localPesca: null,
