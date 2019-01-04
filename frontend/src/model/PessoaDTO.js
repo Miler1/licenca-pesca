@@ -30,6 +30,7 @@ export const PessoaDTO = {
     cep: null,
     uf: null,
     municipio: null,
+    municipioNome: null,
     descricaoAcesso: null
   },
   enderecoCorrespondencia: {
@@ -43,6 +44,7 @@ export const PessoaDTO = {
     cep: null,
     uf: null,
     municipio: null,
+	municipioNome: null,
     descricaoAcesso: null
   }
 };

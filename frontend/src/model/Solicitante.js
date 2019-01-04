@@ -24,6 +24,7 @@ export const Solicitante = {
     cep: null,
     uf: null,
     municipio: null,
+    municipioNome: null,
     descricaoAcesso: null
   },
   enderecoCorrespondencia: {
@@ -37,6 +38,7 @@ export const Solicitante = {
     cep: null,
     uf: null,
     municipio: null,
+    municipioNome: null,
     descricaoAcesso: null
   }
 };
@@ -70,6 +72,7 @@ const toEndereco = endereco => {
       cep: null,
       uf: null,
       municipio: null,
+      municipioNome: null,
       descricaoAcesso: null
     };
   }
@@ -85,6 +88,7 @@ const toEndereco = endereco => {
     cep: endereco.cep,
     uf: endereco.uf,
     municipio: endereco.municipio,
+    municipioNome: endereco.municipioNome,
     descricaoAcesso: endereco.descricaoAcesso
   };
 };
