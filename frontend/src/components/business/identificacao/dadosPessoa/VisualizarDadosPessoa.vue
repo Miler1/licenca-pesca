@@ -85,7 +85,14 @@
         .align
           h4.label {{ $t(`${visualizar_prefix}label.uf`) }}
           h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.uf)}") {{ pessoa.enderecoPrincipal.uf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
-
+    
+    el-row.section(:gutter="20")
+      el-col(:span="25" v-if="!exist(pessoa.enderecoPrincipal.descricaoAcesso)")
+        .align
+          h4.label {{ $t(`${visualizar_prefix}label.descricaoAcesso`) }}
+          h4(:class="{'not-informed': exist(pessoa.enderecoPrincipal.descricaoAcesso)}") {{ pessoa.enderecoPrincipal.descricaoAcesso | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+    
+    
     .enderecoCorrespondencia(v-if="pessoa.enderecoPrincipal.zonaLocalizacao === 1")
       h3.title.withDivisor {{ $t(`${visualizar_prefix}titulo.enderecoCorrespondencia`) }}
 
@@ -185,7 +192,7 @@ export default {
         ]);
       }
     },
-
+    
     getZonaLocalizacao(localizacao) {
       if (localizacao === ZONA_LOCALIZACAO.URBANA) {
         return translate(

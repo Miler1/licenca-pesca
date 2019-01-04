@@ -29,7 +29,8 @@ const VISUALIZAR = {
       complemento: ["Complemento:", "Complement:"],
       cep: ["CEP:", "Postal code:"],
       municipio: ["Municipio:", "County:"],
-      uf: ["UF:", "UF:"]
+      uf: ["UF:", "UF:"],
+      descricaoAcesso: ["Descrição de acesso: ", "Description of access: "]
     },
     dados: {
       genero: {

@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.NoArgsConstructor;
@@ -51,6 +52,10 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 
 	@Column(name = "tx_caminho_carteira")
 	private String caminhoCarteira;
+
+	@ManyToOne
+	@JoinColumn(name="id_solicitante")
+	private Solicitante solicitante;
 
 	/**
 	 * Construtor da Licenca de pesca.
@@ -171,6 +176,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		return caminhoCarteira;
 	}
 
+	public Solicitante getSolicitante() { return solicitante; }
 	/**
 	 * Data ativacao date.
 	 *

@@ -133,7 +133,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 * @param tipo O tipo da modalidade
 	 * @return A Modalidade
 	 */
-	private static Modalidade gerarModalidade(Integer tipo) {
+	public Modalidade gerarModalidade(Integer tipo) {
 
 		if (tipo.equals(ESPORTIVA)) {
 
@@ -189,7 +189,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 * @param solicitante O Solicitante
 	 * @return A Pessoa: Dados de solicitante no EU
 	 */
-	private static Pessoa buscarDadosSolicitante(Solicitante solicitante) {
+	public Pessoa buscarDadosSolicitante(Solicitante solicitante) {
 		var identificador = solicitante.identity();
 
 		if (identificador.isPassaporte())

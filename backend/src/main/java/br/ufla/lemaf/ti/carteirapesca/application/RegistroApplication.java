@@ -1,7 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.application;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
+import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 
 /**
  * Serviço de Registro da camada de application.
@@ -24,4 +27,7 @@ public interface RegistroApplication {
 	 */
 	Protocolo registrar(RegistroResource resource);
 
+	Modalidade gerarModalidade(Integer tipo);
+
+	Pessoa buscarDadosSolicitante(Solicitante solicitante);
 }

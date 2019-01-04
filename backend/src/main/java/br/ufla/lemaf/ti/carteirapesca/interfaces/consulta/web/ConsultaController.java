@@ -1,5 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.web;
 
+import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
+import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.ConsultaServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
@@ -36,6 +41,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class ConsultaController {
 
 	private ConsultaServiceFacade facade;
+
+	@Autowired
+	private ConsultaApplication consultaApplication;
+
+	@Autowired
+	private CarteiraBuilder carteiraBuilder;
+
+	@Autowired
+	private RegistroApplication registroApplication;
 
 	/**
 	 * Injetando dependências.
@@ -113,8 +127,12 @@ public class ConsultaController {
 
 		try {
 
-			var rotaDaCarteira = facade.buscarCaminho(protocolo, Constants.CARTEIRA);
-			var carteira = new File(rotaDaCarteira);
+			var protocoloObj = new Protocolo(protocolo);
+			var licenca = consultaApplication.consulta(protocoloObj);
+			var solicitante = licenca.getSolicitante();
+			var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
+			var caminhoCarteira = carteiraBuilder.gerarCarteira(protocoloObj,licenca.modalidade(), pessoa);
+			var carteira = new File(caminhoCarteira);
 
 			var httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaType.IMAGE_PNG);
