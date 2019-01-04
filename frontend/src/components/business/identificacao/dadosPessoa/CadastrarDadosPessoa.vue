@@ -298,8 +298,12 @@ export default {
   },
 
   beforeDestroy() {
-  	this.pessoa.enderecoPrincipal.municipioNome = this.$refs["enderecoPrincipal"].selectedLabel;
-  	this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
+    if (this.$refs["enderecoPrincipal"]) {
+        this.pessoa.enderecoPrincipal.municipioNome = this.$refs["enderecoPrincipal"].selectedLabel;
+    }
+    if (this.$refs["enderecoCorrespondencia"]) {
+        this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
+    }
     this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
   }
 };
