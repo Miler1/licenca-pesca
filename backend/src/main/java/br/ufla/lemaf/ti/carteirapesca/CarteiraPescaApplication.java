@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Highlander Paiva
  */
 @Configuration
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"br.ufla.lemaf.ti.carteirapesca"})
 @SuppressWarnings("CheckStyle")
 public class CarteiraPescaApplication {
 
