@@ -90,7 +90,7 @@ export default {
 				masked: false
 			},
       modalidade: ModalidadeResource,
-      infoRules: INFORMACOES_RULES,
+			infoRules: INFORMACOES_RULES,
 			cadastrar_info_prefix: INFORMACOES_PREFIX,
 			valid: false
     };
@@ -135,8 +135,7 @@ export default {
 
   beforeDestroy() {
     this.$store.dispatch(
-      SEND_INFORMACOES_COMPLEMENTARES,
-      this.informacoesComplementares
+      SEND_INFORMACOES_COMPLEMENTARES, this.informacoesComplementares
     );
   }
 };
