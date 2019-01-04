@@ -179,7 +179,43 @@ export default {
   components: { ElInput },
   data() {
     return {
-      pessoa: PessoaDTO,
+      pessoa: {
+        estrangeiro: false,
+        nome: null,
+        cpf: null,
+        passaporte: null,
+        dataNascimento: null,
+        sexo: null,
+        nomeMae: null,
+        email: null,
+        confirmarEmail: null,
+        enderecoPrincipal: {
+          tipo: null,
+          zonaLocalizacao: ZonaLocalizacaoDTO.urbana,
+          semNumero: null,
+          logradouro: null,
+          numero: null,
+          bairro: null,
+          complemento: null,
+          cep: null,
+          uf: null,
+          municipio: null,
+          descricaoAcesso: null
+        },
+        enderecoCorrespondencia: {
+          tipo: null,
+          zonaLocalizacao: ZonaLocalizacaoDTO.urbana,
+          semNumero: null,
+          logradouro: null,
+          numero: null,
+          bairro: null,
+          complemento: null,
+          cep: null,
+          uf: null,
+          municipio: null,
+          descricaoAcesso: null
+        }
+      },
       zonaLocalizacao: ZonaLocalizacaoDTO,
       pessoaRules: PESSOA_RULES,
       genero_options: GENERO_OPTIONS,
