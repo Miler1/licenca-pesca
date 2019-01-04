@@ -200,6 +200,7 @@ export default {
           cep: null,
           uf: null,
           municipio: null,
+          municipioNome: null,
           descricaoAcesso: null
         },
         enderecoCorrespondencia: {
@@ -213,6 +214,7 @@ export default {
           cep: null,
           uf: null,
           municipio: null,
+          municipioNome: null,
           descricaoAcesso: null
         }
       },
