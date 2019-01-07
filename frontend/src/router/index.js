@@ -1,5 +1,6 @@
 import RegistrarLicenca from "../components/views/RegistrarLicenca";
 import BuscarLicenca from "../components/views/BuscarLicenca";
+import AutenticidadeQr from "../components/views/AutenticidadeQr";
 
 export const routes = [
   {
@@ -10,7 +11,7 @@ export const routes = [
   {
     path: "/registrar",
     name: "registrar",
-    component: RegistrarLicenca
+    component: AutenticidadeQr
   },
   {
     path: "/consultar/:protocolo",

@@ -169,7 +169,7 @@ export const mutations = {
    * Adiciona os UFs à state.
    */
   [SET_UFS]: (state, ufs) =>
-    (state.ufs = ufs.sort(function (ordenaMenor, ordenaMaior) {
+    (state.ufs = ufs.sort(function(ordenaMenor, ordenaMaior) {
         return ordenaMenor.sigla > ordenaMaior.sigla ? 1 : -1;
       })
     ),
