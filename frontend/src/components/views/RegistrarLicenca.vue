@@ -7,8 +7,8 @@
         el-step(:title="$t(`${registrar_prefix}steps.indices.informacoes`)" icon="el-icon-edit-outline")
         el-step(:title="$t(`${registrar_prefix}steps.indices.resumo`)" icon="el-icon-document")
 
-      identification-step(v-show="activeStep('IDENTIFICACAO')", ref="identificationStep")
-      informacaoes-complementares-step(v-show="activeStep('INFORMACOES_COMPLEMENTARES')", ref="informacoesComplementaresStep")
+      identification-step(v-if="activeStep('IDENTIFICACAO')", ref="identificationStep")
+      informacaoes-complementares-step(v-if="activeStep('INFORMACOES_COMPLEMENTARES')", ref="informacoesComplementaresStep")
       resumo-step(v-if="activeStep('RESUMO')")
 
       step-controller(v-if="showStepsController" :step="step" @prevStep="prevStep" @nextStep="nextStep" @concluir="concluir" @cancelar="cancelar")
