@@ -168,8 +168,11 @@ export const mutations = {
   /**
    * Adiciona os UFs à state.
    */
-  [SET_UFS]: (state, ufs) => (state.ufs = ufs),
-
+  [SET_UFS]: (state, ufs) =>
+    (state.ufs = ufs.sort(function (ordenaMenor, ordenaMaior) {
+        return ordenaMenor.sigla > ordenaMaior.sigla ? 1 : -1;
+      })
+    ),
   /**
    * Adiciona o solicitante à state.
    *
