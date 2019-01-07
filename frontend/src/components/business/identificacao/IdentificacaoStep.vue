@@ -36,6 +36,9 @@ import { CPF_MASK, PASSAPORT_MASK } from "../../../utils/layout/mascaras";
 import InputElement from "../../elements/InputElement";
 import CadastrarDadosPessoa from "./dadosPessoa/CadastrarDadosPessoa";
 import VisualizarDadosPessoa from "./dadosPessoa/VisualizarDadosPessoa";
+import {
+  SEND_SOLICITANTE
+} from "../../../store/actions.type";
 
 export default {
   name: "IdentificationStep",
@@ -74,9 +77,11 @@ export default {
       return false;
     },
     enviarParaStore() {
-      console.log('teste', this.$refs.cadastroDadosPessoa);
       if(this.$refs.cadastroDadosPessoa) {
         this.$refs.cadastroDadosPessoa.enviarParaStore();
+      } else if(this.$refs.visualizarDadosPessoa){
+
+        this.$store.dispatch(SEND_SOLICITANTE, this.solicitante);
       }
     },
 
