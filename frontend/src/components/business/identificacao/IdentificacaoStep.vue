@@ -73,6 +73,12 @@ export default {
       }
       return false;
     },
+    enviarParaStore() {
+      console.log('teste', this.$refs.cadastroDadosPessoa);
+      if(this.$refs.cadastroDadosPessoa) {
+        this.$refs.cadastroDadosPessoa.enviarParaStore();
+      }
+    },
 
     generateAcessoResource(resource) {
       let cpf = null;

@@ -249,6 +249,15 @@ export default {
         this.zonaLocalizacao.urbana
       );
     },
+    enviarParaStore() {
+      if (this.$refs["enderecoPrincipal"]) {
+        this.pessoa.enderecoPrincipal.municipioNome = this.$refs["enderecoPrincipal"].selectedLabel;
+      }
+      if (this.$refs["enderecoCorrespondencia"]) {
+        this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
+      }
+      this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
+    },
     changeSemNumeroEndPrincipal() {
       this.removerMensagemErro("numeroPrincipal");
       this.pessoa.enderecoPrincipal.numero = "";
@@ -298,14 +307,9 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.$refs["enderecoPrincipal"]) {
-        this.pessoa.enderecoPrincipal.municipioNome = this.$refs["enderecoPrincipal"].selectedLabel;
-    }
-    if (this.$refs["enderecoCorrespondencia"]) {
-        this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
-    }
-    this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
-  }
+    this.enviarParaStore();
+  },
+  
 };
 </script>
 

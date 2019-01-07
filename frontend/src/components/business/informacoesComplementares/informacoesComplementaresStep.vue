@@ -13,9 +13,12 @@ export default {
   components: { CadastroInfoComplementares },
   methods: {
 	  validate() {
-		this.$refs.cadastroInfoComplementares.validate();
-		return this.$refs.cadastroInfoComplementares.getValid();
-	  }
+			this.$refs.cadastroInfoComplementares.validate();
+			return this.$refs.cadastroInfoComplementares.getValid();
+		},
+		enviarParaStore() {
+			this.$refs.cadastroInfoComplementares.enviarParaStore();
+		}
   }
 };
 </script>

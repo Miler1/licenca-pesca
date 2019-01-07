@@ -55,10 +55,12 @@ export default {
     nextStep() {
       if(this.activeStep('IDENTIFICACAO')) {
         if(this.checkValidation()) {
+          this.$refs.identificationStep.enviarParaStore();
           this.step++;
         }
       } else if(this.activeStep('INFORMACOES_COMPLEMENTARES')) {
         if(this.checkValidationInformacoesComplementares()) {
+          this.$refs.informacoesComplementaresStep.enviarParaStore();
           this.step++;
         }
       } else {

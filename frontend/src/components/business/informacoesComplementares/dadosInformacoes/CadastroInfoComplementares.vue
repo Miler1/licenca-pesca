@@ -124,6 +124,11 @@ export default {
         this.valid = valid;
       });
 		},
+		enviarParaStore() {
+			this.$store.dispatch(
+				SEND_INFORMACOES_COMPLEMENTARES, this.informacoesComplementares
+			);
+		},
 		getValid() {
 			return this.valid;
 		},
@@ -148,9 +153,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.$store.dispatch(
-      SEND_INFORMACOES_COMPLEMENTARES, this.informacoesComplementares
-    );
+		this.enviarParaStore();
   }
 };
 </script>
