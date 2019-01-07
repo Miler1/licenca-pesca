@@ -251,9 +251,15 @@ export default {
     },
     enviarParaStore() {
       if (this.$refs["enderecoPrincipal"]) {
+        let municipioId = this.pessoa.enderecoPrincipal.municipio;
+        this.pessoa.enderecoPrincipal.municipio = {};
+        this.pessoa.enderecoPrincipal.municipio.id = municipioId;
         this.pessoa.enderecoPrincipal.municipioNome = this.$refs["enderecoPrincipal"].selectedLabel;
       }
       if (this.$refs["enderecoCorrespondencia"]) {
+        let municipioId = this.pessoa.enderecoCorrespondencia.municipio;
+        this.pessoa.enderecoCorrespondencia.municipio = {};
+        this.pessoa.enderecoCorrespondencia.municipio.id = municipioId;
         this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
       }
       this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
