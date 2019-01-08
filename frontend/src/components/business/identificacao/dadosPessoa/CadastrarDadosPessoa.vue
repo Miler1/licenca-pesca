@@ -12,7 +12,7 @@
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.nome`)" prop="nome")
-            el-input(v-model="pessoa.nome", ref="nome")
+              el-input(v-model="pessoa.nome", ref="nome")
 
         el-col(:span="6" v-if="pessoa.estrangeiro === false")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.cpf`)" prop="cpf")

@@ -2,13 +2,16 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.web;
 
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.ConsultaServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.LicencaPescaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroController;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -160,14 +162,18 @@ public class ConsultaController {
 	 * licenca: protocolo(numero da licenca), modalidade, emissao(dataCriacao), validade
 	 * */
 
-	/**
-	 * Acesso dos dados da carteira pelo QrCode.
-	 *
-	 * @param protocolo O protocolo da Carteira
-	 */
-//	@CrossOrigin("*")
-//	@GetMapping("/autenticidade")
-//	public ResponseEntity dadosCarteiraAutenticidade(@RequestParam String protocolo){
-//
-//	}
+	@CrossOrigin("*")
+	@GetMapping("/autenticidade")
+	public ResponseEntity<LicencaPescaDTO> dadosCarteiraPesca(
+		@RequestParam String protocolo){
+
+		var protocoloObj = new Protocolo(protocolo);
+		var licenca = consultaApplication.consulta(protocoloObj);
+		var solicitante = licenca.getSolicitante();
+		var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
+
+		LicencaPescaDTO licencaDTO = new LicencaPescaDTO(pessoa, licenca, protocoloObj);
+
+		return new ResponseEntity<>(licencaDTO, HttpStatus.OK);
+	}
 }
