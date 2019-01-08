@@ -183,9 +183,9 @@ export default {
       } else {
         let date;
         if (strDate instanceof Date) {
-          date = new Date(strDate);
-        } else {
           date = strDate;
+        } else {
+          date = new Date(strDate);
         }
         return translate("interface.geral.data", [
           date.getDate(),
