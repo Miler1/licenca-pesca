@@ -5,6 +5,7 @@ import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.ConsultaServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
@@ -47,6 +48,10 @@ public class ConsultaController {
 
 	@Autowired
 	private CarteiraBuilder carteiraBuilder;
+
+	@Autowired
+	private ProtocoloBuilder protocoloBuilder;
+
 
 	@Autowired
 	private RegistroApplication registroApplication;
@@ -148,5 +153,26 @@ public class ConsultaController {
 		}
 
 	}
+	/**
+	 * Autenticidade da carteira.
+	 * code do QR que é o numero da licença
+	 * pessoa: Nome, CPF/CNPJ, enderecos{CEP, PAIS, MUNICIPIO}
+	 * licenca: protocolo(numero da licenca), modalidade, emissao(dataCriacao), validade
+	 * */
+		@CrossOrigin("*")
+		@GetMapping("/autenticidade")
+		public ResponseEntity acessoPaginaAutenticidade(@RequestParam String protocolo) {
+
+			try {
+
+				var protocoloObj = new Protocolo(protocolo);
+				var licenca = consultaApplication.consulta(protocoloObj);
+				var solicitante = licenca.getSolicitante();
+				var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
+				var dadosAutenticidade = protocoloBuilder.gerarDadosAutenticidade(protocoloObj,licenca.modalidade(), pessoa);
+
+
+			}
+		}
 
 }

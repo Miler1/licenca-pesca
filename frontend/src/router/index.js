@@ -11,6 +11,11 @@ export const routes = [
   {
     path: "/registrar",
     name: "registrar",
+    component: RegistrarLicenca
+  },
+  {
+    path: "/autenticidade",
+    name: "autenticidadeQr",
     component: AutenticidadeQr
   },
   {
