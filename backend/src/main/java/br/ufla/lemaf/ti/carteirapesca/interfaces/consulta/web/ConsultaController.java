@@ -154,25 +154,20 @@ public class ConsultaController {
 
 	}
 	/**
-	 * Autenticidade da carteira.
+	 * Autenticidade da carteira, trazer todos os dados da carteira, menos limite de captura
 	 * code do QR que é o numero da licença
 	 * pessoa: Nome, CPF/CNPJ, enderecos{CEP, PAIS, MUNICIPIO}
 	 * licenca: protocolo(numero da licenca), modalidade, emissao(dataCriacao), validade
 	 * */
-		@CrossOrigin("*")
-		@GetMapping("/autenticidade")
-		public ResponseEntity acessoPaginaAutenticidade(@RequestParam String protocolo) {
 
-			try {
-
-				var protocoloObj = new Protocolo(protocolo);
-				var licenca = consultaApplication.consulta(protocoloObj);
-				var solicitante = licenca.getSolicitante();
-				var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
-				var dadosAutenticidade = protocoloBuilder.gerarDadosAutenticidade(protocoloObj,licenca.modalidade(), pessoa);
-
-
-			}
-		}
-
+	/**
+	 * Acesso dos dados da carteira pelo QrCode.
+	 *
+	 * @param protocolo O protocolo da Carteira
+	 */
+//	@CrossOrigin("*")
+//	@GetMapping("/autenticidade")
+//	public ResponseEntity dadosCarteiraAutenticidade(@RequestParam String protocolo){
+//
+//	}
 }
