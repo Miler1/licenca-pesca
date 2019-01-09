@@ -1,6 +1,5 @@
 import RegistrarLicenca from "../components/views/RegistrarLicenca";
 import BuscarLicenca from "../components/views/BuscarLicenca";
-import AutenticidadeQr from "../components/views/AutenticidadeQr";
 
 export const routes = [
   {
@@ -13,11 +12,13 @@ export const routes = [
     name: "registrar",
     component: RegistrarLicenca
   },
+
   {
-    path: "/autenticidade",
-    name: "autenticidadeQr",
-    component: AutenticidadeQr
+    path: "/buscar/:protocolo",
+    name: "buscar",
+    component: () => import("../components/views/AutenticidadeQr")
   },
+
   {
     path: "/consultar/:protocolo",
     name: "consultar",

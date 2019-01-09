@@ -163,17 +163,17 @@ public class ConsultaController {
 	 * */
 
 	@CrossOrigin("*")
-	@GetMapping("/autenticidade")
-	public ResponseEntity<LicencaPescaDTO> dadosCarteiraPesca(
-		@RequestParam String protocolo){
+	@GetMapping("/buscar")
+	public ResponseEntity<LicencaPescaDTO> buscarDadosCarteira(
+		@RequestParam final String protocolo){
 
 		var protocoloObj = new Protocolo(protocolo);
 		var licenca = consultaApplication.consulta(protocoloObj);
 		var solicitante = licenca.getSolicitante();
 		var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
 
-		LicencaPescaDTO licencaDTO = new LicencaPescaDTO(pessoa, licenca, protocoloObj);
+		var licencaPesca = new LicencaPescaDTO(licenca, protocoloObj, pessoa);
 
-		return new ResponseEntity<>(licencaDTO, HttpStatus.OK);
+		return new ResponseEntity<>(licencaPesca, HttpStatus.OK);
 	}
 }

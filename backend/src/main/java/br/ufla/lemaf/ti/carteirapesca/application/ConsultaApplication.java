@@ -35,4 +35,5 @@ public interface ConsultaApplication {
 	 */
 	String buscarCaminhoBoleto(Protocolo protocolo);
 
+
 }

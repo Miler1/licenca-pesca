@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.LicencaPescaDTO;
 
 /**
  * Serviço de Facade de Consulta da camada de interface.

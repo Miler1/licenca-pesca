@@ -8,11 +8,11 @@
         el-row.section(:gutter="20")
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.nome`) }}
-                h4.informacoes {{ $t(`${autenticidadeQr_prefix}titulo.label.teste`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.nome)}") {{ licencaPesca.pessoa.nome | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.cpf`) }}
-                h4.informacoes {{ $t(`${autenticidadeQr_prefix}titulo.label.teste`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.cpf)}") {{ licencaPesca.pessoa.cpf | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
     card.dadosLicenca
         h3.title {{ $t(`${autenticidadeQr_prefix}titulo.dadosLicenca`) }}
@@ -20,15 +20,19 @@
         el-row.section(:gutter="20")
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.numeroLicenca`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.codigo)}") {{ licencaPesca.protocolo.codigoFormatado | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="7")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.modalidade`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.modalidade | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="6")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.emissao`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.emissao | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.validade | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
     card.dadosEndereco
         
@@ -37,6 +41,7 @@
         el-row.section(:gutter="20")
             el-col(:span="20")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.endereco`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos)}") {{ licencaPesca.pessoa.enderecos | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.municipio`) }}
@@ -55,29 +60,47 @@ import Card from "../layouts/Card";
 import { INTERFACE_AUTENTICIDADE_PREFIX } from "../../utils/messages/interface/registrar/autenticidadeQr/autenticidadeQr";
 import { translate } from "../../utils/helpers/internationalization";
 import Properties from "../../properties";
+import { FETCH_DADOS_CARTEIRA } from '../../store/actions.type';
+import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
+import { LicencaPesca } from "../../model/LicencaPesca";
+import { numero } from '../../utils/validations/pessoa/pessoa_validations';
+import { numericLiteral, nullLiteral } from 'babel-types';
 
 export default {
-  name: "AutenticidadeQr",
+  name: "buscar",
 
     components: {
         Card
     },
     
-    props: {
-        pessoa: Object
-    },
-
     data() {
         return {
-            autenticidadeQr_prefix: INTERFACE_AUTENTICIDADE_PREFIX
+            autenticidadeQr_prefix: INTERFACE_AUTENTICIDADE_PREFIX,
         };
     },
     
+    watch: {
+        "$route": "fetchData"
+    },
+    
+    computed: {
+        ...mapGetters(["licencaPesca"])
+       
+    },
+    
     methods: {
+        fetchData() {
+            this.$store.dispatch(FETCH_DADOS_CARTEIRA, this.$route.params.protocolo);
+        },
+        
         exist(attr) {
         return attr === null || _.isNil(attr);
-        },
-     }
+        }
+     },
+
+    created() {
+        this.fetchData();
+    }
 };
 </script>
 

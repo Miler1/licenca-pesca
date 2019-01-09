@@ -5,6 +5,7 @@ export const INTERFACE_AUTENTICIDADE_PREFIX = "interface.registrar.autenticidade
 
 const AUTENTICIDADE = {
   autenticidade: {
+    naoInformado: ["Não informado", "Uninformed"],
     titulo: {
       dadosPessoais: ["Dados pessoais", "Personal data"],
       dadosLicenca: ["Dados da licença", "License information"],

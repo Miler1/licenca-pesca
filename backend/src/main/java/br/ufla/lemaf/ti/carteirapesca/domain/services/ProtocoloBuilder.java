@@ -30,5 +30,4 @@ public interface ProtocoloBuilder {
 	 * @return O Protocolo
 	 */
 	String gerarProtocolo(Modalidade modalidade);
-	String gerarDadosAutenticidade ( Protocolo protocolo, Modalidade modalidade, Pessoa pessoa);
 }
