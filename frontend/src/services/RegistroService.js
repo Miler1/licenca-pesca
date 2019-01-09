@@ -10,8 +10,14 @@ const RegistroService = {
    * positivo, e trazendo um objeto PessoaDTO vazio em
    * caso negativo.
    */
-  registrar: registroResource =>
-    ApiService.post(`${Properties.BASE_URL}/api/registrar`, registroResource)
+  registrar: registroResource => {
+    var options = {
+      params: registroResource,
+      blockui: true
+    };
+
+    return ApiService.post(`${Properties.BASE_URL}/api/registrar`, options);
+  }
 };
 
 export default RegistroService;

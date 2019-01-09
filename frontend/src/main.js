@@ -1,3 +1,6 @@
+require('jquery');
+require('blockui');
+
 // CORE Imports
 import Vue from "vue";
 import App from "./components/App.vue";
@@ -18,12 +21,14 @@ import Element from "element-ui";
 import "./assets/linearicons/style.css";
 import "mdi/scss/materialdesignicons.scss";
 import "@/theme/main.sass";
+import 'font-awesome/css/font-awesome.css';
 
 // Vue Inits & Configs
 Vue.use(Vue2Filters);
 Vue.use(VueTheMask);
 Vue.use(Element, { i18n: (key, value) => i18n.t(key, value) });
 Vue.use(VeeElement, validator, false);
+
 Vue.prototype.$bus = new Vue();
 ApiService.init();
 

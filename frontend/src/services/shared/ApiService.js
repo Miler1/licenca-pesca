@@ -3,6 +3,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import qs from "qs";
 import { HttpException } from "./handling/HttpException";
+import loading from "./LoadingService";
 
 /**
  * Serviço base para chamadas HTTP.
@@ -53,7 +54,9 @@ const ApiService = {
    */
   async get(resource, slug = "") {
     try {
-      return await Vue.axios.get(`${resource}/${slug}`);
+      return Vue.axios.get(`${resource}/${slug}`).then(response => {
+        return response;
+      });
     } catch (error) {
       return Promise.reject(new HttpException.init(error, true));
     }
@@ -66,9 +69,15 @@ const ApiService = {
    * @param params
    * @return {Promise<*>}
    */
-  async post(resource, params) {
+  async post(resource, options) {
     try {
-      return await Vue.axios.post(`${resource}`, params);
+      if(options.blockui === true) {
+        loading.show();
+      }
+      return Vue.axios.post(`${resource}`, options.params).then(response => {
+        loading.hide();
+        return response;
+      });
     } catch (error) {
       return Promise.reject(new HttpException.init(error, true));
     }
