@@ -28,11 +28,11 @@
 
             el-col(:span="6")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.emissao`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.emissao | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.dataCriacao | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.validade | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
     card.dadosEndereco
         
@@ -41,16 +41,19 @@
         el-row.section(:gutter="20")
             el-col(:span="20")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.endereco`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos)}") {{ licencaPesca.pessoa.enderecos | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
-
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ licencaPesca.pessoa.enderecos[1].logradouro}}, Nº {{ licencaPesca.pessoa.enderecos[1].numero}}, {{ licencaPesca.pessoa.enderecos[1].complemento}}, {{ licencaPesca.pessoa.enderecos[1].bairro}} 
+                
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.municipio`) }}
+                 h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ licencaPesca.pessoa.enderecos[1].municipio.nome }}/{{licencaPesca.pessoa.enderecos[1].municipio.estado.sigla | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="7")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.cep`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ licencaPesca.pessoa.enderecos[1].cep | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="6")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.pais`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ licencaPesca.pessoa.enderecos[1].pais.nome | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
 </template>
 

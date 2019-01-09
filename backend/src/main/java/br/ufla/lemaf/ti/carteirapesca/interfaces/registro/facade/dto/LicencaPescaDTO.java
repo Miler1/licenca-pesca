@@ -1,11 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.EntradaUnicaException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,9 +32,7 @@ public class LicencaPescaDTO {
 		this.protocolo = protocolo;
 		this.pessoa = pessoa;
 
-//		this.campoEndereco(endereco(pessoa));
 	}
-
 
 	/**
 	 * Busca o endereço da carteira.

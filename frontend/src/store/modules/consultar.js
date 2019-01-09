@@ -43,7 +43,9 @@ export const actions = {
   },
 
   [FETCH_DADOS_CARTEIRA]: ({ commit }, protocolo) => {
+    debugger;
     ConsultaService.buscarDadosCarteira(protocolo).then(({ data }) => {
+      debugger;
       commit(SET_DADOS_CARTEIRA, data);
     });
   },

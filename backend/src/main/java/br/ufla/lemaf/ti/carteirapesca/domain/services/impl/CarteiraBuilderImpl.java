@@ -188,7 +188,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @param pessoa A Pessoa solicitante
 	 * @return O endereço
 	 */
-	private static Endereco endereco(Pessoa pessoa) {
+	public static Endereco endereco(Pessoa pessoa) {
 		return pessoa.enderecos
 			.stream()
 			.filter(endereco ->

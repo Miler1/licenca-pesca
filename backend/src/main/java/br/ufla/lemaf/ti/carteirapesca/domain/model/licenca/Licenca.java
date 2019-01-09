@@ -176,7 +176,9 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		return caminhoCarteira;
 	}
 
-	public Solicitante getSolicitante() { return solicitante; }
+	public Solicitante getSolicitante() {
+		return solicitante;
+	}
 	/**
 	 * Data ativacao date.
 	 *
@@ -220,4 +222,56 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@SuppressWarnings("unused")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	public Protocolo getProtocolo() {
+		return protocolo;
+	}
+
+	public void setProtocolo(Protocolo protocolo) {
+		this.protocolo = protocolo;
+	}
+
+	public Modalidade getModalidade() {
+		return modalidade;
+	}
+
+	public void setModalidade(Modalidade modalidade) {
+		this.modalidade = modalidade;
+	}
+
+	public Date getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(Date dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Date getDataAtivacao() {
+		return dataAtivacao;
+	}
+
+	public void setDataAtivacao(Date dataAtivacao) {
+		this.dataAtivacao = dataAtivacao;
+	}
+
+	public void setCaminhoBoleto(String caminhoBoleto) {
+		this.caminhoBoleto = caminhoBoleto;
+	}
+
+	public void setCaminhoCarteira(String caminhoCarteira) {
+		this.caminhoCarteira = caminhoCarteira;
+	}
+
+	public void setSolicitante(Solicitante solicitante) {
+		this.solicitante = solicitante;
+	}
 }

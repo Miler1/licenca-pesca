@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.application;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 
 /**
@@ -34,6 +35,5 @@ public interface ConsultaApplication {
 	 * @return String com o caminho do arquivo
 	 */
 	String buscarCaminhoBoleto(Protocolo protocolo);
-
 
 }

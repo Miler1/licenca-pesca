@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.services;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 
 /**
@@ -22,4 +23,7 @@ public interface CarteiraBuilder {
 	 * @return O caminho do arquivo da carteira
 	 */
 	String gerarCarteira(Protocolo protocolo, Modalidade modalidade, Pessoa pessoa);
+
+//	String gerarDadosCarteira(Protocolo protocolo, Modalidade modalidade, Pessoa pessoa);
+
 }

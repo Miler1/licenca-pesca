@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.web;
 
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
@@ -14,6 +15,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroController
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -50,6 +52,10 @@ public class ConsultaController {
 
 	@Autowired
 	private CarteiraBuilder carteiraBuilder;
+
+//
+//	@Autowired
+//	private DadosCarteiraBuilder dadosCarteiraBuilder;
 
 	@Autowired
 	private ProtocoloBuilder protocoloBuilder;
@@ -155,6 +161,7 @@ public class ConsultaController {
 		}
 
 	}
+
 	/**
 	 * Autenticidade da carteira, trazer todos os dados da carteira, menos limite de captura
 	 * code do QR que é o numero da licença
@@ -176,4 +183,5 @@ public class ConsultaController {
 
 		return new ResponseEntity<>(licencaPesca, HttpStatus.OK);
 	}
+
 }
