@@ -212,25 +212,20 @@
 
 
 	<!--Primeira linha-->
-	<div class="field-primeira-coluna fieldset-border field-duas-colunas field-primeira-linha">
+	<div class="field-primeira-coluna fieldset-border field-uma-coluna field-primeira-linha">
 		<div class="legend-border">Nome</div>
 		<div class="field-content" th:text="${nome}"></div>
 	</div>
 
-	<div class="field-segunda-coluna fieldset-border field-duas-colunas field-primeira-linha">
+	<!--Segunda linha-->
+	<div class="field-primeira-coluna field-segunda-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">CPF/Passaporte</div>
 		<div class="field-content"  th:text="${cpfPassaporte}"></div>
 	</div>
 
-	<!--Segunda linha-->
-	<div class="field-primeira-coluna field-segunda-linha fieldset-border field-duas-colunas ">
+	<div class="field-segunda-coluna field-segunda-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">N º da Licença</div>
 		<div class="field-content"  th:text="${numLicenca}"></div>
-	</div>
-
-	<div class="field-segunda-coluna field-segunda-linha fieldset-border field-duas-colunas ">
-		<div class="legend-border">Modalidade</div>
-		<div class="field-content"  th:text="${modalidade}"></div>
 	</div>
 
 	<!--Terceira linha-->
@@ -252,8 +247,8 @@
 
 	<!--Quinta linha-->
 	<div class="field-primeira-coluna field-quinta-linha fieldset-border field-duas-colunas ">
-		<div class="legend-border">País</div>
-		<div class="field-content"  th:text="${pais}"></div>
+		<div class="legend-border">Modalidade</div>
+		<div class="field-content"  th:text="${modalidade}"></div>
 	</div>
 
 	<div class="field-segunda-coluna field-quinta-linha fieldset-border field-duas-colunas ">
@@ -310,7 +305,7 @@
 		</div>
 
 		<div class="aviso field-quinta-linha">
-			VALIDO EM TODO O ESTADO DO AMAZONAS, MEDIANTE APRESENTAÇÃO DE DOCUMENTO DE IDENTIDADE, RESPEITANDO AS REGRAS DE PESCA DO LOCAL
+			VáLIDO EM TODO O ESTADO DO AMAZONAS, MEDIANTE APRESENTAÇÃO DE DOCUMENTO DE IDENTIDADE, RESPEITANDO AS REGRAS DE PESCA DO LOCAL
 		</div>
 	</div>
 </div>
