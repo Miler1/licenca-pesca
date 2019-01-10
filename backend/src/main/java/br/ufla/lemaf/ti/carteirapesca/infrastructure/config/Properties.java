@@ -80,4 +80,9 @@ public final class Properties {
 		return environment.getProperty("spring.carteira-pesca.path-boleto");
 	}
 
+
+	public static String baseUrl() {
+		return environment.getProperty("spring.application.urlBase");
+	}
+
 }

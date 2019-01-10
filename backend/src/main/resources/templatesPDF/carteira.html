@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+	<style>
+
+		@font-face {
+			font-family: Arial;
+			font-size: 10pt;
+
+			src: url(~/fonts/arial.ttf);
+			-fs-pdf-font-embed: embed;
+			-fs-pdf-font-encoding: Identity-H;
+		}
+		@page {
+			@bottom-center {
+				content: element(footer);
+			}
+		}
+		body{
+			margin: 0;
+			font-family: Arial;
+		}
+		.imagem-background{
+			width: 684px;
+			height: 249.7px;
+			position: fixed;
+			z-index: -1000;
+		}
+
+		.campo-carteira{
+			background-color: white;
+			border: 1px solid black;
+			border-radius: 10px;
+			width: 100px;
+			height: 30px;
+			position: fixed;
+		}
+		#titulo-carteira{
+			width: 192px;
+			font-size: 11px;
+			top: 17.5px;
+			left: 115px;
+			position: fixed;
+			text-align: center;
+			color: #00307A;
+		}
+
+		#brasao-ipaam{
+			height: 44.5px;
+			width: 72px;
+			position: fixed;
+			top: 11.5px;
+			left: 24px;
+		}
+
+		.fieldset-border {
+			border: 2px groove #ddd ;
+			border-radius: 5px;
+			margin: 0 0 1.5em 0 ;
+			-webkit-box-shadow: 0px 0px 0px 0px #000;
+			box-shadow: 0px 0px 0px 0px #000;
+			background-color: white;
+		}
+
+		.fieldset-border .legend-border {
+			font-size: 9px;
+			text-align: left;
+			padding: 0 7px;
+			border-bottom: none;
+			margin-top: -7px;
+			background: white;
+			margin-left: 8px;
+			position: absolute;
+			display: inline;
+		}
+		.field-content{
+
+			font-size: 11px;
+			margin-left: 5px;
+			margin-top: 4px;
+		}
+
+		.field-duas-colunas{
+			width: 151px;
+			height: 19px;
+			position: fixed;
+		}
+
+		.field-uma-coluna{
+			width: 312px;
+			height: 19px;
+			position: fixed;
+		}
+
+		.field-primeira-coluna{
+			left: 11px;
+		}
+
+		.field-segunda-coluna{
+			left: 172px;
+		}
+
+		.field-terceira-coluna{
+			left: 345px;
+		}
+
+		.field-quarta-coluna{
+			left: 506px;
+		}
+
+		.field-primeira-linha{
+			top: 67.5px;
+		}
+
+		.field-segunda-linha{
+			top: 100px;
+		}
+
+		.field-terceira-linha{
+			top: 132.5px;
+		}
+
+		.field-quarta-linha{
+			top: 165px;
+		}
+
+		.field-quinta-linha{
+			top: 197.5px;
+		}
+
+		.field-sexta-linha{
+			top: 230px;
+		}
+
+		.field-segunda-coluna-rodape{
+			left:345px;
+		}
+
+		.aviso{
+			position: fixed;
+			font-size: 7px;
+			text-align: center;
+			width: 311px;
+			left: 345px;
+		}
+		.verso{
+			left: 345px;
+			position:fixed;
+		}
+
+		.principios-titulo{
+			font-weight: bold;
+			font-size: 6px;
+			top: 30px;
+			width: 150px;
+			position: fixed;
+			left: 345px;
+		}
+		.texto-rodape{
+			position: fixed;
+			font-size: 13px;
+			color: white;
+			width: 315px;
+			text-align: center;
+		}
+		.principios-titulo-list{
+			font-size: 6px;
+			left: 345px;
+			top: 60px;
+			position: fixed;
+		}
+		.principios-titulo-list > div {
+			margin-bottom: 5px;
+		}
+		.qr-code{
+			width: 123px;
+			height: 123px;
+			top: 32px;
+			left: 533.13px;
+			position: fixed;
+		}
+		@page {
+			font-family: Arial; margin: 60px}
+		@media print
+		{
+			body{
+				margin-bottom: 50px;
+
+				font-family: Arial;
+			}
+			#footer {
+			}
+			.content {
+				/*Força sempre quebrar a página no final*/
+				font-family: Arial;
+				page-break-after: always;
+				max-height: 80%;
+				height: 80%;
+			}
+		}
+	</style>
+</head>
+<body>
+<div id="footer">
+</div>
+<div class="content">
+	<img id="brasao-ipaam" th:src="${baseUrl + '/images/brasao-ipaam.png'}" />
+	<h2 id="titulo-carteira">LICENÇA PARA PESCA AMADORA ESTADO DO AMAZONAS</h2>
+	<img class="imagem-background" th:src="${baseUrl + '/images/carteira-pesca.png'}"/>
+
+
+	<!--Primeira linha-->
+	<div class="field-primeira-coluna fieldset-border field-duas-colunas field-primeira-linha">
+		<div class="legend-border">Nome</div>
+		<div class="field-content" th:text="${nome}"></div>
+	</div>
+
+	<div class="field-segunda-coluna fieldset-border field-duas-colunas field-primeira-linha">
+		<div class="legend-border">CPF/Passaporte</div>
+		<div class="field-content"  th:text="${cpfPassaporte}"></div>
+	</div>
+
+	<!--Segunda linha-->
+	<div class="field-primeira-coluna field-segunda-linha fieldset-border field-duas-colunas ">
+		<div class="legend-border">N º da Licença</div>
+		<div class="field-content"  th:text="${numLicenca}"></div>
+	</div>
+
+	<div class="field-segunda-coluna field-segunda-linha fieldset-border field-duas-colunas ">
+		<div class="legend-border">Modalidade</div>
+		<div class="field-content"  th:text="${modalidade}"></div>
+	</div>
+
+	<!--Terceira linha-->
+	<div class="field-primeira-coluna field-terceira-linha fieldset-border field-uma-coluna">
+		<div class="legend-border">Endereço</div>
+		<div class="field-content"  th:text="${endereco}"></div>
+	</div>
+
+	<!--Quarta linha-->
+	<div class="field-primeira-coluna field-quarta-linha fieldset-border field-duas-colunas ">
+		<div class="legend-border">Município / UF</div>
+		<div class="field-content" th:text="${municipioUF}"></div>
+	</div>
+
+	<div class="field-segunda-coluna field-quarta-linha fieldset-border field-duas-colunas ">
+		<div class="legend-border">CEP</div>
+		<div class="field-content"  th:text="${cep}"></div>
+	</div>
+
+	<!--Quinta linha-->
+	<div class="field-primeira-coluna field-quinta-linha fieldset-border field-duas-colunas ">
+		<div class="legend-border">País</div>
+		<div class="field-content"  th:text="${pais}"></div>
+	</div>
+
+	<div class="field-segunda-coluna field-quinta-linha fieldset-border field-duas-colunas ">
+		<div class="legend-border">Limite de captura</div>
+		<div class="field-content"  th:text="${limiteCaptura}"></div>
+	</div>
+
+	<div class="texto-rodape field-sexta-linha field-primeira-coluna">CARTEIRA DE PESCA</div>
+
+	<div class="texto-rodape field-sexta-linha field-segunda-coluna-rodape">CARTEIRA DE PESCA</div>
+
+	<!--Verso-->
+	<div class="verso">
+
+		<img class="qr-code" th:src="'data:image/png;base64,' +${qrcode}" />
+
+		<div class="principios-titulo">
+			PRINCÍPIOS DE UM BOM PESCADOR ESPORTIVO
+		</div>
+
+		<div class="principios-titulo-list">
+			<div>
+				- FAÇA O SEU PLANEJAMENTO DE PESCA
+			</div>
+			<div>
+				- RESPEITE OS ANIMAIS E PLANTAS
+			</div>
+			<div>
+				- RESPEITE OS OUTROS PESCADORES E A POPULAÇÃO LOCAL
+			</div>
+			<div>
+				- CUIDADO COM O SEU RESÍDUO
+			</div>
+			<div>
+				- CUIDADO COM O FOGO
+			</div>
+			<div>
+				- RESPONSABILIZE-SE POR SUA SEGURANÇA
+			</div>
+			<div>
+				- AJUDE A FISCALIZAÇÃO AMBIENTAL
+			</div>
+		</div>
+
+		<!--Quarta linha-->
+		<div class="field-terceira-coluna field-quarta-linha fieldset-border field-duas-colunas ">
+			<div class="legend-border">Emissão</div>
+			<div class="field-content" th:text="${emissao}"></div>
+		</div>
+
+		<div class="field-quarta-coluna field-quarta-linha fieldset-border field-duas-colunas ">
+			<div class="legend-border">Validade</div>
+			<div class="field-content" th:text="${validade}"></div>
+		</div>
+
+		<div class="aviso field-quinta-linha">
+			VALIDO EM TODO O ESTADO DO AMAZONAS, MEDIANTE APRESENTAÇÃO DE DOCUMENTO DE IDENTIDADE, RESPEITANDO AS REGRAS DE PESCA DO LOCAL
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
