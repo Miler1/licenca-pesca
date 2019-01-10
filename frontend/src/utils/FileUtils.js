@@ -7,8 +7,6 @@ export default {
 	
 	// Convert um arquivo base64 para BLOB
 	convertBase64ToBlob (base64) {
-		
-		// let binaryString = window.atob(base64);
 	
 		let len = base64.length;
 						
