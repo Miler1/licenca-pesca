@@ -1,6 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
+import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 
 import java.io.File;
 
@@ -29,5 +32,5 @@ public interface ConsultaServiceFacade {
 	 */
 	String buscarCaminho(String protocolo, Integer tipo);
 
-	File gerarCarteira() throws Exception;
+	File gerarCarteira(Protocolo protocoloObj, Licenca licenca, Pessoa pessoa) throws Exception;
 }

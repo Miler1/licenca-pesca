@@ -81,9 +81,9 @@
 		}
 		.field-content{
 
-			font-size: 12px;
+			font-size: 11px;
 			margin-left: 5px;
-			margin-top: 5px;
+			margin-top: 4px;
 		}
 
 		.field-duas-colunas{
@@ -178,7 +178,13 @@
 		.principios-titulo-list > div {
 			margin-bottom: 5px;
 		}
-
+		.qr-code{
+			width: 123px;
+			height: 123px;
+			top: 32px;
+			left: 533.13px;
+			position: fixed;
+		}
 		@page {
 			font-family: Arial; margin: 60px}
 		@media print
@@ -212,51 +218,51 @@
 	<!--Primeira linha-->
 	<div class="field-primeira-coluna fieldset-border field-duas-colunas field-primeira-linha">
 		<div class="legend-border">Nome</div>
-		<div class="field-content"></div>
+		<div class="field-content" th:text="${nome}"></div>
 	</div>
 
 	<div class="field-segunda-coluna fieldset-border field-duas-colunas field-primeira-linha">
 		<div class="legend-border">CPF/Passaporte</div>
-		<div class="field-content"></div>
+		<div class="field-content"  th:text="${cpfPassaporte}"></div>
 	</div>
 
 	<!--Segunda linha-->
 	<div class="field-primeira-coluna field-segunda-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">N º da Licença</div>
-		<div class="field-content"></div>
+		<div class="field-content"  th:text="${numLicenca}"></div>
 	</div>
 
 	<div class="field-segunda-coluna field-segunda-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">Modalidade</div>
-		<div class="field-content"></div>
+		<div class="field-content"  th:text="${modalidade}"></div>
 	</div>
 
 	<!--Terceira linha-->
 	<div class="field-primeira-coluna field-terceira-linha fieldset-border field-uma-coluna">
 		<div class="legend-border">Endereço</div>
-		<div class="field-content"></div>
+		<div class="field-content"  th:text="${endereco}"></div>
 	</div>
 
 	<!--Quarta linha-->
 	<div class="field-primeira-coluna field-quarta-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">Município / UF</div>
-		<div class="field-content"></div>
+		<div class="field-content" th:text="${municipioUF}"></div>
 	</div>
 
 	<div class="field-segunda-coluna field-quarta-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">CEP</div>
-		<div class="field-content"></div>
+		<div class="field-content"  th:text="${cep}"></div>
 	</div>
 
 	<!--Quinta linha-->
 	<div class="field-primeira-coluna field-quinta-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">País</div>
-		<div class="field-content"></div>
+		<div class="field-content"  th:text="${pais}"></div>
 	</div>
 
 	<div class="field-segunda-coluna field-quinta-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">Limite de captura</div>
-		<div class="field-content"></div>
+		<div class="field-content"  th:text="${limiteCaptura}"></div>
 	</div>
 
 	<div class="texto-rodape field-sexta-linha field-primeira-coluna">CARTEIRA DE PESCA</div>
@@ -265,6 +271,8 @@
 
 	<!--Verso-->
 	<div class="verso">
+
+		<img class="qr-code" th:src="'data:image/png;base64,' +${qrcode}" />
 
 		<div class="principios-titulo">
 			PRINCÍPIOS DE UM BOM PESCADOR ESPORTIVO
@@ -297,12 +305,12 @@
 		<!--Quarta linha-->
 		<div class="field-terceira-coluna field-quarta-linha fieldset-border field-duas-colunas ">
 			<div class="legend-border">Emissão</div>
-			<div class="field-content"></div>
+			<div class="field-content" th:text="${emissao}"></div>
 		</div>
 
 		<div class="field-quarta-coluna field-quarta-linha fieldset-border field-duas-colunas ">
 			<div class="legend-border">Validade</div>
-			<div class="field-content"></div>
+			<div class="field-content" th:text="${validade}"></div>
 		</div>
 
 		<div class="aviso field-quinta-linha">

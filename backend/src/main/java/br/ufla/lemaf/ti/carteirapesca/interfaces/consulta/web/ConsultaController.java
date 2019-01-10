@@ -129,11 +129,11 @@ public class ConsultaController {
 
 			var protocoloObj = new Protocolo(protocolo);
 			var licenca = consultaApplication.consulta(protocoloObj);
-//			var solicitante = licenca.getSolicitante();
-//			var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
+			var solicitante = licenca.getSolicitante();
+			var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
 //			var caminhoCarteira = carteiraBuilder.gerarCarteira(protocoloObj,licenca.modalidade(), pessoa);
 //			var carteira = new File(caminhoCarteira);
-			var carteira = facade.gerarCarteira();
+			var carteira = facade.gerarCarteira(protocoloObj, licenca, pessoa);
 
 			var httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaType.APPLICATION_PDF);
