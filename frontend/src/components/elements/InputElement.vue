@@ -331,7 +331,7 @@ export default {
 };
 </script>
 <style lang="sass">
-.el-form-item__label:after 
+.el-form-item.is-required:not(.is-no-asterisk) > .el-form-item__label:after
   content: '*';
   color: #f56c6c;
   margin-left: 4px;
