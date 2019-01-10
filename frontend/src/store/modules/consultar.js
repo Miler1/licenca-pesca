@@ -1,6 +1,6 @@
 import { STATUS_MOCK } from "../../utils/layout/mockData";
 import { SET_LICENCA, SET_LICENCA_ATIVA } from "../mutations.type";
-import { ATIVAR_LICENCA, FETCH_LICENCA } from "../actions.type";
+import { ATIVAR_LICENCA, FETCH_LICENCA} from "../actions.type";
 import ConsultaService from "../../services/ConsultaService";
 
 const INITIAL_STATE = {
@@ -34,7 +34,7 @@ export const actions = {
       commit(SET_LICENCA, data);
     });
   },
-
+  
   [ATIVAR_LICENCA]: ({ commit }) => {
     commit(SET_LICENCA_ATIVA);
   }
