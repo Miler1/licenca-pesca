@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 // vue.config.js
 module.exports = {
   // proxy todos os requests do webpack começando com /api
@@ -12,6 +14,15 @@ module.exports = {
       }
     }
   },
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        '$': 'jquery',
+        jQuery: 'jquery',
+      })
+    ]
+  },
+
   // Mudando rota do build para ser compatível com o Maven
   // ver https://cli.vuejs.org/config/
   outputDir: "target/dist",

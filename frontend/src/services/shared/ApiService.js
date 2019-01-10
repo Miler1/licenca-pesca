@@ -3,6 +3,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import qs from "qs";
 import { HttpException } from "./handling/HttpException";
+import loading from "./LoadingService";
 
 /**
  * Serviço base para chamadas HTTP.
@@ -52,11 +53,22 @@ const ApiService = {
    * @return {Promise<*>}
    */
   async get(resource, slug = "") {
-    try {
-      return await Vue.axios.get(`${resource}/${slug}`);
-    } catch (error) {
+    return Vue.axios.get(`${resource}/${slug}`).then(response => {
+      return response;
+    }).catch(error => {
       return Promise.reject(new HttpException.init(error, true));
-    }
+    });
+  },
+
+  async getWithBlock(resource, slug = "") {
+    loading.show();
+    return Vue.axios.get(`${resource}/${slug}`).then(response => {
+      loading.hide();
+      return response;
+    }).catch(error => {
+      loading.hide();
+      return Promise.reject(new HttpException.init(error, true));
+    });
   },
 
   /**
@@ -67,11 +79,22 @@ const ApiService = {
    * @return {Promise<*>}
    */
   async post(resource, params) {
-    try {
-      return await Vue.axios.post(`${resource}`, params);
-    } catch (error) {
+    return Vue.axios.post(`${resource}`, params).then(response => {
+      return response;
+    }).catch(error => {
       return Promise.reject(new HttpException.init(error, true));
-    }
+    });
+  },
+
+  async postWithBlock(resource, params) {
+    loading.show();
+    return Vue.axios.post(`${resource}`, params).then(response => {
+      loading.hide();
+      return response;
+    }).catch(error => {
+      loading.hide();
+      return Promise.reject(new HttpException.init(error, true));
+    });
   },
 
   /**
@@ -83,11 +106,22 @@ const ApiService = {
    * @return {Promise<*>}
    */
   async update(resource, slug, params) {
-    try {
-      return await Vue.axios.put(`${resource}/${slug}`, params);
-    } catch (error) {
+    return await Vue.axios.put(`${resource}/${slug}`, params).then(response => {
+      return response;
+    }).catch(error => {
       return Promise.reject(new HttpException.init(error, true));
-    }
+    });
+  },
+
+  async updateWithBlock(resource, slug, params) {
+    loading.show();
+    return await Vue.axios.put(`${resource}/${slug}`, params).then(response => {
+      loading.hide();
+      return response;
+    }).catch(error => {
+      loading.hide();
+      return Promise.reject(new HttpException.init(error, true));
+    });
   },
 
   /**
@@ -98,11 +132,22 @@ const ApiService = {
    * @return {Promise<*>}
    */
   async put(resource, params) {
-    try {
-      return await Vue.axios.put(`${resource}`, params);
-    } catch (error) {
+    return await Vue.axios.put(`${resource}`, params).then(response => {
+      return response;
+    }).catch(error => {
       return Promise.reject(new HttpException.init(error, true));
-    }
+    });
+  },
+
+  async putWithBlock(resource, params) {
+    loading.show();
+    return await Vue.axios.put(`${resource}`, params).then(response => {
+      loading.hide();
+      return response;
+    }).catch(error => {
+      loading.hide();
+      return Promise.reject(new HttpException.init(error, true));
+    });
   },
 
   /**
@@ -112,11 +157,22 @@ const ApiService = {
    * @return {Promise<never>}
    */
   async delete(resource) {
-    try {
-      return await Vue.axios.delete(resource);
-    } catch (error) {
+    return await Vue.axios.delete(resource).then(response => {
+      return response;
+    }).catch(error => {
       return Promise.reject(new HttpException.init(error, true));
-    }
+    });
+  },
+
+  async deleteWithBlock(resource) {
+    loading.show();
+    return await Vue.axios.delete(resource).then(response => {
+      loading.hide();
+      return response;
+    }).catch(error => {
+      loading.hide();
+      return Promise.reject(new HttpException.init(error, true));
+    });
   }
 };
 
