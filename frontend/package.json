@@ -15,9 +15,12 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "blockui": "^1.0.0",
     "di-vue-mask": "^1.1.0",
     "element-ui": "^2.4.10",
     "file-saver": "^2.0.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1",
     "mdi": "^2.2.43",
     "register-service-worker": "^1.0.0",
     "v-money": "^0.8.1",

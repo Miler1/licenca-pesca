@@ -53,6 +53,10 @@ spring:
       #client-id: a3489e7dee0ad4e82c5f46cd5b0829cab1310524014e043ea613c5f4ed55b3090d1844661fc0cce7ec9f48d6cd3568fcbc2bc81c9907fd75028c9f9318348579
       #client-secret: 2d34926193fb95719b5d54a2026e55ac37af00cb7bc98f06d3e203e19cfaa8bc8d0dfb11eb5ac9b7f38a391f34b43a309816e6f82f732ef9066898bb0ef251bb
 
+      # Módulo - LP1 - Hiago
+      #client-id: c0d1dba8abcb42bd41204fd5b8c69374da5dd148246d0402465fef4478c7c552a952bde3a718eae6b2482049f4db8fcc40772954f65fa6a45e55ed27aa0dd694
+      #client-secret: 4f9b432c6c7822f667dee9c0e7d208fa51d4dc494d96af6a5f91e622cc0d6fd7f85eaedf222af6c86517a9118c0747301c33b0c4545ecee57a9a5dbead0e2bb8
+
       portal-seguranca:
         url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
       cadastro-unificado:
