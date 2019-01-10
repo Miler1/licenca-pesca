@@ -28,7 +28,7 @@ const VISUALIZAR = {
       numero: ["Número:", "Number:"],
       complemento: ["Complemento:", "Complement:"],
       cep: ["CEP:", "Postal code:"],
-      municipio: ["Municipio:", "County:"],
+      municipio: ["Município:", "County:"],
       uf: ["UF:", "UF:"],
       descricaoAcesso: ["Descrição de acesso: ", "Description of access: "]
     },

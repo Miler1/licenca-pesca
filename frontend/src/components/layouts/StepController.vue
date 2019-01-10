@@ -1,7 +1,7 @@
 <template lang="pug">
 	#step-controller
 		.left
-			el-button(icon="el-icon-arrow-left" type="primary" plain @click="prevStep" v-if="!activeStep('IDENTIFICACAO')") {{ $t(`${registrar_prefix}steps.botoes.voltar`) }}
+			el-button(icon="el-icon-arrow-left" type="primary" @click="prevStep" v-if="!activeStep('IDENTIFICACAO')") {{ $t(`${registrar_prefix}steps.botoes.voltar`) }}
 			el-button(icon="el-icon-close" @click="cancelar") {{ $t(`${registrar_prefix}steps.botoes.cancelar`) }}
 		.center(v-if="enabled()")
 			h4.footer-label {{ $t(`${registrar_prefix}steps.label`, [step + 1, totalSteps]) }}
