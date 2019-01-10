@@ -71,7 +71,9 @@ export default {
 
   methods: {
     cadastrar() {
-      this.$router.push({name: 'registrar'});
+      this.$store.dispatch(CANCELAR).then(p => {
+        this.$router.push({name: 'registrar'});
+      });
     }
   }
 };
