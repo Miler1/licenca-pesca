@@ -131,16 +131,12 @@ public class ConsultaController {
 			var licenca = consultaApplication.consulta(protocoloObj);
 			var solicitante = licenca.getSolicitante();
 			var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
-//			var caminhoCarteira = carteiraBuilder.gerarCarteira(protocoloObj,licenca.modalidade(), pessoa);
-//			var carteira = new File(caminhoCarteira);
 			var carteira = facade.gerarCarteira(protocoloObj, licenca, pessoa);
 
 			var httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaType.APPLICATION_PDF);
 
 			var isr = new InputStreamResource(new FileInputStream(carteira));
-
-
 
 			return new ResponseEntity<InputStreamResource>(isr, httpHeaders, HttpStatus.OK);
 
