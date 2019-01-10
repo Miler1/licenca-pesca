@@ -62,6 +62,18 @@ const ApiService = {
     }
   },
 
+  async getWithBlock(resource, slug = "") {
+    try {
+      loading.show();
+      return Vue.axios.get(`${resource}/${slug}`).then(response => {
+        loading.hide();
+        return response;
+      });
+    } catch (error) {
+      return Promise.reject(new HttpException.init(error, true));
+    }
+  },
+
   /**
    * Aciona o HTTP request POST.
    *
@@ -69,12 +81,20 @@ const ApiService = {
    * @param params
    * @return {Promise<*>}
    */
-  async post(resource, options) {
+  async post(resource, params) {
     try {
-      if(options.blockui === true) {
-        loading.show();
-      }
-      return Vue.axios.post(`${resource}`, options.params).then(response => {
+      return Vue.axios.post(`${resource}`, params).then(response => {
+        return response;
+      });
+    } catch (error) {
+      return Promise.reject(new HttpException.init(error, true));
+    }
+  },
+
+  async postWithBlock(resource, params) {
+    try {
+      loading.show();
+      return Vue.axios.post(`${resource}`, params).then(response => {
         loading.hide();
         return response;
       });
@@ -99,6 +119,19 @@ const ApiService = {
     }
   },
 
+  async updateWithBlock(resource, slug, params) {
+    try {
+      loading.show();
+      return await Vue.axios.put(`${resource}/${slug}`, params).then(response => {
+        loading.hide();
+        return response;
+      });
+
+    } catch (error) {
+      return Promise.reject(new HttpException.init(error, true));
+    }
+  },
+
   /**
    * Aciona o HTTP request PUT.
    *
@@ -114,6 +147,18 @@ const ApiService = {
     }
   },
 
+  async putWithBlock(resource, params) {
+    try {
+      loading.show();
+      return await Vue.axios.put(`${resource}`, params).then(response => {
+        loading.hide();
+        return response;
+      });
+    } catch (error) {
+      return Promise.reject(new HttpException.init(error, true));
+    }
+  },
+
   /**
    * Aciona o HTTP request DELETE.
    *
@@ -123,6 +168,18 @@ const ApiService = {
   async delete(resource) {
     try {
       return await Vue.axios.delete(resource);
+    } catch (error) {
+      return Promise.reject(new HttpException.init(error, true));
+    }
+  },
+
+  async deleteWithBlock(resource) {
+    try {
+      loading.show();
+      return await Vue.axios.delete(resource).then(response => {
+        loading.hide();
+        return response;
+      });
     } catch (error) {
       return Promise.reject(new HttpException.init(error, true));
     }

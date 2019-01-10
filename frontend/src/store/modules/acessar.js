@@ -1,7 +1,6 @@
 import { ACESSAR, CANCELAR } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_INFORMACOES, CLEAN_SOLICITANTE, CLEAN_REGISTRO } from "../mutations.type";
-
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import { stat } from "fs";
@@ -93,7 +92,7 @@ export const mutations = {
       state.solicitante = null;
     }
   },
-  
+
   [CLEAN_SOLICITANTE]: (state) => {
     state.solicitante = Solicitante;
   },

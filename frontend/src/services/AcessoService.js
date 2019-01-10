@@ -1,6 +1,5 @@
 import Properties from "../properties";
 import ApiService from "./shared/ApiService";
-import RequestService from "./shared/RequestService";
 
 const AcessoService = {
   /**
@@ -12,12 +11,7 @@ const AcessoService = {
    * caso negativo.
    */
   acessar: acessoResource => {
-    var options = {
-      params: acessoResource,
-      blockui: true
-    };
-
-    return ApiService.post(`${Properties.BASE_URL}/api/acessar`, options);
+    return ApiService.postWithBlock(`${Properties.BASE_URL}/api/acessar`, acessoResource);
   },
 
   /**
