@@ -2,6 +2,8 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
 
+import java.io.File;
+
 /**
  * Serviço de Facade de Consulta da camada de interface.
  *
@@ -27,4 +29,5 @@ public interface ConsultaServiceFacade {
 	 */
 	String buscarCaminho(String protocolo, Integer tipo);
 
+	File gerarCarteira() throws Exception;
 }

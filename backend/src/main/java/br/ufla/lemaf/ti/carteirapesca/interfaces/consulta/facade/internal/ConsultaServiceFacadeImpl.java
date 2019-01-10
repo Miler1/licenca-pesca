@@ -3,14 +3,20 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.internal;
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.PdfGeneratorUtil;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.ConsultaServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTOAssembler;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -23,6 +29,9 @@ import org.springframework.stereotype.Service;
 public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 
 	private ConsultaApplication application;
+
+	@Autowired
+	PdfGeneratorUtil pdfGenaratorUtil;
 
 	/**
 	 * Injetando dependências.
@@ -84,6 +93,16 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 
 		}
 
+	}
+
+	@Override
+	public File gerarCarteira() throws Exception {
+
+		Map<String,String> data = new HashMap<String,String>();
+
+		data.put("baseUrl", Properties.baseUrl());
+
+		return pdfGenaratorUtil.createPdf("carteira",data);
 	}
 
 }
