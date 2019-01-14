@@ -16,3 +16,4 @@ export const REGISTRAR = "REGISTRAR";
 export const FETCH_LICENCA = "FETCH_LICENCA";
 export const ATIVAR_LICENCA = "ATIVAR_LICENCA";
 export const CANCELAR = "CANCELAR";
+export const BUSCAR_LICENCAS = "BUSCAR_LICENCAS";

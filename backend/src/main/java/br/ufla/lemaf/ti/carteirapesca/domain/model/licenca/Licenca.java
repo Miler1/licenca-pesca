@@ -4,6 +4,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.var;
 import org.apache.commons.lang3.Validate;
@@ -23,11 +24,13 @@ import java.util.GregorianCalendar;
  */
 @NoArgsConstructor
 @javax.persistence.Entity
+@Getter
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "licenca")
 public class Licenca implements Entity<Licenca, Protocolo> {
 
 	// Anos para a licença vencer após ativada
 	private static final Integer ANOS_VENCIMENTO_LICENCA = 1;
+	private static final Integer MES_ANTES_DE_VENCER = -1;
 
 	@Embedded
 	@AttributeOverride(name = "codigoFormatado", column = @Column(name = "tx_protocolo"))
@@ -57,6 +60,11 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JoinColumn(name="id_solicitante")
 	private Solicitante solicitante;
 
+	@Transient
+	private Date dataVencimento;
+
+
+
 	/**
 	 * Construtor da Licenca de pesca.
 	 * <p>
@@ -82,7 +90,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.protocolo = protocolo;
 			this.modalidade = modalidade;
 			this.dataCriacao = new Date();
-			this.status = Status.AGUARDANDO;
+			this.status = Status.AGUARDANDO_PAGAMENTO_BOLETO;
 			this.caminhoCarteira = caminhoCarteira;
 			this.caminhoBoleto = caminhoBoleto;
 		} catch (IllegalArgumentException | NullPointerException ex) {
@@ -96,7 +104,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 * Mas se o Status for ATIVO ou INVALIDADO a operação será anulada.
 	 */
 	public void ativar() {
-		if (!status.sameValueAs(Status.AGUARDANDO)) {
+		if (!status.sameValueAs(Status.AGUARDANDO_PAGAMENTO_BOLETO)) {
 			throw new LicencaException("licenca.statusInvalido.ativar", status.name());
 		}
 		status = Status.ATIVO;
@@ -118,17 +126,39 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 *
 	 * @return Data de vencimento da Licença
 	 */
-	public Date dataVencimento() {
-		if (!status.sameValueAs(Status.ATIVO)) {
-			throw new LicencaException("licenca.statusInvalido.dataVencimento", status.name());
+	public Date getDataVencimento() {
+		if (!status.sameValueAs(Status.ATIVO) && !status.sameValueAs(Status.VENCIDO)) {
+			return null;
 		}
 		var vencimento = new GregorianCalendar();
 		// Não referenciar, já que Date é um objeto mutável,
 		// e vamos alterar o valor de vencimento, mas não
 		// queremos alterar o valor de ativação.
-		vencimento.setTime((Date) dataAtivacao.clone());
-		vencimento.add(Calendar.YEAR, ANOS_VENCIMENTO_LICENCA);
+		if(dataAtivacao != null){
+
+			vencimento.setTime((Date) dataAtivacao.clone());
+			vencimento.add(Calendar.YEAR, ANOS_VENCIMENTO_LICENCA);
+		} else {
+			return null;
+		}
 		return vencimento.getTime();
+	}
+
+	public Boolean getPodeRenovar() {
+		if (!status.sameValueAs(Status.ATIVO) && !status.sameValueAs(Status.VENCIDO)) {
+			return false;
+		}
+		var vencimento = this.getDataVencimento();
+		if(vencimento != null) {
+			var dataInicioRenovacao = new GregorianCalendar();
+			dataInicioRenovacao.setTime((Date) vencimento.clone());
+			dataInicioRenovacao.add(Calendar.MONTH, MES_ANTES_DE_VENCER);
+
+			var dataAtual = new Date();
+			return dataAtual.after(dataInicioRenovacao.getTime());
+		}
+
+		return false;
 	}
 
 	/**
