@@ -43,7 +43,8 @@ export const actions = {
   },
 
   [FETCH_DADOS_CARTEIRA]: ({ commit }, protocolo) => {
-    ConsultaService.buscarDadosCarteira(protocolo).then(({ data }) => {
+    ConsultaService.buscarDadosCarteira(protocolo)
+      .then(({ data }) => {
       commit(SET_DADOS_CARTEIRA, data);
     });
   },
@@ -61,12 +62,8 @@ export const mutations = {
   [SET_LICENCA_ATIVA]: state =>
     state.licenca === null ? null : (state.licenca.status = 1),
 
-  [SET_DADOS_CARTEIRA]: (state, licencaPesca) => (state.licencaPesca = licencaPesca),
-  
-  // [SET_DADOS_CARTEIRA]: (state, licencaPesca) => {
-  //   state.licencaPesca = toLicencaPescaDTO(licencaPesca);
-  // }
-  };
+  [SET_DADOS_CARTEIRA]: (state, licencaPesca) => (state.licencaPesca = licencaPesca)
+};
 
 export default {
   state,

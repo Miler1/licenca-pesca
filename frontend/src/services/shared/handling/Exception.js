@@ -5,7 +5,7 @@ import { Notificator } from "./Notificator";
  *
  * Ex.: options = {
  *      title: "Erro padrão",
- *      message: "Erro não identificado. Contate o adiministrador do sistema.",
+ *      message: "Erro não identificado. Contate o administrador do sistema.",
  *      type: "error",
  *      duration: 1 (opcional),
  *      show: false (opcional)
@@ -19,7 +19,7 @@ import { Notificator } from "./Notificator";
  */
 export function Exception(options = null) {
   const MENSAGEM_PADRAO =
-    "Erro não identificado. Contate o adiministrador do sistema.";
+    "Erro não identificado. Contate o administrador do sistema.";
   const TITULO_PADRAO = "Erro do sistema";
 
   /*

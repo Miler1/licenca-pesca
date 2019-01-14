@@ -28,7 +28,7 @@ const ConsultaService = {
    * dado o protocolo.
    */
   buscarDadosCarteira: protocolo =>
-    ApiService.query(`${Properties.BASE_URL}/api/buscar`, { protocolo })
+    ApiService.query(`${Properties.BASE_URL}/api/informacao-carteira`, { protocolo })
 };
 
 export default ConsultaService;

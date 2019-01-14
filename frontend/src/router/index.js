@@ -14,8 +14,8 @@ export const routes = [
   },
 
   {
-    path: "/buscar/:protocolo",
-    name: "buscar",
+    path: "/informacao-carteira/:protocolo",
+    name: "informacao-carteira",
     component: () => import("../components/views/AutenticidadeQr")
   },
 

@@ -1,11 +1,11 @@
 <template lang="pug">
 	#step-controller
 		.left
-			el-button(icon="el-icon-arrow-left" type="primary" plain @click="prevStep" v-if="!activeStep('IDENTIFICACAO')") {{ $t(`${registrar_prefix}steps.botoes.voltar`) }}
+			el-button(icon="el-icon-arrow-left" type="primary" @click="prevStep" v-if="!activeStep('IDENTIFICACAO')") {{ $t(`${registrar_prefix}steps.botoes.voltar`) }}
 			el-button(icon="el-icon-close" @click="cancelar") {{ $t(`${registrar_prefix}steps.botoes.cancelar`) }}
-		.center
+		.center(v-if="enabled()")
 			h4.footer-label {{ $t(`${registrar_prefix}steps.label`, [step + 1, totalSteps]) }}
-		.right
+		.right(v-if="enabled()")
 			el-button(icon="el-icon-check" type="primary" v-if="activeStep('RESUMO')" @click="concluir") {{ $t(`${registrar_prefix}steps.botoes.concluir`) }}
 			el-button(icon="el-icon-arrow-right" type="primary" @click="nextStep" v-if="!activeStep('RESUMO')") {{ $t(`${registrar_prefix}steps.botoes.proxima`) }}
 
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Properties from "../../properties";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
 import { numero } from '../../utils/validations/pessoa/pessoa_validations';
@@ -31,11 +32,18 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante"])
+  },
+
   methods: {
     activeStep(step) {
       const steps = Properties.STEPS;
 
       return this.step === steps[step];
+    },
+    enabled() {
+      return this.cadastroCanActive || (this.existeSolicitante && !this.cadastroCanActive)
     },
 
     nextStep() {

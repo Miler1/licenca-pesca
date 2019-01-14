@@ -18,7 +18,7 @@ export const Notificator = {
    * Ex.:
    * opt = {
    *      title: "Erro padrão",
-   *      message: "Contate o adiministrador",
+   *      message: "Contate o administrador",
    *      type: "error",
    *      duration: 1 (opcional)
    * }
