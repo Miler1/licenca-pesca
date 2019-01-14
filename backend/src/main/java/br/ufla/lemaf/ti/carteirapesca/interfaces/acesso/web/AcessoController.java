@@ -1,6 +1,8 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -8,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 
@@ -67,6 +66,20 @@ public class AcessoController {
 			.withSelfRel());
 
 		return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
+
+	}
+
+	@CrossOrigin("*")
+	@PostMapping("/buscarLicensas")
+	public ResponseEntity<ListaLicencaDTO> buscarLicensas(@RequestBody final AcessoResource acessoResource) {
+
+		var listaLicencaDTO = new ListaLicencaDTO();
+		var pessoa = acessoServiceFacade.acessar(acessoResource);
+
+		listaLicencaDTO.setPessoa(pessoa);
+		listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
+
+		return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
 	}
 
