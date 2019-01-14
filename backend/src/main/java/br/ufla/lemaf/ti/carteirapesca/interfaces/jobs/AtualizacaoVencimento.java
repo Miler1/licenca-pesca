@@ -15,10 +15,9 @@ public class AtualizacaoVencimento {
 
 	private static final Logger log = LoggerFactory.getLogger(AtualizacaoVencimento.class);
 
-	@Scheduled(cron = "0 0/1 * 1/1 * ?")
+	@Scheduled(cron = "0 0 1/1 * ? *")
 	public void atualizacaoAutomatica() throws Exception {
 		log.info("Atualização automática");
 		registroServiceFacade.atualizarCondicaoVencimento();
-//		sincroniaService.atualizacaoAutomatica();
 	}
 }
