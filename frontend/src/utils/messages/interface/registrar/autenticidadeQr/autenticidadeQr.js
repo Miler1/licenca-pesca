@@ -15,16 +15,16 @@ const AUTENTICIDADE = {
       label: {
         nome: ["Nome ", "Name: "],
         cpf: ["CPF/CNPJ ", "CPF/CNPJ: "],
-        numeroLicenca: ["Número da licença ", ""],
-        modalidade: ["Modalidade ", ""],
-        emissao: ["Emissão ", ""],
-        validade: ["Validade ", ""],
-        endereco: ["Endereço ", ""],
-        municipio: ["Município/UF ", ""],
-        cep: ["CEP ", ""],
-        pais: ["País ", ""],
-        teste: ["Joyce de melo rodrigues"]
-      }
+        numeroLicenca: ["Número da licença ", "License number"],
+        modalidade: ["Modalidade ", "Modality"],
+        emissao: ["Emissão ", "Emission"],
+        validade: ["Validade ", "Validity"],
+        endereco: ["Endereço ", "Address"],
+        municipio: ["Município/UF ", "City / UF"],
+        cep: ["CEP ", "Zip code"],
+        pais: ["País ", "Parents"]
+      },
+      pais: ["Brasil", "Brazil"]
     }
   }
 };

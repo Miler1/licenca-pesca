@@ -4,6 +4,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.NoArgsConstructor;
 import lombok.var;
 import org.apache.commons.lang3.Validate;
@@ -38,6 +39,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private Modalidade modalidade;
 
 	@Column(name = "dt_criacao")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataCriacao;
 
 	@Column(name = "id_status")
@@ -45,6 +47,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private Status status;
 
 	@Column(name = "dt_ativacao")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataAtivacao;
 
 	@Column(name = "tx_caminho_boleto")
@@ -255,9 +258,11 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		this.status = status;
 	}
 
+
 	public Date getDataAtivacao() {
 		return dataAtivacao;
 	}
+
 
 	public void setDataAtivacao(Date dataAtivacao) {
 		this.dataAtivacao = dataAtivacao;

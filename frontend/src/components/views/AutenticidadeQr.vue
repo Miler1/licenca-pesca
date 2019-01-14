@@ -32,7 +32,7 @@
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.validade | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
     card.dadosEndereco
         
@@ -53,7 +53,7 @@
 
             el-col(:span="6")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.pais`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ licencaPesca.pessoa.enderecos[1].pais.nome | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ $t(`${autenticidadeQr_prefix}titulo.pais`) }}
 
 </template>
 
@@ -65,7 +65,7 @@ import { translate } from "../../utils/helpers/internationalization";
 import Properties from "../../properties";
 import { FETCH_DADOS_CARTEIRA } from '../../store/actions.type';
 import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
-import { LicencaPesca } from "../../model/LicencaPesca";
+import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
 import { numero } from '../../utils/validations/pessoa/pessoa_validations';
 import { numericLiteral, nullLiteral } from 'babel-types';
 
@@ -81,11 +81,7 @@ export default {
             autenticidadeQr_prefix: INTERFACE_AUTENTICIDADE_PREFIX,
         };
     },
-    
-    watch: {
-        "$route": "fetchData"
-    },
-    
+
     computed: {
         ...mapGetters(["licencaPesca"])
        
@@ -98,7 +94,7 @@ export default {
         
         exist(attr) {
         return attr === null || _.isNil(attr);
-        }
+        },
      },
 
     created() {

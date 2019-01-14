@@ -25,6 +25,7 @@ public class LicencaDTO extends ResourceSupport {
 
 	private Date dataAtivacao;
 
+
 	/**
 	 * Construtor do DTO de Licença.
 	 *
@@ -38,7 +39,7 @@ public class LicencaDTO extends ResourceSupport {
 	                  @JsonProperty("modalidade") Integer modalidade,
 	                  @JsonProperty("status") Integer status,
 	                  @JsonProperty("dataCriacao") Date dataCriacao,
-	                  @JsonProperty("dataAtivacao") Date dataAtivacao) {
+	                  @JsonProperty("dataAtivacao") Date dataAtivacao){
 		this.protocolo = protocolo;
 		this.modalidade = modalidade;
 		this.status = status;
