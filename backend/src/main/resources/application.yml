@@ -12,7 +12,6 @@ spring:
   application:
     name: Sistema de emissão de Licença de Pesca
     urlBase: http://localhost:9666/
-    urlBaseFront: http://localhost:8080/
 
   servlet:
     multipart:

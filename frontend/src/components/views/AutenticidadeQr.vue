@@ -28,11 +28,15 @@
 
             el-col(:span="6")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.emissao`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.dataCriacao | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.emissao)}") {{ licencaPesca.licenca.dataCriacao | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+
+            el-col(:span="10")
+                h4.status Situação:
+                status-card(:situacao="licencaPesca.licenca.status")
 
     card.dadosEndereco
         
@@ -65,6 +69,7 @@ import { translate } from "../../utils/helpers/internationalization";
 import Properties from "../../properties";
 import { FETCH_DADOS_CARTEIRA } from '../../store/actions.type';
 import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
+import StatusCard from "../layouts/StatusCard";
 import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
 import { numero } from '../../utils/validations/pessoa/pessoa_validations';
 import { numericLiteral, nullLiteral } from 'babel-types';
@@ -73,7 +78,8 @@ export default {
   name: "buscar",
 
     components: {
-        Card
+        Card,
+        StatusCard
     },
     
     data() {
@@ -83,7 +89,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["licencaPesca"])
+        ...mapGetters(["licencaPesca", "listaLicencas"])
        
     },
     
@@ -131,6 +137,13 @@ export default {
       padding-top: 20px
       font-weight: bold
     
+    .status
+        padding-bottom: 4px;
+        display: flex
+        flex-direction: column
+        padding-top: 20px
+        font-weight: bold
+
     .informacoes
         padding-top: 8px
 
