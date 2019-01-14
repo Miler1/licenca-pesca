@@ -14,6 +14,10 @@ const AcessoService = {
     return ApiService.postWithBlock(`${Properties.BASE_URL}/api/acessar`, acessoResource);
   },
 
+  buscarLicensas: acessoResource => {
+    return ApiService.postWithBlock(`${Properties.BASE_URL}/api/buscarLicensas`, acessoResource);
+  },
+
   /**
    * Serviço que busca os munícípios de cada UF.
    */

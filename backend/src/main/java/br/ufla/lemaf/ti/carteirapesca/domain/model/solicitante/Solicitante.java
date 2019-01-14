@@ -32,6 +32,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	private SolicitanteId identity;
 
 	@JoinColumn(name = "id_solicitante")
+	@OrderBy(value="dataCriacao")
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Licenca> licencas = new ArrayList<>();
 
