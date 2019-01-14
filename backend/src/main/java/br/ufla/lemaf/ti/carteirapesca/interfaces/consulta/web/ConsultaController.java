@@ -151,11 +151,11 @@ public class ConsultaController {
 
 			var isr = new InputStreamResource(new FileInputStream(carteira));
 
-			return new ResponseEntity<InputStreamResource>(isr, httpHeaders, HttpStatus.OK);
+			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 
 		} catch (Exception e) {
 
-			return new ResponseEntity<InputStreamResource>((InputStreamResource) null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>((InputStreamResource) null, HttpStatus.NOT_FOUND);
 
 		}
 
