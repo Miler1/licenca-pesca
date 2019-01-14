@@ -63,7 +63,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JoinColumn(name="id_solicitante")
 	private Solicitante solicitante;
 
-	@Transient
+	@Column(name = "dt_vencimento")
 	private Date dataVencimento;
 
 
@@ -130,21 +130,8 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 * @return Data de vencimento da Licença
 	 */
 	public Date getDataVencimento() {
-		if (!status.sameValueAs(Status.ATIVO) && !status.sameValueAs(Status.VENCIDO)) {
-			return null;
-		}
-		var vencimento = new GregorianCalendar();
-		// Não referenciar, já que Date é um objeto mutável,
-		// e vamos alterar o valor de vencimento, mas não
-		// queremos alterar o valor de ativação.
-		if(dataAtivacao != null){
 
-			vencimento.setTime((Date) dataAtivacao.clone());
-			vencimento.add(Calendar.YEAR, ANOS_VENCIMENTO_LICENCA);
-		} else {
-			return null;
-		}
-		return vencimento.getTime();
+		return dataVencimento;
 	}
 
 	public Boolean getPodeRenovar() {
