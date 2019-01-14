@@ -33,4 +33,5 @@ public interface RegistroServiceFacade {
 	 */
 	ProtocoloDTO registrar(RegistroResource resource);
 
+	void atualizarCondicaoVencimento();
 }
