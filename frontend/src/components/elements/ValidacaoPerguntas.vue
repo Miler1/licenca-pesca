@@ -1,59 +1,40 @@
 <template lang="pug">
   #validacao-perguntas
-    h3.title-autenticidadeQr {{ $t(`${validacao_prefix}titulo.tituloInicial`) }}
-    card.dadosPessoais
-
-        h3.title {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
-
-        el-row.section(:gutter="20")
-            el-col(:span="10")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.nome`) }}
-               
-
-            el-col(:span="10")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.cpf`) }}
-               
-
-    card.dadosLicenca
-        h3.title {{ $t(`${validacao_prefix}titulo.dadosLicenca`) }}
-        
-        el-row.section(:gutter="20")
-            el-col(:span="10")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.numeroLicenca`) }}
-                
-
-            el-col(:span="7")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.modalidade`) }}
-               
-
-            el-col(:span="6")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.emissao`) }}
-                
-
-            el-col(:span="10")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.validade`) }}
-               
-
-            el-col(:span="10")
-                h4.status {{ $t(`${validacao_prefix}titulo.label.validade`) }}
-               
-
-    card.dadosEndereco
-        
-        h3.title {{ $t(`${validacao_prefix}titulo.enderecoPrincipal`) }}
-        
-        el-row.section(:gutter="20")
-            el-col(:span="20")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.endereco`) }}
-                
-            el-col(:span="10")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.municipio`) }}
-                
-            el-col(:span="7")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.cep`) }}
-                
-            el-col(:span="6")
-                h4.align {{ $t(`${validacao_prefix}titulo.label.pais`) }}
+    h3.title-validacao {{ $t(`${validacao_prefix}titulo.tituloInicial`) }}
+    .flex
+        .flex-item
+            .espaco-cards
+                el-card.box-card.column
+                    h3.title {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
+                        div(style='margin-top: 20px')
+                            el-radio-group(v-model='radio10')
+                                el-radio.custom(label='1', border='') Maria de fatima de alguma coissa
+                                el-radio.custom(label='2', border='') Maria de fatima de alguma coissa
+                                el-radio.custom(label='3', border='') Maria de fatima de alguma coissa
+                                el-radio.custom(label='4', border='') Maria de fatima de alguma coissa  
+                                el-radio.custom(label='5', border='') Maria de fatima de alguma coissa           
+        .flex-item   
+            .espaco-cards   
+                el-card.box-card.column
+                    h3.title {{ $t(`${validacao_prefix}titulo.dataNascimento`) }}
+                        div(style='margin-top: 20px')
+                            el-radio-group(v-model='radio10')
+                                el-radio(label='1', border='') 25/03/1980
+                                el-radio(label='2', border='') 25/03/1980
+                                el-radio(label='3', border='') 25/03/1980
+                                el-radio(label='4', border='') 25/03/1980
+                                el-radio(label='5', border='') 25/03/1980
+        .flex-item
+            .espaco-cards
+                el-card.box-card.column
+                    h3.title {{ $t(`${validacao_prefix}titulo.municipio`) }}
+                        div(style='margin-top: 20px')
+                            el-radio-group(v-model='radio10')
+                                el-radio(label='1', border='') Maria de fatima de alguma coissa
+                                el-radio(label='2', border='') Maria de fatima de alguma coissa
+                                el-radio(label='3', border='') Maria de fatima de alguma coissa
+                                el-radio(label='4', border='') Maria de fatima de alguma coissa
+                                el-radio(label='5', border='') Maria de fatima de alguma coissa
 
 </template>
 
@@ -81,6 +62,7 @@ export default {
     data() {
         return {
             validacao_prefix: INTERFACE_VALIDACAO_PREFIX,
+            radio10: '1'
         };
     },
 
@@ -97,25 +79,27 @@ export default {
 <style lang="sass">
   @import "../../theme/tools/variables"
 
-  #autenticidadeQr
+  #validacao-perguntas
     h1
       font-weight: 500
 
-    .label-search
-      margin-top: 30px
-
-    .el-steps
-      height: 30px
-
     .title
       font-weight: bold
-      font-size: 18px
+      font-size: 17px
 
-    .title-autenticidadeQr
+    .custom
+        padding-bottom: 10px
+
+    .title-validacao
         text-align: center
         font-weight: bold
-        font-size: 10px
-
+        padding-top: 50px
+        padding-bottom: 10px
+        font-size: 18px
+    
+    .el-radio--mini.is-bordered .el-radio__label
+        font-size: 14px
+        
     .footer-card
       margin-top: 30px
       border-top: $--cor-borda 1px solid
@@ -127,5 +111,18 @@ export default {
       .footer-label
         font-size: $--fonte-pequena
         color: $--cor-texto-secundario
+    
+    .espaco-cards
+        margin: 20px
 
+    // .column 
+    //     flex-direction: column;
+    //     padding: 10px
+
+    .flex
+        display: flex
+
+        .flex-item
+            flex: 1
+            display: grid
 </style>
