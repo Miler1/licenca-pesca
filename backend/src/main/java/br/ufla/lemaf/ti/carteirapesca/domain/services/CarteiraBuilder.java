@@ -24,6 +24,4 @@ public interface CarteiraBuilder {
 	 */
 	String gerarCarteira(Protocolo protocolo, Modalidade modalidade, Pessoa pessoa);
 
-//	String gerarDadosCarteira(Protocolo protocolo, Modalidade modalidade, Pessoa pessoa);
-
 }

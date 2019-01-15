@@ -53,10 +53,6 @@ public class ConsultaController {
 	@Autowired
 	private CarteiraBuilder carteiraBuilder;
 
-//
-//	@Autowired
-//	private DadosCarteiraBuilder dadosCarteiraBuilder;
-
 	@Autowired
 	private ProtocoloBuilder protocoloBuilder;
 
