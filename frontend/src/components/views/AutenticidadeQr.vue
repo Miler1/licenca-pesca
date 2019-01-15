@@ -28,7 +28,7 @@
 
             el-col(:span="6")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.emissao`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.emissao)}") {{ licencaPesca.licenca.dataCriacao | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.emissao)}") {{ licencaPesca.licenca.dataAtivacao | placeholder($t(`${autenticidadeQr_prefix}hifem`)) }}
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
