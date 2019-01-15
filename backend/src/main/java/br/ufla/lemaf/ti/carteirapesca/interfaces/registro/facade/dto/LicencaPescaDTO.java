@@ -34,31 +34,4 @@ public class LicencaPescaDTO {
 
 	}
 
-	/**
-	 * Busca o endereço da carteira.
-	 *
-	 * @param pessoa A Pessoa solicitante
-	 * @return O endereço
-	 */
-	public Endereco endereco(Pessoa pessoa) {
-		return pessoa.enderecos
-			.stream()
-			.filter(endereco ->
-				StringUtils.isNotBlank(endereco.logradouro) && StringUtils.isNotBlank(endereco.cep))
-			.findFirst()
-			.orElseThrow(ResourceNotFoundException::new);
-	}
-	/**
-	 * Constroi o campo de endereço.
-	 *
-	 * @param endereco O endereço da carteira
-	 * @return O campo de endereço
-	 */
-	public String campoEndereco(Endereco endereco) {
-		return (endereco.logradouro + ", Nº " + endereco.numero + " "
-			+ (endereco.complemento != null ? endereco.complemento : "") + ", " + endereco.bairro)
-			.toUpperCase();
-	}
-
-
 }
