@@ -6,6 +6,7 @@ export const INTERFACE_AUTENTICIDADE_PREFIX = "interface.registrar.autenticidade
 const AUTENTICIDADE = {
   autenticidade: {
     naoInformado: ["Não informado", "Uninformed"],
+    hifem: [" - ", " - "],
     titulo: {
       dadosPessoais: ["Dados pessoais", "Personal data"],
       dadosLicenca: ["Dados da licença", "License information"],
@@ -23,7 +24,7 @@ const AUTENTICIDADE = {
         endereco: ["Endereço ", "Address"],
         municipio: ["Município/UF ", "City / UF"],
         cep: ["CEP ", "Zip code"],
-        pais: ["País ", "Parents"]
+        pais: ["País ", "Country"]
       },
       pais: ["Brasil", "Brazil"]
     }
