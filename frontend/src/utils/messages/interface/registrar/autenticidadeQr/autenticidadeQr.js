@@ -24,9 +24,9 @@ const AUTENTICIDADE = {
         endereco: ["Endereço ", "Address"],
         municipio: ["Município/UF ", "City / UF"],
         cep: ["CEP ", "Zip code"],
-        pais: ["País ", "Parents"]
+        pais: ["País ", "Country"]
       },
-      pais: ["Brasil", "Country"]
+      pais: ["Brasil", "Brazil"]
     }
   }
 };
