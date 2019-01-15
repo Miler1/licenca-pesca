@@ -12,6 +12,13 @@ export const routes = [
     name: "registrar",
     component: RegistrarLicenca
   },
+
+  {
+    path: "/informacao-carteira/:protocolo",
+    name: "informacao-carteira",
+    component: () => import("../components/views/AutenticidadeQr")
+  },
+
   {
     path: "/consultar/:protocolo",
     name: "consultar",

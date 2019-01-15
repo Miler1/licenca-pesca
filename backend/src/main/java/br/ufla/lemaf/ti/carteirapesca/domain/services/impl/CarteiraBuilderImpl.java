@@ -280,6 +280,6 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @return A imagem gerada do QR Code
 	 */
 	private static BufferedImage generateQRCode(Protocolo protocolo) {
-		return QRCodeUtils.createQRCodeImage(protocolo.getProtocoloNaoFormatado());
+		return QRCodeUtils.createQRCodeImage(Properties.baseUrl() + protocolo.getCodigo());
 	}
 }
