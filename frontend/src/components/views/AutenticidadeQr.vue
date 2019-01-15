@@ -103,13 +103,11 @@ export default {
 
         enderecoFormatado(){
            if(this.licencaPesca){
-                debugger
                 return this.licencaPesca.pessoa.enderecos[1].logradouro + ", Nº " + this.licencaPesca.pessoa.enderecos[1].numero + ", " + this.licencaPesca.pessoa.enderecos[1].complemento + ", " + this.licencaPesca.pessoa.enderecos[1].bairro;
             }
         },
         municipioFormatado(){
             if(this.licencaPesca){
-                debugger
                 return this.licencaPesca.pessoa.enderecos[1].municipio.nome + "/" + this.licencaPesca.pessoa.enderecos[1].municipio.estado.sigla;
             }
         },

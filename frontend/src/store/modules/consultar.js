@@ -46,7 +46,7 @@ export const actions = {
     ConsultaService.buscarDadosCarteira(protocolo).then(({ data }) => {
       commit(SET_DADOS_CARTEIRA, data);
     });
-  },
+  }
 };
 
 /**
