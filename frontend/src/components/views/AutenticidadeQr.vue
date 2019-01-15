@@ -32,10 +32,10 @@
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}hifem`)) }}
 
             el-col(:span="10")
-                h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
+                h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.situacao`) }}
                 status-card(:situacao="licencaPesca.licenca.status")
 
     card.dadosEndereco
@@ -72,7 +72,7 @@ import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
 import StatusCard from "../layouts/StatusCard";
 import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
 import { numero } from '../../utils/validations/pessoa/pessoa_validations';
-import { numericLiteral, nullLiteral } from 'babel-types';
+import { numericLiteral, nullLiteral, thisExpression } from 'babel-types';
 
 export default {
   name: "buscar",
@@ -103,8 +103,16 @@ export default {
 
         enderecoFormatado(){
            if(this.licencaPesca){
-                return this.licencaPesca.pessoa.enderecos[1].logradouro + ", Nº " + this.licencaPesca.pessoa.enderecos[1].numero + ", " + this.licencaPesca.pessoa.enderecos[1].complemento + ", " + this.licencaPesca.pessoa.enderecos[1].bairro;
+               if(this.licencaPesca.pessoa.enderecos) {
+                    return 
+                        (this.licencaPesca.pessoa.enderecos[1].logradouro ? this.licencaPesca.pessoa.enderecos[1].logradouro : '') + 
+                        (this.licencaPesca.pessoa.enderecos[1].numero ? ", Nº " + this.licencaPesca.pessoa.enderecos[1].numero : '') + 
+                        (this.licencaPesca.pessoa.enderecos[1].complemento ? ", " + this.licencaPesca.pessoa.enderecos[1].complemento : '') + 
+                        (this.licencaPesca.pessoa.enderecos[1].bairro ? ", " + this.licencaPesca.pessoa.enderecos[1].bairro : '');
+               }
             }
+
+            return '-';
         },
         municipioFormatado(){
             if(this.licencaPesca){
