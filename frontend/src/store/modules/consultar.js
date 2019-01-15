@@ -1,10 +1,11 @@
 import { STATUS_MOCK } from "../../utils/layout/mockData";
-import { SET_LICENCA, SET_LICENCA_ATIVA } from "../mutations.type";
-import { ATIVAR_LICENCA, FETCH_LICENCA} from "../actions.type";
+import { SET_LICENCA, SET_LICENCA_ATIVA, SET_DADOS_CARTEIRA } from "../mutations.type";
+import { ATIVAR_LICENCA, FETCH_LICENCA, FETCH_DADOS_CARTEIRA } from "../actions.type";
 import ConsultaService from "../../services/ConsultaService";
 
 const INITIAL_STATE = {
   licenca: null,
+  licencaPesca: null,
   status: STATUS_MOCK
 };
 
@@ -18,7 +19,9 @@ export const state = Object.assign({}, INITIAL_STATE);
 export const getters = {
   status: state => state.status,
 
-  licenca: state => state.licenca
+  licenca: state => state.licenca,
+
+  licencaPesca: state => state.licencaPesca
 };
 
 /**
@@ -37,6 +40,12 @@ export const actions = {
   
   [ATIVAR_LICENCA]: ({ commit }) => {
     commit(SET_LICENCA_ATIVA);
+  },
+
+  [FETCH_DADOS_CARTEIRA]: ({ commit }, protocolo) => {
+    ConsultaService.buscarDadosCarteira(protocolo).then(({ data }) => {
+      commit(SET_DADOS_CARTEIRA, data);
+    });
   }
 };
 
@@ -50,7 +59,9 @@ export const mutations = {
   [SET_LICENCA]: (state, licenca) => (state.licenca = licenca),
 
   [SET_LICENCA_ATIVA]: state =>
-    state.licenca === null ? null : (state.licenca.status = 1)
+    state.licenca === null ? null : (state.licenca.status = 1),
+
+  [SET_DADOS_CARTEIRA]: (state, licencaPesca) => (state.licencaPesca = licencaPesca)
 };
 
 export default {

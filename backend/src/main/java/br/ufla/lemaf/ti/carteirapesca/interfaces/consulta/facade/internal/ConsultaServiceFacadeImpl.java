@@ -107,7 +107,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 
 		Map<String,String> data = new HashMap<String,String>();
 
-		var qrcode = QRCodeUtils.createQRCodeImage(protocolo.getProtocoloNaoFormatado());
+		var qrcode = QRCodeUtils.createQRCodeImage(Properties.baseUrl() + "informacao-carteira" + "/" + protocolo.getProtocoloNaoFormatado());
 
 		String qrcode64 = encodeToString(qrcode, "png");
 		String nomeFontSize = (pessoa.nome.toUpperCase().length() > 47) ? ("7px") : ("10px");
