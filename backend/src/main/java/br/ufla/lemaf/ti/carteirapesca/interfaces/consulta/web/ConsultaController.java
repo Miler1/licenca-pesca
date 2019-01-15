@@ -180,6 +180,8 @@ public class ConsultaController {
 
 		var licencaPesca = new LicencaPescaDTO(licenca, protocoloObj, pessoa);
 
+
+
 		return new ResponseEntity<>(licencaPesca, HttpStatus.OK);
 	}
 

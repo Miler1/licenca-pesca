@@ -40,7 +40,7 @@ public class LicencaPescaDTO {
 	 * @param pessoa A Pessoa solicitante
 	 * @return O endereço
 	 */
-	private static Endereco endereco(Pessoa pessoa) {
+	public Endereco endereco(Pessoa pessoa) {
 		return pessoa.enderecos
 			.stream()
 			.filter(endereco ->
@@ -54,7 +54,7 @@ public class LicencaPescaDTO {
 	 * @param endereco O endereço da carteira
 	 * @return O campo de endereço
 	 */
-	private static String campoEndereco(Endereco endereco) {
+	public String campoEndereco(Endereco endereco) {
 		return (endereco.logradouro + ", Nº " + endereco.numero + " "
 			+ (endereco.complemento != null ? endereco.complemento : "") + ", " + endereco.bairro)
 			.toUpperCase();

@@ -19,6 +19,7 @@ const AUTENTICIDADE = {
         modalidade: ["Modalidade ", "Modality"],
         emissao: ["Emissão ", "Emission"],
         validade: ["Validade ", "Validity"],
+        situacao: ["Situação", "Situation"],
         endereco: ["Endereço ", "Address"],
         municipio: ["Município/UF ", "City / UF"],
         cep: ["CEP ", "Zip code"],

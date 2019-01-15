@@ -12,7 +12,7 @@
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.cpf`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.cpf)}") {{ licencaPesca.pessoa.cpf | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.cpf)}") {{ cpfFormatado() | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
     card.dadosLicenca
         h3.title {{ $t(`${autenticidadeQr_prefix}titulo.dadosLicenca`) }}
@@ -35,7 +35,7 @@
                 h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="10")
-                h4.status Situação:
+                h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
                 status-card(:situacao="licencaPesca.licenca.status")
 
     card.dadosEndereco
@@ -45,11 +45,11 @@
         el-row.section(:gutter="20")
             el-col(:span="20")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.endereco`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ licencaPesca.pessoa.enderecos[1].logradouro}}, Nº {{ licencaPesca.pessoa.enderecos[1].numero}}, {{ licencaPesca.pessoa.enderecos[1].complemento}}, {{ licencaPesca.pessoa.enderecos[1].bairro}} 
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ enderecoFormatado() | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
                 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.municipio`) }}
-                 h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ licencaPesca.pessoa.enderecos[1].municipio.nome }}/{{licencaPesca.pessoa.enderecos[1].municipio.estado.sigla | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                 h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.enderecos[1])}") {{ municipioFormatado() | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="7")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.cep`) }}
@@ -97,10 +97,28 @@ export default {
         fetchData() {
             this.$store.dispatch(FETCH_DADOS_CARTEIRA, this.$route.params.protocolo);
         },
-        
         exist(attr) {
         return attr === null || _.isNil(attr);
         },
+
+        enderecoFormatado(){
+           if(this.licencaPesca){
+                debugger
+                return this.licencaPesca.pessoa.enderecos[1].logradouro + ", Nº " + this.licencaPesca.pessoa.enderecos[1].numero + ", " + this.licencaPesca.pessoa.enderecos[1].complemento + ", " + this.licencaPesca.pessoa.enderecos[1].bairro;
+            }
+        },
+        municipioFormatado(){
+            if(this.licencaPesca){
+                debugger
+                return this.licencaPesca.pessoa.enderecos[1].municipio.nome + "/" + this.licencaPesca.pessoa.enderecos[1].municipio.estado.sigla;
+            }
+        },
+        cpfFormatado() {
+            if(this.licencaPesca){
+                return this.licencaPesca.pessoa.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+            }
+        }
+        
      },
 
     created() {
