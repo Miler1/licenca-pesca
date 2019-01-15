@@ -112,8 +112,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		String qrcode64 = encodeToString(qrcode, "png");
 		String nomeFontSize = (pessoa.nome.toUpperCase().length() > 47) ? ("7px") : ("10px");
 		String enderecoFontSize = (CarteiraBuilderImpl.campoEndereco(CarteiraBuilderImpl.endereco(pessoa)).length() > 47)?("7px") : ("10px");
-
-		System.out.println("Length carteira:" + CarteiraBuilderImpl.campoEndereco(CarteiraBuilderImpl.endereco(pessoa)).length());
+		String municipioFontSize = (CarteiraBuilderImpl.campoMunicipioUF(CarteiraBuilderImpl.endereco(pessoa)).length() > 22)?("7px") : ("10px");
 
 		data.put("qrcode", qrcode64);
 		data.put("baseUrl", Properties.baseUrl());
@@ -128,6 +127,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		data.put("endereco", CarteiraBuilderImpl.campoEndereco(CarteiraBuilderImpl.endereco(pessoa)));
 		data.put("enderecoFontSize",enderecoFontSize);
 
+		data.put("municipioFontSize",municipioFontSize);
 		data.put("municipioUF", CarteiraBuilderImpl.campoMunicipioUF(CarteiraBuilderImpl.endereco(pessoa)));
 		data.put("cep", CarteiraBuilderImpl.campoCEP(CarteiraBuilderImpl.endereco(pessoa)));
 

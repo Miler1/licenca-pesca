@@ -229,7 +229,7 @@
 	<!--Quarta linha-->
 	<div class="field-primeira-coluna field-quarta-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">Município / UF</div>
-		<div class="field-content" th:text="${municipioUF}"></div>
+		<div class="field-content" th:text="${municipioUF}" th:style="'font-size: '+ @{${municipioFontSize}}+';'"></div>
 	</div>
 
 	<div class="field-segunda-coluna field-quarta-linha fieldset-border field-duas-colunas ">
