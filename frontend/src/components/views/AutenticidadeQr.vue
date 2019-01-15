@@ -103,15 +103,14 @@ export default {
 
         enderecoFormatado(){
            if(this.licencaPesca){
-               if(this.licencaPesca.pessoa.enderecos) {
-                    return 
-                        (this.licencaPesca.pessoa.enderecos[1].logradouro ? this.licencaPesca.pessoa.enderecos[1].logradouro : '') + 
-                        (this.licencaPesca.pessoa.enderecos[1].numero ? ", Nº " + this.licencaPesca.pessoa.enderecos[1].numero : '') + 
-                        (this.licencaPesca.pessoa.enderecos[1].complemento ? ", " + this.licencaPesca.pessoa.enderecos[1].complemento : '') + 
-                        (this.licencaPesca.pessoa.enderecos[1].bairro ? ", " + this.licencaPesca.pessoa.enderecos[1].bairro : '');
+               if(this.licencaPesca.pessoa.enderecos[1]) {
+                    var enderecoCompleto = this.licencaPesca.pessoa.enderecos[1].logradouro + ", Nº " + this.licencaPesca.pessoa.enderecos[1].numero;
+                       
+               }if(this.licencaPesca.pessoa.enderecos[1]){
+                   var enderecoSemComplemento = (this.licencaPesca.pessoa.enderecos[1].complemento ? ", " + this.licencaPesca.pessoa.enderecos[1].complemento : '') + ", " + this.licencaPesca.pessoa.enderecos[1].bairro
                }
-            }
-
+               return enderecoCompleto + enderecoSemComplemento;
+           }
             return '-';
         },
         municipioFormatado(){
