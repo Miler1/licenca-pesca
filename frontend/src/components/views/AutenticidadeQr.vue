@@ -35,7 +35,7 @@
                 h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="10")
-                h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
+                h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.situacao`) }}
                 status-card(:situacao="licencaPesca.licenca.status")
 
     card.dadosEndereco

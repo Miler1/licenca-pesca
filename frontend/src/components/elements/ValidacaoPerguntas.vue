@@ -1,6 +1,7 @@
 <template lang="pug">
   #validacao-perguntas
     h3.title-validacao {{ $t(`${validacao_prefix}titulo.tituloInicial`) }}
+    p.espaco-cards {{ $t(`${validacao_prefix}titulo.subtitulo`) }}
     .flex
         .flex-item
             .espaco-cards
@@ -8,34 +9,23 @@
                     h3.title {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
                         div(style='margin-top: 20px')
                             el-radio-group(v-model='radio10')
-                                el-radio.custom(label='1', border='') Maria de fatima de alguma coissa
-                                el-radio.custom(label='2', border='') Maria de fatima de alguma coissa
-                                el-radio.custom(label='3', border='') Maria de fatima de alguma coissa
-                                el-radio.custom(label='4', border='') Maria de fatima de alguma coissa  
-                                el-radio.custom(label='5', border='') Maria de fatima de alguma coissa           
+                                el-radio.custom(label='1', border='') Maria de fatima de alguma coissa          
         .flex-item   
             .espaco-cards   
                 el-card.box-card.column
                     h3.title {{ $t(`${validacao_prefix}titulo.dataNascimento`) }}
                         div(style='margin-top: 20px')
-                            el-radio-group(v-model='radio10')
-                                el-radio(label='1', border='') 25/03/1980
-                                el-radio(label='2', border='') 25/03/1980
-                                el-radio(label='3', border='') 25/03/1980
-                                el-radio(label='4', border='') 25/03/1980
-                                el-radio(label='5', border='') 25/03/1980
+                        el-form(:model="pessoa" ref="pessoa" label-position="top")
+                            el-form-item(prop="dataNascimento")                           
+                                el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${validacao_prefix}format.data`)")
         .flex-item
             .espaco-cards
                 el-card.box-card.column
                     h3.title {{ $t(`${validacao_prefix}titulo.municipio`) }}
                         div(style='margin-top: 20px')
                             el-radio-group(v-model='radio10')
-                                el-radio(label='1', border='') Maria de fatima de alguma coissa
-                                el-radio(label='2', border='') Maria de fatima de alguma coissa
-                                el-radio(label='3', border='') Maria de fatima de alguma coissa
-                                el-radio(label='4', border='') Maria de fatima de alguma coissa
-                                el-radio(label='5', border='') Maria de fatima de alguma coissa
-
+                                el-radio(label='1', border='') Minas Gerais
+                                
 </template>
 
 <script>
@@ -62,12 +52,16 @@ export default {
     data() {
         return {
             validacao_prefix: INTERFACE_VALIDACAO_PREFIX,
-            radio10: '1'
+            radio10: '1',
+            value4: '',
+            pessoa: {
+                dataNascimento: null,
+            }
         };
     },
 
     computed: {
-        ...mapGetters(["licencaPesca", "listaLicencas"])
+        ...mapGetters(["Solicitante", "Pessoa"])
        
     },
     
@@ -114,10 +108,6 @@ export default {
     
     .espaco-cards
         margin: 20px
-
-    // .column 
-    //     flex-direction: column;
-    //     padding: 10px
 
     .flex
         display: flex

@@ -6,8 +6,12 @@ export const INTERFACE_VALIDACAO_PREFIX = "interface.registrar.validacao.";
 const VALIDACAO = {
   validacao: {
     naoInformado: ["Não informado", "Uninformed"],
+    format: {
+      data: ["dd/MM/yyyy", "yyyy-MM-dd"]
+    },
     titulo: {
-      tituloInicial: ["Informe os dados", "Fishing License"],
+      tituloInicial: [" Validação de dados", "Fishing License"],
+      subtitulo: ["Para acessar as suas licenças é necessário que selecione as respostas corretas correspondente aos seus dados: ", ""],
       nomeMae: ["Nome da mãe", ""],
       dataNascimento: ["Data de Nascimento", ""],
       municipio: ["Município", ""]

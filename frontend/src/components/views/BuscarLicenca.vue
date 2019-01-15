@@ -30,9 +30,9 @@
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
       
-      validacao-perguntas
-      visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
-      lista-licencas(v-if="existeSolicitante")
+      validacao-perguntas(v-if="existeSolicitante"  ref="validacaoPerguntas")
+      //- visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
+      //- lista-licencas(v-if="existeSolicitante")
       
 
       
