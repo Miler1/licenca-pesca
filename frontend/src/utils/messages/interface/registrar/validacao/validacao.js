@@ -7,11 +7,8 @@ const VALIDACAO = {
   validacao: {
     naoInformado: ["Não informado", "Uninformed"],
     titulo: {
-      dadosPessoais: ["Dados pessoais", "Personal data"],
-      dadosLicenca: ["Dados da licença", "License information"],
-      tituloInicial: ["Licença de ", "Fishing License"],
-      enderecoPrincipal: ["Endereço Principal", "Main Address"],
-      enderecoCorrespondencia: ["Endereço de Correspondência", "Mailing Address"],
+      tituloInicial: ["Validação de segurança", "Fishing License"],
+      nomeMae: ["Nome da mãe", ""],
       label: {
         nome: ["Nome ", "Name "],
         cpf: ["CPF/CNPJ ", "CPF/CNPJ "],

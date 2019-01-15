@@ -24,7 +24,7 @@
 
             el-col(:span="7")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.modalidade`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ licencaPesca.licenca.modalidade | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.modalidade)}") {{ modalidade() | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
 
             el-col(:span="6")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.emissao`) }}
@@ -115,8 +115,15 @@ export default {
             if(this.licencaPesca){
                 return this.licencaPesca.pessoa.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
             }
+        },
+        modalidade(){
+            if(this.licencaPesca.licenca.modalidade === "RECREATIVA"){
+                return "Recreativa (leva o peixe)"
+            }else {
+                return "Esportiva (pesca e solta o peixe)"
+            }
         }
-        
+
      },
 
     created() {

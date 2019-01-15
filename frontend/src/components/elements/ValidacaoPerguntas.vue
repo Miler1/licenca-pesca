@@ -1,9 +1,9 @@
 <template lang="pug">
   #validacao-perguntas
-    h2.title-autenticidadeQr {{ $t(`${validacao_prefix}titulo.tituloInicial`) }}
+    h3.title-autenticidadeQr {{ $t(`${validacao_prefix}titulo.tituloInicial`) }}
     card.dadosPessoais
 
-        h3.title {{ $t(`${validacao_prefix}titulo.dadosPessoais`) }}
+        h3.title {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
 
         el-row.section(:gutter="20")
             el-col(:span="10")
@@ -114,7 +114,7 @@ export default {
     .title-autenticidadeQr
         text-align: center
         font-weight: bold
-        font-size: 30px
+        font-size: 10px
 
     .footer-card
       margin-top: 30px
