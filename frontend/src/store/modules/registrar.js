@@ -108,7 +108,7 @@ export const actions = {
       Vue.prototype.$message.error(
         `Não foi possível conectar ao servidor.`
       );
-    });;
+    });
   },
 
   [SEND_SOLICITANTE]: ({ commit }, solicitante) => {
