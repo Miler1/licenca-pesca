@@ -11,6 +11,7 @@ spring:
 
   application:
     name: Sistema de emissão de Licença de Pesca
+    urlBase: http://localhost:9666/
 
   servlet:
     multipart:

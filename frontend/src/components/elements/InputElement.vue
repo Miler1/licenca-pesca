@@ -331,10 +331,24 @@ export default {
 };
 </script>
 <style lang="sass">
-.el-form-item__label:after 
+.el-form-item.is-required:not(.is-no-asterisk) > .el-form-item__label:after
   content: '*';
   color: #f56c6c;
   margin-left: 4px;
 .el-form-item__label:before 
   content: '' !important;
+
+.el-button--primary
+
+  background-color: #007EFE !important;
+  border-color: #007EFE !important;
+
+  &:hover
+    background-color: #409EFF !important;
+    border-color: #409EFF !important;
+
+.el-button--primary.is-disabled
+  background-color: #409EFF!important;
+  border-color: #409EFF !important;
+  color: white !important;
 </style>

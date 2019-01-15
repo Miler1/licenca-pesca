@@ -104,6 +104,10 @@ export const actions = {
         `A licença ${data.numero} foi criada com sucesso.`
       );
       return data.numero;
+    }).catch(error => {
+      Vue.prototype.$message.error(
+        `Não foi possível conectar ao servidor.`
+      );
     });
   },
 
@@ -169,7 +173,7 @@ export const mutations = {
    * Adiciona os UFs à state.
    */
   [SET_UFS]: (state, ufs) =>
-    (state.ufs = ufs.sort(function (ordenaMenor, ordenaMaior) {
+    (state.ufs = ufs.sort(function(ordenaMenor, ordenaMaior) {
         return ordenaMenor.sigla > ordenaMaior.sigla ? 1 : -1;
       })
     ),

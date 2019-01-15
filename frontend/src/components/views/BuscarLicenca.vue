@@ -18,7 +18,7 @@
             el-select(v-model="type_acesso" slot="prepend" @change="resource = ''")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
-            el-button.search-button(slot="append" icon="el-icon-search" @click="" type="primary" :disabled="resource === ''")
+            el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
           input-element(
           :placeholder="$t('interface.registrar.identificacao.acesso.placeholder.passaporte')"
           v-model="resource"
@@ -28,9 +28,11 @@
             el-select(v-model="type_acesso" slot="prepend" @change="resource = ''")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
-            el-button.search-button(slot="append" icon="el-icon-search" @click="" type="primary" :disabled="resource === ''")
+            el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
       
-      //- tabela-consulta
+
+      visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
+      lista-licencas(v-if="existeSolicitante")
       
 </template>
 
@@ -41,10 +43,12 @@ import Card from "../layouts/Card";
 import { buscar } from "../../store/actions.type";
 import Properties from "../../properties";
 import InputElement from "../elements/InputElement";
-import { REGISTRAR, CANCELAR } from "../../store/actions.type";
+import { REGISTRAR, CANCELAR, BUSCAR_LICENCAS } from "../../store/actions.type";
 import { CPF_MASK, PASSAPORT_MASK } from "../../utils/layout/mascaras";
 import { translate } from "../../utils/helpers/internationalization";
 import { CONSULTAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
+import VisualizarDadosPessoa from "../business/identificacao/dadosPessoa/VisualizarDadosPessoa";
+import ListaLicencas from "../business/identificacao/dadosPessoa/ListaLicencas";
 
 export default {
   name: "BuscarLicenca",
@@ -52,7 +56,9 @@ export default {
   components: {
     InputElement,
     Card,
-    Tabela
+    Tabela,
+    VisualizarDadosPessoa,
+    ListaLicencas
   },
 
   data() {
@@ -68,10 +74,29 @@ export default {
       }]
     };
   },
+  computed: {
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante"])
+  },
 
   methods: {
     cadastrar() {
-      this.$router.push({name: 'registrar'});
+      this.$store.dispatch(CANCELAR).then(p => {
+        this.$router.push({name: 'registrar'});
+      });
+    },
+    acessar() {
+      this.$store.dispatch(BUSCAR_LICENCAS, this.generateAcessoResource(this.resource));
+    },
+    generateAcessoResource(resource) {
+      let cpf = null;
+      let passaporte = null;
+      if (this.type_acesso === "CPF") {
+        cpf = resource;
+      } else {
+        passaporte = resource;
+      }
+
+      return { cpf, passaporte };
     }
   }
 };

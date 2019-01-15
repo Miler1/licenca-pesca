@@ -1,6 +1,6 @@
-import { ACESSAR, CANCELAR } from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_INFORMACOES, CLEAN_SOLICITANTE, CLEAN_REGISTRO } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import { stat } from "fs";
@@ -39,7 +39,9 @@ export const getters = {
   /**
    * Retorna verdadeiro se a etapa de identificação estiver ok.
    */
-  showStepsController: state => state.showStepsController
+  showStepsController: state => state.showStepsController,
+
+  listaLicencas: state => state.listaLicencas
 };
 
 /**
@@ -60,6 +62,17 @@ export const actions = {
       .then(({ data }) => {
         commit(SET_SOLICITANTE, data);
         commit(ACTIVE_CADASTRO, data);
+      })
+      .catch(error => {
+        commit(SET_ERROR, error);
+      });
+  },
+
+  [BUSCAR_LICENCAS]: ({ commit }, acessoResource) => {
+    AcessoService.buscarLicensas(acessoResource)
+      .then(({ data }) => {
+        commit(SET_SOLICITANTE, data.pessoa);
+        commit(SET_LISTA_LICENCAS, data.licencas);
       })
       .catch(error => {
         commit(SET_ERROR, error);
@@ -93,8 +106,15 @@ export const mutations = {
     }
   },
 
+
+
   [CLEAN_SOLICITANTE]: (state) => {
     state.solicitante = Solicitante;
+  },
+
+  [SET_LISTA_LICENCAS]: (state, listaLicencas) => {
+
+    state.listaLicencas = listaLicencas;
   },
   /**
    * Verifica se será necessário cadastrar o usuário.

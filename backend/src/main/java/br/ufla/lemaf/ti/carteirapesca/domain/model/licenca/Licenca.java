@@ -4,8 +4,14 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
+import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
 import javax.persistence.*;
@@ -23,11 +29,13 @@ import java.util.GregorianCalendar;
  */
 @NoArgsConstructor
 @javax.persistence.Entity
+@Getter
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "licenca")
 public class Licenca implements Entity<Licenca, Protocolo> {
 
 	// Anos para a licença vencer após ativada
 	private static final Integer ANOS_VENCIMENTO_LICENCA = 1;
+	private static final Integer MES_ANTES_DE_VENCER = -1;
 
 	@Embedded
 	@AttributeOverride(name = "codigoFormatado", column = @Column(name = "tx_protocolo"))
@@ -38,6 +46,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private Modalidade modalidade;
 
 	@Column(name = "dt_criacao")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataCriacao;
 
 	@Column(name = "id_status")
@@ -45,6 +54,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private Status status;
 
 	@Column(name = "dt_ativacao")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataAtivacao;
 
 	@Column(name = "tx_caminho_boleto")
@@ -56,6 +66,12 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@ManyToOne
 	@JoinColumn(name="id_solicitante")
 	private Solicitante solicitante;
+
+	@Column(name = "dt_vencimento")
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private Date dataVencimento;
+
+
 
 	/**
 	 * Construtor da Licenca de pesca.
@@ -82,7 +98,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.protocolo = protocolo;
 			this.modalidade = modalidade;
 			this.dataCriacao = new Date();
-			this.status = Status.AGUARDANDO;
+			this.status = Status.AGUARDANDO_PAGAMENTO_BOLETO;
 			this.caminhoCarteira = caminhoCarteira;
 			this.caminhoBoleto = caminhoBoleto;
 		} catch (IllegalArgumentException | NullPointerException ex) {
@@ -96,7 +112,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 * Mas se o Status for ATIVO ou INVALIDADO a operação será anulada.
 	 */
 	public void ativar() {
-		if (!status.sameValueAs(Status.AGUARDANDO)) {
+		if (!status.sameValueAs(Status.AGUARDANDO_PAGAMENTO_BOLETO)) {
 			throw new LicencaException("licenca.statusInvalido.ativar", status.name());
 		}
 		status = Status.ATIVO;
@@ -112,23 +128,32 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		}
 		status = Status.INVALIDADO;
 	}
-
+	
 	/**
 	 * Data vencimento date.
 	 *
 	 * @return Data de vencimento da Licença
 	 */
-	public Date dataVencimento() {
-		if (!status.sameValueAs(Status.ATIVO)) {
-			throw new LicencaException("licenca.statusInvalido.dataVencimento", status.name());
+	public Date getDataVencimento() {
+
+		return dataVencimento;
+	}
+
+	public Boolean getPodeRenovar() {
+		if (!status.sameValueAs(Status.ATIVO) && !status.sameValueAs(Status.VENCIDO)) {
+			return false;
 		}
-		var vencimento = new GregorianCalendar();
-		// Não referenciar, já que Date é um objeto mutável,
-		// e vamos alterar o valor de vencimento, mas não
-		// queremos alterar o valor de ativação.
-		vencimento.setTime((Date) dataAtivacao.clone());
-		vencimento.add(Calendar.YEAR, ANOS_VENCIMENTO_LICENCA);
-		return vencimento.getTime();
+		var vencimento = this.getDataVencimento();
+		if(vencimento != null) {
+			var dataInicioRenovacao = new GregorianCalendar();
+			dataInicioRenovacao.setTime((Date) vencimento.clone());
+			dataInicioRenovacao.add(Calendar.MONTH, MES_ANTES_DE_VENCER);
+
+			var dataAtual = new Date();
+			return dataAtual.after(dataInicioRenovacao.getTime());
+		}
+
+		return false;
 	}
 
 	/**
@@ -176,7 +201,9 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		return caminhoCarteira;
 	}
 
-	public Solicitante getSolicitante() { return solicitante; }
+	public Solicitante getSolicitante() {
+		return solicitante;
+	}
 	/**
 	 * Data ativacao date.
 	 *
@@ -220,4 +247,58 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@SuppressWarnings("unused")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	public Protocolo getProtocolo() {
+		return protocolo;
+	}
+
+	public void setProtocolo(Protocolo protocolo) {
+		this.protocolo = protocolo;
+	}
+
+	public Modalidade getModalidade() {
+		return modalidade;
+	}
+
+	public void setModalidade(Modalidade modalidade) {
+		this.modalidade = modalidade;
+	}
+
+	public Date getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(Date dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+
+	public Date getDataAtivacao() {
+		return dataAtivacao;
+	}
+
+
+	public void setDataAtivacao(Date dataAtivacao) {
+		this.dataAtivacao = dataAtivacao;
+	}
+
+	public void setCaminhoBoleto(String caminhoBoleto) {
+		this.caminhoBoleto = caminhoBoleto;
+	}
+
+	public void setCaminhoCarteira(String caminhoCarteira) {
+		this.caminhoCarteira = caminhoCarteira;
+	}
+
+	public void setSolicitante(Solicitante solicitante) {
+		this.solicitante = solicitante;
+	}
 }

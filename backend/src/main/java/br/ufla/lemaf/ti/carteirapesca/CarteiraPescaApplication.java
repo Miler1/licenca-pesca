@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Classe principal da Aplicação.
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @SpringBootApplication
+@EnableScheduling
 @SuppressWarnings("CheckStyle")
 public class CarteiraPescaApplication {
 

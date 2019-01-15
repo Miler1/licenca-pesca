@@ -166,7 +166,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @param pessoa A Pessoa solicitante da carteira
 	 * @return O CPF ou o Passsaporte da pessoa solicitante
 	 */
-	private static String identificadorPessoa(Pessoa pessoa) {
+	public static String identificadorPessoa(Pessoa pessoa) {
 		if (pessoa.cpf != null) {
 
 			return CPFUtils.format(pessoa.cpf);
@@ -188,7 +188,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @param pessoa A Pessoa solicitante
 	 * @return O endereço
 	 */
-	private static Endereco endereco(Pessoa pessoa) {
+	public static Endereco endereco(Pessoa pessoa) {
 		return pessoa.enderecos
 			.stream()
 			.filter(endereco ->
@@ -203,7 +203,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @param endereco O endereço da carteira
 	 * @return O campo de endereço
 	 */
-	private static String campoEndereco(Endereco endereco) {
+	public static String campoEndereco(Endereco endereco) {
 		return (endereco.logradouro + ", Nº " + endereco.numero + " "
 			+ (endereco.complemento != null ? endereco.complemento : "") + ", " + endereco.bairro)
 			.toUpperCase();
@@ -215,7 +215,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @param endereco O endereço da carteira
 	 * @return O campo de município e UF
 	 */
-	private static String campoMunicipioUF(Endereco endereco) {
+	public static String campoMunicipioUF(Endereco endereco) {
 		return (endereco.municipio.nome + " / " + endereco.municipio.estado.sigla)
 			.toUpperCase();
 	}
@@ -226,7 +226,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @param endereco O endereço da carteira
 	 * @return O campo de CEP
 	 */
-	private static String campoCEP(Endereco endereco) {
+	public static String campoCEP(Endereco endereco) {
 		return endereco.cep != null ? endereco.cep : "-";
 	}
 
@@ -236,7 +236,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @param modalidade A modalidade da carteira
 	 * @return O campo de limite de captura
 	 */
-	private static String campoLimiteCaptura(Modalidade modalidade) {
+	public static String campoLimiteCaptura(Modalidade modalidade) {
 		switch (modalidade) {
 			case ESPORTIVA:
 				return "0 (ZERO)";
@@ -280,6 +280,6 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @return A imagem gerada do QR Code
 	 */
 	private static BufferedImage generateQRCode(Protocolo protocolo) {
-		return QRCodeUtils.createQRCodeImage(protocolo.getProtocoloNaoFormatado());
+		return QRCodeUtils.createQRCodeImage(Properties.baseUrl() + protocolo.getCodigo());
 	}
 }

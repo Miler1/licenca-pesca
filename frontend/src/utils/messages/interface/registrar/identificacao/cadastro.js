@@ -20,7 +20,7 @@ const CADASTRO = {
       numero: ["Número:", "Number:"],
       complemento: ["Complemento:", "Complement:"],
       cep: ["CEP:", "Postal code:"],
-      municipio: ["Municipio:", "County:"],
+      municipio: ["Município:", "County:"],
       uf: ["UF:", "UF:"],
       email: ["E-mail:", "Email:"],
       confirmarEmail: ["Confirmar e-mail:", "Confirm email:"],

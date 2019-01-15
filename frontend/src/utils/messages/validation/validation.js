@@ -52,7 +52,7 @@ const VALIDATION = {
     },
     confirmarEmail: {
       required: [required("Confirmar e-mail"), required("Confirm email", en)],
-      check: ["Campos de email não batem.", "Email fields don't match."]
+      check: ["Campos de email não coincidem.", "Email fields doesn't match."]
     },
     zonaLocalizacao: {
       required: [required("Zona de localização"), required("Location zone", en)]

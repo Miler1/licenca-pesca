@@ -5,11 +5,17 @@ import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.ConsultaServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.LicencaPescaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroController;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +26,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -47,6 +52,10 @@ public class ConsultaController {
 
 	@Autowired
 	private CarteiraBuilder carteiraBuilder;
+
+	@Autowired
+	private ProtocoloBuilder protocoloBuilder;
+
 
 	@Autowired
 	private RegistroApplication registroApplication;
@@ -131,22 +140,45 @@ public class ConsultaController {
 			var licenca = consultaApplication.consulta(protocoloObj);
 			var solicitante = licenca.getSolicitante();
 			var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
-			var caminhoCarteira = carteiraBuilder.gerarCarteira(protocoloObj,licenca.modalidade(), pessoa);
-			var carteira = new File(caminhoCarteira);
+			var carteira = facade.gerarCarteira(protocoloObj, licenca, pessoa);
 
 			var httpHeaders = new HttpHeaders();
-			httpHeaders.setContentType(MediaType.IMAGE_PNG);
+			httpHeaders.setContentType(MediaType.APPLICATION_PDF);
 
 			var isr = new InputStreamResource(new FileInputStream(carteira));
 
 			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 
-		} catch (IOException | NullPointerException e) {
+		} catch (Exception e) {
 
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>((InputStreamResource) null, HttpStatus.NOT_FOUND);
 
 		}
 
+	}
+
+	/**
+	 * Autenticidade da carteira, trazer todos os dados da carteira, menos limite de captura
+	 * code do QR que é o numero da licença
+	 * pessoa: Nome, CPF/CNPJ, enderecos{CEP, PAIS, MUNICIPIO}
+	 * licenca: protocolo(numero da licenca), modalidade, emissao(dataCriacao), validade
+	 * */
+
+	@CrossOrigin("*")
+	@GetMapping("/informacao-carteira")
+	public ResponseEntity<LicencaPescaDTO> buscarDadosCarteira(
+		@RequestParam final String protocolo){
+
+		var protocoloObj = new Protocolo(protocolo);
+		var licenca = consultaApplication.consulta(protocoloObj);
+		var solicitante = licenca.getSolicitante();
+		var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
+
+		var licencaPesca = new LicencaPescaDTO(licenca, protocoloObj, pessoa);
+
+
+
+		return new ResponseEntity<>(licencaPesca, HttpStatus.OK);
 	}
 
 }

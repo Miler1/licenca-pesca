@@ -106,15 +106,7 @@ export default {
 
             registro.solicitante.dataNascimento =  date.getDate() + '/' + (date.getMonth() + 1)+ '/' + date.getFullYear();
           }
-          // if(registro.solicitante.enderecoPrincipal.municipio) {
 
-          //   registro.solicitante.enderecoPrincipal.municipio = registro.solicitante.enderecoPrincipal.municipio.id;
-          // }
-          // if(registro.solicitante.enderecoCorrespondencia.municipio) {
-
-          //   registro.solicitante.enderecoCorrespondencia.municipio = registro.solicitante.enderecoCorrespondencia.municipio.id;
-          // }
-          
           this.$store.dispatch(REGISTRAR, registro).then(p => {
             let protocolo = p.replace("/", "").replace("-", "");
             this.$router.push({

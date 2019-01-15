@@ -16,7 +16,7 @@
 <script>
 import { mapGetters } from "vuex";
 import ListaLicenca from "../elements/ListaLicenca";
-import { ATIVAR_LICENCA, FETCH_LICENCA } from "../../store/actions.type";
+import { ATIVAR_LICENCA, FETCH_LICENCA, FETCH_CARTEIRA } from "../../store/actions.type";
 import Card from "../layouts/Card";
 import { INTERFACE_CONSULTA_PREFIX } from "../../utils/messages/interface/consulta/consulta";
 import Properties from "../../properties";

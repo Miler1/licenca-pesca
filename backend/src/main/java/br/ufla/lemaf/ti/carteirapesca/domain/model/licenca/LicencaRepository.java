@@ -1,7 +1,12 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 /**
  * Repository de Licença.
@@ -19,4 +24,9 @@ public interface LicencaRepository extends JpaRepository<Licenca, Integer> {
 	 * @return A licença
 	 */
 	Licenca findByProtocoloCodigoFormatado(String protocolo);
+
+	@Transactional
+	@Modifying
+	@Query("update Licenca l set l.status = 3 where l.dataVencimento < :date and l.status = 1")
+	void alterarVencimento(Date date);
 }

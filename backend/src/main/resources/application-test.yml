@@ -11,6 +11,7 @@ spring:
 
   application:
     name: Sistema de emissão de Licença de Pesca
+    urlBase: http://java3-5.ti.lemaf.ufla.br/carteira-pesca/
 
   servlet:
     multipart:
