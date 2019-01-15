@@ -1,15 +1,15 @@
 import { handleMessage } from "../../../utils";
 import Properties from "../../../../../properties";
 
-export const INTERFACE_AUTENTICIDADE_PREFIX = "interface.registrar.autenticidade.";
+export const INTERFACE_VALIDACAO_PREFIX = "interface.registrar.validacao.";
 
-const AUTENTICIDADE = {
-  autenticidade: {
+const VALIDACAO = {
+  validacao: {
     naoInformado: ["Não informado", "Uninformed"],
     titulo: {
       dadosPessoais: ["Dados pessoais", "Personal data"],
       dadosLicenca: ["Dados da licença", "License information"],
-      tituloInicial: ["Licença de Pesca", "Fishing License"],
+      tituloInicial: ["Licença de ", "Fishing License"],
       enderecoPrincipal: ["Endereço Principal", "Main Address"],
       enderecoCorrespondencia: ["Endereço de Correspondência", "Mailing Address"],
       label: {
@@ -30,11 +30,11 @@ const AUTENTICIDADE = {
   }
 };
 
-export const PT_AUTENTICIDADE = handleMessage(
-  AUTENTICIDADE,
+export const PT_VALIDACAO = handleMessage(
+  VALIDACAO,
   Properties.LANGUAGE_INDEX.PT_BR
 );
-export const EN_AUTENTICIDADE = handleMessage(
-  AUTENTICIDADE,
+export const EN_VALIDACAO = handleMessage(
+  VALIDACAO,
   Properties.LANGUAGE_INDEX.EN
 );

@@ -30,9 +30,11 @@
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
       
-
+      validacao-perguntas
       visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
+      
+
       
 </template>
 
@@ -49,6 +51,7 @@ import { translate } from "../../utils/helpers/internationalization";
 import { CONSULTAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
 import VisualizarDadosPessoa from "../business/identificacao/dadosPessoa/VisualizarDadosPessoa";
 import ListaLicencas from "../business/identificacao/dadosPessoa/ListaLicencas";
+import ValidacaoPerguntas from "../elements/ValidacaoPerguntas";
 
 export default {
   name: "BuscarLicenca",
@@ -58,7 +61,8 @@ export default {
     Card,
     Tabela,
     VisualizarDadosPessoa,
-    ListaLicencas
+    ListaLicencas,
+    ValidacaoPerguntas
   },
 
   data() {
