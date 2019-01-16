@@ -73,6 +73,15 @@ public final class Properties {
 	public static String pathCarteiraPesca() {
 		return environment.getProperty("spring.carteira-pesca.base-path");
 	}
+
+	/**
+	 * @return O caminho da carteira de pesca
+	 */
+	public static String pathArquivos() {
+		return environment.getProperty("spring.arquivos.base-path-arquivos");
+	}
+
+
 	/**
 	 * @return O caminho da do boleto da licença de pesca
 	 */

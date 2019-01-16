@@ -1,6 +1,6 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS } from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_DADOS_SOLICITANTE, SET_LISTA_DADOS, SET_BUSCA_DADOS_SOLICITANTE, SET_TEST } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import { stat } from "fs";
@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   solicitante: Solicitante,
   cadastroCanActive: false,
   existeSolicitante: false,
+  buscaDados: Array,
   showStepsController: true
 };
 
@@ -24,6 +25,8 @@ export const getters = {
    * Retorna o solicitante.
    */
   solicitante: state => state.solicitante,
+
+  buscaDados: state => state.buscaDados,
 
   /**
    * Retorna true se existir o solicitante e false se não existir.
@@ -79,6 +82,17 @@ export const actions = {
       });
   },
 
+//validacaoDados
+  [BUSCA_DADOS]: ({ commit }, acessoResource) => {
+    AcessoService.validaDados(acessoResource)
+      .then(({ data, resposta }) => {
+        commit(SET_BUSCA_DADOS_SOLICITANTE, data.maes);
+      })
+      .catch(error => {
+        commit(SET_ERROR, error);
+      });
+  },
+
   [CANCELAR]: ({ commit }) => {
     commit(ACTIVE_CADASTRO, false);
     commit(CLEAN_SOLICITANTE);
@@ -106,7 +120,13 @@ export const mutations = {
     }
   },
 
-
+  [SET_BUSCA_DADOS_SOLICITANTE]: (state, solicitante) => {
+    if (solicitante !== null) {
+      state.buscaDados = solicitante;
+    } else {
+      state.buscaDados = null;
+    }
+  },
 
   [CLEAN_SOLICITANTE]: (state) => {
     state.solicitante = Solicitante;

@@ -49,7 +49,7 @@ public class Gerador {
 		return nomes;
 	}
 	public String[] gerarMaes(Integer tamanho, Integer padrao){
-		return gerar(Properties.baseUrl()  + "/maes/maes", tamanho, padrao);
+		return gerar(Properties.pathArquivos() + "maes", tamanho, padrao);
 	}
 
 

@@ -18,6 +18,11 @@ const AcessoService = {
     return ApiService.postWithBlock(`${Properties.BASE_URL}/api/buscarLicensas`, acessoResource);
   },
 
+  validaDados: acessoResource => {
+    return ApiService.postWithBlock(`${Properties.BASE_URL}/api/validaDados`, acessoResource);
+  },
+
+
   /**
    * Serviço que busca os munícípios de cada UF.
    */

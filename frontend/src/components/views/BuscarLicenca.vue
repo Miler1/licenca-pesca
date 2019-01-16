@@ -30,9 +30,9 @@
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
       
-      validacao-perguntas(v-if="existeSolicitante"  ref="validacaoPerguntas")
+      validacao-perguntas(ref="validacaoPerguntas")
       //- visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
-      //- lista-licencas(v-if="existeSolicitante")
+      lista-licencas(v-if="existeSolicitante")
       
 
       
@@ -42,10 +42,10 @@
 import { mapGetters } from "vuex";
 import Tabela from "../elements/Table";
 import Card from "../layouts/Card";
-import { buscar } from "../../store/actions.type";
+import { buscar, BUSCA_DADOS } from "../../store/actions.type";
 import Properties from "../../properties";
 import InputElement from "../elements/InputElement";
-import { REGISTRAR, CANCELAR, BUSCAR_LICENCAS } from "../../store/actions.type";
+import { REGISTRAR, CANCELAR, BUSCAR_LICENCAS} from "../../store/actions.type";
 import { CPF_MASK, PASSAPORT_MASK } from "../../utils/layout/mascaras";
 import { translate } from "../../utils/helpers/internationalization";
 import { CONSULTAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
@@ -79,7 +79,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "buscaDados"])
   },
 
   methods: {
@@ -89,7 +89,8 @@ export default {
       });
     },
     acessar() {
-      this.$store.dispatch(BUSCAR_LICENCAS, this.generateAcessoResource(this.resource));
+      // this.$store.dispatch(BUSCAR_LICENCAS, this.generateAcessoResource(this.resource));
+      this.$store.dispatch(BUSCA_DADOS, this.generateAcessoResource(this.resource));
     },
     generateAcessoResource(resource) {
       let cpf = null;

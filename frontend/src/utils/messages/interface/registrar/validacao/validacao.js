@@ -9,9 +9,12 @@ const VALIDACAO = {
     format: {
       data: ["dd/MM/yyyy", "yyyy-MM-dd"]
     },
+    botoes: {
+      validar: ["Validar dados"]
+    },
     titulo: {
-      tituloInicial: [" Validação de dados", "Fishing License"],
-      subtitulo: ["Para acessar as suas licenças é necessário que selecione as respostas corretas correspondente aos seus dados: ", ""],
+      tituloInicial: ["Confirmação de dados", "Fishing License"],
+      subtitulo: ["Para sua segurança, antes de acessar as licenças é necessário confirmar algumas informações. Por favor responda as questões abaixo: ", ""],
       nomeMae: ["Nome da mãe", ""],
       dataNascimento: ["Data de Nascimento", ""],
       municipio: ["Município", ""]

@@ -73,6 +73,7 @@ public class AcessoApplicationImpl implements AcessoApplication {
 
 	}
 
+
 	/**
 	 * Checa se existe o usuário, re torna-o caso positivo,
 	 * ou um {@link Pessoa} vazio se não existir.

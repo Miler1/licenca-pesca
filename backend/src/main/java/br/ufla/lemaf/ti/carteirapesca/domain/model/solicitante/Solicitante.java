@@ -7,9 +7,12 @@ import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import lombok.NoArgsConstructor;
 import lombok.val;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -139,42 +142,5 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
 	}
 
-	private static Map<String, Object[]> preencherListaVerificacao(Pessoa pessoa) {
-
-		Map<String, Object[]> listasVerificacao = new HashMap<>();
-
-		Integer qtdCaracteresCpfCnpj = pessoa.cpf.length();
-
-		if(qtdCaracteresCpfCnpj == 11) {
-			preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
-		}
-
-		return listasVerificacao;
-
-	}
-	/**
-	 * Gerar nomes da mãe
-	 *
-	 */
-
-	private static void preencherListaVerificacaoPessoa(Map<String, Object[]> listasVerificacao, Pessoa pessoa) {
-
-		Gerador gerador = new Gerador();
-
-		Integer quantidade = 5;
-		Integer padrao = Integer.valueOf(pessoa.cpf.substring(pessoa.cpf.length()-1));
-		Integer posicao = padrao > 3 ? Math.abs(padrao/3) : padrao;
-
-
-		String[] maes = gerador.gerarMaes(quantidade, padrao);
-
-		if(posicao > 3) {
-			posicao = 0;
-		}
-
-		maes[posicao++] = CarteiraUtils.capitalize(pessoa.nomeMae);
-		listasVerificacao.put("maes", maes);
-
-	}
 
 }

@@ -1,15 +1,15 @@
 <template lang="pug">
   #validacao-perguntas
     h3.title-validacao {{ $t(`${validacao_prefix}titulo.tituloInicial`) }}
-    p.espaco-cards {{ $t(`${validacao_prefix}titulo.subtitulo`) }}
+    p.espaco-cards.subtitulo {{ $t(`${validacao_prefix}titulo.subtitulo`) }}
     .flex
         .flex-item
             .espaco-cards
                 el-card.box-card.column
-                    h3.title {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
+                    h3.title.display {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
                         div(style='margin-top: 20px')
-                            el-radio-group(v-model='radio10')
-                                el-radio.custom(label='1', border='') Maria de fatima de alguma coissa          
+                            el-radio-group(v-for="nomesMae in buscaDados" v-model='radio' )
+                                el-radio.custom(:label='nomesMae' border='' required) {{nomesMae}}           
         .flex-item   
             .espaco-cards   
                 el-card.box-card.column
@@ -23,8 +23,11 @@
                 el-card.box-card.column
                     h3.title {{ $t(`${validacao_prefix}titulo.municipio`) }}
                         div(style='margin-top: 20px')
-                            el-radio-group(v-model='radio10')
+                            el-radio-group(v-model="pessoa.municipio")
                                 el-radio(label='1', border='') Minas Gerais
+    .buttons
+        .right
+          el-button(icon="el-icon-check" type="default" @click="" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
                                 
 </template>
 
@@ -43,6 +46,7 @@ import { numericLiteral, nullLiteral } from 'babel-types';
 
 export default {
   name: "ValidacaoPerguntas",
+    
 
     components: {
         Card,
@@ -52,20 +56,50 @@ export default {
     data() {
         return {
             validacao_prefix: INTERFACE_VALIDACAO_PREFIX,
-            radio10: '1',
+            radio: '1',
             value4: '',
             pessoa: {
                 dataNascimento: null,
-            }
+            },
+           
         };
     },
 
     computed: {
-        ...mapGetters(["Solicitante", "Pessoa"])
+        ...mapGetters(["solicitante", "buscaDados"])
        
     },
     
     methods: {
+        instantiate() {
+            validaDados = this;
+        },
+        fetchData() {
+            debugger
+        },
+
+
+        validacaoDados(){
+            debugger
+
+            var acessoResource = {
+                cpf : this.$route.params.pessoa.cpf
+            };
+            
+        },
+        preparaDadosValidacao(dados) {
+        debugger
+            this.validaDados.nomesMunicipio = dados.nomesMunicipios;
+            this.validaDados.nomesMae = dados.maes;
+
+	    },
+
+        created() {
+            this.instantiate();
+             this.fetchData();
+            validacaoDados();
+        },
+
     }
 };
 </script>
@@ -76,7 +110,10 @@ export default {
   #validacao-perguntas
     h1
       font-weight: 500
-
+    
+    .subtitulo    
+        font-size: 15px;
+    
     .title
       font-weight: bold
       font-size: 17px
@@ -84,16 +121,28 @@ export default {
     .custom
         padding-bottom: 10px
 
+    .display
+        display: flex
+        flex-direction: column
+
     .title-validacao
         text-align: center
         font-weight: bold
         padding-top: 50px
         padding-bottom: 10px
-        font-size: 18px
+        font-size: 21px
     
     .el-radio--mini.is-bordered .el-radio__label
         font-size: 14px
-        
+    
+    .el-radio-group
+        display: grid;
+        margin-bottom: 8px;
+        // line-height: 1;
+        // width: 100%;
+        // vertical-align: middle;
+        // font-size: 0;
+    
     .footer-card
       margin-top: 30px
       border-top: $--cor-borda 1px solid

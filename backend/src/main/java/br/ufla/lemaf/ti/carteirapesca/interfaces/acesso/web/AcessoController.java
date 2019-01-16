@@ -1,11 +1,15 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaDadosValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -82,6 +89,63 @@ public class AcessoController {
 		return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
 	}
+
+	@CrossOrigin("*")
+	@PostMapping("/validaDados")
+	public ResponseEntity buscarConfirmarDados(@RequestBody final AcessoResource acessoResource) {
+
+//		var listaDadosDTO = new ListaDadosValidacaoDTO();
+//
+		var pessoa = acessoServiceFacade.acessar(acessoResource);
+//
+//		listaDadosDTO.setPessoa(pessoa);
+
+		return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
+
+	}
+
+
+	private static Map<String, Object[]> preencherListaVerificacao(PessoaDTO pessoaDTO) {
+
+
+		Map<String, Object[]> listasVerificacao = new HashMap<>();
+
+
+		Integer qtdCaracteresCpf = pessoaDTO.getCpf().length();
+
+		if(qtdCaracteresCpf == 11) {
+			preencherListaVerificacaoPessoa(listasVerificacao, pessoaDTO);
+		}
+
+		return listasVerificacao;
+
+	}
+
+	/**
+	 * Gerar nomes da mãe
+	 *
+	 */
+
+	private static void preencherListaVerificacaoPessoa(Map<String, Object[]> listasVerificacao, PessoaDTO pessoa) {
+
+		Gerador gerador = new Gerador();
+
+		Integer quantidade = 5;
+		Integer padrao = Integer.valueOf(pessoa.getCpf().substring(pessoa.getCpf().length()-1));
+		Integer posicao = padrao > 3 ? Math.abs(padrao/3) : padrao;
+
+
+		String[] maes = gerador.gerarMaes(quantidade, padrao);
+
+		if(posicao > 3) {
+			posicao = 0;
+		}
+
+		maes[posicao++] = CarteiraUtils.capitalize(pessoa.getNomeMae());
+		listasVerificacao.put("maes", maes);
+
+	}
+
 
 
 }
