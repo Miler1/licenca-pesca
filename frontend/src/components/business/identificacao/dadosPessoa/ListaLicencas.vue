@@ -22,10 +22,10 @@
                     span.item-content 
                         status-card(:situacao="lista.status")
                 .flex-item
-                    span.item-title Ações:
-                    span.item-content 
+                    span.item-title-acoes Ações
+                    span.item-content-acoes
                         el-dropdown(trigger="click", v-if="lista.status !== 'INVALIDADO'")
-                            span.el-dropdown-link Ações
+                            span.el-dropdown-link.el-button.el-button--primary Ações
                                 i.el-icon-arrow-down.el-icon--right
                             el-dropdown-menu(slot="dropdown")
                                 el-dropdown-item(type="primary", v-if="lista.status === 'AGUARDANDO_PAGAMENTO_BOLETO'",  @click.native="gerarBoleto(lista)") Gerar boleto
@@ -39,6 +39,7 @@
 import { mapGetters } from "vuex";
 import StatusCard from "../../../layouts/StatusCard";
 import Properties from "../../../../properties";
+import { translate } from "../../../../utils/helpers/internationalization";
 
 export default {
   name: "ListaLicencas",
@@ -57,9 +58,30 @@ export default {
   },
 
   methods: {
-      formatData(data) {
-          return new Date(data).convertDate();
-      },
+
+      formatData(strDate) {
+        if (strDate === null) return null;
+        const DATE_PATTERN = new RegExp("([\\d]{2})\\/([\\d]{2})\\/([\\d]{4})");
+        if (DATE_PATTERN.test(strDate)) {
+            return translate("interface.geral.data", [
+            strDate.substring(0, 2),
+            strDate.substring(3, 5),
+            strDate.substring(6)
+            ]);
+        } else {
+            let date;
+            if (strDate instanceof Date) {
+            date = strDate;
+            } else {
+            date = new Date(strDate);
+            }
+            return translate("interface.geral.data", [
+            date.getDate(),
+            date.getMonth() + 1,
+            date.getFullYear()
+            ]);
+        }
+        },
       gerarBoleto(lista) {
         let protocolo = lista.protocolo.codigoFormatado;
         let protocoloDesformatado = protocolo.replace("/", "").replace("-", "");
@@ -121,6 +143,9 @@ export default {
 
     .item-content
         font-size: 13px
+    .item-content-acoes
+        font-size: 13px
+        text-align: center
 
     .flex
         display: flex
@@ -132,4 +157,9 @@ export default {
             .item-title
                 font-weight: 500
                 margin-bottom: 10px
+            
+            .item-title-acoes
+                font-weight: 500
+                margin-bottom: 10px
+                text-align: center
 </style>
