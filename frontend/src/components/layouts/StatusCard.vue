@@ -1,11 +1,20 @@
 <template lang="pug">
-span.status-card(:class="classStyle")
-    | {{label}}
+div
+    span.status-card.aguardando-pagamento(v-if="situacao === 'AGUARDANDO_PAGAMENTO_BOLETO'")
+        | {{ $t(`${consultar_prefix}listaLicenca.situacao.aguardandoBoleto`) }}
+    span.status-card.ativo(v-if="situacao === 'ATIVO'")
+        | {{ $t(`${consultar_prefix}listaLicenca.situacao.ativo`) }}
+    span.status-card.invalidado(v-if="situacao === 'INVALIDADO'")
+        | {{ $t(`${consultar_prefix}listaLicenca.situacao.invalido`) }}
+    span.status-card.vencido(v-if="situacao === 'VENCIDO'")
+        | {{ $t(`${consultar_prefix}listaLicenca.situacao.vencido`) }}
+
 </template>
 
 <script>
 
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";  
+import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
 
 export default {
   name: "StatusCard",
@@ -15,37 +24,17 @@ export default {
   },
 
   mounted() {
-      this.getConfig();
   },
 
   data() {
-    return {
+    return {    
         label: '',
+        consultar_prefix: REGISTRAR_GERAL_MESSAGES_PREFIX,
         classStyle: ''
     };
   },
 
   methods: {
-    getConfig() {
-        switch(this.situacao) {
-            case 'AGUARDANDO_PAGAMENTO_BOLETO':
-                this.label = 'Aguardando pagamento do boleto';
-                this.classStyle = 'aguardando-pagamento';
-                break;
-            case 'ATIVO':
-                this.label = 'Ativo';
-                this.classStyle = 'ativo';
-                break;
-            case 'INVALIDADO':
-                this.label = 'Invalidado';
-                this.classStyle = 'invalidado';
-                break;
-            case 'VENCIDO':
-                this.label = 'Vencido';
-                this.classStyle = 'vencido';
-                break;
-        }
-    }
   }
 
 };

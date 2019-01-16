@@ -21,6 +21,20 @@ const GERAL = {
       },
       label: ["Etapa {0} de {1}", "Step {0} of {1}"]
     },
+    listaLicenca: {
+      titulo: ["Lista licenças", "License list"],
+      ativacao: ["Ativação:", "Activate date:"],
+      cadastro: ["Cadastro:", "Register date:"],
+      vencimento: ["Vencimento:", "Expire date:"],
+      acoes: ["Ações", "Actions"],
+      situacao: {
+        titulo: ["Situação:", "Situation:"],
+        aguardandoBoleto: ["Aguardando pagamento do boleto", "Waiting for payment of the bank slip"],
+        invalido: ["Inválido", "Invalid"],
+        ativo: ["Ativo", "Active"],
+        vencido: ["Vencido", "Expired"]
+      }
+    },
     confirm: {
       titulo: [
         "Confirmar conclusão",

@@ -1,31 +1,31 @@
 <template lang="pug">
 #lista-licenca
-    h3.title.withDivisor Lista licenças
+    h3.title.withDivisor {{ $t(`${consultar_prefix}listaLicenca.titulo`) }}
     .licencas(v-for="lista in listaLicencas")
         .protocolo {{ lista.protocolo.codigoFormatado }}
         .withDivisor.listMargin
             .flex
                 .flex-item
-                    span.item-title Modalidade:
+                    span.item-title  {{$t(`${cadastrar_info_prefix}labels.modalidadePesca`)}}
                     span.item-content {{lista.modalidade}}
                 .flex-item
-                    span.item-title Cadastro:
+                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.cadastro`) }}
                     span.item-content {{formatData(lista.dataCriacao)}}
                 .flex-item
-                    span.item-title Ativação:
+                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.ativacao`) }}
                     span.item-content {{(lista.dataAtivacao) ? formatData(lista.dataAtivacao) : '-'}}
                 .flex-item
-                    span.item-title Vencimento:
+                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.vencimento`) }}
                     span.item-content {{(lista.dataVencimento) ? formatData(lista.dataVencimento) : '-'}}
                 .flex-item
-                    span.item-title Situação:
+                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.situacao.titulo`) }}
                     span.item-content 
                         status-card(:situacao="lista.status")
                 .flex-item
-                    span.item-title-acoes Ações
+                    span.item-title-acoes {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                     span.item-content-acoes
                         el-dropdown(trigger="click", v-if="lista.status !== 'INVALIDADO'")
-                            span.el-dropdown-link.el-button.el-button--primary Ações
+                            span.el-dropdown-link.el-button.el-button--primary {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                                 i.el-icon-arrow-down.el-icon--right
                             el-dropdown-menu(slot="dropdown")
                                 el-dropdown-item(type="primary", v-if="lista.status === 'AGUARDANDO_PAGAMENTO_BOLETO'",  @click.native="gerarBoleto(lista)") Gerar boleto
@@ -40,6 +40,8 @@ import { mapGetters } from "vuex";
 import StatusCard from "../../../layouts/StatusCard";
 import Properties from "../../../../properties";
 import { translate } from "../../../../utils/helpers/internationalization";
+import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/geral";
+import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registrar/informacoes/informacoes";
 
 export default {
   name: "ListaLicencas",
@@ -54,6 +56,8 @@ export default {
 
   data() {
     return {
+      consultar_prefix: REGISTRAR_GERAL_MESSAGES_PREFIX,
+      cadastrar_info_prefix: INFORMACOES_PREFIX
     };
   },
 
