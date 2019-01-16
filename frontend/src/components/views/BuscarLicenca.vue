@@ -29,7 +29,11 @@
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
-      
+        .block
+          .error-pagina-inicial
+            | {{errorTelaInicial}}
+          .close(v-if="existeSolicitante" @click="fecharSolicitante")
+            | &times;
 
       visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
@@ -75,7 +79,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "errorTelaInicial"])
   },
 
   methods: {
@@ -97,6 +101,9 @@ export default {
       }
 
       return { cpf, passaporte };
+    },
+    fecharSolicitante(){
+      this.$store.dispatch(CANCELAR);
     }
   }
 };
@@ -106,6 +113,15 @@ export default {
   @import "../../theme/tools/variables"
 
   #registrar-licenca
+    .error-pagina-inicial
+      color: red
+      font-size: 14px
+      margin-top: 10px
+    .block
+      display: block
+      .close
+        font-size: 20px
+        float: right
     h1
       font-weight: 500
 

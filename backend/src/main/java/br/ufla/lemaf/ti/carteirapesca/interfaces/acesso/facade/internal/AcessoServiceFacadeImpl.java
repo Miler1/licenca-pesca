@@ -80,9 +80,12 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	}
 
 	@Override
-	public List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa) {
+	public List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa) throws Exception {
 		var solicitante = solicitanteRopository.findByIdentityCpfNumero(pessoa.getCpf());
 
+		if(solicitante == null) {
+			throw new Exception("Pessoa não encontrada!");
+		}
 		return solicitante.buscarTodasLicencas();
 	}
 }

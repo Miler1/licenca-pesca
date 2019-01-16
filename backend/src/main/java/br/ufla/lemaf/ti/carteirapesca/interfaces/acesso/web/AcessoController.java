@@ -71,13 +71,15 @@ public class AcessoController {
 
 	@CrossOrigin("*")
 	@PostMapping("/buscarLicensas")
-	public ResponseEntity<ListaLicencaDTO> buscarLicensas(@RequestBody final AcessoResource acessoResource) {
+	public ResponseEntity<ListaLicencaDTO> buscarLicensas(@RequestBody final AcessoResource acessoResource) throws Exception {
 
 		var listaLicencaDTO = new ListaLicencaDTO();
 		var pessoa = acessoServiceFacade.acessar(acessoResource);
 
 		listaLicencaDTO.setPessoa(pessoa);
+
 		listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
+
 
 		return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
