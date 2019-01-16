@@ -7,7 +7,12 @@
             .flex
                 .flex-item
                     span.item-title  {{$t(`${cadastrar_info_prefix}labels.modalidadePesca`)}}
-                    span.item-content {{lista.modalidade}}
+                    span.item-content(v-if="lista.modalidade === 'RECREATIVA'")
+                        | {{ $t(`${consultar_prefix}listaLicenca.modalidade.recreativa`) }}
+                    span.item-content(v-if="lista.modalidade === 'ESPORTIVA'")
+                        | {{ $t(`${consultar_prefix}listaLicenca.modalidade.esportiva`) }}
+
+
                 .flex-item
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.cadastro`) }}
                     span.item-content {{formatData(lista.dataCriacao)}}

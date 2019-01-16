@@ -27,6 +27,10 @@ const GERAL = {
       cadastro: ["Cadastro:", "Register date:"],
       vencimento: ["Vencimento:", "Expire date:"],
       acoes: ["Ações", "Actions"],
+      modalidade: {
+        esportiva: ["Esportiva", "Sportive"],
+        recreativa: ["Recreativa", "Recreative"]
+      },
       situacao: {
         titulo: ["Situação:", "Situation:"],
         aguardandoBoleto: ["Aguardando pagamento do boleto", "Waiting for payment of the bank slip"],
