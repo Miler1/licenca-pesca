@@ -32,8 +32,8 @@
         .block
           .error-pagina-inicial
             | {{errorTelaInicial}}
-          .close(v-if="existeSolicitante" @click="fecharSolicitante")
-            | &times;
+          //- .close(v-if="existeSolicitante" @click="fecharSolicitante")
+          //-   | &times;
 
       visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")

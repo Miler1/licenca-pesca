@@ -22,7 +22,7 @@ const GERAL = {
       label: ["Etapa {0} de {1}", "Step {0} of {1}"]
     },
     listaLicenca: {
-      titulo: ["Lista licenças", "License list"],
+      titulo: ["Lista de licenças", "License list"],
       ativacao: ["Ativação:", "Activate date:"],
       cadastro: ["Cadastro:", "Register date:"],
       vencimento: ["Vencimento:", "Expire date:"],

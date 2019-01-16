@@ -12,7 +12,7 @@
       el-col(:span="6" v-if="!exist(pessoa.cpf)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.cpf`) }}
-          h4(:class="{'not-informed': exist(pessoa.cpf)}") {{ pessoa.cpf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+          h4(:class="{'not-informed': exist(pessoa.cpf)}") {{ pessoa.cpf.formatarCpfCnpj() | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
       el-col(:span="6" v-if="!exist(pessoa.passaporte)")
         .align
@@ -251,7 +251,7 @@ export default {
 
       .label
         margin-bottom: 5px
-        color: $--cor-texto-secundario
+        font-weight: 500
 
     .not-informed
       font-style: italic
