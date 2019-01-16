@@ -189,7 +189,7 @@
         <dependency>
             <groupId>br.ufla.lemaf</groupId>
             <artifactId>cadastro-unificado-oauth-client</artifactId>
-            <version>1.1.18</version>
+            <version>2.0.0</version>
         </dependency>
 
         <!--Stella (lib de utils Brasileira)-->

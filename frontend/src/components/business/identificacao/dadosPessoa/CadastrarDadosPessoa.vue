@@ -20,7 +20,7 @@
 
         el-col(:span="6" v-if="pessoa.estrangeiro === true")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.passaporte`)" prop="passaporte")
-            el-input(v-model="pessoa.passaporte")
+            el-input(v-model="pessoa.passaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']")
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.dataNascimento`)" prop="dataNascimento")
@@ -315,7 +315,7 @@ export default {
   beforeDestroy() {
     this.enviarParaStore();
   },
-  
+
 };
 </script>
 

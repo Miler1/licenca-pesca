@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices;
 
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
@@ -10,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import lombok.var;
 import main.java.br.ufla.lemaf.beans.Message;
+import main.java.br.ufla.lemaf.beans.PessoaFiltroResult;
+import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
@@ -209,4 +212,27 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 
 		return municipio.get();
 	}
+
+	public static Pessoa buscarPessoaComFiltro(FiltroPessoa filtro) {
+
+		PessoaFiltroResult pessoas = WebServiceUtils
+			.webServiceEU()
+			.buscarPessoasComFiltroAll(filtro);
+
+		Pessoa pessoa;
+
+		if(pessoas.pageItems == null || pessoas.pageItems.size() == 0) {
+
+			pessoa = new Pessoa();
+			pessoa.cpf = filtro.login;
+			pessoa.passaporte = filtro.passaporte;
+
+		} else {
+			pessoa = pessoas.pageItems.get(0);
+		}
+
+		return pessoa;
+
+	}
+
 }

@@ -9,6 +9,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import lombok.var;
 import main.java.br.ufla.lemaf.beans.PessoaFiltroResult;
 import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
@@ -42,29 +43,10 @@ public class AcessoApplicationImpl implements AcessoApplication {
 			filtroPessoa.passaporte = acessoResource.getPassaporte();
 		}
 
-		return buscarPessoaComFiltro(filtroPessoa);
-
-	}
-
-	public static Pessoa buscarPessoaComFiltro(FiltroPessoa filtro) {
-
-		PessoaFiltroResult pessoas = WebServiceUtils
+		return WebServiceUtils
 			.webServiceEU()
-			.buscarPessoasComFiltroAll(filtro);
-
-		Pessoa pessoa;
-
-		if(pessoas.pageItems == null || pessoas.pageItems.size() == 0) {
-
-			pessoa = new Pessoa();
-			pessoa.cpf = filtro.login;
-			pessoa.passaporte = filtro.passaporte;
-
-		} else {
-			pessoa = pessoas.pageItems.get(0);
-		}
-
-		return pessoa;
+			.buscarPessoaComFiltro(filtroPessoa);
 
 	}
+
 }

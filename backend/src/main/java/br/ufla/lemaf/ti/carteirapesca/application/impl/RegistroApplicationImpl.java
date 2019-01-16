@@ -9,6 +9,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
@@ -16,6 +17,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplemented
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -115,9 +117,13 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		WebServiceUtils.validarWebService();
 
+		FiltroPessoa filtroPessoa = new FiltroPessoa();
+		filtroPessoa.login = pessoa.getCpf();
+		filtroPessoa.passaporte = pessoa.getPassaporte();
+
 		var pessoaEU = WebServiceUtils
 			.webServiceEU()
-			.buscarPessoaFisicaPeloCpf(pessoa.getCpf());
+			.buscarPessoaComFiltro(filtroPessoa);
 
 		if (pessoaEU == null) {
 
@@ -192,11 +198,16 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	public Pessoa buscarDadosSolicitante(Solicitante solicitante) {
 		var identificador = solicitante.identity();
 
-		if (identificador.isPassaporte())
-			throw new NotImplementedException();
+		FiltroPessoa filtroPessoa = new FiltroPessoa();
+
+		if(identificador.isCPF()) {
+			filtroPessoa.login = identificador.cpf().getNumero();
+		} else {
+			filtroPessoa.passaporte = identificador.passaporte().getNumero();
+		}
 
 		return WebServiceUtils
 			.webServiceEU()
-			.buscarPessoaFisicaPeloCpf(identificador.valor());
+			.buscarPessoaComFiltro(filtroPessoa);
 	}
 }
