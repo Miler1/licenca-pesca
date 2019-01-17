@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -81,12 +82,11 @@ public final class PessoaDTO extends ResourceSupport {
 	 * Usado para criar PessoaDTO com CPF formatado.
 	 *
 	 * @param pessoa A Pessoa
-	 * @param cpf    O CPF
 	 */
-	public PessoaDTO(final PessoaDTO pessoa, final String cpf) {
+	public PessoaDTO(final PessoaDTO pessoa) {
 		this.estrangeiro = pessoa.estrangeiro;
 		this.nome = pessoa.nome;
-		this.cpf = cpf;
+		this.cpf = (pessoa.getCpf() != null ? CPFUtils.unformat(pessoa.getCpf()) : null);
 		this.passaporte = pessoa.passaporte;
 		setDataNascimento(pessoa.dataNascimento);
 		this.sexo = pessoa.sexo;

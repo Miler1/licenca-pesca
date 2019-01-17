@@ -1,11 +1,11 @@
 server:
-  port: 9666
+  port: 9902
 
 logging:
   level:
     br.ufla.lemaf.ti: DEBUG
     org.hibernate: DEBUG
-  file: /var/log/application/carteira_pesca.log
+  file: /var/spring/logs/carteira-pesca/carteira_pesca.log
 
 spring:
 
@@ -46,12 +46,19 @@ spring:
 
   security:
     entradaUnica:
-      # Módulo - Teste
-      client-id: c8671b62b00f2c32015f78fac719a7e7e6da4f423366dd6b43f02e1536ac26cdc91b9c8c38a7b5ce1747495cf32bbf915e58281063dac35449d6a9542b215ea3
-      client-secret: 1c19f894bde9b539ad174308d8dbd02f7d26e03f0cbfbe4cf8295b7beaeee4a81c234e1b738daeef3bfbe1e55615901d028fdc7264de157f00b1212c63dc792e
+      # Módulo - JAVA3-5
+      #client-id: c8671b62b00f2c32015f78fac719a7e7e6da4f423366dd6b43f02e1536ac26cdc91b9c8c38a7b5ce1747495cf32bbf915e58281063dac35449d6a9542b215ea3
+      #client-secret: 1c19f894bde9b539ad174308d8dbd02f7d26e03f0cbfbe4cf8295b7beaeee4a81c234e1b738daeef3bfbe1e55615901d028fdc7264de157f00b1212c63dc792e
 
+      # Módulo - RUNNERS
+      client-id: aa4dea461daa4a10afbbb3b727d52f10547544fd127a0f620523c81e6a0da561ae00d31aa355d27b3638ba18afcbda63951ab03f8a2547e97b52bffb4df43457
+      client-secret: 759f3c7be525ca9af70597d5e77a7c55b31ded334d517ac2dcdd3dfffcaf4df33cbce32e5bab856f418c5083dff56e027d682fda6bdab5d78858e59c60ae2b87
 
       portal-seguranca:
-        url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
+        url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
       cadastro-unificado:
-        url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
+        url: http://am.runners.ti.lemaf.ufla.br/cadastro-unificado
+
+  carteira-pesca:
+    base-path: var/dados/amazonas/arquivos/carteira-pesca/carteira/
+    path-boleto: var/dados/amazonas/arquivos/carteira-pesca/boleto/
