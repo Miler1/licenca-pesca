@@ -70,7 +70,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
 		return licencas
 			.stream()
-			.anyMatch(licenca -> licenca.status().sameValueAs(Status.ATIVO) && licenca.modalidade().sameValueAs(modalidade));
+			.anyMatch(licenca -> (licenca.status().sameValueAs(Status.ATIVO) || licenca.status().sameValueAs(Status.AGUARDANDO_PAGAMENTO_BOLETO)) && licenca.modalidade().sameValueAs(modalidade));
 	}
 
 	/**
