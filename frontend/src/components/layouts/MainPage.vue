@@ -3,7 +3,7 @@
 		el-container
 			el-header(height="70px")
 				menu-header
-			el-main
+			el-main#container
 				view-layout
 					router-view
 </template>

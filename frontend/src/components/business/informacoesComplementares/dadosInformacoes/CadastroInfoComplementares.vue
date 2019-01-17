@@ -1,6 +1,6 @@
 <template lang="pug">
 	#cadastro-info-complementares
-		el-form(:model="informacoesComplementares" :rules="infoRules" label-position="top" ref="informacoesComplementares")
+		el-form#container(:model="informacoesComplementares" :rules="infoRules" label-position="top" ref="informacoesComplementares")
 
 			el-row(:gutter="20")
 
@@ -73,6 +73,7 @@ import {
   ModalidadeResource
 } from "../../../../model/InformacoesComplementaresDTO";
 import { mapGetters } from "vuex";
+import VueScrollTo from 'vue-scrollto';
 import InfoSelect from "../../../elements/InfoSelect";
 import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registrar/informacoes/informacoes";
 import { INFORMACOES_RULES } from "../../../../utils/validations/informacoes/informacoes_rules";
@@ -105,7 +106,24 @@ export default {
 				tipoIsca: null,
 				modalidadeMaisPraticada: null,
 				agenciaTurismo: null
-			}
+			},
+			options: {
+				container: '#container',
+				easing: 'ease-in',
+				offset: -60,
+				cancelable: true,
+				onStart: function (element) {
+				// scrolling started
+				},
+				onDone: function (element) {
+				// scrolling is done
+				},
+				onCancel: function () {
+				// scrolling has been interrupted
+				},
+				x: false,
+				y: true
+			},
 
 		};
   },
@@ -142,7 +160,9 @@ export default {
           return field.descricao_es;
       }
     },
-
+		scroll () {
+			VueScrollTo.scrollTo('#container', 1, this.options);
+		},
     changeToSelect(field) {
       return field.length > 4;
     }

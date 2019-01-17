@@ -28,6 +28,7 @@
     "vue": "^2.5.17",
     "vue-axios": "^2.1.4",
     "vue-router": "^3.0.1",
+    "vue-scrollto": "^2.13.0",
     "vue-the-mask": "^0.11.1",
     "vue2-filters": "^0.3.0",
     "vuex": "^3.0.1"
