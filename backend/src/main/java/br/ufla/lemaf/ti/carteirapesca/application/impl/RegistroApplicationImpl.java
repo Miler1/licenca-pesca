@@ -99,10 +99,10 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		var pessoa = buscarDadosSolicitante(getSolicitante(resource));
 
-		var caminhoCarteira = carteiraBuilder.gerarCarteira(protocolo, modalidade, pessoa);
+//		var caminhoCarteira = carteiraBuilder.gerarCarteira(protocolo, modalidade, pessoa);
 		var caminhoBoleto = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
 
-		return new Licenca(protocolo, modalidade, caminhoCarteira, caminhoBoleto);
+		return new Licenca(protocolo, modalidade, caminhoBoleto);
 	}
 
 	/**

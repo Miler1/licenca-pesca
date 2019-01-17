@@ -1,6 +1,6 @@
 {
-	"nome": "Licença de Pesca Hiago",
-	"sigla": "LPH",
+	"nome": "Licença de Pesca Gustavo",
+	"sigla": "LPG",
 	"url": "http://localhost:9666/",
 	"descricao": "Módulo de emissão de Licença de Pesca",
 	"cadastrarPerfis": true,
