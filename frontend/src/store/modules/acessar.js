@@ -1,6 +1,6 @@
 import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS } from "../actions.type";
-import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_DADOS_SOLICITANTE, SET_LISTA_DADOS, SET_BUSCA_DADOS_SOLICITANTE, SET_TEST } from "../mutations.type";
+import { Solicitante, toSolicitanteDTO, toSolicitanteBusca } from "../../model/Solicitante";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_DADOS_SOLICITANTE, SET_LISTA_DADOS, SET_BUSCA_DADOS_SOLICITANTE, SET_TEST, SET_BUSCA_DADOS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import { stat } from "fs";
@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   cadastroCanActive: false,
   existeSolicitante: false,
   buscaDados: Array,
+  buscaMunicipios: Array,
   showStepsController: true
 };
 
@@ -26,7 +27,11 @@ export const getters = {
    */
   solicitante: state => state.solicitante,
 
+
   buscaDados: state => state.buscaDados,
+
+
+  buscaMunicipios: state => state.buscaMunicipios,
 
   /**
    * Retorna true se existir o solicitante e false se não existir.
@@ -82,11 +87,12 @@ export const actions = {
       });
   },
 
-//validacaoDados
   [BUSCA_DADOS]: ({ commit }, acessoResource) => {
     AcessoService.validaDados(acessoResource)
-      .then(({ data, resposta }) => {
+      .then(({ data }) => {
+        debugger
         commit(SET_BUSCA_DADOS_SOLICITANTE, data.maes);
+        commit(SET_BUSCA_DADOS, data.municipios);
       })
       .catch(error => {
         commit(SET_ERROR, error);
@@ -125,6 +131,14 @@ export const mutations = {
       state.buscaDados = solicitante;
     } else {
       state.buscaDados = null;
+    }
+  },
+
+  [SET_BUSCA_DADOS]: (state, solicitante) => {
+    if (solicitante !== null) {
+      state.buscaMunicipios = solicitante;
+    } else {
+      state.buscaMunicipios = null;
     }
   },
 

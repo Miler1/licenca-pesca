@@ -30,8 +30,8 @@
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
       
-      validacao-perguntas(ref="validacaoPerguntas")
-      //- visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
+      validacao-perguntas(v-if="" ref="validacaoPerguntas")
+      visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
       
 
@@ -79,7 +79,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "buscaDados"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "buscaDados", "buscaMunicipios"])
   },
 
   methods: {
@@ -102,7 +102,12 @@ export default {
       }
 
       return { cpf, passaporte };
-    }
+    },
+    // visualizarPerguntas(){
+    //   if(cpf === null){
+    //     return false
+    //   }
+    // }
   }
 };
 </script>

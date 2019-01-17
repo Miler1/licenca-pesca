@@ -94,27 +94,26 @@ public class AcessoController {
 	@PostMapping("/validaDados")
 	public ResponseEntity buscarConfirmarDados(@RequestBody final AcessoResource acessoResource) {
 
-//		var listaDadosDTO = new ListaDadosValidacaoDTO();
+//		var listaLicencaDTO = new ListaLicencaDTO();
+
+		PessoaDTO pessoa = acessoServiceFacade.acessar(acessoResource);
 //
-		var pessoa = acessoServiceFacade.acessar(acessoResource);
-//
-//		listaDadosDTO.setPessoa(pessoa);
+//		listaLicencaDTO.setPessoa(pessoa);
 
 		return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
 
 	}
 
-
-	private static Map<String, Object[]> preencherListaVerificacao(PessoaDTO pessoaDTO) {
+	private static Map<String, Object[]> preencherListaVerificacao(PessoaDTO pessoa) {
 
 
 		Map<String, Object[]> listasVerificacao = new HashMap<>();
 
 
-		Integer qtdCaracteresCpf = pessoaDTO.getCpf().length();
+		Integer qtdCaracteresCpf = pessoa.getCpf().length();
 
 		if(qtdCaracteresCpf == 11) {
-			preencherListaVerificacaoPessoa(listasVerificacao, pessoaDTO);
+			preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
 		}
 
 		return listasVerificacao;
@@ -135,16 +134,26 @@ public class AcessoController {
 		Integer posicao = padrao > 3 ? Math.abs(padrao/3) : padrao;
 
 
-		String[] maes = gerador.gerarMaes(quantidade, padrao);
+		String[] municipios = gerador.gerarMunicipios(quantidade, padrao);
+		municipios[posicao] = CarteiraUtils.capitalize(pessoa.getEnderecoPrincipal().getMunicipio().nome);
+		listasVerificacao.put("municipios", municipios);
+
+//		String[] municipios = gerador.getMunicipios(quantidade, padrao);
+//		municipios[posicao++] = CarteiraUtils.capitalize(pessoa.getEnderecoPrincipal().getMunicipio().nome);
+//		listasVerificacao.put("nomesMunicipios", municipios);
+
 
 		if(posicao > 3) {
 			posicao = 0;
 		}
 
+		String[] maes = gerador.gerarMaes(quantidade, padrao);
+
 		maes[posicao++] = CarteiraUtils.capitalize(pessoa.getNomeMae());
 		listasVerificacao.put("maes", maes);
 
 	}
+
 
 
 

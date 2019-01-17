@@ -8,23 +8,25 @@
                 el-card.box-card.column
                     h3.title.display {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
                         div(style='margin-top: 20px')
-                            el-radio-group(v-for="nomesMae in buscaDados" v-model='radio' )
-                                el-radio.custom(:label='nomesMae' border='' required) {{nomesMae}}           
+                            el-radio-group(v-for="nomesMae in buscaDados", :key="nomesMae" v-model="nomeMaes" )
+                                el-radio.custom(:label='nomesMae' border='' required) {{nomesMae}} 
+                            | {{nomeMaes}}          
         .flex-item   
             .espaco-cards   
                 el-card.box-card.column
                     h3.title {{ $t(`${validacao_prefix}titulo.dataNascimento`) }}
                         div(style='margin-top: 20px')
-                        el-form(:model="pessoa" ref="pessoa" label-position="top")
+                        el-form(v-model="pessoa" ref="pessoa" label-position="top")
                             el-form-item(prop="dataNascimento")                           
                                 el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${validacao_prefix}format.data`)")
+                        //- | {{dataNascimento}}
         .flex-item
             .espaco-cards
                 el-card.box-card.column
                     h3.title {{ $t(`${validacao_prefix}titulo.municipio`) }}
                         div(style='margin-top: 20px')
-                            el-radio-group(v-model="pessoa.municipio")
-                                el-radio(label='1', border='') Minas Gerais
+                            el-radio-group(v-for="nomesMunicipios in buscaMunicipios", :key="nomesMunicipios" v-model="nomeMunicipios" )
+                                el-radio(label='nomesMunicipios', border='') {{nomesMunicipios}} 
     .buttons
         .right
           el-button(icon="el-icon-check" type="default" @click="" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
@@ -56,8 +58,8 @@ export default {
     data() {
         return {
             validacao_prefix: INTERFACE_VALIDACAO_PREFIX,
-            radio: '1',
-            value4: '',
+            nomeMaes: '1',
+            nomeMunicipios: '2',
             pessoa: {
                 dataNascimento: null,
             },
@@ -66,13 +68,13 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["solicitante", "buscaDados"])
+        ...mapGetters(["solicitante", "buscaDados", "buscaMunicipios"])
        
     },
     
     methods: {
         instantiate() {
-            validaDados = this;
+            this.validaDados = this;
         },
         fetchData() {
             debugger
@@ -97,7 +99,7 @@ export default {
         created() {
             this.instantiate();
              this.fetchData();
-            validacaoDados();
+            this.validacaoDados();
         },
 
     }

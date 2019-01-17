@@ -59,6 +59,18 @@ export const toSolicitanteDTO = solicitante => {
   };
 };
 
+// export const toSolicitanteBusca = solicitante => {
+//   return {
+//     nome: solicitante.nome,
+//     cpf: solicitante.cpf,
+//     passaporte: solicitante.passaporte,
+//     dataNascimento: solicitante.dataNascimento,
+//     nomeMae: solicitante.nomeMae,
+//     enderecoPrincipal: toEndereco(solicitante.enderecoPrincipal)
+//   };
+// };
+
+
 const toEndereco = endereco => {
   if (endereco === null) {
     return {
