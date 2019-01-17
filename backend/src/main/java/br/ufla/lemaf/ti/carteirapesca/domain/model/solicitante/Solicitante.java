@@ -4,21 +4,19 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoController;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import lombok.NoArgsConstructor;
 import lombok.val;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Value Object de Solicitante, ou seja, a pessoa que solicitou
@@ -40,7 +38,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	private SolicitanteId identity;
 
 	@JoinColumn(name = "id_solicitante")
-	@OrderBy(value="dataCriacao")
+	@OrderBy(value = "dataCriacao")
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Licenca> licencas = new ArrayList<>();
 
@@ -141,6 +139,5 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		}
 
 	}
-
 
 }

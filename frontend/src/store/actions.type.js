@@ -19,3 +19,4 @@ export const ATIVAR_LICENCA = "ATIVAR_LICENCA";
 export const CANCELAR = "CANCELAR";
 export const BUSCAR_LICENCAS = "BUSCAR_LICENCAS";
 export const BUSCA_DADOS = "BUSCA_DADOS";
+export const VALIDA_DADOS = "VALIDA_DADOS";

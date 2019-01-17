@@ -1,6 +1,6 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS } from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS, VALIDA_DADOS } from "../actions.type";
 import { Solicitante, toSolicitanteDTO, toSolicitanteBusca } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_DADOS_SOLICITANTE, SET_LISTA_DADOS, SET_BUSCA_DADOS_SOLICITANTE, SET_TEST, SET_BUSCA_DADOS } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_BUSCA_MAES, SET_BUSCA_MUNICIPIOS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import { stat } from "fs";
@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   solicitante: Solicitante,
   cadastroCanActive: false,
   existeSolicitante: false,
-  buscaDados: Array,
+  buscaMaes: Array,
   buscaMunicipios: Array,
   showStepsController: true
 };
@@ -27,9 +27,14 @@ export const getters = {
    */
   solicitante: state => state.solicitante,
 
+    /**
+   * Retorna os nomes de mães gerados.
+   */
+  buscaMaes: state => state.buscaMaes,
 
-  buscaDados: state => state.buscaDados,
-
+    /**
+   * Retorna os municipios gerados.
+   */
 
   buscaMunicipios: state => state.buscaMunicipios,
 
@@ -88,11 +93,22 @@ export const actions = {
   },
 
   [BUSCA_DADOS]: ({ commit }, acessoResource) => {
-    AcessoService.validaDados(acessoResource)
+    AcessoService.buscaDados(acessoResource)
+      .then(({ data }) => {
+        commit(SET_BUSCA_MAES, data.maes);
+        commit(SET_BUSCA_MUNICIPIOS, data.municipios);
+      })
+      .catch(error => {
+        commit(SET_ERROR, error);
+      });
+  },
+
+  [VALIDA_DADOS]: ({ commit }, pessoa, listaDadosValidacaoDTO) => {
+    AcessoService.verificaDados(pessoa, listaDadosValidacaoDTO)
       .then(({ data }) => {
         debugger
-        commit(SET_BUSCA_DADOS_SOLICITANTE, data.maes);
-        commit(SET_BUSCA_DADOS, data.municipios);
+        commit(SET_BUSCA_MAES, data.maes);
+        commit(SET_BUSCA_MUNICIPIOS, data.municipios);
       })
       .catch(error => {
         commit(SET_ERROR, error);
@@ -126,15 +142,15 @@ export const mutations = {
     }
   },
 
-  [SET_BUSCA_DADOS_SOLICITANTE]: (state, solicitante) => {
+  [SET_BUSCA_MAES]: (state, solicitante) => {
     if (solicitante !== null) {
-      state.buscaDados = solicitante;
+      state.buscaMaes = solicitante;
     } else {
-      state.buscaDados = null;
+      state.buscaMaes = null;
     }
   },
 
-  [SET_BUSCA_DADOS]: (state, solicitante) => {
+  [SET_BUSCA_MUNICIPIOS]: (state, solicitante) => {
     if (solicitante !== null) {
       state.buscaMunicipios = solicitante;
     } else {

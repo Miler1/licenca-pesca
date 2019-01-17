@@ -9,7 +9,6 @@ import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
@@ -199,4 +198,5 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			.webServiceEU()
 			.buscarPessoaFisicaPeloCpf(identificador.valor());
 	}
+
 }

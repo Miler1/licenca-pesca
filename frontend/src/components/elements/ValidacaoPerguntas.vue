@@ -8,9 +8,9 @@
                 el-card.box-card.column
                     h3.title.display {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
                         div(style='margin-top: 20px')
-                            el-radio-group(v-for="nomesMae in buscaDados", :key="nomesMae" v-model="nomeMaes" )
+                            el-radio-group(v-for="nomesMae in buscaMaes", :key="nomesMae" v-model="pessoa.mae" )
                                 el-radio.custom(:label='nomesMae' border='' required) {{nomesMae}} 
-                            | {{nomeMaes}}          
+                            | {{pessoa.mae}}          
         .flex-item   
             .espaco-cards   
                 el-card.box-card.column
@@ -19,17 +19,18 @@
                         el-form(v-model="pessoa" ref="pessoa" label-position="top")
                             el-form-item(prop="dataNascimento")                           
                                 el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${validacao_prefix}format.data`)")
-                        //- | {{dataNascimento}}
+                        | {{pessoa.dataNascimento}}
         .flex-item
             .espaco-cards
                 el-card.box-card.column
                     h3.title {{ $t(`${validacao_prefix}titulo.municipio`) }}
                         div(style='margin-top: 20px')
-                            el-radio-group(v-for="nomesMunicipios in buscaMunicipios", :key="nomesMunicipios" v-model="nomeMunicipios" )
-                                el-radio(label='nomesMunicipios', border='') {{nomesMunicipios}} 
+                            el-radio-group(v-for="nomesMunicipios in buscaMunicipios", :key="nomesMunicipios" v-model="pessoa.municipio" )
+                                el-radio(:label='nomesMunicipios', border='' required) {{nomesMunicipios}}
+                            | {{pessoa.municipio}} 
     .buttons
         .right
-          el-button(icon="el-icon-check" type="default" @click="" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
+          el-button(icon="el-icon-check" type="default" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
                                 
 </template>
 
@@ -39,7 +40,7 @@ import Card from "../layouts/Card";
 import { INTERFACE_VALIDACAO_PREFIX } from "../../utils/messages/interface/registrar/validacao/validacao";
 import { translate } from "../../utils/helpers/internationalization";
 import Properties from "../../properties";
-import { FETCH_DADOS_CARTEIRA } from '../../store/actions.type';
+import { FETCH_DADOS_CARTEIRA, VALIDA_DADOS } from '../../store/actions.type';
 import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
 import StatusCard from "../layouts/StatusCard";
 import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
@@ -58,8 +59,6 @@ export default {
     data() {
         return {
             validacao_prefix: INTERFACE_VALIDACAO_PREFIX,
-            nomeMaes: '1',
-            nomeMunicipios: '2',
             pessoa: {
                 dataNascimento: null,
             },
@@ -68,7 +67,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["solicitante", "buscaDados", "buscaMunicipios"])
+        ...mapGetters(["solicitante", "buscaMaes", "buscaMunicipios"])
        
     },
     
@@ -80,25 +79,17 @@ export default {
             debugger
         },
 
-
-        validacaoDados(){
-            debugger
-
-            var acessoResource = {
-                cpf : this.$route.params.pessoa.cpf
-            };
-            
+        validarDados(){
+            this.$store.dispatch(VALIDA_DADOS, this.pessoa);
+            let date = this.pessoa.dataNascimento;
+            if(typeof(date) !== "string"){
+                this.pessoa.dataNascimento =  date.getDate() + '/' + (date.getMonth() + 1)+ '/' + date.getFullYear();
+          }
         },
-        preparaDadosValidacao(dados) {
-        debugger
-            this.validaDados.nomesMunicipio = dados.nomesMunicipios;
-            this.validaDados.nomesMae = dados.maes;
-
-	    },
 
         created() {
             this.instantiate();
-             this.fetchData();
+            this.fetchData();
             this.validacaoDados();
         },
 

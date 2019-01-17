@@ -78,7 +78,7 @@ public final class Properties {
 	 * @return O caminho da carteira de pesca
 	 */
 	public static String pathArquivos() {
-		return environment.getProperty("spring.arquivos.base-path-arquivos");
+		return environment.getProperty("spring.arquivos.base-path-arquivos-dados");
 	}
 
 

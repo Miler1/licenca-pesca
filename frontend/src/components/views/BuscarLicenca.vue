@@ -79,7 +79,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "buscaDados", "buscaMunicipios"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "buscaMaes", "buscaMunicipios"])
   },
 
   methods: {
@@ -92,6 +92,7 @@ export default {
       // this.$store.dispatch(BUSCAR_LICENCAS, this.generateAcessoResource(this.resource));
       this.$store.dispatch(BUSCA_DADOS, this.generateAcessoResource(this.resource));
     },
+
     generateAcessoResource(resource) {
       let cpf = null;
       let passaporte = null;
@@ -100,14 +101,9 @@ export default {
       } else {
         passaporte = resource;
       }
-
+      debugger
       return { cpf, passaporte };
-    },
-    // visualizarPerguntas(){
-    //   if(cpf === null){
-    //     return false
-    //   }
-    // }
+    }
   }
 };
 </script>

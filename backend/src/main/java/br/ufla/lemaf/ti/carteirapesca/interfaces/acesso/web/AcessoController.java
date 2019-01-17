@@ -1,23 +1,28 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaDadosValidacaoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
-
+import javax.validation.constraints.Null;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +40,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Transactional
 @RequestMapping("/api")
 public class AcessoController {
+
+	@Autowired
+	private RegistroApplication registroApplication;
 
 	private AcessoServiceFacade acessoServiceFacade;
 
@@ -90,19 +98,62 @@ public class AcessoController {
 
 	}
 
+	//validacao
 	@CrossOrigin("*")
-	@PostMapping("/validaDados")
+	@PostMapping("/verificaDados")
+	public ResponseEntity verificaDados(@RequestBody final ValidacaoDTO validacaoDTO) {
+
+		AcessoController.verificaDadosProrietario(validacaoDTO);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	public static Boolean verificaDadosProrietario(ValidacaoDTO validacaoDTO) {
+
+		if (!verificaDadosPessoa(validacaoDTO)) {
+			return false;
+		}
+		return true;
+
+	}
+
+	private static Boolean verificaDadosPessoa(ValidacaoDTO validacaoDTO) {
+
+		WebServiceUtils.validarWebService();
+
+		var pessoa = WebServiceUtils
+			.webServiceEU()
+			.buscarPessoaFisicaPeloCpf(validacaoDTO.getCpf());
+
+		if(!pessoa.dataNascimento.equals(validacaoDTO.getDataNascimento())){
+			return false;
+		} else if(!pessoa.nomeMae.equals(validacaoDTO.getMae())) {
+			return false;
+		} else if(pessoa.enderecos.stream()
+			.filter(endereco -> endereco.municipio.nome
+				.equals(validacaoDTO.getMunicipio()))
+			.findFirst() != null) {
+			return false;
+		}
+
+		return true;
+
+	}
+
+	@CrossOrigin("*")
+	@PostMapping("/buscaDados")
 	public ResponseEntity buscarConfirmarDados(@RequestBody final AcessoResource acessoResource) {
 
-//		var listaLicencaDTO = new ListaLicencaDTO();
+		var listaLicencaDTO = new ListaLicencaDTO();
 
 		PessoaDTO pessoa = acessoServiceFacade.acessar(acessoResource);
-//
-//		listaLicencaDTO.setPessoa(pessoa);
+
+		listaLicencaDTO.setPessoa(pessoa);
 
 		return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
 
 	}
+
 
 	private static Map<String, Object[]> preencherListaVerificacao(PessoaDTO pessoa) {
 
@@ -112,18 +163,13 @@ public class AcessoController {
 
 		Integer qtdCaracteresCpf = pessoa.getCpf().length();
 
-		if(qtdCaracteresCpf == 11) {
+		if (qtdCaracteresCpf == 11) {
 			preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
 		}
 
 		return listasVerificacao;
 
 	}
-
-	/**
-	 * Gerar nomes da mãe
-	 *
-	 */
 
 	private static void preencherListaVerificacaoPessoa(Map<String, Object[]> listasVerificacao, PessoaDTO pessoa) {
 
@@ -138,11 +184,6 @@ public class AcessoController {
 		municipios[posicao] = CarteiraUtils.capitalize(pessoa.getEnderecoPrincipal().getMunicipio().nome);
 		listasVerificacao.put("municipios", municipios);
 
-//		String[] municipios = gerador.getMunicipios(quantidade, padrao);
-//		municipios[posicao++] = CarteiraUtils.capitalize(pessoa.getEnderecoPrincipal().getMunicipio().nome);
-//		listasVerificacao.put("nomesMunicipios", municipios);
-
-
 		if(posicao > 3) {
 			posicao = 0;
 		}
@@ -153,8 +194,5 @@ public class AcessoController {
 		listasVerificacao.put("maes", maes);
 
 	}
-
-
-
 
 }

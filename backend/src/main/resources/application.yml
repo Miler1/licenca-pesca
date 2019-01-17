@@ -67,4 +67,4 @@ spring:
     path-boleto: arquivos/boleto/
 
   arquivos:
-    base-path-arquivos: arquivos/gerador/
+    base-path-arquivos-dados: src/main/resources/gerador/
