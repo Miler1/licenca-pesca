@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
 import br.com.caelum.stella.boleto.*;
-import br.com.caelum.stella.boleto.bancos.Santander;
+import br.com.caelum.stella.boleto.bancos.Bradesco;
 import br.com.caelum.stella.boleto.transformer.GeradorDeBoleto;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
@@ -91,21 +91,21 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 	private static Boleto montarBoleto(final Pessoa pessoa,
 	                                   final Protocolo protocolo,
 	                                   final Modalidade modalidade) {
-
-		val santander = new Santander();
+		val bradesco = new Bradesco();
 
 		return Boleto.novoBoleto()
-			.comBanco(santander)
+			.comBanco(bradesco)
 			.comDatas(montarDatas())
 			.comBeneficiario(montarBeneficiario())
 			.comPagador(montarPagador(pessoa))
 			.comValorBoleto(montarValorBoleto(modalidade))
 			.comNumeroDoDocumento(protocolo.getCodigoFormatado())
+			.comEspecieDocumento("OU")
 			.comInstrucoes(
-				"Boleto gerado somente para testes"
+				""
 			)
 			.comLocaisDePagamento(
-				"Boleto não pode ser pago"
+				"Pagável em qualquer banco até o vencimento."
 			);
 
 	}
@@ -133,6 +133,20 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 	}
 
+	private static Emissor montarEmissor() {
+		Emissor emissor = Emissor.novoEmissor()
+			.comCedente("Instituto de Proteção Ambiental do Amazonas")
+			.comAgencia(3739)
+			.comDigitoAgencia('7')
+			.comContaCorrente(16065)
+			.comNumeroConvenio(4928031)
+			.comDigitoContaCorrente('2')
+			.comCarteira("09")
+			.comNossoNumero("00000001798")
+			.comDigitoNossoNumero("4");
+		return emissor;
+	}
+
 	/**
 	 * Monta os dados de data do boleto.
 	 *
@@ -150,7 +164,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 		return Datas.novasDatas()
 			.comDocumento(day, month, year)
 			.comProcessamento(day, month, year)
-			.comVencimento(day, month, year);
+			.comVencimento(day, month + 1, year);
 	}
 
 	/**
@@ -213,18 +227,23 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 	private static Beneficiario montarBeneficiario() {
 		// TODO - colocar dado real
 		val enderecoBeneficiario = Endereco.novoEndereco()
-			.comLogradouro("Av das Empresas, 777")
-			.comBairro("Bairro Centro")
-			.comCep("37200-000")
-			.comCidade("Lavras")
-			.comUf("MG");
+			.comLogradouro("Av Mário Ypiranga, 3280")
+			.comBairro("Parque Dez de Novembro")
+			.comCep("69050-030")
+			.comCidade("Manaus")
+			.comUf("AM");
 
 		return Beneficiario.novoBeneficiario()
-			.comNomeBeneficiario("Universidade Federal de Lavras")
-			.comNumeroConvenio("3903125")
-			.comCarteira("102")
-			.comNossoNumero("382713000472")
-			.comDigitoNossoNumero("2")
+			.comNomeBeneficiario("Instituto de Proteção Ambiental do Amazonas")
+			.comAgencia("3739")
+			.comDigitoAgencia("7")
+			.comNumeroConvenio("4928031")
+			.comCarteira("09")
+			.comCodigoBeneficiario("16065")
+			.comDigitoCodigoBeneficiario("2")
+			.comNossoNumero("00000001798")
+			.comDocumento("04.624.888/0001-94")
+			.comDigitoNossoNumero("4")
 			.comEndereco(enderecoBeneficiario);
 
 	}
