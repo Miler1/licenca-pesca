@@ -164,7 +164,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 		return Datas.novasDatas()
 			.comDocumento(day, month, year)
 			.comProcessamento(day, month, year)
-			.comVencimento(day, month, year);
+			.comVencimento(day, month + 1, year);
 	}
 
 	/**
