@@ -87,7 +87,7 @@ export const RENDA_MENSAL_MOCK = [
   {
     cod: 7,
     descricao_pt: "Mais de 15 salários mínimos",
-    descricao_en: "More then 6 to 9 minimum wages",
+    descricao_en: "More then 15 minimum wages",
     descricao_es: "Más de 15 salarios mínimos"
   }
 ];

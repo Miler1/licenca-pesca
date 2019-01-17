@@ -1,10 +1,14 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
+import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.application.impl.RegistroApplicationImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import lombok.NoArgsConstructor;
 import lombok.val;
 
@@ -62,10 +66,11 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 *
 	 * @return {@code true} se alguma licença estiver ativa
 	 */
-	public boolean pussuiLicencaAtiva() {
+	public boolean pussuiLicencaAtiva(Modalidade modalidade) {
+
 		return licencas
 			.stream()
-			.anyMatch(licenca -> licenca.status().sameValueAs(Status.ATIVO));
+			.anyMatch(licenca -> (licenca.status().sameValueAs(Status.ATIVO) || licenca.status().sameValueAs(Status.AGUARDANDO_PAGAMENTO_BOLETO)) && licenca.modalidade().sameValueAs(modalidade));
 	}
 
 	/**
@@ -76,7 +81,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @return O protocolo da licença
 	 */
 	public Protocolo adicionarLicenca(Licenca licenca) {
-		if (!pussuiLicencaAtiva()) {
+		if (!pussuiLicencaAtiva(licenca.modalidade())) {
 			licencas.add(licenca);
 			return licenca.protocolo();
 		} else {

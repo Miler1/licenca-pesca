@@ -9,7 +9,7 @@
 
       identification-step(v-show="activeStep('IDENTIFICACAO')", ref="identificationStep")
       informacaoes-complementares-step(v-show="activeStep('INFORMACOES_COMPLEMENTARES')", ref="informacoesComplementaresStep")
-      resumo-step(v-if="activeStep('RESUMO')")
+      resumo-step(v-show="activeStep('RESUMO')", ref="resumo")
 
       step-controller(v-if="showStepsController" :step="step" @prevStep="prevStep" @nextStep="nextStep" @concluir="concluir" @cancelar="cancelar")
 
@@ -57,10 +57,12 @@ export default {
         if(this.checkValidation()) {
           this.$refs.identificationStep.enviarParaStore();
           this.step++;
+          this.$refs.informacoesComplementaresStep.scroll();
         }
       } else if(this.activeStep('INFORMACOES_COMPLEMENTARES')) {
         if(this.checkValidationInformacoesComplementares()) {
           this.$refs.informacoesComplementaresStep.enviarParaStore();
+          this.$refs.resumo.scroll();
           this.step++;
         }
       } else {

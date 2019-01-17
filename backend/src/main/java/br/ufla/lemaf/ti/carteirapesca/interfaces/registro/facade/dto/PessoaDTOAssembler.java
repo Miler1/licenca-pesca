@@ -124,8 +124,7 @@ public class PessoaDTOAssembler {
 			pessoa.sexo.codigo = Constants.FEMININO;
 			pessoa.sexo.nome = "Feminino";
 		} else {
-			pessoa.sexo.codigo = 2;
-			pessoa.sexo.nome = "Outro";
+			pessoa.sexo = null;
 		}
 
 		pessoa.nomeMae = pessoaDTO.getNomeMae();
