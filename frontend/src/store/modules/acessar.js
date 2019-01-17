@@ -100,19 +100,18 @@ export const actions = {
         commit(SET_BUSCA_MUNICIPIOS, data.municipios);
       })
       .catch(error => {
-        commit(SET_ERROR, error);
+        commit(SET_ERROR_TELA_BUSCA, error.response.data);
       });
   },
 
   [VALIDA_DADOS]: ({ commit }, pessoa, listaDadosValidacaoDTO) => {
     AcessoService.verificaDados(pessoa, listaDadosValidacaoDTO)
       .then(({ data }) => {
-        debugger
         commit(SET_BUSCA_MAES, data.maes);
         commit(SET_BUSCA_MUNICIPIOS, data.municipios);
       })
       .catch(error => {
-        commit(SET_ERROR, error);
+        commit(SET_ERROR_TELA_BUSCA, error.response.data);
       });
   },
 

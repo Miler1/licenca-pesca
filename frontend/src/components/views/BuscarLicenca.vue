@@ -12,6 +12,7 @@
           input-element(
           :placeholder="$t('interface.registrar.identificacao.acesso.placeholder.cpf')"
           v-model="resource"
+          :resource="resource"
           v-if="type_acesso === 'CPF'"
           :mask="maskCPF"
           @enter="acessar")
@@ -30,11 +31,9 @@
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 	
-	.block
+        .block
           .error-pagina-inicial
-            | {{errorTelaInicial}}
-          //- .close(v-if="existeSolicitante" @click="fecharSolicitante")
-          //-   | &times;      
+            | {{errorTelaInicial}}     
 
       validacao-perguntas(v-if="" ref="validacaoPerguntas")
       visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
@@ -73,8 +72,8 @@ export default {
     return {
       step: 0,
       consultar_prefix: CONSULTAR_GERAL_MESSAGES_PREFIX,
-      resource: "",
       type_acesso: "CPF",
+      resource: "",
       maskCPF: CPF_MASK,
       maskPassport: PASSAPORT_MASK,
       tableData:[{
@@ -82,6 +81,7 @@ export default {
       }]
     };
   },
+
   computed: {
     ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "errorTelaInicial", "buscaMaes", "buscaMunicipios"])
   },
@@ -123,6 +123,7 @@ export default {
       color: red
       font-size: 14px
       margin-top: 10px
+
     .block
       display: block
       .close

@@ -1,17 +1,18 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
-import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
+import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -118,16 +123,18 @@ public class AcessoController {
 
 		var pessoa = WebServiceUtils
 			.webServiceEU()
-			.buscarPessoaFisicaPeloCpf(validacaoDTO.getCpf());
+			.buscarPessoaFisicaPeloCpf("10538244674" /*validacaoDTO.getCpf()*/);
 
-		if(!pessoa.dataNascimento.equals(validacaoDTO.getDataNascimento())){
+		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0){
 			return false;
 		} else if(!pessoa.nomeMae.equals(validacaoDTO.getMae())) {
 			return false;
-		} else if(pessoa.enderecos.stream()
-			.filter(endereco -> endereco.municipio.nome
-				.equals(validacaoDTO.getMunicipio()))
-			.findFirst() != null) {
+		} else if((pessoa.enderecos
+			.stream()
+			.filter(e ->
+				e.municipio.nome.equals(validacaoDTO.getMunicipio()))
+			.findFirst()
+			.orElse(null)) == null) {
 			return false;
 		}
 

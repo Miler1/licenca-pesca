@@ -78,13 +78,8 @@ export default {
         fetchData() {
             debugger
         },
-
         validarDados(){
             this.$store.dispatch(VALIDA_DADOS, this.pessoa);
-            let date = this.pessoa.dataNascimento;
-            if(typeof(date) !== "string"){
-                this.pessoa.dataNascimento =  date.getDate() + '/' + (date.getMonth() + 1)+ '/' + date.getFullYear();
-          }
         },
 
         created() {
