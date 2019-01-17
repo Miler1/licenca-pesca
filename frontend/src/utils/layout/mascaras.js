@@ -4,5 +4,5 @@ export const CPF_MASK = {
 };
 
 export const PASSAPORT_MASK = {
-  mask: "AAAAAAAAAAAAAAAAAAAA"
+  mask: "AAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 };

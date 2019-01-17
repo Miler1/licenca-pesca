@@ -78,11 +78,15 @@ const ApiService = {
    * @param params
    * @return {Promise<*>}
    */
-  async post(resource, params) {
+  async post(resource, params, hasError=true) {
     return Vue.axios.post(`${resource}`, params).then(response => {
       return response;
     }).catch(error => {
-      return Promise.reject(new HttpException.init(error, true));
+      if(hasError){
+        return Promise.reject(new HttpException.init(error, true));
+      } else {
+        throw error;
+      }
     });
   },
 

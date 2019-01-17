@@ -38,7 +38,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(
 			ex,
-			Message.get("erro.default"),
+			ex.getMessage(),
 			new HttpHeaders(),
 			HttpStatus.INTERNAL_SERVER_ERROR,
 			request

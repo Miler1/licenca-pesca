@@ -1,6 +1,6 @@
 import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS, VALIDA_DADOS } from "../actions.type";
 import { Solicitante, toSolicitanteDTO, toSolicitanteBusca } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_BUSCA_MAES, SET_BUSCA_MUNICIPIOS } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA,  SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_BUSCA_MAES, SET_BUSCA_MUNICIPIOS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import { stat } from "fs";
@@ -84,11 +84,12 @@ export const actions = {
   [BUSCAR_LICENCAS]: ({ commit }, acessoResource) => {
     AcessoService.buscarLicensas(acessoResource)
       .then(({ data }) => {
+        commit(SET_ERROR_TELA_BUSCA, "");
         commit(SET_SOLICITANTE, data.pessoa);
         commit(SET_LISTA_LICENCAS, data.licencas);
       })
       .catch(error => {
-        commit(SET_ERROR, error);
+        commit(SET_ERROR_TELA_BUSCA, error.response.data);
       });
   },
 

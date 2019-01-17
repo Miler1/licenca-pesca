@@ -59,10 +59,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 
 		validateResource(resource);
 
-		val pessoaValidada = new PessoaDTO(
-			resource.getPessoa(),
-			CPFUtils.unformat(resource.getPessoa().getCpf())
-		);
+		val pessoaValidada = new PessoaDTO(resource.getPessoa());
 
 		return assembler.toDTO(registroApplication.registrar(
 			new RegistroResource(
@@ -116,7 +113,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		if (Validate.isNull(pessoa.getCpf()) && Validate.isNull(pessoa.getPassaporte()))
 			camposInvalidos.add(Message.get(REGISTRO_ERROR_PREFIX + "cpfAndPassaporte"));
 
-		if (!Validate.isNull(pessoa.getCpf()) && !Validate.isCpfValid(pessoa.getCpf()))
+		if (!Validate.isNull(pessoa.getCpf()) && !Validate.isCpfValid(pessoa.getCpf()) && Validate.isNull(pessoa.getPassaporte()))
 			camposInvalidos.add(Message.get(REGISTRO_ERROR_PREFIX + "cpfInvalido"));
 
 		if (Validate.isNull(pessoa.getNome()))

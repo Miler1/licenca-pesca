@@ -110,19 +110,24 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		var qrcode = QRCodeUtils.createQRCodeImage(Properties.baseUrl() + "informacao-carteira" + "/" + protocolo.getProtocoloNaoFormatado());
 
 		String qrcode64 = encodeToString(qrcode, "png");
-		System.out.println(qrcode64);
+		String nomeFontSize = (pessoa.nome.toUpperCase().length() > 47) ? ("7px") : ("10px");
+		String enderecoFontSize = (CarteiraBuilderImpl.campoEndereco(CarteiraBuilderImpl.endereco(pessoa)).length() > 47)?("7px") : ("10px");
+		String municipioFontSize = (CarteiraBuilderImpl.campoMunicipioUF(CarteiraBuilderImpl.endereco(pessoa)).length() > 22)?("7px") : ("10px");
 
 		data.put("qrcode", qrcode64);
 		data.put("baseUrl", Properties.baseUrl());
 
 		data.put("nome", pessoa.nome.toUpperCase());
+		data.put("nomeFontSize",nomeFontSize);
 		data.put("cpfPassaporte", CarteiraBuilderImpl.identificadorPessoa(pessoa));
 
 		data.put("numLicenca", protocolo.getCodigoFormatado());
 		data.put("modalidade", licenca.modalidade().name().toUpperCase());
 
 		data.put("endereco", CarteiraBuilderImpl.campoEndereco(CarteiraBuilderImpl.endereco(pessoa)));
+		data.put("enderecoFontSize",enderecoFontSize);
 
+		data.put("municipioFontSize",municipioFontSize);
 		data.put("municipioUF", CarteiraBuilderImpl.campoMunicipioUF(CarteiraBuilderImpl.endereco(pessoa)));
 		data.put("cep", CarteiraBuilderImpl.campoCEP(CarteiraBuilderImpl.endereco(pessoa)));
 

@@ -1,7 +1,8 @@
-import { SET_ERROR } from "../mutations.type";
+import { SET_ERROR, SET_ERROR_TELA_BUSCA } from "../mutations.type";
 
 const INITIAL_STATE = {
-  errors: []
+  errors: [],
+  errorTelaInicial: '' 
 };
 
 export const state = Object.assign({}, INITIAL_STATE);
@@ -15,7 +16,9 @@ export const getters = {
   /**
    * Retorna a lista de erros.
    */
-  errors: state => state.errors
+  errors: state => state.errors,
+
+  errorTelaInicial: state => state.errorTelaInicial
 };
 
 /**
@@ -37,7 +40,10 @@ export const mutations = {
   /**
    * Adiciona o erro à lista de erros.
    */
-  [SET_ERROR]: (state, error) => state.errors.push(error)
+  [SET_ERROR]: (state, error) => state.errors.push(error),
+  [SET_ERROR_TELA_BUSCA]: (state, error) => {
+    state.errorTelaInicial = error;
+  },
 };
 
 export default {

@@ -10,10 +10,5 @@ export const GENERO_OPTIONS = [
     key: SexoDTO.feminino,
     value: SexoDTO.feminino,
     label: "feminino"
-  },
-  {
-    key: SexoDTO.outros,
-    value: SexoDTO.outros,
-    label: "outros"
   }
 ];

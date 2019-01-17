@@ -18,6 +18,9 @@ export default {
 		},
 		enviarParaStore() {
 			this.$refs.cadastroInfoComplementares.enviarParaStore();
+		},
+		scroll() {
+			this.$refs.cadastroInfoComplementares.scroll();
 		}
   }
 };

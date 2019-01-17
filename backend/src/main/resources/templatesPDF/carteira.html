@@ -29,14 +29,6 @@
 			z-index: -1000;
 		}
 
-		.campo-carteira{
-			background-color: white;
-			border: 1px solid black;
-			border-radius: 10px;
-			width: 100px;
-			height: 30px;
-			position: fixed;
-		}
 		#titulo-carteira{
 			width: 192px;
 			font-size: 11px;
@@ -77,7 +69,7 @@
 		}
 		.field-content{
 
-			font-size: 11px;
+			font-size: 10px;
 			margin-left: 5px;
 			margin-top: 4px;
 		}
@@ -214,7 +206,7 @@
 	<!--Primeira linha-->
 	<div class="field-primeira-coluna fieldset-border field-uma-coluna field-primeira-linha">
 		<div class="legend-border">Nome</div>
-		<div class="field-content" th:text="${nome}"></div>
+		<div class="field-content" th:text="${nome}" th:style="'font-size: '+ @{${nomeFontSize}}+';'"></div>
 	</div>
 
 	<!--Segunda linha-->
@@ -231,13 +223,13 @@
 	<!--Terceira linha-->
 	<div class="field-primeira-coluna field-terceira-linha fieldset-border field-uma-coluna">
 		<div class="legend-border">Endereço</div>
-		<div class="field-content"  th:text="${endereco}"></div>
+		<div class="field-content"  th:text="${endereco}" th:style="'font-size: '+ @{${enderecoFontSize}}+';'"></div>
 	</div>
 
 	<!--Quarta linha-->
 	<div class="field-primeira-coluna field-quarta-linha fieldset-border field-duas-colunas ">
 		<div class="legend-border">Município / UF</div>
-		<div class="field-content" th:text="${municipioUF}"></div>
+		<div class="field-content" th:text="${municipioUF}" th:style="'font-size: '+ @{${municipioFontSize}}+';'"></div>
 	</div>
 
 	<div class="field-segunda-coluna field-quarta-linha fieldset-border field-duas-colunas ">

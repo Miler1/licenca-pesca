@@ -14,7 +14,7 @@
           v-model="resource"
           v-if="type_acesso === 'CPF'"
           :mask="maskCPF"
-          @enter="")
+          @enter="acessar")
             el-select(v-model="type_acesso" slot="prepend" @change="resource = ''")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
@@ -24,18 +24,22 @@
           v-model="resource"
           v-if="type_acesso !== 'CPF'"
           :mask="maskPassport"
-          @enter="")
+          @enter="acessar")
             el-select(v-model="type_acesso" slot="prepend" @change="resource = ''")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
-      
+	
+	.block
+          .error-pagina-inicial
+            | {{errorTelaInicial}}
+          //- .close(v-if="existeSolicitante" @click="fecharSolicitante")
+          //-   | &times;      
+
       validacao-perguntas(v-if="" ref="validacaoPerguntas")
       visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
-      
 
-      
 </template>
 
 <script>
@@ -74,12 +78,12 @@ export default {
       maskCPF: CPF_MASK,
       maskPassport: PASSAPORT_MASK,
       tableData:[{
-        
+
       }]
     };
   },
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "buscaMaes", "buscaMunicipios"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "errorTelaInicial", "buscaMaes", "buscaMunicipios"])
   },
 
   methods: {
@@ -103,6 +107,9 @@ export default {
       }
       debugger
       return { cpf, passaporte };
+    },
+    fecharSolicitante(){
+      this.$store.dispatch(CANCELAR);
     }
   }
 };
@@ -112,18 +119,27 @@ export default {
   @import "../../theme/tools/variables"
 
   #registrar-licenca
+    .error-pagina-inicial
+      color: red
+      font-size: 14px
+      margin-top: 10px
+    .block
+      display: block
+      .close
+        font-size: 20px
+        float: right
     h1
       font-weight: 500
 
     .label-search
       margin-top: 10px
-    
+
     .right
       text-align: right
 
     .left
       text-align: left
-    
+
     .buscar
       display: flex
 

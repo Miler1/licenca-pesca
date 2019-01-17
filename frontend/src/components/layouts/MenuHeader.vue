@@ -2,7 +2,7 @@
 	#menu-header
 		.menu
 			.left
-				router-link(to="/")
+				.home(v-on:click="goHome()")
 					.logo-image
 					.logo-text IPAAM
 			.right
@@ -16,6 +16,7 @@
 
 <script>
 import { localizeValidation } from "../../configs/validator";
+import { CANCELAR } from "../../store/actions.type";
 
 export default {
   name: "MenuHeader",
@@ -26,6 +27,13 @@ export default {
   methods: {
     handleLocale() {
       localizeValidation();
+	},
+	goHome() {
+		console.log('teste');
+		this.$store.dispatch(CANCELAR).then(p => {
+			this.step = 0;
+			this.$router.push({name: 'home'});
+		});
 	}
   }
 };
@@ -52,10 +60,11 @@ export default {
 				display: flex
 				align-items: center
 
-				.router-link-active
+				.home
 					display: flex
 					align-items: center
 					text-decoration: none
+					cursor: pointer
 
 				.logo-image
 					color: white

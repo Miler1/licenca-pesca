@@ -1,18 +1,16 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
+import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.application.impl.RegistroApplicationImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoController;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import lombok.NoArgsConstructor;
 import lombok.val;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,7 +36,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	private SolicitanteId identity;
 
 	@JoinColumn(name = "id_solicitante")
-	@OrderBy(value = "dataCriacao")
+	@OrderBy(value="dataCriacao")
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Licenca> licencas = new ArrayList<>();
 
@@ -68,10 +66,11 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 *
 	 * @return {@code true} se alguma licença estiver ativa
 	 */
-	public boolean pussuiLicencaAtiva() {
+	public boolean pussuiLicencaAtiva(Modalidade modalidade) {
+
 		return licencas
 			.stream()
-			.anyMatch(licenca -> licenca.status().sameValueAs(Status.ATIVO));
+			.anyMatch(licenca -> (licenca.status().sameValueAs(Status.ATIVO) || licenca.status().sameValueAs(Status.AGUARDANDO_PAGAMENTO_BOLETO)) && licenca.modalidade().sameValueAs(modalidade));
 	}
 
 	/**
@@ -82,7 +81,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @return O protocolo da licença
 	 */
 	public Protocolo adicionarLicenca(Licenca licenca) {
-		if (!pussuiLicencaAtiva()) {
+		if (!pussuiLicencaAtiva(licenca.modalidade())) {
 			licencas.add(licenca);
 			return licenca.protocolo();
 		} else {
@@ -139,5 +138,4 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		}
 
 	}
-
 }

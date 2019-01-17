@@ -36,6 +36,6 @@ public interface AcessoServiceFacade {
 	 */
 	PessoaDTO acessar(AcessoResource resource);
 
-	List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa);
+	List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa) throws Exception;
 
 }

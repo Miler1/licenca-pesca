@@ -16,21 +16,21 @@ const VISUALIZAR = {
       ]
     },
     label: {
-      cpf: ["CPF:", "CPF:"],
-      nome: ["Nome:", "Name:"],
-      passaporte: ["Passaporte:", "Passport:"],
-      sexo: ["Sexo:", "Sex:"],
-      dataNascimento: ["Data de nascimento:", "Date of birth:"],
-      nomeMae: ["Nome da mãe:", "Mother's name:"],
-      localizacao: ["Zona de localização:", "Location zone:"],
-      logradouro: ["Logradouro:", "Public place:"],
-      bairro: ["Bairro:", "Neighborhood:"],
-      numero: ["Número:", "Number:"],
-      complemento: ["Complemento:", "Complement:"],
-      cep: ["CEP:", "Postal code:"],
-      municipio: ["Município:", "County:"],
-      uf: ["UF:", "UF:"],
-      descricaoAcesso: ["Descrição de acesso: ", "Description of access: "]
+      cpf: ["CPF", "CPF"],
+      nome: ["Nome", "Name"],
+      passaporte: ["Passaporte", "Passport"],
+      sexo: ["Sexo", "Sex"],
+      dataNascimento: ["Data de nascimento", "Birthday"],
+      nomeMae: ["Nome da mãe", "Mother's name"],
+      localizacao: ["Zona de localização", "Location zone"],
+      logradouro: ["Logradouro", "Public place"],
+      bairro: ["Bairro", "Neighborhood"],
+      numero: ["Número", "Number"],
+      complemento: ["Complemento", "Complement"],
+      cep: ["CEP", "Postal code"],
+      municipio: ["Município", "County"],
+      uf: ["UF", "State"],
+      descricaoAcesso: ["Descrição de acesso", "Access description"]
     },
     dados: {
       genero: {
