@@ -59,10 +59,12 @@ spring:
 
       portal-seguranca:
 #        url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
-        url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
+#        url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
+        url: http://localhost:9900
       cadastro-unificado:
 #        url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
-        url: http://am.runners.ti.lemaf.ufla.br/cadastro-unificado
+#        url: http://am.runners.ti.lemaf.ufla.br/cadastro-unificado
+        url: http://localhost:9901
 
   carteira-pesca:
     base-path: arquivos/carteira/

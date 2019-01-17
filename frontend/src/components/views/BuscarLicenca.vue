@@ -24,16 +24,16 @@
           v-model="resource"
           v-if="type_acesso !== 'CPF'"
           :mask="maskPassport"
-          @enter="")
+          @enter="acessar")
             el-select(v-model="type_acesso" slot="prepend" @change="resource = ''")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
-      
+
 
       visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
-      
+
 </template>
 
 <script>
@@ -70,7 +70,7 @@ export default {
       maskCPF: CPF_MASK,
       maskPassport: PASSAPORT_MASK,
       tableData:[{
-        
+
       }]
     };
   },
@@ -111,13 +111,13 @@ export default {
 
     .label-search
       margin-top: 10px
-    
+
     .right
       text-align: right
 
     .left
       text-align: left
-    
+
     .buscar
       display: flex
 

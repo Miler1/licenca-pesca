@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.internal;
 
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
@@ -10,7 +11,6 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.val;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,7 +80,14 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 	@Override
 	public List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa) {
-		var solicitante = solicitanteRopository.findByIdentityCpfNumero(pessoa.getCpf());
+
+		Solicitante solicitante;
+
+		if (pessoa.getCpf() != null) {
+			solicitante = solicitanteRopository.findByIdentityCpfNumero(pessoa.getCpf());
+		} else {
+			solicitante = solicitanteRopository.findByIdentityPassaporteNumero(pessoa.getPassaporte());
+		}
 
 		return solicitante.buscarTodasLicencas();
 	}

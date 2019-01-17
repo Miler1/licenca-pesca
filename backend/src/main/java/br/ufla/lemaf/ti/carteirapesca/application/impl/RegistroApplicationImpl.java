@@ -9,11 +9,8 @@ import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.NotImplementedException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -120,12 +117,13 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		FiltroPessoa filtroPessoa = new FiltroPessoa();
 		filtroPessoa.login = pessoa.getCpf();
 		filtroPessoa.passaporte = pessoa.getPassaporte();
+		filtroPessoa.isUsuario = false;
 
 		var pessoaEU = WebServiceUtils
 			.webServiceEU()
 			.buscarPessoaComFiltro(filtroPessoa);
 
-		if (pessoaEU == null) {
+		if (pessoaEU == null || pessoaEU.nome == null) {
 
 			WebServiceUtils
 				.webServiceEU()
@@ -199,6 +197,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		var identificador = solicitante.identity();
 
 		FiltroPessoa filtroPessoa = new FiltroPessoa();
+		filtroPessoa.isUsuario = false;
 
 		if(identificador.isCPF()) {
 			filtroPessoa.login = identificador.cpf().getNumero();
