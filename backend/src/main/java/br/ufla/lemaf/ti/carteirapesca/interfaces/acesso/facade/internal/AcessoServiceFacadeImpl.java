@@ -89,8 +89,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 			solicitante = solicitanteRopository.findByIdentityPassaporteNumero(pessoa.getPassaporte());
 		}
 
-		if(solicitante == null) {
+		if(solicitante == null && pessoa.getNome() == null) {
 			throw new Exception("Pessoa não encontrada!");
+		} else if(solicitante == null && pessoa.getNome() != null) {
+			return null;
 		}
 
 		return solicitante.buscarTodasLicencas();
