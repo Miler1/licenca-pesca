@@ -12,6 +12,8 @@ logging:
 spring:
 
   application:
+
+    urlBase: http://homologacao.ipaam.lemaf.com.br/carteira-pesca/
     name: Glide
     version: @project.version@
 
