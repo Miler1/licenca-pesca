@@ -229,7 +229,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs"])
+    ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa"])
   },
   methods: {
     instantiate() {

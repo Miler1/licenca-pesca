@@ -1,6 +1,6 @@
 import { ACESSAR, CANCELAR, BUSCAR_LICENCAS } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import { stat } from "fs";
@@ -10,7 +10,9 @@ const INITIAL_STATE = {
   solicitante: Solicitante,
   cadastroCanActive: false,
   existeSolicitante: false,
-  showStepsController: true
+  showStepsController: true,
+  cpfPesquisa: null,
+  passaportePesquisa: null
 };
 
 export const state = Object.assign({}, INITIAL_STATE);
@@ -25,6 +27,11 @@ export const getters = {
    * Retorna o solicitante.
    */
   solicitante: state => state.solicitante,
+
+
+  cpfPesquisa: state => state.cpfPesquisa,
+
+  passaportePesquisa: state => state.passaportePesquisa,
 
   /**
    * Retorna true se existir o solicitante e false se não existir.
@@ -63,6 +70,8 @@ export const actions = {
       .then(({ data }) => {
         commit(SET_SOLICITANTE, data);
         commit(ACTIVE_CADASTRO, data);
+        commit(SET_CPF_PESQUISA, data.cpf);
+        commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
       })
       .catch(error => {
         commit(SET_ERROR, error);
@@ -117,6 +126,14 @@ export const mutations = {
   [CLEAN_SOLICITANTE]: (state) => {
     state.solicitante = Solicitante;
   },
+
+  [SET_CPF_PESQUISA]: (state, cpf) => {
+    state.cpfPesquisa = cpf;
+  },  
+  
+  [SET_PASSAPORTE_PESQUISA]: (state, passaporte) => {
+    state.passaportePesquisa = passaporte;
+  },  
 
   [SET_LISTA_LICENCAS]: (state, listaLicencas) => {
     Vue.set(state, 'listaLicencas', [...listaLicencas]);
