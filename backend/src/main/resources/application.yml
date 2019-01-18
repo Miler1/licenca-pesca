@@ -53,23 +53,19 @@ spring:
       client-id: 398a20646b37c8f9ad8a4c1b53f7108e2b04c8d524b427d512ba2d99c3d002ac2b499098228200971a4e14fc0f1cdba67283bfef8154e7286d5882ee4266e3ce
       client-secret: f463b60e0abfe70b31fe316cd548f7ca019115f1c8969bdfd1f57e3ca0708d5faaf7a0bbb0ede643bb31f7c442c5392eb801d792ebec0fddfa3e127b84aa2fdb
 
-#      # Módulo - LP1 - Hiago
+      # Módulo - LP1 - Hiago
 #      client-id: 5835eed6bddf39b6a6844b5f9645e360b5c003bb9d65be17ef7cd5863f713b0e7bcfafaa691e4482af6a20c775c19dadcf22eb1e1edc0617c2ac06605e047b98
 #      client-secret: c726ad09489baacd3af62843ee514a95e9af9ff2a28bc2babbffc1554d69502a299a093f34ab5cefbf78001e8e7873a532bca90ec3f8e4b7b8a8f2fdf145e05f
 
       portal-seguranca:
-#        url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
-        url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
+        url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
+#        url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
 #        url: http://localhost:9900
       cadastro-unificado:
-#        url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
-        url: http://am.runners.ti.lemaf.ufla.br/cadastro-unificado
+        url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
+#        url: http://am.runners.ti.lemaf.ufla.br/cadastro-unificado
 #        url: http://localhost:9901
 
   carteira-pesca:
     base-path: arquivos/carteira/
     path-boleto: arquivos/boleto/
-
-  arquivos:
-    base-path-arquivos-dados: src/main/resources/gerador/
-

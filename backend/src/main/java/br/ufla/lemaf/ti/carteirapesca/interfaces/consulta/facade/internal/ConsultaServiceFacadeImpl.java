@@ -134,11 +134,22 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		data.put("pais", "BRASIL");
 		data.put("limiteCaptura", CarteiraBuilderImpl.campoLimiteCaptura(licenca.modalidade()));
 
-		Date validade = new Date();
-		validade.setYear(validade.getYear()+1);
+		Date validade = licenca.getDataVencimento();
 
-		data.put("emissao", DateUtils.formatDate(new Date(), Constants.DATE_FORMAT));
-		data.put("validade", DateUtils.formatDate(validade, Constants.DATE_FORMAT));
+		if(licenca.dataAtivacao() == null){
+
+			data.put("emissao", "-");
+		} else {
+
+			data.put("emissao", DateUtils.formatDate(licenca.dataAtivacao(), Constants.DATE_FORMAT));
+		}
+
+		if(validade == null) {
+			data.put("validade", "-");
+		} else {
+
+			data.put("validade", DateUtils.formatDate(validade, Constants.DATE_FORMAT));
+		}
 
 		return pdfGenaratorUtil.createPdf("carteira",data);
 	}
