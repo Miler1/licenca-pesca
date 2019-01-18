@@ -1,6 +1,6 @@
 <template lang="pug">
 #lista-licenca
-    h3.title.withDivisor(v-if="listaLicensas && listaLicensas.length > 0") {{ $t(`${consultar_prefix}listaLicenca.titulo`) }}
+    h3.title.withDivisor(v-if="listaLicencas && listaLicensas.length > 0") {{ $t(`${consultar_prefix}listaLicenca.titulo`) }}
     .licencas(v-if="listaLicensas && listaLicensas.length > 0" v-for="lista in listaLicencas")
         .protocolo {{ lista.protocolo.codigoFormatado }}
         .withDivisor.listMargin

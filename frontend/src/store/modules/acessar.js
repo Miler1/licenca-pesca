@@ -77,7 +77,11 @@ export const actions = {
         commit(SET_LISTA_LICENCAS, data.licencas);
       })
       .catch(error => {
-        commit(SET_ERROR_TELA_BUSCA, error.response.data);
+        if(error.response){
+
+          commit(SET_ERROR_TELA_BUSCA, error.response.data);
+          commit(CLEAN_SOLICITANTE);
+        }
       });
   },
 
