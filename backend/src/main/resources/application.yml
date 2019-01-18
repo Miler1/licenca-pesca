@@ -58,14 +58,18 @@ spring:
 #      client-secret: c726ad09489baacd3af62843ee514a95e9af9ff2a28bc2babbffc1554d69502a299a093f34ab5cefbf78001e8e7873a532bca90ec3f8e4b7b8a8f2fdf145e05f
 
       portal-seguranca:
-        url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
-#        url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
+#        url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br
+        url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
 #        url: http://localhost:9900
       cadastro-unificado:
-        url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
-#        url: http://am.runners.ti.lemaf.ufla.br/cadastro-unificado
+#        url: http://cadastro-unificado.java3-5.ti.lemaf.ufla.br
+        url: http://am.runners.ti.lemaf.ufla.br/cadastro-unificado
 #        url: http://localhost:9901
 
   carteira-pesca:
     base-path: arquivos/carteira/
     path-boleto: arquivos/boleto/
+
+  arquivos:
+    base-path-arquivos-dados: src/main/resources/gerador/
+

@@ -1,19 +1,23 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
-import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
-import br.ufla.lemaf.ti.carteirapesca.application.impl.RegistroApplicationImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import lombok.NoArgsConstructor;
 import lombok.val;
+import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +31,9 @@ import java.util.List;
 @javax.persistence.Entity
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "solicitante")
 public class Solicitante implements Entity<Solicitante, SolicitanteId> {
+
+	private static final int NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE = 3;
+	private static final int HORAS_BLOQUEIO_SOLICITANTE = 2;
 
 	@Embedded
 	@AttributeOverrides({
@@ -138,4 +145,81 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		}
 
 	}
+//
+//	public static Solicitante buscaSolicitante(String cpf) {
+//
+//	}
+//
+//
+//	public static void desbloqueiaSolicitante(String cpf){
+//
+//		Solicitante solicitante = buscaSolicitante(cpf);
+//
+//		if(solicitante == null){
+//			solicitante = new Solicitante();
+//		}
+//		solicitante.numeroTentativas = 0;
+//		solicitante.dataUltimaTentativa = null;
+//		solicitante.dataDesbloqueio = null;
+//		solicitante.buscarIdentificadorUnico();
+//
+//	}
+//
+//	public static Boolean solicitanteBloqueado(String cpfCnpj) {
+//
+//		Solicitante solicitante = buscaSolicitante(cpfCnpj);
+//
+//		if(solicitante != null && solicitante.dataDesbloqueio != null) {
+//
+//			if(DateUtils.dataMaiorQue(new Date(), solicitante.dataDesbloqueio)) {
+//				desbloqueiaSolicitante(cpfCnpj);
+//				return false;
+//			}
+//
+//			return true;
+//
+//		} else if(solicitante != null && solicitante.dataUltimaTentativa != null && solicitante.numeroTentativas < NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE) {
+//
+//			Date dataUltimaTentativa = DateUtils.somarHorasData(solicitante.dataUltimaTentativa, 24);
+//
+//			if(DateUtils.dataMaiorQue(new Date(), dataUltimaTentativa)) {
+//				desbloqueiaUsuario(cpfCnpj);
+//				return false;
+//			}
+//
+//		}
+//
+//		return false;
+//
+//	}
+//
+//	public static void atualizaNumeroTentativas(String cpfCnpj) {
+//
+//		Solicitante solicitante = buscaSolicitante(cpfCnpj);
+//
+//		if(solicitante != null) {
+//
+//			solicitante.numeroTentativas = solicitante.numeroTentativas + 1;
+//
+//			if(solicitante.numeroTentativas == NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE) {
+//				solicitante.dataDesbloqueio = DateUtils.somarHorasData(new Date(), HORAS_BLOQUEIO_SOLICITANTE);
+//			}
+//
+//		} else {
+//
+//			solicitante = new Solicitante();
+//
+//			solicitante.() = CpfCnpjUtil.removerMascara(cpfCnpj);
+//			solicitante.numeroTentativas = 1;
+//
+//		}
+//
+//		solicitante.dataUltimaTentativa = new Date();
+//
+//		solicitante.validateAndSave();
+//
+//		em().getTransaction().commit();
+//		em().getTransaction().begin();
+//
+//	}
 }

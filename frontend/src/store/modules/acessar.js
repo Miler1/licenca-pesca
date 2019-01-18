@@ -94,13 +94,14 @@ export const actions = {
   },
 
   [BUSCA_DADOS]: ({ commit }, acessoResource) => {
-    AcessoService.buscaDados(acessoResource)
+    AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
+        // commit(SET_ERROR_TELA_BUSCA, "");
         commit(SET_BUSCA_MAES, data.maes);
         commit(SET_BUSCA_MUNICIPIOS, data.municipios);
       })
       .catch(error => {
-        commit(SET_ERROR_TELA_BUSCA, error.response.data);
+        commit(SET_ERROR, error);
       });
   },
 
@@ -111,7 +112,7 @@ export const actions = {
         commit(SET_BUSCA_MUNICIPIOS, data.municipios);
       })
       .catch(error => {
-        commit(SET_ERROR_TELA_BUSCA, error.response.data);
+        commit(SET_ERROR, error);
       });
   },
 

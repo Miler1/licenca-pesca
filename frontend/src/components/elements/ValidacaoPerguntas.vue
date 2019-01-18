@@ -75,9 +75,11 @@ export default {
         instantiate() {
             this.validaDados = this;
         },
+        
         fetchData() {
             debugger
         },
+
         validarDados(){
             this.$store.dispatch(VALIDA_DADOS, this.pessoa);
         },

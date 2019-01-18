@@ -1,7 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.CPF;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Passaporte;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
@@ -9,13 +8,9 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFaca
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
-import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
-import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +24,6 @@ import javax.transaction.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -106,14 +100,31 @@ public class AcessoController {
 	@PostMapping("/verificaDados")
 	public ResponseEntity verificaDados(@RequestBody final ValidacaoDTO validacaoDTO) {
 
-		AcessoController.verificaDadosProrietario(validacaoDTO);
+		if(verificaDadosSolicitante(validacaoDTO) == true){
 
-		return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		}else{
+
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+			// numeroTentativas
+			// dataUltimaTentativa
+			// dataDesbloqueio
+			//BuscaPessoa
+			//desbloqueioPessoa
+			//pessoaBloqueada
+			//atualizaNumeroTentativas
+//			Solicitante.atualizaNumeroTentativas(validacaoDTO.getCpf());
+		}
+
+//		verificaDadosSolicitante(validacaoDTO);
+
 	}
 
-	public static Boolean verificaDadosProrietario(ValidacaoDTO validacaoDTO) {
+	public static Boolean verificaDadosSolicitante(ValidacaoDTO validacaoDTO) {
 
-		if (!verificaDadosPessoa(validacaoDTO)) {
+		if (!verificaDadosValidosSolicitante(validacaoDTO)) {
 
 			return false;
 
@@ -123,7 +134,7 @@ public class AcessoController {
 
 	}
 
-	private static Boolean verificaDadosPessoa(ValidacaoDTO validacaoDTO) {
+	private static Boolean verificaDadosValidosSolicitante(ValidacaoDTO validacaoDTO) {
 
 		WebServiceUtils.validarWebService();
 
@@ -149,8 +160,8 @@ public class AcessoController {
 	}
 
 	@CrossOrigin("*")
-	@PostMapping("/buscaDados")
-	public ResponseEntity buscarConfirmarDados(@RequestBody final AcessoResource acessoResource) {
+	@PostMapping("/buscarDados")
+	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) {
 
 		var listaLicencaDTO = new ListaLicencaDTO();
 
@@ -171,11 +182,11 @@ public class AcessoController {
 
 		if (!Validate.isNull(pessoa.getCpf())) {
 
-			preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
+			preencherListaVerificacaoSolicitante(listasVerificacao, pessoa);
 
 		} if(!Validate.isNull(pessoa.getPassaporte())) {
 
-			preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
+			preencherListaVerificacaoSolicitante(listasVerificacao, pessoa);
 		}
 
 //		preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
@@ -184,7 +195,7 @@ public class AcessoController {
 
 	}
 
-	private static void preencherListaVerificacaoPessoa(Map<String, Object[]> listasVerificacao, PessoaDTO pessoa) {
+	private static void preencherListaVerificacaoSolicitante(Map<String, Object[]> listasVerificacao, PessoaDTO pessoa) {
 
 		Gerador gerador = new Gerador();
 
