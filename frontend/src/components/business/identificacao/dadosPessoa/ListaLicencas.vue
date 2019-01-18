@@ -37,7 +37,7 @@
                                 el-dropdown-item(type="primary", v-if="lista.status === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
                                 el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                         span(v-if="lista.status === 'INVALIDADO'") -
-    .sem-licenca.withDivisor
+    .sem-licenca.withDivisor(v-if="!listaLicensas || listaLicensas.length <= 0")
         | {{ $t(`${consultar_prefix}listaLicenca.semLicenca`) }}
 </template>
 
