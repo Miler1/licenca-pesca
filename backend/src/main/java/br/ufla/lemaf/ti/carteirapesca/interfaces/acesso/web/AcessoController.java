@@ -1,5 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.CPF;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
@@ -8,6 +10,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicenc
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
@@ -111,8 +114,11 @@ public class AcessoController {
 	public static Boolean verificaDadosProrietario(ValidacaoDTO validacaoDTO) {
 
 		if (!verificaDadosPessoa(validacaoDTO)) {
+
 			return false;
+
 		}
+
 		return true;
 
 	}
@@ -163,11 +169,16 @@ public class AcessoController {
 		Map<String, Object[]> listasVerificacao = new HashMap<>();
 
 
-		Integer qtdCaracteresCpf = pessoa.getCpf().length();
+		if (!Validate.isNull(pessoa.getCpf())) {
 
-		if (qtdCaracteresCpf == 11) {
+			preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
+
+		} if(!Validate.isNull(pessoa.getPassaporte())) {
+
 			preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
 		}
+
+//		preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
 
 		return listasVerificacao;
 

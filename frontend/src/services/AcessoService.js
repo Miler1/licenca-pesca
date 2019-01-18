@@ -26,7 +26,6 @@ const AcessoService = {
     return ApiService.postWithBlock(`${Properties.BASE_URL}/api/verificaDados`, validacaoDTO);
   },
 
-
   /**
    * Serviço que busca os munícípios de cada UF.
    */

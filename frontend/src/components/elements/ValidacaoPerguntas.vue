@@ -27,7 +27,7 @@
                         div(style='margin-top: 20px')
                             el-radio-group(v-for="nomesMunicipios in buscaMunicipios", :key="nomesMunicipios" v-model="pessoa.municipio" )
                                 el-radio(:label='nomesMunicipios', border='' required) {{nomesMunicipios}}
-                            | {{pessoa.municipio}} 
+                            | {{pessoa.municipio}}
     .buttons
         .right
           el-button(icon="el-icon-check" type="default" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
