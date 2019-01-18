@@ -5,12 +5,15 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.val;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +39,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	 * @param acessoApplication Serviço de Acesso da camada de application.
 	 */
 	@Autowired
-	public AcessoServiceFacadeImpl(AcessoApplication acessoApplication) {
+	public AcessoServiceFacadeImpl(AcessoApplication acessoApplication,
+									final SolicitanteRopository solicitanteRopository) {
 		this.acessoApplication = acessoApplication;
+		this.solicitanteRopository = solicitanteRopository;
 	}
 
 	/**
@@ -70,7 +75,6 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 				resource.getPassaporte()
 			);
 		}
-
 		// Converte dado Pessoa em DTO de Pessoa
 		return pessoaDTOAssembler.toDTO(
 			acessoApplication.identificar(recursoValidado)
@@ -79,20 +83,80 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	}
 
 	@Override
-	public List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa) throws Exception {
+	public List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoaDTO) throws Exception {
 
-		Solicitante solicitante;
-
-		if (pessoa.getCpf() != null) {
-			solicitante = solicitanteRopository.findByIdentityCpfNumero(pessoa.getCpf());
-		} else {
-			solicitante = solicitanteRopository.findByIdentityPassaporteNumero(pessoa.getPassaporte());
-		}
+		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
 		if(solicitante == null) {
 			throw new Exception("Pessoa não encontrada!");
 		}
 
 		return solicitante.buscarTodasLicencas();
+	}
+
+	private Solicitante buscarSolicitante(PessoaDTO pessoaDTO) {
+
+		Solicitante solicitante = null;
+
+		if (pessoaDTO.getCpf() != null) {
+			solicitante = solicitanteRopository.findByIdentityCpfNumero(pessoaDTO.getCpf());
+		} else {
+			solicitante = solicitanteRopository.findByIdentityPassaporteNumero(pessoaDTO.getPassaporte());
+		}
+
+		return solicitante;
+
+	}
+
+	@Override
+	public Boolean validaDadosAcessoLicencas(ValidacaoDTO validacaoDTO) throws Exception {
+
+		PessoaDTO pessoaDTO = new PessoaDTO(validacaoDTO.getCpf(), validacaoDTO.getPassaporte());
+
+		Solicitante solicitante = buscarSolicitante(pessoaDTO);
+
+		if(solicitante.getNumeroTentativas() == 3) {
+			throw new Exception("INSERIR MSG DE BLOQUEIO de USUARIO");
+		}
+
+		Boolean dadosValidos = dadosAcessoValidos(validacaoDTO);
+
+		if(!dadosValidos) {
+
+			solicitante.atualizaNumeroTentativas();
+
+			solicitanteRopository.save(solicitante);
+
+			return dadosValidos;
+
+		}
+
+		return dadosValidos;
+
+	}
+
+	private static Boolean dadosAcessoValidos(ValidacaoDTO validacaoDTO) {
+
+		WebServiceUtils.validarWebService();
+
+		var pessoa = WebServiceUtils
+			.webServiceEU()
+			.buscarPessoaFisicaPeloCpf("13090989646" /*validacaoDTO.getCpf()*/);
+
+		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0){
+			return false;
+		} else if(!pessoa.nomeMae.equals(validacaoDTO.getMae())) {
+			return false;
+		} else if((pessoa.enderecos
+			.stream()
+			.filter(e ->
+				e.municipio.nome.equals(validacaoDTO.getMunicipio()))
+			.findFirst()
+			.orElse(null)) == null) {
+			return false;
+		}
+
+		return true;
+
 	}
 }

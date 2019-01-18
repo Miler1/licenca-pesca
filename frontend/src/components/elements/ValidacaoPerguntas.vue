@@ -9,8 +9,7 @@
                     h3.title.display {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
                         div(style='margin-top: 20px')
                             el-radio-group(v-for="nomesMae in buscaMaes", :key="nomesMae" v-model="pessoa.mae" )
-                                el-radio.custom(:label='nomesMae' border='' required) {{nomesMae}} 
-                            | {{pessoa.mae}}          
+                                el-radio.custom(:label='nomesMae' border='' required) {{nomesMae}}         
         .flex-item   
             .espaco-cards   
                 el-card.box-card.column
@@ -19,7 +18,6 @@
                         el-form(v-model="pessoa" ref="pessoa" label-position="top")
                             el-form-item(prop="dataNascimento")                           
                                 el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${validacao_prefix}format.data`)")
-                        | {{pessoa.dataNascimento}}
         .flex-item
             .espaco-cards
                 el-card.box-card.column
@@ -27,7 +25,6 @@
                         div(style='margin-top: 20px')
                             el-radio-group(v-for="nomesMunicipios in buscaMunicipios", :key="nomesMunicipios" v-model="pessoa.municipio" )
                                 el-radio(:label='nomesMunicipios', border='' required) {{nomesMunicipios}}
-                            | {{pessoa.municipio}}
     .buttons
         .right
           el-button(icon="el-icon-check" type="default" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
@@ -40,7 +37,7 @@ import Card from "../layouts/Card";
 import { INTERFACE_VALIDACAO_PREFIX } from "../../utils/messages/interface/registrar/validacao/validacao";
 import { translate } from "../../utils/helpers/internationalization";
 import Properties from "../../properties";
-import { FETCH_DADOS_CARTEIRA, VALIDA_DADOS } from '../../store/actions.type';
+import { FETCH_DADOS_CARTEIRA, VALIDA_DADOS, SEND_SOLICITANTE } from '../../store/actions.type';
 import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
 import StatusCard from "../layouts/StatusCard";
 import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
@@ -55,38 +52,28 @@ export default {
         Card,
         StatusCard
     },
+   
     
     data() {
         return {
             validacao_prefix: INTERFACE_VALIDACAO_PREFIX,
             pessoa: {
                 dataNascimento: null,
-            },
-           
+                cpf: null
+            }
         };
     },
 
     computed: {
         ...mapGetters(["solicitante", "buscaMaes", "buscaMunicipios"])
-       
     },
     
     methods: {
-        instantiate() {
-            this.validaDados = this;
-        },
-        
-        fetchData() {
-            debugger
-        },
-
         validarDados(){
             this.$store.dispatch(VALIDA_DADOS, this.pessoa);
         },
 
         created() {
-            this.instantiate();
-            this.fetchData();
             this.validacaoDados();
         },
 

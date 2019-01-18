@@ -1,9 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +40,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class AcessoController {
 
 	private AcessoServiceFacade acessoServiceFacade;
+	private SolicitanteRopository solicitanteRopository;
+
 
 	/**
 	 * Injeta a dependencia da controller.
@@ -95,77 +96,30 @@ public class AcessoController {
 
 	}
 
-	//validacao
 	@CrossOrigin("*")
 	@PostMapping("/verificaDados")
-	public ResponseEntity verificaDados(@RequestBody final ValidacaoDTO validacaoDTO) {
+	public ResponseEntity verificaDados(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
-		if(verificaDadosSolicitante(validacaoDTO) == true){
-
+		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO)) {
 			return new ResponseEntity<>(HttpStatus.OK);
-
-		}else{
-
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-			// numeroTentativas
-			// dataUltimaTentativa
-			// dataDesbloqueio
-			//BuscaPessoa
-			//desbloqueioPessoa
-			//pessoaBloqueada
-			//atualizaNumeroTentativas
-//			Solicitante.atualizaNumeroTentativas(validacaoDTO.getCpf());
 		}
 
-//		verificaDadosSolicitante(validacaoDTO);
+//		else {
+//			redirecionaValidacao("Dados não conferem. Após 3 tentativas erradas, o CPF/PASSAPORTE será bloqueado por 2 horas.");
+//		}
 
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	public static Boolean verificaDadosSolicitante(ValidacaoDTO validacaoDTO) {
-
-		if (!verificaDadosValidosSolicitante(validacaoDTO)) {
-
-			return false;
-
-		}
-
-		return true;
-
-	}
-
-	private static Boolean verificaDadosValidosSolicitante(ValidacaoDTO validacaoDTO) {
-
-		WebServiceUtils.validarWebService();
-
-		var pessoa = WebServiceUtils
-			.webServiceEU()
-			.buscarPessoaFisicaPeloCpf("10538244674" /*validacaoDTO.getCpf()*/);
-
-		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0){
-			return false;
-		} else if(!pessoa.nomeMae.equals(validacaoDTO.getMae())) {
-			return false;
-		} else if((pessoa.enderecos
-			.stream()
-			.filter(e ->
-				e.municipio.nome.equals(validacaoDTO.getMunicipio()))
-			.findFirst()
-			.orElse(null)) == null) {
-			return false;
-		}
-
-		return true;
-
-	}
 
 	@CrossOrigin("*")
 	@PostMapping("/buscarDados")
 	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) {
 
+
 		var listaLicencaDTO = new ListaLicencaDTO();
 
-		PessoaDTO pessoa = acessoServiceFacade.acessar(acessoResource);
+		var pessoa = acessoServiceFacade.acessar(acessoResource);
 
 		listaLicencaDTO.setPessoa(pessoa);
 
@@ -188,8 +142,6 @@ public class AcessoController {
 
 			preencherListaVerificacaoSolicitante(listasVerificacao, pessoa);
 		}
-
-//		preencherListaVerificacaoPessoa(listasVerificacao, pessoa);
 
 		return listasVerificacao;
 

@@ -1,12 +1,14 @@
 import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS, VALIDA_DADOS } from "../actions.type";
 import { Solicitante, toSolicitanteDTO, toSolicitanteBusca } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA,  SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_BUSCA_MAES, SET_BUSCA_MUNICIPIOS } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA,  SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_BUSCA_MAES, SET_BUSCA_MUNICIPIOS, SET_SOLICITANTE_DADOS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import { stat } from "fs";
 
 const INITIAL_STATE = {
   solicitante: Solicitante,
+  maes: Array,
+  municipios: Array,
   cadastroCanActive: false,
   existeSolicitante: false,
   buscaMaes: Array,
@@ -35,6 +37,9 @@ export const getters = {
     /**
    * Retorna os municipios gerados.
    */
+
+  buscaDadosSolicitante: state => state.solicitante,
+
 
   buscaMunicipios: state => state.buscaMunicipios,
 
@@ -96,7 +101,6 @@ export const actions = {
   [BUSCA_DADOS]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
-        // commit(SET_ERROR_TELA_BUSCA, "");
         commit(SET_BUSCA_MAES, data.maes);
         commit(SET_BUSCA_MUNICIPIOS, data.municipios);
       })
@@ -142,18 +146,28 @@ export const mutations = {
       state.solicitante = null;
     }
   },
+  
 
-  [SET_BUSCA_MAES]: (state, solicitante) => {
-    if (solicitante !== null) {
-      state.buscaMaes = solicitante;
+  [SET_SOLICITANTE_DADOS]:(state, buscaDadosSolicitante) => {
+    
+    if (buscaDadosSolicitante !== null) {
+      state.buscaDadosSolicitante = toSolicitanteBusca(buscaDadosSolicitante);
+    } else {
+      state.buscaDadosSolicitante = null;
+    }
+  },
+
+  [SET_BUSCA_MAES]: (state, maes) => {
+    if (maes !== null) {
+      state.buscaMaes = maes;
     } else {
       state.buscaMaes = null;
     }
   },
 
-  [SET_BUSCA_MUNICIPIOS]: (state, solicitante) => {
-    if (solicitante !== null) {
-      state.buscaMunicipios = solicitante;
+  [SET_BUSCA_MUNICIPIOS]: (state, municipios) => {
+    if (municipios !== null) {
+      state.buscaMunicipios = municipios;
     } else {
       state.buscaMunicipios = null;
     }

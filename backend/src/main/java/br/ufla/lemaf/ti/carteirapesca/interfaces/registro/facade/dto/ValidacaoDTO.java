@@ -28,7 +28,7 @@ public class ValidacaoDTO {
 						@JsonProperty("dataNascimento") Date dataNascimento,
 						@JsonProperty("municipio") String municipio,
 						@JsonProperty("mae") String mae) {
-		this.cpf = cpf;
+		this.cpf = "13090989646";
 		this.passaporte = passaporte;
 		this.dataNascimento = dataNascimento;
 		this.municipio = municipio;

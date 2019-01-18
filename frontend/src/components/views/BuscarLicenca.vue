@@ -12,7 +12,6 @@
           input-element(
           :placeholder="$t('interface.registrar.identificacao.acesso.placeholder.cpf')"
           v-model="resource"
-          :resource="resource"
           v-if="type_acesso === 'CPF'"
           :mask="maskCPF"
           @enter="acessar")
@@ -83,7 +82,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "errorTelaInicial", "buscaMaes", "buscaMunicipios"])
+    ...mapGetters(["solicitante", "cadastroCanActive","existeSolicitante","errorTelaInicial", "buscaMaes", "buscaMunicipios"])
   },
 
   methods: {
@@ -105,7 +104,6 @@ export default {
       } else {
         passaporte = resource;
       }
-      debugger
       return { cpf, passaporte };
     },
     fecharSolicitante(){
