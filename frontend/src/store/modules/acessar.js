@@ -4,6 +4,7 @@ import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_
 import AcessoService from "../../services/AcessoService";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import { stat } from "fs";
+import Vue from "vue";
 
 const INITIAL_STATE = {
   solicitante: Solicitante,
@@ -114,8 +115,7 @@ export const mutations = {
   },
 
   [SET_LISTA_LICENCAS]: (state, listaLicencas) => {
-
-    state.listaLicencas = listaLicencas;
+    Vue.set(state, 'listaLicencas', [...listaLicencas]);
   },
   /**
    * Verifica se será necessário cadastrar o usuário.
