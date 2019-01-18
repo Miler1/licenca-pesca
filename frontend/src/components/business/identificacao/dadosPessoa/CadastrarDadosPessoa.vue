@@ -152,11 +152,11 @@
             el-form-item(:label="$t(`${cadastrar_prefix}labels.uf`)" prop="enderecoCorrespondencia.uf")
               el-select(v-model="pessoa.enderecoCorrespondencia.uf" :loading="ufSelectLoader" @change="fetchMunicipiosEnderecoCorrespondencia" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
                 el-option(v-for="uf in ufs" :key="uf.id" :value="uf.sigla" :label="uf.sigla")
-
+        
           el-col(:span="6")
             el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoCorrespondencia.municipio")
               el-select(v-model="pessoa.enderecoCorrespondencia.municipio" ref="enderecoCorrespondencia" :loading="municipioSelectLoader" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-                el-option(v-for="municipio in municipios" :key="municipio.id" :value="municipio.id" :label="municipio.nome")
+                el-option(v-for="municipio in municipiosCorrespondencia" :key="municipio.id" :value="municipio.id" :label="municipio.nome")
 
 </template>
 
@@ -171,7 +171,8 @@ import { CADASTRO_MESSAGES_PREFIX } from "../../../../utils/messages/interface/r
 import {
   FETCH_MUNICIPIOS,
   FETCH_UFS,
-  SEND_SOLICITANTE
+  SEND_SOLICITANTE,
+FETCH_MUNICIPIOS_CORRESPONDENCIA
 } from "../../../../store/actions.type";
 
 export default {
@@ -228,7 +229,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["municipios", "ufs"])
+    ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs"])
   },
   methods: {
     instantiate() {
@@ -263,6 +264,14 @@ export default {
         this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
       }
       this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
+    },
+    tratarMunicipio() {
+      if(this.pessoa.enderecoPrincipal.municipio){
+        this.pessoa.enderecoPrincipal.municipio = this.pessoa.enderecoPrincipal.municipio.id; 
+      }
+      if(this.pessoa.enderecoCorrespondencia.municipio){
+        this.pessoa.enderecoCorrespondencia.municipio = this.pessoa.enderecoCorrespondencia.municipio.id; 
+      }
     },
     changeSemNumeroEndPrincipal() {
       this.removerMensagemErro("numeroPrincipal");
@@ -302,7 +311,7 @@ export default {
       if (uf !== null) {
         let idUf = this.ufs.find(u => u.sigla === uf).id;
         this.$store
-          .dispatch(FETCH_MUNICIPIOS, idUf)
+          .dispatch(FETCH_MUNICIPIOS_CORRESPONDENCIA, idUf)
           .finally(() => (this.municipioSelectLoader = false));
       }
     }

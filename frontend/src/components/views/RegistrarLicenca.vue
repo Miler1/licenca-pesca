@@ -71,6 +71,10 @@ export default {
     },
 
     prevStep() {
+      if(this.activeStep('INFORMACOES_COMPLEMENTARES')) {
+        
+        this.$refs.identificationStep.prepararDados();
+      }
       if (this.step-- <= 0) this.step = 0;
     },
     checkValidationInformacoesComplementares() {

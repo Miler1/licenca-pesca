@@ -66,6 +66,10 @@ export default {
     acessar() {
       this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource));
     },
+    prepararDados() {
+
+      this.$refs.cadastroDadosPessoa.tratarMunicipio();
+    },
 
     getValidated () {
       if(this.$refs.cadastroDadosPessoa) {
