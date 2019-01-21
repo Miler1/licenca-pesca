@@ -59,7 +59,7 @@ export const getters = {
   /**
    * Retorna true para validar os dados ou falso caso ainda não tenha pesquisado.
    */
-  existeDadosParaValidacao: state => state.buscaMaes.length !== 0,
+  existeDadosParaValidacao: state => state.buscaMaes !== [],
 
   /**
    * Retorna verdadeiro quando o cadastro do solicitante

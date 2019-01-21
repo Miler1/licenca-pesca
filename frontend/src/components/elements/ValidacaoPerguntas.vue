@@ -79,10 +79,7 @@ export default {
         validarDados(){
             this.$store.dispatch(VALIDA_DADOS, this.pessoa);
         },
-
-        created() {
-            this.validacaoDados();
-        },
+        
         atualizarCpfPesquisado(resource) {
             debugger
             this.pessoa.cpf = resource.cpf;
