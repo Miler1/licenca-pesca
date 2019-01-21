@@ -25,7 +25,7 @@
 					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 
 			.data
-				cadastrar-dados-pessoa(v-show="showCadastro()", ref="cadastroDadosPessoa")
+				cadastrar-dados-pessoa(v-if="showCadastro()", ref="cadastroDadosPessoa")
 				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()", ref="visualizarDadosPessoa")
 </template>
 
@@ -70,8 +70,10 @@ export default {
       }
     },
     prepararDados() {
+      if(this.$refs.cadastroDadosPessoa){
 
-      this.$refs.cadastroDadosPessoa.tratarMunicipio();
+        this.$refs.cadastroDadosPessoa.tratarMunicipio();
+      }
     },
 
     getValidated () {

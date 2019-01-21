@@ -70,6 +70,8 @@ export const actions = {
       .then(({ data }) => {
         commit(SET_SOLICITANTE, data);
         commit(ACTIVE_CADASTRO, data);
+        commit(SET_CPF_PESQUISA, data.cpf);
+        commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
       })
       .catch(error => {
         commit(SET_ERROR, error);
