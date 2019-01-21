@@ -1,6 +1,6 @@
 import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, VALIDA_DADOS, BUSCA_DADOS_VALIDACAO } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, ACTIVE_VALIDACAO } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import Vue from "vue";
 
@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   municipios: Array,
   cadastroCanActive: false,
   existeSolicitante: false,
+  existeDadosParaValidacao: true,
   showStepsController: true,
   buscaMaes: [],
   buscaMunicipios: Array,
@@ -56,9 +57,9 @@ export const getters = {
   existeSolicitante: state => state.solicitante.nome !== null,
 
   /**
-   * Retorna true se maes tiver com nomes e false se não conter.
+   * Retorna true para validar os dados ou falso caso ainda não tenha pesquisado.
    */
-  validacaoDados: state => state.buscaMaes.length < 0,
+  existeDadosParaValidacao: state => state.buscaMaes.length !== 0,
 
   /**
    * Retorna verdadeiro quando o cadastro do solicitante
@@ -195,7 +196,8 @@ export const mutations = {
     solicitante !== null && solicitante.nome === null
       ? (state.cadastroCanActive = true)
       : (state.cadastroCanActive = false);
-  }
+  },
+
 };
 
 export default {

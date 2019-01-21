@@ -100,15 +100,17 @@ public class AcessoController {
 	@PostMapping("/verificaDados")
 	public ResponseEntity verificaDados(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
-		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO)) {
-
-			return new ResponseEntity<>(HttpStatus.OK);
-
-		}
-//		else {
-////			redirecionaValidacao("Dados não conferem. Após 3 tentativas erradas, o CPF/PASSAPORTE será bloqueado por 2 horas.");
+//		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO)) {
+//
+//			return new ResponseEntity<>(HttpStatus.OK);
+//
 //		}
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+
+//		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 

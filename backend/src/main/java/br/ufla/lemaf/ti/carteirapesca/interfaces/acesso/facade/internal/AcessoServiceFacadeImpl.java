@@ -122,7 +122,13 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		if(solicitante.getNumeroTentativas() == 3) {
 
 			throw new Exception("CPF / passaporte bloqueado, tente novamente após 2 horas");
+
 		}
+//		
+//		else if(solicitante.getNumeroTentativas() < 3 ){
+//
+//			throw new Exception("Dados não conferem. Após 3 tentativas erradas, o CPF / PASSAPORTE será bloqueado por 2 horas.");
+//		}
 
 		Boolean dadosValidos = dadosAcessoValidos(validacaoDTO);
 
