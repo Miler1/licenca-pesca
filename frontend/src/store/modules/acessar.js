@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   municipios: Array,
   cadastroCanActive: false,
   existeSolicitante: false,
-  existeDadosParaValidacao: true,
+  existeDadosParaValidacao: false,
   showStepsController: true,
   buscaMaes: [],
   buscaMunicipios: Array,
@@ -59,7 +59,7 @@ export const getters = {
   /**
    * Retorna true para validar os dados ou falso caso ainda não tenha pesquisado.
    */
-  existeDadosParaValidacao: state => state.buscaMaes !== [],
+  existeDadosParaValidacao: state => state.buscaMaes != 0,
 
   /**
    * Retorna verdadeiro quando o cadastro do solicitante
