@@ -46,16 +46,16 @@ spring:
   security:
     entradaUnica:
       # Módulo - LP0 - Gustavo
-      client-id: b7613a4152fbb9dfe6f8d526a5ec5e7eab59f8a169a1fdf57ba3ff234fd76928c2a25b5e39852e5e031030f97d11ba32b959872a9f4c78b2bac7f861de368d49
-      client-secret: 89a87e6d9264e7c1c58a50afb9498b3c6b12b31bb260894001655f07c9840b4fec958291eaead52acf2160bc6b9f32bd5cbf495af3adfea3716f4d0bbbc0a245
+#      client-id: b7613a4152fbb9dfe6f8d526a5ec5e7eab59f8a169a1fdf57ba3ff234fd76928c2a25b5e39852e5e031030f97d11ba32b959872a9f4c78b2bac7f861de368d49
+#      client-secret: 89a87e6d9264e7c1c58a50afb9498b3c6b12b31bb260894001655f07c9840b4fec958291eaead52acf2160bc6b9f32bd5cbf495af3adfea3716f4d0bbbc0a245
 
 #      # Módulo - LP1 - Márcio
 #      client-id: a3489e7dee0ad4e82c5f46cd5b0829cab1310524014e043ea613c5f4ed55b3090d1844661fc0cce7ec9f48d6cd3568fcbc2bc81c9907fd75028c9f9318348579
 #      client-secret: 2d34926193fb95719b5d54a2026e55ac37af00cb7bc98f06d3e203e19cfaa8bc8d0dfb11eb5ac9b7f38a391f34b43a309816e6f82f732ef9066898bb0ef251bb
 
       # Módulo - LP1 - Hiago
-#      client-id: 5835eed6bddf39b6a6844b5f9645e360b5c003bb9d65be17ef7cd5863f713b0e7bcfafaa691e4482af6a20c775c19dadcf22eb1e1edc0617c2ac06605e047b98
-#      client-secret: c726ad09489baacd3af62843ee514a95e9af9ff2a28bc2babbffc1554d69502a299a093f34ab5cefbf78001e8e7873a532bca90ec3f8e4b7b8a8f2fdf145e05f
+      client-id: 5835eed6bddf39b6a6844b5f9645e360b5c003bb9d65be17ef7cd5863f713b0e7bcfafaa691e4482af6a20c775c19dadcf22eb1e1edc0617c2ac06605e047b98
+      client-secret: c726ad09489baacd3af62843ee514a95e9af9ff2a28bc2babbffc1554d69502a299a093f34ab5cefbf78001e8e7873a532bca90ec3f8e4b7b8a8f2fdf145e05f
 
       portal-seguranca:
 #        url: http://portal-seguranca.java3-5.ti.lemaf.ufla.br

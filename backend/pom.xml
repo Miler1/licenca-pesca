@@ -206,6 +206,13 @@
             <version>2.1.2</version>
         </dependency>
 
+        <!--jrimum (Arquivo remessa)-->
+        <dependency>
+            <groupId>org.jrimum</groupId>
+            <artifactId>jrimum-texgit</artifactId>
+            <version>0.2.3-DEV-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>br.com.caelum.stella</groupId>
             <artifactId>caelum-stella-bean-validation</artifactId>
