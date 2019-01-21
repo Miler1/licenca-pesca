@@ -1,6 +1,6 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS, VALIDA_DADOS } from "../actions.type";
-import { Solicitante, toSolicitanteDTO, toSolicitanteBusca} from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MUNICIPIOS, SET_BUSCA_MAES, SET_SOLICITANTE_DADOS } from "../mutations.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, VALIDA_DADOS, BUSCA_DADOS_VALIDACAO } from "../actions.type";
+import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import Vue from "vue";
 
@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   cadastroCanActive: false,
   existeSolicitante: false,
   showStepsController: true,
-  buscaMaes: Array,
+  buscaMaes: [],
   buscaMunicipios: Array,
   cpfPesquisa: null,
   passaportePesquisa: null
@@ -30,27 +30,35 @@ export const getters = {
    */
   solicitante: state => state.solicitante,
 
+  /**
+   * Retorna o cpf.
+  */
   cpfPesquisa: state => state.cpfPesquisa,
 
+  /**
+   * Retorna o passaporte.
+  */
   passaportePesquisa: state => state.passaportePesquisa,
 
-    /**
+  /**
    * Retorna os nomes de mães gerados.
-   */
+  */
   buscaMaes: state => state.buscaMaes,
 
-    /**
+  /**
    * Retorna os municipios gerados.
-   */
-//remover
-  buscaDadosSolicitante: state => state.solicitante,
-
-  buscaMunicipios: state => state.buscaMunicipios,
+  */
+  // buscaMunicipios: state => state.buscaMunicipios,
 
   /**
    * Retorna true se existir o solicitante e false se não existir.
    */
   existeSolicitante: state => state.solicitante.nome !== null,
+
+  /**
+   * Retorna true se maes tiver com nomes e false se não conter.
+   */
+  validacaoDados: state => state.buscaMaes.length < 0,
 
   /**
    * Retorna verdadeiro quando o cadastro do solicitante
@@ -98,21 +106,23 @@ export const actions = {
         commit(SET_LISTA_LICENCAS, data.licencas);
       })
       .catch(error => {
-        if(error.response){
+        if (error.response) {
           commit(SET_ERROR_TELA_BUSCA, error.response.data);
           commit(CLEAN_SOLICITANTE);
         }
       });
   },
 
-  [BUSCA_DADOS]: ({ commit }, acessoResource) => {
+  [BUSCA_DADOS_VALIDACAO]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
+        commit(SET_ERROR_TELA_BUSCA, "");
         commit(SET_BUSCA_MAES, data.maes);
-        commit(SET_BUSCA_MUNICIPIOS, data.municipios);
       })
       .catch(error => {
-        commit(SET_ERROR, error);
+        if (error.response) {
+          commit(SET_ERROR_TELA_BUSCA, error.response.data);
+        }
       });
   },
 
@@ -120,7 +130,6 @@ export const actions = {
     AcessoService.verificaDados(pessoa, listaDadosValidacaoDTO)
       .then(({ data }) => {
         commit(SET_BUSCA_MAES, data.maes);
-        commit(SET_BUSCA_MUNICIPIOS, data.municipios);
       })
       .catch(error => {
         commit(SET_ERROR, error);
@@ -153,16 +162,6 @@ export const mutations = {
       state.solicitante = null;
     }
   },
-  
-
-  [SET_SOLICITANTE_DADOS]:(state, buscaDadosSolicitante) => {
-    
-    if (buscaDadosSolicitante !== null) {
-      state.buscaDadosSolicitante = toSolicitanteBusca(buscaDadosSolicitante);
-    } else {
-      state.buscaDadosSolicitante = null;
-    }
-  },
 
   [SET_BUSCA_MAES]: (state, maes) => {
     if (maes !== null) {
@@ -172,25 +171,17 @@ export const mutations = {
     }
   },
 
-  [SET_BUSCA_MUNICIPIOS]: (state, municipios) => {
-    if (municipios !== null) {
-      state.buscaMunicipios = municipios;
-    } else {
-      state.buscaMunicipios = null;
-    }
-  },
-
   [CLEAN_SOLICITANTE]: (state) => {
     state.solicitante = Solicitante;
   },
 
   [SET_CPF_PESQUISA]: (state, cpf) => {
     state.cpfPesquisa = cpf;
-  },  
-  
+  },
+
   [SET_PASSAPORTE_PESQUISA]: (state, passaporte) => {
     state.passaportePesquisa = passaporte;
-  },  
+  },
 
   [SET_LISTA_LICENCAS]: (state, listaLicencas) => {
     Vue.set(state, 'listaLicencas', [...listaLicencas]);

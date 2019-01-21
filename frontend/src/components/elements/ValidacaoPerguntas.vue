@@ -8,7 +8,7 @@
                 el-card.box-card.column
                     h3.title.display {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
                         div(style='margin-top: 20px')
-                            el-radio-group(v-for="nomesMae in buscaMaes", :key="nomesMae" v-model="pessoa.mae" )
+                            el-radio-group(v-for="nomesMae in buscaMaes", :key="nomesMae" v-model="pessoa.nomeMae" )
                                 el-radio.custom(:label='nomesMae' border='' required) {{nomesMae}}         
         .flex-item   
             .espaco-cards   
@@ -18,13 +18,14 @@
                         el-form(v-model="pessoa" ref="pessoa" label-position="top")
                             el-form-item(prop="dataNascimento")                           
                                 el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${validacao_prefix}format.data`)")
-        .flex-item
-            .espaco-cards
-                el-card.box-card.column
-                    h3.title {{ $t(`${validacao_prefix}titulo.municipio`) }}
-                        div(style='margin-top: 20px')
-                            el-radio-group(v-for="nomesMunicipios in buscaMunicipios", :key="nomesMunicipios" v-model="pessoa.municipio" )
-                                el-radio(:label='nomesMunicipios', border='' required) {{nomesMunicipios}}
+        //- .flex-item
+        //-     .espaco-cards
+        //-         el-card.box-card.column
+        //-             h3.title {{ $t(`${validacao_prefix}titulo.municipio`) }}
+        //-                 div(style='margin-top: 20px')
+        //-                     el-radio-group(v-for="nomesMunicipios in buscaMunicipios", :key="nomesMunicipios" v-model="pessoa.municipio" )
+        //-                         el-radio(:label='nomesMunicipios', border='' required) {{nomesMunicipios}}
+
     .buttons
         .right
           el-button(icon="el-icon-check" type="default" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
@@ -66,12 +67,12 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["solicitante", "buscaMaes", "buscaMunicipios"])
+        ...mapGetters(["solicitante", "buscaMaes", "errorTelaInicial", "validacaoDados", "buscaMunicipios"])
     },
     
     methods: {
 
-         instantiate() {
+        instantiate() {
             Vue.prototype.$validacaoPerguntas = this;
         },
 
@@ -83,11 +84,12 @@ export default {
             this.validacaoDados();
         },
         atualizarCpfPesquisado(resource) {
+            debugger
             this.pessoa.cpf = resource.cpf;
             this.pessoa.passaporte = resource.passaporte;
                 if(resource.cpf === null && resource.passaporte){
-                this.pessoa.estrangeiro = true;
-                this.estrangeiroDisabled = true;
+                    this.pessoa.estrangeiro = true;
+                    this.estrangeiroDisabled = true;
                 } else {
                     this.pessoa.estrangeiro = false;
                     this.estrangeiroDisabled = false;

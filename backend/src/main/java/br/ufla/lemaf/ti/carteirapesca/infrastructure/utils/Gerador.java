@@ -55,9 +55,9 @@ public class Gerador {
 		return gerar(Properties.pathArquivos() + "maes", tamanho, padrao);
 
 	}
-
-	public String[] gerarMunicipios(Integer tamanho, Integer padrao){
-		return gerar(Properties.pathArquivos() + "municipios", tamanho, padrao);
-	}
+//
+//	public String[] gerarMunicipios(Integer tamanho, Integer padrao){
+//		return gerar(Properties.pathArquivos() + "municipios", tamanho, padrao);
+//	}
 
 }

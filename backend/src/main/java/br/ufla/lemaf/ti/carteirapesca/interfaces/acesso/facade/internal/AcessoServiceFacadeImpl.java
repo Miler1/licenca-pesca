@@ -103,7 +103,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 			solicitante = solicitanteRopository.findByIdentityCpfNumero(pessoaDTO.getCpf());
 
-		} else {
+		} else if(pessoaDTO.getPassaporte() != null){
 
 			solicitante = solicitanteRopository.findByIdentityPassaporteNumero(pessoaDTO.getPassaporte());
 		}
@@ -146,19 +146,11 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		var pessoa = WebServiceUtils
 			.webServiceEU()
-//			.buscarPessoaFisicaPeloCpf("13090989646" /*validacaoDTO.getCpf()*/);
 			.buscarPessoaFisicaPeloCpf(validacaoDTO.getCpf());
 
 		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0){
 			return false;
-		} else if(!pessoa.nomeMae.equals(validacaoDTO.getMae())) {
-			return false;
-		} else if((pessoa.enderecos
-			.stream()
-			.filter(e ->
-				e.municipio.nome.equals(validacaoDTO.getMunicipio()))
-			.findFirst()
-			.orElse(null)) == null) {
+		} else if(!pessoa.nomeMae.toUpperCase().equals(validacaoDTO.getNomeMae().toUpperCase())) {
 			return false;
 		}
 

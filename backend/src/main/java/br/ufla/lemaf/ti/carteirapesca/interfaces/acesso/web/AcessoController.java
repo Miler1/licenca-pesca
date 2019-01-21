@@ -101,18 +101,20 @@ public class AcessoController {
 	public ResponseEntity verificaDados(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
 		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO)) {
+
 			return new ResponseEntity<>(HttpStatus.OK);
+
 		}
 //		else {
-//			redirecionaValidacao("Dados não conferem. Após 3 tentativas erradas, o CPF/PASSAPORTE será bloqueado por 2 horas.");
+////			redirecionaValidacao("Dados não conferem. Após 3 tentativas erradas, o CPF/PASSAPORTE será bloqueado por 2 horas.");
 //		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 
 	@CrossOrigin("*")
 	@PostMapping("/buscarDados")
-	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) {
+	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) throws Exception {
 
 
 		var listaLicencaDTO = new ListaLicencaDTO();
@@ -120,6 +122,8 @@ public class AcessoController {
 		var pessoa = acessoServiceFacade.acessar(acessoResource);
 
 		listaLicencaDTO.setPessoa(pessoa);
+
+		listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
 
 		return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
 
@@ -153,10 +157,9 @@ public class AcessoController {
 		Integer padrao = Integer.valueOf(pessoa.getCpf().substring(pessoa.getCpf().length()-1));
 		Integer posicao = padrao > 3 ? Math.abs(padrao/3) : padrao;
 
-
-		String[] municipios = gerador.gerarMunicipios(quantidade, padrao);
-		municipios[posicao] = CarteiraUtils.capitalize(pessoa.getEnderecoPrincipal().getMunicipio().nome);
-		listasVerificacao.put("municipios", municipios);
+//		String[] municipios = gerador.gerarMunicipios(quantidade, padrao);
+//		municipios[posicao] = CarteiraUtils.capitalize(pessoa.getEnderecoPrincipal().getMunicipio().nome);
+//		listasVerificacao.put("municipios", municipios);
 
 		if(posicao > 3) {
 			posicao = 0;

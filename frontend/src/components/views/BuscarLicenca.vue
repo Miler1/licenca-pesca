@@ -44,7 +44,7 @@
 import { mapGetters } from "vuex";
 import Tabela from "../elements/Table";
 import Card from "../layouts/Card";
-import { buscar, BUSCA_DADOS } from "../../store/actions.type";
+import { buscar, BUSCA_DADOS_VALIDACAO } from "../../store/actions.type";
 import Properties from "../../properties";
 import InputElement from "../elements/InputElement";
 import { REGISTRAR, CANCELAR, BUSCAR_LICENCAS} from "../../store/actions.type";
@@ -83,7 +83,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive","existeSolicitante","errorTelaInicial", "buscaMaes", "buscaMunicipios"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante",  "errorTelaInicial", "buscaMaes", "buscaMunicipios"])
   },
 
   methods: {
@@ -94,10 +94,10 @@ export default {
     },
     acessar() {
       // this.$store.dispatch(BUSCAR_LICENCAS, this.generateAcessoResource(this.resource));
-      this.$store.dispatch(BUSCA_DADOS, this.generateAcessoResource(this.resource));
-      debugger
+      this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource));
+      
       if(this.$refs.validacaoPerguntas){
-        this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+          this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
       }
     },
 

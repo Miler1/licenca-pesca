@@ -18,21 +18,20 @@ public class ValidacaoDTO {
 
 	private Date dataNascimento;
 
-	private String municipio;
+//	private String municipio;
 
-	private String mae;
+	private String nomeMae;
 
 
 	@JsonCreator
 	public ValidacaoDTO(@JsonProperty("cpf") String cpf,
 						@JsonProperty("passaporte") String passaporte,
 						@JsonProperty("dataNascimento") Date dataNascimento,
-						@JsonProperty("municipio") String municipio,
-						@JsonProperty("mae") String mae) {
+						@JsonProperty("nomeMae") String nomeMae) {
 		this.cpf = (cpf != null ? CPFUtils.unformat(cpf) : null);
 		this.passaporte = passaporte;
 		this.dataNascimento = dataNascimento;
-		this.municipio = municipio;
-		this.mae = mae;
+//		this.municipio = municipio;
+		this.nomeMae = nomeMae;
 	}
 }
