@@ -98,7 +98,8 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.dataCriacao = new Date();
 			this.status = Status.AGUARDANDO_PAGAMENTO_BOLETO;
 			this.caminhoBoleto = caminhoBoleto;
-			this.dataVencimentoBoleto = Date.from(Instant.from(LocalDate.now().plusMonths(QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO)));
+			this.setDataVencimentoBoleto();
+
 		} catch (IllegalArgumentException | NullPointerException ex) {
 
 			throw new LicencaException("licenca.creation");
