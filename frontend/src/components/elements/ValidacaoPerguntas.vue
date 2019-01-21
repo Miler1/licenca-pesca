@@ -39,7 +39,7 @@ import Card from "../layouts/Card";
 import { INTERFACE_VALIDACAO_PREFIX } from "../../utils/messages/interface/registrar/validacao/validacao";
 import { translate } from "../../utils/helpers/internationalization";
 import Properties from "../../properties";
-import { FETCH_DADOS_CARTEIRA, VALIDA_DADOS, SEND_SOLICITANTE } from '../../store/actions.type';
+import { FETCH_DADOS_CARTEIRA, VALIDA_DADOS, SEND_SOLICITANTE, BUSCAR_LICENCAS } from '../../store/actions.type';
 import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
 import StatusCard from "../layouts/StatusCard";
 import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
@@ -77,7 +77,7 @@ export default {
         },
 
         validarDados(){
-            this.$store.dispatch(VALIDA_DADOS, this.pessoa);
+            this.$store.dispatch(BUSCAR_LICENCAS, this.resource.cpf);
         },
         
         atualizarCpfPesquisado(resource) {

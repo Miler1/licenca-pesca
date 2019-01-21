@@ -39,6 +39,6 @@ public interface AcessoServiceFacade {
 
 	List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa) throws Exception;
 
-	Boolean validaDadosAcessoLicencas(ValidacaoDTO validacaoDTO) throws Exception;
+	Boolean validaDadosAcessoLicencas(AcessoResource acessoResource) throws Exception;
 
 }

@@ -1,8 +1,11 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * DTO de Recurso do Usuario para o acesso do {@link AcessoController}.
@@ -13,9 +16,17 @@ import lombok.Data;
 @Data
 public class AcessoResource {
 
+
+
 	private String cpf;
 
 	private String passaporte;
+
+	private Date dataNascimento;
+
+//	private String municipio;
+
+	private String nomeMae;
 
 	/**
 	 * Construtor.
@@ -27,9 +38,15 @@ public class AcessoResource {
 	 */
 	@JsonCreator
 	public AcessoResource(@JsonProperty("cpf") String cpf,
-	                      @JsonProperty("passaporte") String passaporte) {
-		this.cpf = cpf;
+						  @JsonProperty("passaporte") String passaporte,
+						  @JsonProperty("dataNascimento") Date dataNascimento,
+						  @JsonProperty("nomeMae") String nomeMae) {
+
+		this.cpf = (cpf != null ? CPFUtils.unformat(cpf) : null);
 		this.passaporte = passaporte;
+		this.dataNascimento = dataNascimento;
+//		this.municipio = municipio;
+		this.nomeMae = nomeMae;
 	}
 
 	@Override

@@ -95,7 +95,6 @@ export default {
     acessar() {
       // this.$store.dispatch(BUSCAR_LICENCAS, this.generateAcessoResource(this.resource));
       this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource));
-      console.log(this.existeDadosParaValidacao)
       if(this.$refs.validacaoPerguntas){
           this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
       }

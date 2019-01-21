@@ -105,6 +105,7 @@ export const actions = {
         commit(SET_ERROR_TELA_BUSCA, "");
         commit(SET_SOLICITANTE, data.pessoa);
         commit(SET_LISTA_LICENCAS, data.licencas);
+        commit(SET_BUSCA_MAES, data.maes);
       })
       .catch(error => {
         if (error.response) {

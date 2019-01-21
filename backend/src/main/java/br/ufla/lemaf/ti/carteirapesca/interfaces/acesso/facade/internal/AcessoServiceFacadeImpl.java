@@ -67,12 +67,15 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		if (resource.getCpf() != null) {
 			recursoValidado = new AcessoResource(
 				CPFUtils.unformat(resource.getCpf()),
-				resource.getPassaporte()
+				resource.getPassaporte(), resource.getDataNascimento(),
+				resource.getNomeMae()
 			);
 		} else {
 			recursoValidado = new AcessoResource(
 				resource.getCpf(),
-				resource.getPassaporte()
+				resource.getPassaporte() ,
+				resource.getDataNascimento(),
+				resource.getNomeMae()
 			);
 		}
 		// Converte dado Pessoa em DTO de Pessoa
@@ -113,9 +116,9 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	}
 
 	@Override
-	public Boolean validaDadosAcessoLicencas(ValidacaoDTO validacaoDTO) throws Exception {
+	public Boolean validaDadosAcessoLicencas(AcessoResource acessoResource) throws Exception {
 
-		PessoaDTO pessoaDTO = new PessoaDTO(validacaoDTO.getCpf(), validacaoDTO.getPassaporte());
+		PessoaDTO pessoaDTO = new PessoaDTO(acessoResource.getCpf(), acessoResource.getPassaporte());
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
@@ -124,13 +127,8 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 			throw new Exception("CPF / passaporte bloqueado, tente novamente após 2 horas");
 
 		}
-//		
-//		else if(solicitante.getNumeroTentativas() < 3 ){
-//
-//			throw new Exception("Dados não conferem. Após 3 tentativas erradas, o CPF / PASSAPORTE será bloqueado por 2 horas.");
-//		}
 
-		Boolean dadosValidos = dadosAcessoValidos(validacaoDTO);
+		Boolean dadosValidos = dadosAcessoValidos(acessoResource);
 
 		if(!dadosValidos) {
 
@@ -146,17 +144,17 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 	}
 
-	private static Boolean dadosAcessoValidos(ValidacaoDTO validacaoDTO) {
+	private static Boolean dadosAcessoValidos(AcessoResource acessoResource) {
 
 		WebServiceUtils.validarWebService();
 
 		var pessoa = WebServiceUtils
 			.webServiceEU()
-			.buscarPessoaFisicaPeloCpf(validacaoDTO.getCpf());
+			.buscarPessoaFisicaPeloCpf(acessoResource.getCpf());
 
-		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0){
+		if(pessoa.dataNascimento.compareTo(acessoResource.getDataNascimento()) != 0){
 			return false;
-		} else if(!pessoa.nomeMae.toUpperCase().equals(validacaoDTO.getNomeMae().toUpperCase())) {
+		} else if(!pessoa.nomeMae.toUpperCase().equals(acessoResource.getNomeMae().toUpperCase())) {
 			return false;
 		}
 

@@ -82,8 +82,10 @@ public class AcessoController {
 	}
 
 	@CrossOrigin("*")
-	@PostMapping("/buscarLicensas")
+	@PostMapping("/buscarLicencas")
 	public ResponseEntity<ListaLicencaDTO> buscarLicensas(@RequestBody final AcessoResource acessoResource) throws Exception {
+
+		acessoServiceFacade.validaDadosAcessoLicencas(acessoResource);
 
 		var listaLicencaDTO = new ListaLicencaDTO();
 		var pessoa = acessoServiceFacade.acessar(acessoResource);
@@ -96,8 +98,8 @@ public class AcessoController {
 
 	}
 
-	@CrossOrigin("*")
-	@PostMapping("/verificaDados")
+//	@CrossOrigin("*")
+//	@PostMapping("/verificaDados")
 	public ResponseEntity verificaDados(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
 //		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO)) {
@@ -106,11 +108,9 @@ public class AcessoController {
 //
 //		}
 
-		acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 
-//		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 

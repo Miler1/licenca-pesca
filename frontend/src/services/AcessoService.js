@@ -15,7 +15,7 @@ const AcessoService = {
   },
 
   buscarLicensas: acessoResource => {
-    return ApiService.post(`${Properties.BASE_URL}/api/buscarLicensas`, acessoResource, false);
+    return ApiService.postWithBlock(`${Properties.BASE_URL}/api/buscarLicensas`, acessoResource, false);
   },
 
   buscarDados: acessoResource => {
@@ -23,7 +23,7 @@ const AcessoService = {
   },
 
   verificaDados: validacaoDTO => {
-    return ApiService.postWithBlock(`${Properties.BASE_URL}/api/verificaDados`, validacaoDTO);
+    return ApiService.post(`${Properties.BASE_URL}/api/verificaDados`, validacaoDTO);
   },
 
   /**
