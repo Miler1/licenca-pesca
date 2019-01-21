@@ -57,7 +57,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 	 * @return A licença.
 	 */
 	@Override
-	public LicencaDTO consultar(final String protocolo) {
+	public Licenca consultar(final String protocolo) {
 
 		var formatter = new ProtocoloFormatter();
 
@@ -65,11 +65,16 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 			? ProtocoloUtils.unformat(protocolo)
 			: protocolo;
 
-		var assembler = new LicencaDTOAssembler();
+		return application.consulta(new Protocolo(protocoloValido));
 
-		return assembler.toDTO(
-			application.consulta(new Protocolo(protocoloValido))
-		);
+	}
+
+	@Override
+	public LicencaDTO consultarLicencaDTO(final String protocolo) {
+
+		var licenca = consultar(protocolo);
+
+		return new LicencaDTOAssembler().toDTO(licenca);
 
 	}
 

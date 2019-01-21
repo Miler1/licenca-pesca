@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.*;
@@ -38,6 +39,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	private ProtocoloBuilder protocoloBuilder;
 	private CarteiraBuilder carteiraBuilder;
 	private BoletoBuilder boletoBuilder;
+	private LicencaRepository licencaRepository;
 
 	private SolicitanteRopository solicitanteRopository;
 
@@ -53,11 +55,13 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	public RegistroApplicationImpl(final ProtocoloBuilder protocoloBuilder,
 	                               final CarteiraBuilder carteiraBuilder,
 	                               final BoletoBuilder boletoBuilder,
-	                               final SolicitanteRopository solicitanteRopository) {
+	                               final SolicitanteRopository solicitanteRopository,
+	                               final LicencaRepository licencaRepository) {
 		this.protocoloBuilder = protocoloBuilder;
 		this.carteiraBuilder = carteiraBuilder;
 		this.boletoBuilder = boletoBuilder;
 		this.solicitanteRopository = solicitanteRopository;
+		this.licencaRepository = licencaRepository;
 	}
 
 	/**
@@ -208,5 +212,16 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		return WebServiceUtils
 			.webServiceEU()
 			.buscarPessoaComFiltro(filtroPessoa);
+	}
+
+	@Override
+	public String regerarBoleto(Licenca licenca) {
+
+		licenca.setDataVencimentoBoleto();
+		licencaRepository.save(licenca);
+
+		Pessoa pessoa = buscarDadosSolicitante(licenca.getSolicitante());
+
+		return boletoBuilder.gerarBoleto(licenca.getProtocolo(), licenca.modalidade(), pessoa);
 	}
 }
