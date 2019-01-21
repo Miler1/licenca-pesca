@@ -115,8 +115,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
+
 		if(solicitante.getNumeroTentativas() == 3) {
-			throw new Exception("INSERIR MSG DE BLOQUEIO de USUARIO");
+
+			throw new Exception("CPF/PASSAPORTE bloqueado, tente novamente após 2 horas");
 		}
 
 		Boolean dadosValidos = dadosAcessoValidos(validacaoDTO);
