@@ -25,7 +25,7 @@
 					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 
 			.data
-				cadastrar-dados-pessoa(v-if="showCadastro()", ref="cadastroDadosPessoa")
+				cadastrar-dados-pessoa(v-show="showCadastro()", ref="cadastroDadosPessoa")
 				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()", ref="visualizarDadosPessoa")
 </template>
 
@@ -77,7 +77,7 @@ export default {
     },
 
     getValidated () {
-      if(this.$refs.cadastroDadosPessoa) {
+      if(this.$refs.cadastroDadosPessoa && this.showCadastro() ) {
         this.$refs.cadastroDadosPessoa.validate();
         return this.$refs.cadastroDadosPessoa.getValidate();
       } else if(this.$refs.visualizarDadosPessoa){

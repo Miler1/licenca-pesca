@@ -14,12 +14,12 @@
           el-form-item(:label="$t(`${cadastrar_prefix}labels.nome`)" prop="nome")
               el-input(v-model="pessoa.nome", ref="nome")
 
-        el-col(:span="6" v-if="pessoa.estrangeiro === false")
-          el-form-item(:label="$t(`${cadastrar_prefix}labels.cpf`)" prop="cpf")
+        el-col(:span="6" v-show="pessoa.estrangeiro === false")
+          el-form-item(:label="$t(`${cadastrar_prefix}labels.cpf`)")
             el-input(v-model="pessoa.cpf" v-mask="['###.###.###-##']" disabled)
 
-        el-col(:span="6" v-if="pessoa.estrangeiro === true")
-          el-form-item(:label="$t(`${cadastrar_prefix}labels.passaporte`)" prop="passaporte")
+        el-col(:span="6" v-show="pessoa.estrangeiro === true")
+          el-form-item(:label="$t(`${cadastrar_prefix}labels.passaporte`)" )
             el-input(v-model="pessoa.passaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']" disabled)
 
         el-col(:span="6")
@@ -232,20 +232,7 @@ export default {
   computed: {
     ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa"])
   },
-  updated(){
-    if(!this.pessoa.cpf && !this.pessoa.cpf){
-
-      this.pessoa.cpf = this.cpfPesquisa;
-      this.pessoa.passaporte = this.passaportePesquisa;
-      if(this.pessoa.cpf === null && this.pessoa.cpf){
-        this.pessoa.estrangeiro = true;
-        this.estrangeiroDisabled = true;
-      } else {
-        this.pessoa.estrangeiro = false;
-        this.estrangeiroDisabled = false;
-      }
-    }
-  },
+ 
   methods: {
     instantiate() {
       Vue.prototype.$cadastroPessoa = this;
@@ -260,10 +247,11 @@ export default {
       return this.valid;
     },
     atualizarCpfPesquisado(resource) {
-
+      console.log('cpf', resource.cpf);
+      console.log('passaporte', resource.passaporte);
       this.pessoa.cpf = resource.cpf;
       this.pessoa.passaporte = resource.passaporte;
-      if(resource.cpf === null && resource.passaporte){
+      if(resource.cpf === null && resource.passaporte !== null){
         this.pessoa.estrangeiro = true;
         this.estrangeiroDisabled = true;
       } else {
