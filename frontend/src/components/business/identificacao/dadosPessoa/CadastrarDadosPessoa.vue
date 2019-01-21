@@ -232,6 +232,20 @@ export default {
   computed: {
     ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa"])
   },
+  updated(){
+    if(!this.pessoa.cpf && !this.pessoa.cpf){
+
+      this.pessoa.cpf = this.cpfPesquisa;
+      this.pessoa.passaporte = this.passaportePesquisa;
+      if(this.pessoa.cpf === null && this.pessoa.cpf){
+        this.pessoa.estrangeiro = true;
+        this.estrangeiroDisabled = true;
+      } else {
+        this.pessoa.estrangeiro = false;
+        this.estrangeiroDisabled = false;
+      }
+    }
+  },
   methods: {
     instantiate() {
       Vue.prototype.$cadastroPessoa = this;
@@ -246,7 +260,6 @@ export default {
       return this.valid;
     },
     atualizarCpfPesquisado(resource) {
-
 
       this.pessoa.cpf = resource.cpf;
       this.pessoa.passaporte = resource.passaporte;
