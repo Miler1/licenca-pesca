@@ -9,7 +9,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.shared.ValueObject;
  * @since 1.0
  */
 public enum Status implements ValueObject<Status> {
-	AGUARDANDO_PAGAMENTO_BOLETO, ATIVO, INVALIDADO, VENCIDO;
+	AGUARDANDO_PAGAMENTO_BOLETO, ATIVO, INVALIDADO, VENCIDO, RENOVADO;
 
 	/**
 	 * {@inheritDoc}

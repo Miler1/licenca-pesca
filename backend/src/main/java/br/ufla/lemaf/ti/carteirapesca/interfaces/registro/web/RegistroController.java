@@ -70,4 +70,14 @@ public class RegistroController {
 
 	}
 
+	@CrossOrigin("*")
+	@PostMapping("/renovar")
+	public ResponseEntity<Void> renovar(
+		@RequestBody final String protocolo) {
+
+
+		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+	}
+
 }
