@@ -22,6 +22,8 @@ const GERAL = {
       label: ["Etapa {0} de {1}", "Step {0} of {1}"]
     },
     listaLicenca: {
+      semLicenca: ["Não existe licença cadastrada para o CPF/Passaporte pesquisado. Para realizar o cadastramento, utilize o botão 'Cadastrar Licença'.",
+      "The CPF/Passport searched doesn't have any license. For register one, please use 'Register license' buttom."],
       titulo: ["Lista de licenças", "License list"],
       ativacao: ["Ativação", "Activate date"],
       cadastro: ["Cadastro", "Register date"],

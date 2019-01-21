@@ -1,7 +1,7 @@
 <template lang="pug">
 #lista-licenca
-    h3.title.withDivisor {{ $t(`${consultar_prefix}listaLicenca.titulo`) }}
-    .licencas(v-for="lista in listaLicencas")
+    h3.title.withDivisor(v-if="listaLicencas && listaLicencas.length > 0") {{ $t(`${consultar_prefix}listaLicenca.titulo`) }}
+    .licencas(v-if="listaLicencas && listaLicencas.length > 0" v-for="lista in listaLicencas")
         .protocolo {{ lista.protocolo.codigoFormatado }}
         .withDivisor.listMargin
             .flex
@@ -37,6 +37,8 @@
                                 el-dropdown-item(type="primary", v-if="lista.status === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
                                 el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                         span(v-if="lista.status === 'INVALIDADO'") -
+    .sem-licenca.withDivisor(v-if="!listaLicencas || listaLicencas.length <= 0")
+        | {{ $t(`${consultar_prefix}listaLicenca.semLicenca`) }}
 </template>
 
 <script>
@@ -132,7 +134,14 @@ export default {
 .el-dropdown-menu
     // margin-left: -100px !important
 
+
+
 #lista-licenca
+
+    .sem-licenca
+        text-align: center
+        font-size: 15px
+    
     .title
         margin-bottom: 20px
 

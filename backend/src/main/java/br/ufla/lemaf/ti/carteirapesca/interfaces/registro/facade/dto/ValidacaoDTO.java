@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class ValidacaoDTO {
 						@JsonProperty("dataNascimento") Date dataNascimento,
 						@JsonProperty("municipio") String municipio,
 						@JsonProperty("mae") String mae) {
-		this.cpf = "13090989646";
+		this.cpf = (cpf != null ? CPFUtils.unformat(cpf) : null);
 		this.passaporte = passaporte;
 		this.dataNascimento = dataNascimento;
 		this.municipio = municipio;

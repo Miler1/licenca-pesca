@@ -88,6 +88,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
 		if(solicitante == null) {
+
 			throw new Exception("Pessoa não encontrada!");
 		}
 
@@ -99,8 +100,11 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		Solicitante solicitante = null;
 
 		if (pessoaDTO.getCpf() != null) {
+
 			solicitante = solicitanteRopository.findByIdentityCpfNumero(pessoaDTO.getCpf());
+
 		} else {
+
 			solicitante = solicitanteRopository.findByIdentityPassaporteNumero(pessoaDTO.getPassaporte());
 		}
 
@@ -115,10 +119,9 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
-
 		if(solicitante.getNumeroTentativas() == 3) {
 
-			throw new Exception("CPF/PASSAPORTE bloqueado, tente novamente após 2 horas");
+			throw new Exception("CPF / passaporte bloqueado, tente novamente após 2 horas");
 		}
 
 		Boolean dadosValidos = dadosAcessoValidos(validacaoDTO);
@@ -143,7 +146,8 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		var pessoa = WebServiceUtils
 			.webServiceEU()
-			.buscarPessoaFisicaPeloCpf("13090989646" /*validacaoDTO.getCpf()*/);
+//			.buscarPessoaFisicaPeloCpf("13090989646" /*validacaoDTO.getCpf()*/);
+			.buscarPessoaFisicaPeloCpf(validacaoDTO.getCpf());
 
 		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0){
 			return false;

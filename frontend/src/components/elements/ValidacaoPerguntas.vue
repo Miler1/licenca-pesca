@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import { mapGetters } from "vuex";
 import Card from "../layouts/Card";
 import { INTERFACE_VALIDACAO_PREFIX } from "../../utils/messages/interface/registrar/validacao/validacao";
@@ -69,12 +70,28 @@ export default {
     },
     
     methods: {
+
+         instantiate() {
+            Vue.prototype.$validacaoPerguntas = this;
+        },
+
         validarDados(){
             this.$store.dispatch(VALIDA_DADOS, this.pessoa);
         },
 
         created() {
             this.validacaoDados();
+        },
+        atualizarCpfPesquisado(resource) {
+            this.pessoa.cpf = resource.cpf;
+            this.pessoa.passaporte = resource.passaporte;
+                if(resource.cpf === null && resource.passaporte){
+                this.pessoa.estrangeiro = true;
+                this.estrangeiroDisabled = true;
+                } else {
+                    this.pessoa.estrangeiro = false;
+                    this.estrangeiroDisabled = false;
+                }
         },
 
     }

@@ -54,6 +54,7 @@ import { CONSULTAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/
 import VisualizarDadosPessoa from "../business/identificacao/dadosPessoa/VisualizarDadosPessoa";
 import ListaLicencas from "../business/identificacao/dadosPessoa/ListaLicencas";
 import ValidacaoPerguntas from "../elements/ValidacaoPerguntas";
+import { debug } from 'util';
 
 export default {
   name: "BuscarLicenca",
@@ -94,6 +95,10 @@ export default {
     acessar() {
       // this.$store.dispatch(BUSCAR_LICENCAS, this.generateAcessoResource(this.resource));
       this.$store.dispatch(BUSCA_DADOS, this.generateAcessoResource(this.resource));
+      debugger
+      if(this.$refs.validacaoPerguntas){
+        this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+      }
     },
 
     generateAcessoResource(resource) {

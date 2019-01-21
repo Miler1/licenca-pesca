@@ -103,11 +103,9 @@ public class AcessoController {
 		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
-
 //		else {
 //			redirecionaValidacao("Dados não conferem. Após 3 tentativas erradas, o CPF/PASSAPORTE será bloqueado por 2 horas.");
 //		}
-
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

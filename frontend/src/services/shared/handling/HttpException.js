@@ -68,6 +68,8 @@ function generateMessage(error) {
     return HttpError[status];
   } else if (!_.isNil(error.response.data.message)) {
     return error.response.data.message;
+  } else if (!_.isNil(error.response.data)) {
+    return error.response.data;
   } else {
     return null;
   }

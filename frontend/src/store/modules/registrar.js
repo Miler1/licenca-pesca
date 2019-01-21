@@ -4,13 +4,14 @@ import {
   CADASTRAR_SOLICITANTE,
   SET_ERROR,
   SET_MODALIDADE_PESCA,
-  SET_MUNICIPIOS, SET_PROTOCOLO,
+  SET_MUNICIPIOS, SET_MUNICIPIOS_CORRESPONDENCIA, SET_PROTOCOLO,
   SET_UFS,
   CLEAN_REGISTRO
 } from "../mutations.type";
 import {
   FETCH_MODALIDADE_PESCA,
   FETCH_MUNICIPIOS,
+  FETCH_MUNICIPIOS_CORRESPONDENCIA,
   FETCH_UFS,
   REGISTRAR,
   SEND_INFORMACOES_COMPLEMENTARES,
@@ -35,6 +36,7 @@ import { stat } from "fs";
 
 const INITIAL_STATE = {
   municipios: [],
+  municipiosCorrespondencia: [],
   ufs: [],
   informacoesComplementaresResource: {
     modalidadePesca: MODALIDADE_PESCA_MOCK,
@@ -66,6 +68,7 @@ export const getters = {
    * Retorna a lista de municipios.
    */
   municipios: state => state.municipios,
+  municipiosCorrespondencia: state => state.municipiosCorrespondencia,
 
   /**
    * Retorna a lista de UFs.
@@ -132,6 +135,16 @@ export const actions = {
         commit(SET_ERROR, error);
       });
   },
+  
+  [FETCH_MUNICIPIOS_CORRESPONDENCIA]: ({ commit }, uf) => {
+    AcessoService.fetchMunicipios(uf)
+      .then(({ data }) => {
+        commit(SET_MUNICIPIOS_CORRESPONDENCIA, data);
+      })
+      .catch(error => {
+        commit(SET_ERROR, error);
+      });
+  },
 
   /**
    * Busca e popula a lista de UFs.
@@ -168,6 +181,9 @@ export const mutations = {
    * Adiciona os municípios à state
    */
   [SET_MUNICIPIOS]: (state, municipios) => (state.municipios = municipios),
+
+
+  [SET_MUNICIPIOS_CORRESPONDENCIA]: (state, municipios) => (state.municipiosCorrespondencia = municipios),
 
   /**
    * Adiciona os UFs à state.

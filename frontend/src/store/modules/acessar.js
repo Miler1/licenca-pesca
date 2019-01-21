@@ -1,9 +1,8 @@
 import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS, VALIDA_DADOS } from "../actions.type";
-import { Solicitante, toSolicitanteDTO, toSolicitanteBusca } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA,  SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_BUSCA_MAES, SET_BUSCA_MUNICIPIOS, SET_SOLICITANTE_DADOS } from "../mutations.type";
+import { Solicitante, toSolicitanteDTO, toSolicitanteBusca} from "../../model/Solicitante";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MUNICIPIOS, SET_BUSCA_MAES, SET_SOLICITANTE_DADOS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
-import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
-import { stat } from "fs";
+import Vue from "vue";
 
 const INITIAL_STATE = {
   solicitante: Solicitante,
@@ -11,9 +10,11 @@ const INITIAL_STATE = {
   municipios: Array,
   cadastroCanActive: false,
   existeSolicitante: false,
+  showStepsController: true,
   buscaMaes: Array,
   buscaMunicipios: Array,
-  showStepsController: true
+  cpfPesquisa: null,
+  passaportePesquisa: null
 };
 
 export const state = Object.assign({}, INITIAL_STATE);
@@ -29,6 +30,10 @@ export const getters = {
    */
   solicitante: state => state.solicitante,
 
+  cpfPesquisa: state => state.cpfPesquisa,
+
+  passaportePesquisa: state => state.passaportePesquisa,
+
     /**
    * Retorna os nomes de mães gerados.
    */
@@ -37,9 +42,8 @@ export const getters = {
     /**
    * Retorna os municipios gerados.
    */
-
+//remover
   buscaDadosSolicitante: state => state.solicitante,
-
 
   buscaMunicipios: state => state.buscaMunicipios,
 
@@ -94,7 +98,10 @@ export const actions = {
         commit(SET_LISTA_LICENCAS, data.licencas);
       })
       .catch(error => {
-        commit(SET_ERROR_TELA_BUSCA, error.response.data);
+        if(error.response){
+          commit(SET_ERROR_TELA_BUSCA, error.response.data);
+          commit(CLEAN_SOLICITANTE);
+        }
       });
   },
 
@@ -177,9 +184,16 @@ export const mutations = {
     state.solicitante = Solicitante;
   },
 
-  [SET_LISTA_LICENCAS]: (state, listaLicencas) => {
+  [SET_CPF_PESQUISA]: (state, cpf) => {
+    state.cpfPesquisa = cpf;
+  },  
+  
+  [SET_PASSAPORTE_PESQUISA]: (state, passaporte) => {
+    state.passaportePesquisa = passaporte;
+  },  
 
-    state.listaLicencas = listaLicencas;
+  [SET_LISTA_LICENCAS]: (state, listaLicencas) => {
+    Vue.set(state, 'listaLicencas', [...listaLicencas]);
   },
   /**
    * Verifica se será necessário cadastrar o usuário.
