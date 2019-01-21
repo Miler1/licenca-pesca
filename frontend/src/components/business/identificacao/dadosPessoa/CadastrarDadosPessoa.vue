@@ -6,7 +6,7 @@
       el-row.section(:gutter="20")
 
         el-col(:span="6")
-          el-checkbox(v-model="pessoa.estrangeiro") {{ $t(`${cadastrar_prefix}labels.estrangeiro`) }}
+          el-checkbox(v-model="pessoa.estrangeiro", :disabled="estrangeiroDisabled") {{ $t(`${cadastrar_prefix}labels.estrangeiro`) }}
 
       el-row.section(:gutter="20")
 
@@ -16,11 +16,11 @@
 
         el-col(:span="6" v-if="pessoa.estrangeiro === false")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.cpf`)" prop="cpf")
-            el-input(v-model="pessoa.cpf" v-mask="['###.###.###-##']")
+            el-input(v-model="pessoa.cpf" v-mask="['###.###.###-##']" disabled)
 
         el-col(:span="6" v-if="pessoa.estrangeiro === true")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.passaporte`)" prop="passaporte")
-            el-input(v-model="pessoa.passaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']")
+            el-input(v-model="pessoa.passaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']" disabled)
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.dataNascimento`)" prop="dataNascimento")
@@ -180,6 +180,7 @@ export default {
   components: { ElInput },
   data() {
     return {
+      estrangeiroDisabled: false,
       pessoa: {
         estrangeiro: false,
         nome: null,
@@ -243,6 +244,19 @@ export default {
     },
     getValidate() {
       return this.valid;
+    },
+    atualizarCpfPesquisado(resource) {
+
+
+      this.pessoa.cpf = resource.cpf;
+      this.pessoa.passaporte = resource.passaporte;
+      if(resource.cpf === null && resource.passaporte){
+        this.pessoa.estrangeiro = true;
+        this.estrangeiroDisabled = true;
+      } else {
+        this.pessoa.estrangeiro = false;
+        this.estrangeiroDisabled = false;
+      }
     },
     isEPUrbano() {
       return (
