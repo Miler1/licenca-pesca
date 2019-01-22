@@ -77,7 +77,7 @@ export default {
         },
 
         validarDados(){
-            this.$store.dispatch(BUSCAR_LICENCAS, this.resource);
+            this.$store.dispatch(BUSCAR_LICENCAS, this.pessoa);
         },
 
         atualizarCpfPesquisado(resource) {
