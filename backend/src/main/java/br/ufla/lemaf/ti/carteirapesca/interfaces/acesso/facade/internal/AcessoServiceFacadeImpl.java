@@ -167,20 +167,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 				solicitanteRopository.save(solicitante);
 				return false;
 			}
+
 			return true;
 			
 		}
-//		else if(solicitante != null
-//					&& solicitante.getDataUltimaTentativa() != null
-//					&& solicitante.getNumeroTentativas() < Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE){
-//
-//			Date dataUltimaTentativa = DateUtils.somarHorasData(solicitante.getDataUltimaTentativa(), 24);
-//
-//			if(DateUtils.dataMaiorQue(new Date(), dataUltimaTentativa)) {
-//				solicitante.desbloqueiaSolicitante();
-//
-//				return false;
-//			}
 
 		return false;
 	}
@@ -194,11 +184,14 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 			.webServiceEU()
 			.buscarPessoaFisicaPeloCpf(acessoResource.getCpf());
 
-		if(pessoa.dataNascimento.compareTo(acessoResource.getDataNascimento()) != 0){
-			return false;
-		} else if(!pessoa.nomeMae.toUpperCase().equals(acessoResource.getNomeMae().toUpperCase())) {
+		if(pessoa.dataNascimento.compareTo(acessoResource.getDataNascimento()) != 0 || !pessoa.nomeMae.toUpperCase().equals(acessoResource.getNomeMae().toUpperCase()) ){
+
 			return false;
 		}
+//		else if(!pessoa.nomeMae.toUpperCase().equals(acessoResource.getNomeMae().toUpperCase())) {
+//
+//			return false;
+//		}
 
 		return true;
 

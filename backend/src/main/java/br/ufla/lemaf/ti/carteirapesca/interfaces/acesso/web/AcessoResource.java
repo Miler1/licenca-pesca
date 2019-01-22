@@ -15,14 +15,11 @@ import java.util.Date;
 public class AcessoResource {
 
 
-
 	private String cpf;
 
 	private String passaporte;
 
 	private Date dataNascimento;
-
-//	private String municipio;
 
 	private String nomeMae;
 

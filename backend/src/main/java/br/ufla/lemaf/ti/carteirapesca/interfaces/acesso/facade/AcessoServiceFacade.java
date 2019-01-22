@@ -39,4 +39,6 @@ public interface AcessoServiceFacade {
 
 	Boolean validaDadosAcessoLicencas(AcessoResource acessoResource) throws Exception;
 
+	Boolean solicitanteBloqueado(AcessoResource acessoResource) throws Exception;
+
 }

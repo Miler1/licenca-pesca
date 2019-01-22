@@ -5,6 +5,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRoposi
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.internal.AcessoServiceFacadeImpl;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
@@ -106,16 +107,21 @@ public class AcessoController {
 	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) throws Exception {
 
 
-		var listaLicencaDTO = new ListaLicencaDTO();
+		if(acessoServiceFacade.solicitanteBloqueado(acessoResource)) {
 
-		var pessoa = acessoServiceFacade.acessar(acessoResource);
+			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
 
-		listaLicencaDTO.setPessoa(pessoa);
+		} else {
+			var listaLicencaDTO = new ListaLicencaDTO();
 
-		listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
+			var pessoa = acessoServiceFacade.acessar(acessoResource);
 
-		return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
+			listaLicencaDTO.setPessoa(pessoa);
 
+			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
+
+			return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
+		}
 	}
 
 
