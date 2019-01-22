@@ -102,7 +102,7 @@ export const actions = {
   },
 
   [BUSCAR_LICENCAS]: ({ commit }, acessoResource) => {
-    AcessoService.buscarLicensas(acessoResource)
+    AcessoService.buscarLicencas(acessoResource)
       .then(({ data }) => {
         console.log(data);
         commit(SET_ERROR_TELA_BUSCA, "");

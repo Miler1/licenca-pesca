@@ -79,7 +79,7 @@ public class AcessoController {
 	}
 
 	@CrossOrigin("*")
-	@PostMapping(value="/buscarLicensas")
+	@PostMapping(value="/buscarLicencas")
 	public ResponseEntity<ListaLicencaDTO> buscarLicensas(@RequestBody final AcessoResource acessoResource) throws Exception {
 
 		if(acessoServiceFacade.validaDadosAcessoLicencas(acessoResource) == true){
