@@ -69,7 +69,15 @@ export default {
         },
 
         validarDados(){
-            this.$store.dispatch(BUSCAR_LICENCAS, this.pessoa);
+            let dto = {
+                acessoResource: {
+                    cpf: this.pessoa.cpf,
+                    passaporte: this.pessoa.passaporte
+                },
+                dataNascimento: this.pessoa.dataNascimento,
+                nomeMae: this.pessoa.nomeMae
+            }
+            this.$store.dispatch(BUSCAR_LICENCAS, dto);
         },
 
         atualizarCpfPesquisado(resource) {

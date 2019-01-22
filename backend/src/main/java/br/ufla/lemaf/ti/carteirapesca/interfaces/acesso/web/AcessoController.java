@@ -1,12 +1,12 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -82,13 +82,13 @@ public class AcessoController {
 
 	@CrossOrigin("*")
 	@PostMapping(value="/buscarLicencas")
-	public ResponseEntity<ListaLicencaDTO> buscarLicencas(@RequestBody final AcessoResource acessoResource) throws Exception {
+	public ResponseEntity<ListaLicencaDTO> buscarLicencas(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
-		if(acessoServiceFacade.validaDadosAcessoLicencas(acessoResource) == true){
+		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true){
 
 			var listaLicencaDTO = new ListaLicencaDTO();
 
-			var pessoa = acessoServiceFacade.acessar(acessoResource);
+			var pessoa = acessoServiceFacade.acessar(validacaoDTO.getAcessoResource());
 
 			listaLicencaDTO.setPessoa(pessoa);
 

@@ -19,9 +19,9 @@ public class AcessoResource {
 
 	private String passaporte;
 
-	private Date dataNascimento;
-
-	private String nomeMae;
+//	private Date dataNascimento;
+//
+//	private String nomeMae;
 
 	/**
 	 * Construtor.
@@ -33,14 +33,10 @@ public class AcessoResource {
 	 */
 	@JsonCreator
 	public AcessoResource(@JsonProperty("cpf") String cpf,
-						  @JsonProperty("passaporte") String passaporte,
-						  @JsonProperty("dataNascimento") Date dataNascimento,
-						  @JsonProperty("nomeMae") String nomeMae) {
+						  @JsonProperty("passaporte") String passaporte) {
 
 		this.cpf = (cpf != null ? CPFUtils.unformat(cpf) : null);
 		this.passaporte = passaporte;
-		this.dataNascimento = dataNascimento;
-		this.nomeMae = nomeMae;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -12,22 +12,19 @@ import java.util.Date;
 @Setter
 public class ValidacaoDTO {
 
-	private String cpf;
-
-	private String passaporte;
+	private AcessoResource acessoResource;
 
 	private Date dataNascimento;
 
 	private String nomeMae;
 
+	public AcessoResource getAcessoResource() {
+		return acessoResource;
+	}
 
 	@JsonCreator
-	public ValidacaoDTO(@JsonProperty("cpf") String cpf,
-						@JsonProperty("passaporte") String passaporte,
-						@JsonProperty("dataNascimento") Date dataNascimento,
+	public ValidacaoDTO(@JsonProperty("dataNascimento") Date dataNascimento,
 						@JsonProperty("nomeMae") String nomeMae) {
-		this.cpf = (cpf != null ? CPFUtils.unformat(cpf) : null);
-		this.passaporte = passaporte;
 		this.dataNascimento = dataNascimento;
 		this.nomeMae = nomeMae;
 	}

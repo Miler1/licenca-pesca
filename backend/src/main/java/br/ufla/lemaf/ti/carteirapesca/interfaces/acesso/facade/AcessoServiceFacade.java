@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public interface AcessoServiceFacade {
 
 	List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa) throws Exception;
 
-	Boolean validaDadosAcessoLicencas(AcessoResource acessoResource) throws Exception;
+	Boolean validaDadosAcessoLicencas(ValidacaoDTO validacaoDTO) throws Exception;
 
 	Boolean solicitanteBloqueado(AcessoResource acessoResource) throws Exception;
 

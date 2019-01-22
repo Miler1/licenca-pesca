@@ -1,4 +1,4 @@
-ALTER TABLE carteira_pesca.solicitante ADD COLUMN numero_tentativas integer NOT NULL default 0;
+ALTER TABLE carteira_pesca.solicitante ADD COLUMN numero_tentativas integer default 0;
 COMMENT ON COLUMN carteira_pesca.solicitante.numero_tentativas IS 'Número de tentativas de acesso as licencas.';
 
 ALTER TABLE carteira_pesca.solicitante ADD COLUMN data_ultima_tentativa timestamp without time zone;
