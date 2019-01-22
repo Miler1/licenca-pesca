@@ -92,9 +92,11 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
-		if(solicitante == null) {
+		if(solicitante == null && pessoaDTO.getNome() == null) {
 
 			throw new Exception("Pessoa não encontrada!");
+		} else if(solicitante == null){
+			return null;
 		}
 
 		return solicitante.buscarTodasLicencas();
@@ -124,6 +126,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
+
+		if(solicitante == null){
+			throw new Exception("Pessoa não encontrada!");
+		}
 
 		if(solicitanteBloqueado(validacaoDTO.getAcessoResource())){
 
