@@ -80,9 +80,10 @@ public class AcessoController {
 
 	@CrossOrigin("*")
 	@PostMapping(value="/buscarLicencas")
-	public ResponseEntity<ListaLicencaDTO> buscarLicensas(@RequestBody final AcessoResource acessoResource) throws Exception {
+	public ResponseEntity<ListaLicencaDTO> buscarLicencas(@RequestBody final AcessoResource acessoResource) throws Exception {
 
 		if(acessoServiceFacade.validaDadosAcessoLicencas(acessoResource) == true){
+
 			var listaLicencaDTO = new ListaLicencaDTO();
 
 			var pessoa = acessoServiceFacade.acessar(acessoResource);
@@ -94,25 +95,11 @@ public class AcessoController {
 			return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
 		} else {
-			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+
+			throw new Exception("Dados não conferem. Após 3 tentativas erradas, o Cpf/passaporte será bloqueado por 2 horas.");
+
 		}
 	}
-
-//	@CrossOrigin("*")
-//	@PostMapping("/verificaDados")
-	public ResponseEntity verificaDados(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
-
-//		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO)) {
-//
-//			return new ResponseEntity<>(HttpStatus.OK);
-//
-//		}
-
-
-		return new ResponseEntity<>(HttpStatus.OK);
-
-	}
-
 
 	@CrossOrigin("*")
 	@PostMapping("/buscarDados")

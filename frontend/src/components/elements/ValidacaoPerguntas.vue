@@ -18,14 +18,6 @@
                         el-form(v-model="pessoa" ref="pessoa" label-position="top")
                             el-form-item(prop="dataNascimento")                           
                                 el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${validacao_prefix}format.data`)")
-        //- .flex-item
-        //-     .espaco-cards
-        //-         el-card.box-card.column
-        //-             h3.title {{ $t(`${validacao_prefix}titulo.municipio`) }}
-        //-                 div(style='margin-top: 20px')
-        //-                     el-radio-group(v-for="nomesMunicipios in buscaMunicipios", :key="nomesMunicipios" v-model="pessoa.municipio" )
-        //-                         el-radio(:label='nomesMunicipios', border='' required) {{nomesMunicipios}}
-
     .buttons
         .right
           el-button(icon="el-icon-check" type="default" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}

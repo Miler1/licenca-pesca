@@ -8,6 +8,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import lombok.Getter;
@@ -165,7 +166,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		return null;
 	}
 
-	public void desbloqueiaSolicitante(PessoaDTO pessoaDTO) throws Exception {
+	public void desbloqueiaSolicitante() throws Exception {
 
 		if(this == null){
 			throw new Exception("Não existe solicitante CORRIGIR MSG");
@@ -176,35 +177,35 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		this.dataDesbloqueio = null;
 
 	}
-
-	public Boolean solicitanteBloqueado(ValidacaoDTO validacaoDTO) throws Exception  {
-
-		PessoaDTO pessoaDTO = new PessoaDTO(validacaoDTO.getCpf(), validacaoDTO.getPassaporte());
-
-		Solicitante solicitante = buscaSolicitante(pessoaDTO);
-
-		if(solicitante != null && solicitante.dataDesbloqueio != null) {
-
-			if(DateUtils.dataMaiorQue(new Date(), solicitante.dataDesbloqueio)) {
-				desbloqueiaSolicitante(pessoaDTO);
-				return false;
-			}
-
-			return true;
-
-		} else if(solicitante != null && solicitante.dataUltimaTentativa != null && solicitante.numeroTentativas < Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE) {
-
-			Date dataUltimaTentativa = DateUtils.somarHorasData(solicitante.dataUltimaTentativa, 24);
-
-			if(DateUtils.dataMaiorQue(new Date(), dataUltimaTentativa)) {
-				desbloqueiaSolicitante(pessoaDTO);
-				return false;
-			}
-
-		}
-
-		return false;
-	}
+//
+//	public Boolean solicitanteBloqueado(AcessoResource acessoResource) throws Exception  {
+//
+//		PessoaDTO pessoaDTO = new PessoaDTO(acessoResource.getCpf(), acessoResource.getPassaporte());
+//
+//		Solicitante solicitante = buscarSolicitante(pessoaDTO);
+//
+//		if(solicitante != null && solicitante.dataDesbloqueio != null) {
+//
+//			if(DateUtils.dataMaiorQue(new Date(), solicitante.dataDesbloqueio)) {
+//				desbloqueiaSolicitante();
+//				return false;
+//			}
+//
+//			return true;
+//
+//		} else if(solicitante != null && solicitante.dataUltimaTentativa != null && solicitante.numeroTentativas < Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE) {
+//
+//			Date dataUltimaTentativa = DateUtils.somarHorasData(solicitante.dataUltimaTentativa, 24);
+//
+//			if(DateUtils.dataMaiorQue(new Date(), dataUltimaTentativa)) {
+//				desbloqueiaSolicitante();
+//				return false;
+//			}
+//
+//		}
+//
+//		return false;
+//	}
 
 	public void atualizaNumeroTentativas() throws Exception {
 

@@ -1,19 +1,17 @@
 import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, VALIDA_DADOS, BUSCA_DADOS_VALIDACAO } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, ACTIVE_VALIDACAO } from "../mutations.type";
+import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import Vue from "vue";
 
 const INITIAL_STATE = {
   solicitante: Solicitante,
   maes: Array,
-  municipios: Array,
   cadastroCanActive: false,
   existeSolicitante: false,
   existeDadosParaValidacao: false,
   showStepsController: true,
   buscaMaes: [],
-  buscaMunicipios: Array,
   cpfPesquisa: null,
   passaportePesquisa: null
 };
@@ -104,8 +102,6 @@ export const actions = {
   [BUSCAR_LICENCAS]: ({ commit }, acessoResource) => {
     AcessoService.buscarLicencas(acessoResource)
       .then(({ data }) => {
-        console.log(data);
-        commit(SET_ERROR_TELA_BUSCA, "");
         commit(SET_SOLICITANTE, data.pessoa);
         commit(SET_LISTA_LICENCAS, data.licencas);
       })

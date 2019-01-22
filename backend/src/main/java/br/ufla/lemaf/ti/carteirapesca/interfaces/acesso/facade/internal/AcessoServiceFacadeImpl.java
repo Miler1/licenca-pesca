@@ -5,6 +5,8 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
@@ -17,6 +19,7 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -120,11 +123,17 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		PessoaDTO pessoaDTO = new PessoaDTO(acessoResource.getCpf(), acessoResource.getPassaporte());
 
+
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
+
+//		if(solicitanteBloqueado(acessoResource)){
+//
+//			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
+//		}
 
 		if(solicitante.getNumeroTentativas() == 3) {
 
-			throw new Exception("CPF / passaporte bloqueado, tente novamente após 2 horas");
+			throw new Exception("Cpf / passaporte bloqueado, tente novamente após 2 horas");
 
 		}
 
@@ -143,6 +152,34 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		return dadosValidos;
 
 	}
+
+	public Boolean solicitanteBloqueado(AcessoResource acessoResource) throws Exception {
+
+		PessoaDTO pessoaDTO = new PessoaDTO(acessoResource.getCpf(), acessoResource.getPassaporte());
+
+		Solicitante solicitante = buscarSolicitante(pessoaDTO);
+
+		if(solicitante != null && solicitante.getDataDesbloqueio() != null) {
+
+			if(DateUtils.dataMaiorQue(new Date(), solicitante.getDataDesbloqueio())) {
+				solicitante.desbloqueiaSolicitante();			
+				return false;
+			}
+			return true;
+			
+		} else if(solicitante != null && solicitante.getDataUltimaTentativa() != null && solicitante.getNumeroTentativas() < Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE){
+
+			Date dataUltimaTentativa = DateUtils.somarHorasData(solicitante.getDataUltimaTentativa(), 24);
+
+			if(DateUtils.dataMaiorQue(new Date(), dataUltimaTentativa)) {
+				solicitante.desbloqueiaSolicitante();
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 
 	private static Boolean dadosAcessoValidos(AcessoResource acessoResource) {
 

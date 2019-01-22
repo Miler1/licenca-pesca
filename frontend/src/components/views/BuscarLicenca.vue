@@ -34,7 +34,7 @@
           .error-pagina-inicial
             | {{errorTelaInicial}}     
 
-      validacao-perguntas(v-show="existeDadosParaValidacao" ref="validacaoPerguntas")
+      validacao-perguntas(v-show="existeDadosParaValidacao" v-if="!existeSolicitante" ref="validacaoPerguntas")
       visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
 
@@ -93,7 +93,6 @@ export default {
       });
     },
     acessar() {
-      // this.$store.dispatch(BUSCAR_LICENCAS, this.generateAcessoResource(this.resource));
       this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource));
       if(this.$refs.validacaoPerguntas){
           this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
