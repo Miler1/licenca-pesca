@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
@@ -106,12 +107,12 @@ public class AcessoController {
 	@PostMapping("/buscarDados")
 	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) throws Exception {
 
-
 		if(acessoServiceFacade.solicitanteBloqueado(acessoResource)) {
 
 			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
 
 		} else {
+
 			var listaLicencaDTO = new ListaLicencaDTO();
 
 			var pessoa = acessoServiceFacade.acessar(acessoResource);

@@ -9,7 +9,7 @@
                     h3.title.display {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
                         div(style='margin-top: 20px')
                             el-radio-group(v-for="nomesMae in buscaMaes", :key="nomesMae" v-model="pessoa.nomeMae" )
-                                el-radio.custom(:label='nomesMae' border='' required) {{nomesMae}}         
+                                el-radio.custom(:label='nomesMae' border required) {{nomesMae}}         
         .flex-item   
             .espaco-cards   
                 el-card.box-card.column

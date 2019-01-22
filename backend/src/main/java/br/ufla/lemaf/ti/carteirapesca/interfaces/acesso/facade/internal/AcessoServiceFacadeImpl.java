@@ -165,6 +165,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 				solicitante.desbloqueiaSolicitante();
 				solicitanteRopository.save(solicitante);
+
 				return false;
 			}
 
