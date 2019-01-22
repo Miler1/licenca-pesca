@@ -16,6 +16,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDT
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.val;
 import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ import java.util.List;
 @Service
 public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
+	@Autowired
 	private AcessoApplication acessoApplication;
 
 	@Autowired
@@ -128,7 +130,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
 		}
 
-		if(solicitante.getNumeroTentativas() == 3) {
+		if(solicitante.getNumeroTentativas() != null && solicitante.getNumeroTentativas() == 3) {
 
 			throw new Exception("Cpf / passaporte bloqueado, tente novamente após 2 horas");
 
@@ -174,13 +176,26 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	}
 
 
-	private static Boolean dadosAcessoValidos(ValidacaoDTO validacaoDTO) {
+	private Boolean dadosAcessoValidos(ValidacaoDTO validacaoDTO) {
 
 		WebServiceUtils.validarWebService();
 
-		var pessoa = WebServiceUtils
+//		var pessoa = WebServiceUtils
+//			.webServiceEU()
+//			.buscarPessoaFisicaPeloCpf(validacaoDTO.getAcessoResource().getCpf());
+
+		FiltroPessoa filtroPessoa = new FiltroPessoa();
+		filtroPessoa.isUsuario = false;
+
+		if(validacaoDTO.getAcessoResource().getCpf() != null) {
+			filtroPessoa.login = validacaoDTO.getAcessoResource().getCpf();
+		} else {
+			filtroPessoa.passaporte = validacaoDTO.getAcessoResource().getPassaporte();
+		}
+
+		var pessoa =  WebServiceUtils
 			.webServiceEU()
-			.buscarPessoaFisicaPeloCpf(validacaoDTO.getAcessoResource().getCpf());
+			.buscarPessoaComFiltro(filtroPessoa);
 
 		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0 || !pessoa.nomeMae.toUpperCase().equals(validacaoDTO.getNomeMae().toUpperCase()) ){
 
