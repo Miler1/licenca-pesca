@@ -51,10 +51,11 @@ export default {
   },
 
   computed: {
+
+    ...mapGetters(["showStepsController", "cadastroCanActive", "registroResource", "protocolo"])
   },
 
   mounted(){
-      console.log('t');
     this.$store.dispatch(FETCH_LICENCA, this.$route.params.protocolo).then(p => {
         console.log(p);
     });
