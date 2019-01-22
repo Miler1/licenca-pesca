@@ -14,13 +14,18 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import lombok.var;
 import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -31,6 +36,9 @@ import java.util.List;
  */
 @Service
 public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
+
+
+	private static final Logger log = LoggerFactory.getLogger(AcessoServiceFacadeImpl.class);
 
 	@Autowired
 	private AcessoApplication acessoApplication;
@@ -205,6 +213,17 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 			.webServiceEU()
 			.buscarPessoaComFiltro(filtroPessoa);
 
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.setTime(pessoa.dataNascimento);
+		Calendar dateCalendar = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		pessoa.dataNascimento = dateCalendar.getTime();
+
+
+		calendar.setTime(validacaoDTO.getDataNascimento());
+		Calendar calendar1 = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		validacaoDTO.setDataNascimento(calendar1.getTime());
+
+		
 		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0 || !pessoa.nomeMae.toUpperCase().equals(validacaoDTO.getNomeMae().toUpperCase()) ){
 
 			return false;
