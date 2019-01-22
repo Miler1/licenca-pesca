@@ -16,11 +16,11 @@
 
         el-col(:span="6" v-show="pessoa.estrangeiro === false")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.cpf`)")
-            el-input(v-model="pessoa.cpf" v-mask="['###.###.###-##']" disabled)
+            el-input(v-model="pessoaCpf" v-mask="['###.###.###-##']" disabled)
 
         el-col(:span="6" v-show="pessoa.estrangeiro === true")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.passaporte`)" )
-            el-input(v-model="pessoa.passaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']" disabled)
+            el-input(v-model="pessoaPassaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']" disabled)
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.dataNascimento`)" prop="dataNascimento")
@@ -181,6 +181,8 @@ export default {
   data() {
     return {
       estrangeiroDisabled: false,
+      pessoaCpf: "",
+      pessoaPassaporte: "",
       pessoa: {
         estrangeiro: false,
         nome: null,
@@ -247,10 +249,8 @@ export default {
       return this.valid;
     },
     atualizarCpfPesquisado(resource) {
-      console.log('cpf', resource.cpf);
-      console.log('passaporte', resource.passaporte);
-      this.pessoa.cpf = resource.cpf;
-      this.pessoa.passaporte = resource.passaporte;
+      this.pessoaCpf = resource.cpf;
+      this.pessoaPassaporte = resource.passaporte;
       if(resource.cpf === null && resource.passaporte !== null){
         this.pessoa.estrangeiro = true;
         this.estrangeiroDisabled = true;
@@ -278,6 +278,8 @@ export default {
         this.pessoa.enderecoCorrespondencia.municipio.id = municipioId;
         this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
       }
+      // this.pessoa.cpf = this.pessoaCpf;
+      // this.pessoa.passaporte = this.pessoaPassaporte;
       this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
     },
     tratarMunicipio() {
