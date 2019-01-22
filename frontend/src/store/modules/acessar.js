@@ -127,6 +127,7 @@ export const actions = {
 
   [CANCELAR]: ({ commit }) => {
     commit(ACTIVE_CADASTRO, false);
+    commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
     commit(CLEAN_SOLICITANTE);
     commit(CLEAN_REGISTRO);
   }
