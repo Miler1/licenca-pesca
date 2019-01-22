@@ -45,11 +45,6 @@ export const getters = {
   buscaMaes: state => state.buscaMaes,
 
   /**
-   * Retorna os municipios gerados.
-  */
-  // buscaMunicipios: state => state.buscaMunicipios,
-
-  /**
    * Retorna true se existir o solicitante e false se não existir.
    */
   existeSolicitante: state => state.solicitante.nome !== null,
@@ -127,15 +122,15 @@ export const actions = {
       });
   },
 
-  [VALIDA_DADOS]: ({ commit }, pessoa, listaDadosValidacaoDTO) => {
-    AcessoService.verificaDados(pessoa, listaDadosValidacaoDTO)
-      .then(({ data }) => {
-        commit(SET_BUSCA_MAES, data.maes);
-      })
-      .catch(error => {
-        commit(SET_ERROR, error);
-      });
-  },
+  // [VALIDA_DADOS]: ({ commit }, pessoa, listaDadosValidacaoDTO) => {
+  //   AcessoService.verificaDados(pessoa, listaDadosValidacaoDTO)
+  //     .then(({ data }) => {
+  //       commit(SET_BUSCA_MAES, data.maes);
+  //     })
+  //     .catch(error => {
+  //       commit(SET_ERROR, error);
+  //     });
+  // },
 
   [CANCELAR]: ({ commit }) => {
     commit(ACTIVE_CADASTRO, false);

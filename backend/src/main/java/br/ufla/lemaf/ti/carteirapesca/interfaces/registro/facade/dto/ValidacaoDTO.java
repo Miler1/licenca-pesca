@@ -18,8 +18,6 @@ public class ValidacaoDTO {
 
 	private Date dataNascimento;
 
-//	private String municipio;
-
 	private String nomeMae;
 
 
@@ -31,7 +29,6 @@ public class ValidacaoDTO {
 		this.cpf = (cpf != null ? CPFUtils.unformat(cpf) : null);
 		this.passaporte = passaporte;
 		this.dataNascimento = dataNascimento;
-//		this.municipio = municipio;
 		this.nomeMae = nomeMae;
 	}
 }

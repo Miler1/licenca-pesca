@@ -10,8 +10,6 @@ import java.util.Scanner;
 
 public class Gerador {
 
-//	private static final String ARQUIVOS_GERADOS_DADOS = "gerador/";
-
 	private Scanner sc;
 
 	private String[] gerar(String file, Integer tamanho, Integer padrao){
@@ -55,9 +53,5 @@ public class Gerador {
 		return gerar(Properties.pathArquivos() + "maes", tamanho, padrao);
 
 	}
-//
-//	public String[] gerarMunicipios(Integer tamanho, Integer padrao){
-//		return gerar(Properties.pathArquivos() + "municipios", tamanho, padrao);
-//	}
 
 }

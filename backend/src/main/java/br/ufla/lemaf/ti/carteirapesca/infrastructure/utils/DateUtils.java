@@ -42,7 +42,7 @@ public class DateUtils {
 
 	}
 
-	public static Boolean dataMaiorQue(java.util.Date data, java.util.Date dataComparacao) {
+	public static Boolean dataMaiorQue(Date data, Date dataComparacao) {
 
 		if(data.compareTo(dataComparacao) == 1) {
 			return true;
@@ -53,7 +53,7 @@ public class DateUtils {
 	}
 
 
-	public static java.util.Date somarHorasData(java.util.Date data, Integer horas) {
+	public static Date somarHorasData(Date data, Integer horas) {
 
 		Calendar c = Calendar.getInstance();
 		c.setTime(data);

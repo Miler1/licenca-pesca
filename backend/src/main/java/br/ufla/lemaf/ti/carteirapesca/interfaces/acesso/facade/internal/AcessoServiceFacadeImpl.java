@@ -188,11 +188,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 			return false;
 		}
-//		else if(!pessoa.nomeMae.toUpperCase().equals(acessoResource.getNomeMae().toUpperCase())) {
-//
-//			return false;
-//		}
-
+		
 		return true;
 
 	}

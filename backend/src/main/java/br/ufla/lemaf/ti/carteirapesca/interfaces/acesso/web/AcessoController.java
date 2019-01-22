@@ -152,10 +152,6 @@ public class AcessoController {
 		Integer padrao = Integer.valueOf(pessoa.getCpf().substring(pessoa.getCpf().length()-1));
 		Integer posicao = padrao > 3 ? Math.abs(padrao/3) : padrao;
 
-//		String[] municipios = gerador.gerarMunicipios(quantidade, padrao);
-//		municipios[posicao] = CarteiraUtils.capitalize(pessoa.getEnderecoPrincipal().getMunicipio().nome);
-//		listasVerificacao.put("municipios", municipios);
-
 		if(posicao > 3) {
 			posicao = 0;
 		}
