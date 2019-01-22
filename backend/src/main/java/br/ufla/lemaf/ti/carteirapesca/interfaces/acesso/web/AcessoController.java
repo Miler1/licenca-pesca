@@ -96,6 +96,8 @@ public class AcessoController {
 
 			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
 
+
+
 			return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
 		} else {
@@ -121,7 +123,10 @@ public class AcessoController {
 
 			listaLicencaDTO.setPessoa(pessoa);
 
+
+
 			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
+
 
 			return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
 		}
