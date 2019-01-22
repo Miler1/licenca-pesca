@@ -7,7 +7,7 @@
           el-button(icon="el-icon-plus" type="primary" @click="cadastrar" ) {{ $t(`${consultar_prefix}botoes.cadastrar`) }}
     card
       .acesso
-        h4.label-search {{ $t("interface.registrar.identificacao.acesso.label.search") }} {{dadosSolicitanteAConfirmar}}
+        h4.label-search {{ $t("interface.registrar.identificacao.acesso.label.search") }}
         .search
           input-element(
           :placeholder="$t('interface.registrar.identificacao.acesso.placeholder.cpf')"
