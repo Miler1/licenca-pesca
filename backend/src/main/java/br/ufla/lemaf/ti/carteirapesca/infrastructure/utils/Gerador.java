@@ -1,9 +1,11 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +18,11 @@ public class Gerador {
 
 		try {
 
-			sc = new Scanner(ResourceUtils.getFile("classpath:" +file));
+
+			ClassPathResource resource = new ClassPathResource(file);
+			InputStream resourceInputStream = resource.getInputStream();
+
+			sc = new Scanner(resourceInputStream);
 
 		} catch (FileNotFoundException e) {
 
