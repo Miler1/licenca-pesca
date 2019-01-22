@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,7 +127,7 @@ public class AcessoController {
 	}
 
 
-	private static Map<String, Object[]> preencherListaVerificacao(PessoaDTO pessoa) {
+	private static Map<String, Object[]> preencherListaVerificacao(PessoaDTO pessoa) throws IOException {
 
 
 		Map<String, Object[]> listasVerificacao = new HashMap<>();
@@ -145,7 +146,7 @@ public class AcessoController {
 
 	}
 
-	private static void preencherListaVerificacaoSolicitante(Map<String, Object[]> listasVerificacao, PessoaDTO pessoa) {
+	private static void preencherListaVerificacaoSolicitante(Map<String, Object[]> listasVerificacao, PessoaDTO pessoa) throws IOException {
 
 		Gerador gerador = new Gerador();
 

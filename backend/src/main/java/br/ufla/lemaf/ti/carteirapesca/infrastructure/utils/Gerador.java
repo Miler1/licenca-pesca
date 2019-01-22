@@ -1,9 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
+import org.springframework.util.ResourceUtils;
 
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,11 +12,11 @@ public class Gerador {
 
 	private Scanner sc;
 
-	private String[] gerar(String file, Integer tamanho, Integer padrao){
+	private String[] gerar(String file, Integer tamanho, Integer padrao) throws IOException {
 
 		try {
 
-			sc = new Scanner(new File(file));
+			sc = new Scanner(ResourceUtils.getFile("classpath:" +file));
 
 		} catch (FileNotFoundException e) {
 
@@ -49,8 +49,8 @@ public class Gerador {
 		return nomes;
 	}
 
-	public String[] gerarMaes(Integer tamanho, Integer padrao){
-		return gerar(Properties.pathArquivos() + "maes", tamanho, padrao);
+	public String[] gerarMaes(Integer tamanho, Integer padrao) throws IOException {
+		return gerar("gerador/maes", tamanho, padrao);
 
 	}
 
