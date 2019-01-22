@@ -22,10 +22,6 @@ const AcessoService = {
     return ApiService.post(`${Properties.BASE_URL}/api/buscarDados`, acessoResource, false);
   },
 
-  // verificaDados: validacaoDTO => {
-  //   return ApiService.post(`${Properties.BASE_URL}/api/verificaDados`, validacaoDTO);
-  // },
-
   /**
    * Serviço que busca os munícípios de cada UF.
    */
