@@ -2,7 +2,6 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.internal;
 
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaRepository;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
@@ -15,7 +14,6 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.val;
 import lombok.var;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
