@@ -23,6 +23,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -149,9 +150,10 @@ public class AcessoController {
 	private static void preencherListaVerificacaoSolicitante(Map<String, Object[]> listasVerificacao, PessoaDTO pessoa) throws IOException {
 
 		Gerador gerador = new Gerador();
+		Random rand = new Random();
 
 		Integer quantidade = 5;
-		Integer padrao = Integer.valueOf(pessoa.getCpf().substring(pessoa.getCpf().length()-1));
+		Integer padrao = rand.nextInt(5) ;
 		Integer posicao = padrao > 3 ? Math.abs(padrao/3) : padrao;
 
 		if(posicao > 3) {
