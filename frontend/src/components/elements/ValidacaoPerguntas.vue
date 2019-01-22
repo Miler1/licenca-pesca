@@ -53,7 +53,8 @@ export default {
             validacao_prefix: INTERFACE_VALIDACAO_PREFIX,
             pessoa: {
                 dataNascimento: null,
-                cpf: null
+                cpf: null,
+                nomeMae: null
             }
         };
     },

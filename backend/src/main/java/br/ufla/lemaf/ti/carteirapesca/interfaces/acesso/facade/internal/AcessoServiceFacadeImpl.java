@@ -124,6 +124,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		PessoaDTO pessoaDTO = new PessoaDTO(validacaoDTO.getAcessoResource().getCpf(), validacaoDTO.getAcessoResource().getPassaporte());
 
+		if(validacaoDTO.getNomeMae() == null || validacaoDTO.getDataNascimento() == null){
+
+			throw new Exception("Os dados não foram informados ou estão inválidos!");
+		}
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
