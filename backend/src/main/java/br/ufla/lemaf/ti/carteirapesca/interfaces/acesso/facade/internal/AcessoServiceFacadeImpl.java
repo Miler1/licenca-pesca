@@ -131,16 +131,14 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
-		if(solicitante == null){
-			throw new Exception("Pessoa não encontrada!");
-		}
+
 
 		if(solicitanteBloqueado(validacaoDTO.getAcessoResource())){
 
 			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
 		}
 
-		if(solicitante.getNumeroTentativas() != null && solicitante.getNumeroTentativas() == 3) {
+		if(solicitante != null && solicitante.getNumeroTentativas() != null && solicitante.getNumeroTentativas() == 3) {
 
 			throw new Exception("Cpf / passaporte bloqueado, tente novamente após 2 horas");
 
