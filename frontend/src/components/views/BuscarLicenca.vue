@@ -7,7 +7,7 @@
           el-button(icon="el-icon-plus" type="primary" @click="cadastrar" ) {{ $t(`${consultar_prefix}botoes.cadastrar`) }}
     card
       .acesso
-        h4.label-search {{ $t("interface.registrar.identificacao.acesso.label.search") }}
+        h4.label-search {{ $t("interface.registrar.identificacao.acesso.label.search") }} {{dadosSolicitanteAConfirmar}}
         .search
           input-element(
           :placeholder="$t('interface.registrar.identificacao.acesso.placeholder.cpf')"
@@ -34,7 +34,7 @@
           .error-pagina-inicial
             | {{errorTelaInicial}}     
 
-      validacao-perguntas(v-show="existeDadosParaValidacao" v-if="!existeSolicitante" ref="validacaoPerguntas")
+      validacao-perguntas(v-show="dadosSolicitanteAConfirmar" ref="validacaoPerguntas")
       visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante" ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
 
@@ -84,7 +84,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "existeDadosParaValidacao", "errorTelaInicial", "buscaMaes", "buscaMunicipios"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "dadosSolicitanteAConfirmar", "errorTelaInicial", "buscaMaes", "buscaMunicipios"])
   },
 
   methods: {
@@ -93,6 +93,7 @@ export default {
         this.$router.push({name: 'registrar'});
       });
     },
+
     acessar() {
       this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource));
       if(this.$refs.validacaoPerguntas){
@@ -110,6 +111,7 @@ export default {
       }
       return { cpf, passaporte };
     },
+
     fecharSolicitante(){
       this.$store.dispatch(CANCELAR);
     }

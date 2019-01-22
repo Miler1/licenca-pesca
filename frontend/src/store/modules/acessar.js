@@ -1,6 +1,6 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, VALIDA_DADOS, BUSCA_DADOS_VALIDACAO } from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES } from "../mutations.type";
+import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import Vue from "vue";
 
@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   maes: Array,
   cadastroCanActive: false,
   existeSolicitante: false,
-  existeDadosParaValidacao: false,
+  dadosSolicitanteAConfirmar: false,
   showStepsController: true,
   buscaMaes: false,
   cpfPesquisa: null,
@@ -52,7 +52,7 @@ export const getters = {
   /**
    * Retorna true para validar os dados ou falso caso ainda não tenha pesquisado.
    */
-  existeDadosParaValidacao: state => state.buscaMaes,
+  dadosSolicitanteAConfirmar: state => state.dadosSolicitanteAConfirmar,
 
   /**
    * Retorna verdadeiro quando o cadastro do solicitante
@@ -97,6 +97,7 @@ export const actions = {
   [BUSCAR_LICENCAS]: ({ commit }, acessoResource) => {
     AcessoService.buscarLicencas(acessoResource)
       .then(({ data }) => {
+        commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
         commit(SET_SOLICITANTE, data.pessoa);
         commit(SET_LISTA_LICENCAS, data.licencas);
       })
@@ -111,6 +112,8 @@ export const actions = {
   [BUSCA_DADOS_VALIDACAO]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
+        commit(SET_DADOS_SOLICITANTE_CONFIRMAR, true);
+        commit(CLEAN_SOLICITANTE);
         commit(SET_ERROR_TELA_BUSCA, "");
         commit(SET_BUSCA_MAES, data.maes);
       })
@@ -183,6 +186,9 @@ export const mutations = {
       : (state.cadastroCanActive = false);
   },
 
+  [SET_DADOS_SOLICITANTE_CONFIRMAR]: (state, dadosSolicitanteAConfirmar) => {
+    state.dadosSolicitanteAConfirmar = dadosSolicitanteAConfirmar;
+  }
 };
 
 export default {
