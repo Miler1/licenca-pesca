@@ -1,21 +1,22 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * DTO de Recurso do Usuario para o acesso do {@link AcessoController}.
- *
- * @author Highlander Paiva
- * @since 1.0
- */
 @Data
+@Getter
+@Setter
 public class AcessoResource {
+
 
 	private String cpf;
 
 	private String passaporte;
+
 
 	/**
 	 * Construtor.
@@ -27,8 +28,9 @@ public class AcessoResource {
 	 */
 	@JsonCreator
 	public AcessoResource(@JsonProperty("cpf") String cpf,
-	                      @JsonProperty("passaporte") String passaporte) {
-		this.cpf = cpf;
+						  @JsonProperty("passaporte") String passaporte) {
+
+		this.cpf = (cpf != null ? CPFUtils.unformat(cpf) : null);
 		this.passaporte = passaporte;
 	}
 

@@ -29,13 +29,13 @@
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
+	
         .block
           .error-pagina-inicial
-            | {{errorTelaInicial}}
-          //- .close(v-if="existeSolicitante" @click="fecharSolicitante")
-          //-   | &times;
+            | {{errorTelaInicial}}     
 
-      visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
+      validacao-perguntas(v-show="existeDadosParaValidacao" v-if="!existeSolicitante" ref="validacaoPerguntas")
+      visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante" ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
 
 </template>
@@ -44,15 +44,18 @@
 import { mapGetters } from "vuex";
 import Tabela from "../elements/Table";
 import Card from "../layouts/Card";
-import { buscar } from "../../store/actions.type";
+import { buscar, BUSCA_DADOS_VALIDACAO } from "../../store/actions.type";
 import Properties from "../../properties";
 import InputElement from "../elements/InputElement";
-import { REGISTRAR, CANCELAR, BUSCAR_LICENCAS } from "../../store/actions.type";
+import { REGISTRAR, CANCELAR, BUSCAR_LICENCAS} from "../../store/actions.type";
 import { CPF_MASK, PASSAPORT_MASK } from "../../utils/layout/mascaras";
 import { translate } from "../../utils/helpers/internationalization";
 import { CONSULTAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
 import VisualizarDadosPessoa from "../business/identificacao/dadosPessoa/VisualizarDadosPessoa";
 import ListaLicencas from "../business/identificacao/dadosPessoa/ListaLicencas";
+import ValidacaoPerguntas from "../elements/ValidacaoPerguntas";
+import { debug } from 'util';
+import { returnStatement } from 'babel-types';
 
 export default {
   name: "BuscarLicenca",
@@ -62,15 +65,16 @@ export default {
     Card,
     Tabela,
     VisualizarDadosPessoa,
-    ListaLicencas
+    ListaLicencas,
+    ValidacaoPerguntas
   },
 
   data() {
     return {
       step: 0,
       consultar_prefix: CONSULTAR_GERAL_MESSAGES_PREFIX,
-      resource: "",
       type_acesso: "CPF",
+      resource: "",
       maskCPF: CPF_MASK,
       maskPassport: PASSAPORT_MASK,
       tableData:[{
@@ -78,8 +82,9 @@ export default {
       }]
     };
   },
+
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "errorTelaInicial"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "existeDadosParaValidacao", "errorTelaInicial", "buscaMaes", "buscaMunicipios"])
   },
 
   methods: {
@@ -89,8 +94,12 @@ export default {
       });
     },
     acessar() {
-      this.$store.dispatch(BUSCAR_LICENCAS, this.generateAcessoResource(this.resource));
+      this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource));
+      if(this.$refs.validacaoPerguntas){
+          this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+      }
     },
+
     generateAcessoResource(resource) {
       let cpf = null;
       let passaporte = null;
@@ -99,7 +108,6 @@ export default {
       } else {
         passaporte = resource;
       }
-
       return { cpf, passaporte };
     },
     fecharSolicitante(){
@@ -117,6 +125,7 @@ export default {
       color: red
       font-size: 14px
       margin-top: 10px
+
     .block
       display: block
       .close

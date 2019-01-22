@@ -1,17 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.application;
 
 import br.ufla.lemaf.ti.carteirapesca.application.impl.AcessoApplicationImpl;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.CPF;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices.CadastroUnificadoService;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.junit.Before;
-import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class AcessoApplicationTest {
 
