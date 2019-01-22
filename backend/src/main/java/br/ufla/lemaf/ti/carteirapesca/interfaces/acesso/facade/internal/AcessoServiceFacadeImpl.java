@@ -126,10 +126,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
-//		if(solicitanteBloqueado(acessoResource)){
-//
-//			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
-//		}
+		if(solicitanteBloqueado(acessoResource)){
+
+			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
+		}
 
 		if(solicitante.getNumeroTentativas() == 3) {
 
@@ -162,22 +162,27 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		if(solicitante != null && solicitante.getDataDesbloqueio() != null) {
 
 			if(DateUtils.dataMaiorQue(new Date(), solicitante.getDataDesbloqueio())) {
-				solicitante.desbloqueiaSolicitante();			
+
+				solicitante.desbloqueiaSolicitante();
+				solicitanteRopository.save(solicitante);
 				return false;
 			}
 			return true;
 			
-		} else if(solicitante != null && solicitante.getDataUltimaTentativa() != null && solicitante.getNumeroTentativas() < Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE){
-
-			Date dataUltimaTentativa = DateUtils.somarHorasData(solicitante.getDataUltimaTentativa(), 24);
-
-			if(DateUtils.dataMaiorQue(new Date(), dataUltimaTentativa)) {
-				solicitante.desbloqueiaSolicitante();
-				return false;
-			}
 		}
+//		else if(solicitante != null
+//					&& solicitante.getDataUltimaTentativa() != null
+//					&& solicitante.getNumeroTentativas() < Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE){
+//
+//			Date dataUltimaTentativa = DateUtils.somarHorasData(solicitante.getDataUltimaTentativa(), 24);
+//
+//			if(DateUtils.dataMaiorQue(new Date(), dataUltimaTentativa)) {
+//				solicitante.desbloqueiaSolicitante();
+//
+//				return false;
+//			}
 
-		return true;
+		return false;
 	}
 
 

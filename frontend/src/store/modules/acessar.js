@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   existeSolicitante: false,
   existeDadosParaValidacao: false,
   showStepsController: true,
-  buscaMaes: [],
+  buscaMaes: false,
   cpfPesquisa: null,
   passaportePesquisa: null
 };
@@ -57,7 +57,7 @@ export const getters = {
   /**
    * Retorna true para validar os dados ou falso caso ainda não tenha pesquisado.
    */
-  existeDadosParaValidacao: state => state.buscaMaes != 0,
+  existeDadosParaValidacao: state => state.buscaMaes,
 
   /**
    * Retorna verdadeiro quando o cadastro do solicitante
@@ -122,6 +122,7 @@ export const actions = {
       .catch(error => {
         if (error.response) {
           commit(SET_ERROR_TELA_BUSCA, error.response.data);
+          commit(CLEAN_SOLICITANTE);
         }
       });
   },

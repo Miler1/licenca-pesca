@@ -35,7 +35,7 @@
             | {{errorTelaInicial}}     
 
       validacao-perguntas(v-show="existeDadosParaValidacao" v-if="!existeSolicitante" ref="validacaoPerguntas")
-      visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante", ref="visualizarDadosPessoa")
+      visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante" ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
 
 </template>
@@ -55,6 +55,7 @@ import VisualizarDadosPessoa from "../business/identificacao/dadosPessoa/Visuali
 import ListaLicencas from "../business/identificacao/dadosPessoa/ListaLicencas";
 import ValidacaoPerguntas from "../elements/ValidacaoPerguntas";
 import { debug } from 'util';
+import { returnStatement } from 'babel-types';
 
 export default {
   name: "BuscarLicenca",
