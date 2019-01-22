@@ -16,11 +16,11 @@
 
         el-col(:span="6" v-show="pessoa.estrangeiro === false")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.cpf`)")
-            el-input(v-model="pessoaCpf" v-mask="['###.###.###-##']" disabled)
+            el-input(v-model="pessoa.cpf" v-mask="['###.###.###-##']" disabled)
 
         el-col(:span="6" v-show="pessoa.estrangeiro === true")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.passaporte`)" )
-            el-input(v-model="pessoaPassaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']" disabled)
+            el-input(v-model="pessoa.passaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']" disabled)
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.dataNascimento`)" prop="dataNascimento")
@@ -249,8 +249,8 @@ export default {
       return this.valid;
     },
     atualizarCpfPesquisado(resource) {
-      this.pessoaCpf = resource.cpf;
-      this.pessoaPassaporte = resource.passaporte;
+      this.pessoa.cpf = resource.cpf;
+      this.pessoa.passaporte = resource.passaporte;
       if(resource.cpf === null && resource.passaporte !== null){
         this.pessoa.estrangeiro = true;
         this.estrangeiroDisabled = true;
