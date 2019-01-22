@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
@@ -81,8 +78,7 @@ public class AcessoController {
 
 	}
 
-	@CrossOrigin("*")
-	@PostMapping("/buscarLicencas")
+	@RequestMapping(value="/buscarLicencas", method = RequestMethod.POST)
 	public ResponseEntity<ListaLicencaDTO> buscarLicensas(@RequestBody final AcessoResource acessoResource) throws Exception {
 
 		acessoServiceFacade.validaDadosAcessoLicencas(acessoResource);
