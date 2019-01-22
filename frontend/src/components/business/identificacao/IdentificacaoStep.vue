@@ -70,12 +70,14 @@ export default {
       }
     },
     prepararDados() {
+      if(this.$refs.cadastroDadosPessoa){
 
-      this.$refs.cadastroDadosPessoa.tratarMunicipio();
+        this.$refs.cadastroDadosPessoa.tratarMunicipio();
+      }
     },
 
     getValidated () {
-      if(this.$refs.cadastroDadosPessoa) {
+      if(this.$refs.cadastroDadosPessoa && this.showCadastro() ) {
         this.$refs.cadastroDadosPessoa.validate();
         return this.$refs.cadastroDadosPessoa.getValidate();
       } else if(this.$refs.visualizarDadosPessoa){

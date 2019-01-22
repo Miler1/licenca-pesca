@@ -4,17 +4,15 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.var;
-import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
 import javax.persistence.*;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -35,6 +33,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	// Anos para a licença vencer após ativada
 	private static final Integer ANOS_VENCIMENTO_LICENCA = 1;
 	private static final Integer MES_ANTES_DE_VENCER = -1;
+	private static final Integer QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO = 1;
 
 	@Embedded
 	@AttributeOverride(name = "codigoFormatado", column = @Column(name = "tx_protocolo"))
@@ -70,7 +69,9 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimento;
 
-
+	@Column(name = "dt_vencimento_boleto")
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private Date dataVencimentoBoleto;
 
 	/**
 	 * Construtor da Licenca de pesca.
@@ -96,6 +97,8 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.dataCriacao = new Date();
 			this.status = Status.AGUARDANDO_PAGAMENTO_BOLETO;
 			this.caminhoBoleto = caminhoBoleto;
+			this.setDataVencimentoBoleto();
+
 		} catch (IllegalArgumentException | NullPointerException ex) {
 
 			throw new LicencaException("licenca.creation");
@@ -132,6 +135,21 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	public Date getDataVencimento() {
 
 		return dataVencimento;
+	}
+
+	public Date getDataVencimentoBoleto() {
+
+		return dataVencimentoBoleto;
+	}
+
+	public void setDataVencimentoBoleto() {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.MONTH, QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO);
+
+		this.dataVencimentoBoleto = calendar.getTime();
+
 	}
 
 	public Boolean getPodeRenovar() {
@@ -275,11 +293,9 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		this.status = status;
 	}
 
-
 	public Date getDataAtivacao() {
 		return dataAtivacao;
 	}
-
 
 	public void setDataAtivacao(Date dataAtivacao) {
 		this.dataAtivacao = dataAtivacao;

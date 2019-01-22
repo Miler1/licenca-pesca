@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.web;
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
@@ -29,6 +30,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -81,7 +83,7 @@ public class ConsultaController {
 	@GetMapping("/consultar")
 	public ResponseEntity<LicencaDTO> consultar(@RequestParam final String protocolo) {
 
-		var licenca = facade.consultar(protocolo);
+		var licenca = facade.consultarLicencaDTO(protocolo);
 
 		if (licenca == null)
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -106,8 +108,17 @@ public class ConsultaController {
 
 		try {
 
-			var rotaDoBoleto = facade.buscarCaminho(protocolo, Constants.BOLETO);
-			var boleto = new File(rotaDoBoleto);
+			var licenca = facade.consultar(protocolo);
+
+			String caminhoBoleto;
+
+			if(licenca.getDataVencimentoBoleto().compareTo(new Date()) != -1) {
+				caminhoBoleto = facade.buscarCaminho(protocolo, Constants.BOLETO);
+			} else {
+				caminhoBoleto = registroApplication.regerarBoleto(licenca);
+			}
+
+			var boleto = new File(caminhoBoleto);
 
 			var httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaType.APPLICATION_PDF);
