@@ -122,16 +122,6 @@ export const actions = {
       });
   },
 
-  // [VALIDA_DADOS]: ({ commit }, pessoa, listaDadosValidacaoDTO) => {
-  //   AcessoService.verificaDados(pessoa, listaDadosValidacaoDTO)
-  //     .then(({ data }) => {
-  //       commit(SET_BUSCA_MAES, data.maes);
-  //     })
-  //     .catch(error => {
-  //       commit(SET_ERROR, error);
-  //     });
-  // },
-
   [CANCELAR]: ({ commit }) => {
     commit(ACTIVE_CADASTRO, false);
     commit(CLEAN_SOLICITANTE);

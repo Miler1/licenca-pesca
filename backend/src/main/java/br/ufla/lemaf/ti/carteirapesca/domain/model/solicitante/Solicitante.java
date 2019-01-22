@@ -46,13 +46,13 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Licenca> licencas = new ArrayList<>();
 
-	@JoinColumn(name = "numero_tentativas")
+	@Column(name = "numero_tentativas")
 	private Integer numeroTentativas;
 
-	@JoinColumn(name = "data_ultima_tentativa")
+	@Column(name = "data_ultima_tentativa")
 	private Date dataUltimaTentativa;
 
-	@JoinColumn(name = "data_desbloqueio")
+	@Column(name = "data_desbloqueio")
 	private Date dataDesbloqueio;
 
 

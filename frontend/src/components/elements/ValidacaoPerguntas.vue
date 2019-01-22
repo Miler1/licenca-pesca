@@ -122,10 +122,6 @@ export default {
     .el-radio-group
         display: grid;
         margin-bottom: 8px;
-        // line-height: 1;
-        // width: 100%;
-        // vertical-align: middle;
-        // font-size: 0;
     
     .footer-card
       margin-top: 30px
