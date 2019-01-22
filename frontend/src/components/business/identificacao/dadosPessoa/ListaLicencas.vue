@@ -29,14 +29,14 @@
                 .flex-item
                     span.item-title-acoes {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                     span.item-content-acoes
-                        el-dropdown(trigger="click", v-if="lista.status !== 'INVALIDADO'")
+                        el-dropdown(trigger="click", v-if="lista.status !== 'INVALIDADO' && lista.status !== 'VENCIDO'")
                             span.el-dropdown-link.el-button.el-button--primary {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                                 i.el-icon-arrow-down.el-icon--right
                             el-dropdown-menu(slot="dropdown")
                                 el-dropdown-item(type="primary", v-if="lista.status === 'AGUARDANDO_PAGAMENTO_BOLETO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarBoleto`) }}
                                 el-dropdown-item(type="primary", v-if="lista.status === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
-                                el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
-                        span(v-if="lista.status === 'INVALIDADO'") -
+                                //- el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
+                        span(v-if="lista.status === 'INVALIDADO' || lista.status === 'VENCIDO'") -
     .sem-licenca.withDivisor(v-if="!listaLicencas || listaLicencas.length <= 0")
         | {{ $t(`${consultar_prefix}listaLicenca.semLicenca`) }}
 </template>
