@@ -78,20 +78,24 @@ public class AcessoController {
 
 	}
 
-	@RequestMapping(value="/buscarLicencas", method = RequestMethod.POST)
+	@CrossOrigin("*")
+	@PostMapping(value="/buscarLicensas")
 	public ResponseEntity<ListaLicencaDTO> buscarLicensas(@RequestBody final AcessoResource acessoResource) throws Exception {
 
-		acessoServiceFacade.validaDadosAcessoLicencas(acessoResource);
+		if(acessoServiceFacade.validaDadosAcessoLicencas(acessoResource) == true){
+			var listaLicencaDTO = new ListaLicencaDTO();
 
-		var listaLicencaDTO = new ListaLicencaDTO();
-		var pessoa = acessoServiceFacade.acessar(acessoResource);
+			var pessoa = acessoServiceFacade.acessar(acessoResource);
 
-		listaLicencaDTO.setPessoa(pessoa);
+			listaLicencaDTO.setPessoa(pessoa);
 
-		listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
+			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
 
-		return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
+		} else {
+			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+		}
 	}
 
 //	@CrossOrigin("*")

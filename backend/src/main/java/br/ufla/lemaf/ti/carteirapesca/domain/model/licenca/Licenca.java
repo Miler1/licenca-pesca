@@ -29,7 +29,6 @@ import java.util.GregorianCalendar;
  */
 @NoArgsConstructor
 @javax.persistence.Entity
-@Getter
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "licenca")
 public class Licenca implements Entity<Licenca, Protocolo> {
 
@@ -197,7 +196,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		return caminhoCarteira;
 	}
 
-	public Solicitante getSolicitante() {
+	public Solicitante solicitante() {
 		return solicitante;
 	}
 	/**

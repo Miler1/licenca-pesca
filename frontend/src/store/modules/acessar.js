@@ -102,10 +102,10 @@ export const actions = {
   [BUSCAR_LICENCAS]: ({ commit }, acessoResource) => {
     AcessoService.buscarLicensas(acessoResource)
       .then(({ data }) => {
+        console.log(data);
         commit(SET_ERROR_TELA_BUSCA, "");
         commit(SET_SOLICITANTE, data.pessoa);
         commit(SET_LISTA_LICENCAS, data.licencas);
-        commit(SET_BUSCA_MAES, data.maes);
       })
       .catch(error => {
         if (error.response) {

@@ -81,7 +81,6 @@ export default {
         },
 
         atualizarCpfPesquisado(resource) {
-            debugger
             this.pessoa.cpf = resource.cpf;
             this.pessoa.passaporte = resource.passaporte;
                 if(resource.cpf === null && resource.passaporte){

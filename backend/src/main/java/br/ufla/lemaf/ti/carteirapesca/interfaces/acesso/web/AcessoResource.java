@@ -4,16 +4,14 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
-/**
- * DTO de Recurso do Usuario para o acesso do {@link AcessoController}.
- *
- * @author Highlander Paiva
- * @since 1.0
- */
 @Data
+@Getter
+@Setter
 public class AcessoResource {
 
 
@@ -45,7 +43,6 @@ public class AcessoResource {
 		this.cpf = (cpf != null ? CPFUtils.unformat(cpf) : null);
 		this.passaporte = passaporte;
 		this.dataNascimento = dataNascimento;
-//		this.municipio = municipio;
 		this.nomeMae = nomeMae;
 	}
 
