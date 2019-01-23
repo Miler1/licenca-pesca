@@ -174,9 +174,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 			throw new Exception("Não existe solicitante para esse CPF/passaporte");
 		}
 
-		this.numeroTentativas = 0;
-
-		this.numeroTentativas = this.numeroTentativas + 1;
+		this.numeroTentativas = (this.numeroTentativas == null ? 1 : this.numeroTentativas + 1);
 
 		this.dataUltimaTentativa = new Date();
 
