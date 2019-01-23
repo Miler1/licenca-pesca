@@ -103,6 +103,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		if(solicitante == null && pessoaDTO.getNome() == null) {
 
 			throw new ValidationException("acesso.resourceInvalid.pessoaNaoCadastrada");
+
 		} else if(solicitante == null){
 			return null;
 		}
