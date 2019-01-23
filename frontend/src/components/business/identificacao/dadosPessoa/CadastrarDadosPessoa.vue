@@ -181,6 +181,8 @@ export default {
   data() {
     return {
       estrangeiroDisabled: false,
+      pessoaCpf: "",
+      pessoaPassaporte: "",
       pessoa: {
         estrangeiro: false,
         nome: null,
@@ -247,8 +249,6 @@ export default {
       return this.valid;
     },
     atualizarCpfPesquisado(resource) {
-      console.log('cpf', resource.cpf);
-      console.log('passaporte', resource.passaporte);
       this.pessoa.cpf = resource.cpf;
       this.pessoa.passaporte = resource.passaporte;
       if(resource.cpf === null && resource.passaporte !== null){
@@ -278,6 +278,8 @@ export default {
         this.pessoa.enderecoCorrespondencia.municipio.id = municipioId;
         this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
       }
+      // this.pessoa.cpf = this.pessoaCpf;
+      // this.pessoa.passaporte = this.pessoaPassaporte;
       this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
     },
     tratarMunicipio() {

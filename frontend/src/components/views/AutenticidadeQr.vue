@@ -130,7 +130,7 @@ export default {
                 return "Esportiva (pesca e solta o peixe)"
             }
         }
-        
+
      },
 
     created() {

@@ -220,7 +220,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		licenca.setDataVencimentoBoleto();
 		licencaRepository.save(licenca);
 
-		Pessoa pessoa = buscarDadosSolicitante(licenca.getSolicitante());
+		Pessoa pessoa = buscarDadosSolicitante(licenca.solicitante());
 
 		return boletoBuilder.gerarBoleto(licenca.getProtocolo(), licenca.modalidade(), pessoa);
 	}

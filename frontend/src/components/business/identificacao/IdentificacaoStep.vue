@@ -64,10 +64,13 @@ export default {
 
   methods: {
     acessar() {
-      this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource));
-      if(this.$refs.cadastroDadosPessoa){
-        this.$refs.cadastroDadosPessoa.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
-      }
+      this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource))
+        .then((p) => {
+          if(this.$refs.cadastroDadosPessoa){
+            this.$refs.cadastroDadosPessoa.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+          }
+        });
+      
     },
     prepararDados() {
       if(this.$refs.cadastroDadosPessoa){
@@ -86,7 +89,8 @@ export default {
       return false;
     },
     enviarParaStore() {
-      if(this.$refs.cadastroDadosPessoa) {
+      console.log(this.$refs.cadastroDadosPessoa && this.showCadastro());
+      if(this.$refs.cadastroDadosPessoa && this.showCadastro()) {
         this.$refs.cadastroDadosPessoa.enviarParaStore();
       } else if(this.$refs.visualizarDadosPessoa){
 

@@ -1,8 +1,13 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -32,6 +41,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class AcessoController {
 
 	private AcessoServiceFacade acessoServiceFacade;
+	private SolicitanteRopository solicitanteRopository;
+
 
 	/**
 	 * Injeta a dependencia da controller.
@@ -72,18 +83,92 @@ public class AcessoController {
 	}
 
 	@CrossOrigin("*")
-	@PostMapping("/buscarLicensas")
-	public ResponseEntity<ListaLicencaDTO> buscarLicensas(@RequestBody final AcessoResource acessoResource) throws Exception {
+	@PostMapping(value="/buscarLicencas")
+	public ResponseEntity<ListaLicencaDTO> buscarLicencas(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
-		var listaLicencaDTO = new ListaLicencaDTO();
-		var pessoa = acessoServiceFacade.acessar(acessoResource);
+		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true){
 
-		listaLicencaDTO.setPessoa(pessoa);
+			var listaLicencaDTO = new ListaLicencaDTO();
 
-		listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
+			var pessoa = acessoServiceFacade.acessar(validacaoDTO.getAcessoResource());
+
+			listaLicencaDTO.setPessoa(pessoa);
+
+			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
 
 
-		return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
+
+			return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
+
+		} else {
+
+			throw new Exception("Dados não conferem. Após 3 tentativas erradas, o Cpf/passaporte será bloqueado por 2 horas.");
+
+		}
+	}
+
+	@CrossOrigin("*")
+	@PostMapping("/buscarDados")
+	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) throws Exception {
+
+		if(acessoServiceFacade.solicitanteBloqueado(acessoResource)) {
+
+			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
+
+		} else {
+
+			var listaLicencaDTO = new ListaLicencaDTO();
+
+			var pessoa = acessoServiceFacade.acessar(acessoResource);
+
+			listaLicencaDTO.setPessoa(pessoa);
+
+
+
+			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
+
+
+			return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
+		}
+	}
+
+
+	private static Map<String, Object[]> preencherListaVerificacao(PessoaDTO pessoa) throws IOException {
+
+
+		Map<String, Object[]> listasVerificacao = new HashMap<>();
+
+
+		if (!Validate.isNull(pessoa.getCpf())) {
+
+			preencherListaVerificacaoSolicitante(listasVerificacao, pessoa);
+
+		} if(!Validate.isNull(pessoa.getPassaporte())) {
+
+			preencherListaVerificacaoSolicitante(listasVerificacao, pessoa);
+		}
+
+		return listasVerificacao;
+
+	}
+
+	private static void preencherListaVerificacaoSolicitante(Map<String, Object[]> listasVerificacao, PessoaDTO pessoa) throws IOException {
+
+		Gerador gerador = new Gerador();
+		Random rand = new Random();
+
+		Integer quantidade = 5;
+		Integer padrao = rand.nextInt(5) ;
+		Integer posicao = padrao > 3 ? Math.abs(padrao/3) : padrao;
+
+		if(posicao > 3) {
+			posicao = 0;
+		}
+
+		String[] maes = gerador.gerarMaes(quantidade, padrao);
+
+		maes[posicao++] = CarteiraUtils.capitalize(pessoa.getNomeMae());
+		listasVerificacao.put("maes", maes);
 
 	}
 
