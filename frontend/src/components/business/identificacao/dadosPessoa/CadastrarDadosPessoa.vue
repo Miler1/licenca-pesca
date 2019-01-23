@@ -6,7 +6,7 @@
       el-row.section(:gutter="20")
 
         el-col(:span="6")
-          el-checkbox(v-model="pessoa.estrangeiro") {{ $t(`${cadastrar_prefix}labels.estrangeiro`) }}
+          el-checkbox(v-model="pessoa.estrangeiro", :disabled="estrangeiroDisabled") {{ $t(`${cadastrar_prefix}labels.estrangeiro`) }}
 
       el-row.section(:gutter="20")
 
@@ -14,13 +14,13 @@
           el-form-item(:label="$t(`${cadastrar_prefix}labels.nome`)" prop="nome")
               el-input(v-model="pessoa.nome", ref="nome")
 
-        el-col(:span="6" v-if="pessoa.estrangeiro === false")
-          el-form-item(:label="$t(`${cadastrar_prefix}labels.cpf`)" prop="cpf")
-            el-input(v-model="pessoa.cpf" v-mask="['###.###.###-##']")
+        el-col(:span="6" v-show="pessoa.estrangeiro === false")
+          el-form-item(:label="$t(`${cadastrar_prefix}labels.cpf`)")
+            el-input(v-model="pessoa.cpf" v-mask="['###.###.###-##']" disabled)
 
-        el-col(:span="6" v-if="pessoa.estrangeiro === true")
-          el-form-item(:label="$t(`${cadastrar_prefix}labels.passaporte`)" prop="passaporte")
-            el-input(v-model="pessoa.passaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']")
+        el-col(:span="6" v-show="pessoa.estrangeiro === true")
+          el-form-item(:label="$t(`${cadastrar_prefix}labels.passaporte`)" )
+            el-input(v-model="pessoa.passaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']" disabled)
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.dataNascimento`)" prop="dataNascimento")
@@ -152,11 +152,11 @@
             el-form-item(:label="$t(`${cadastrar_prefix}labels.uf`)" prop="enderecoCorrespondencia.uf")
               el-select(v-model="pessoa.enderecoCorrespondencia.uf" :loading="ufSelectLoader" @change="fetchMunicipiosEnderecoCorrespondencia" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
                 el-option(v-for="uf in ufs" :key="uf.id" :value="uf.sigla" :label="uf.sigla")
-
+        
           el-col(:span="6")
             el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoCorrespondencia.municipio")
               el-select(v-model="pessoa.enderecoCorrespondencia.municipio" ref="enderecoCorrespondencia" :loading="municipioSelectLoader" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
-                el-option(v-for="municipio in municipios" :key="municipio.id" :value="municipio.id" :label="municipio.nome")
+                el-option(v-for="municipio in municipiosCorrespondencia" :key="municipio.id" :value="municipio.id" :label="municipio.nome")
 
 </template>
 
@@ -171,7 +171,8 @@ import { CADASTRO_MESSAGES_PREFIX } from "../../../../utils/messages/interface/r
 import {
   FETCH_MUNICIPIOS,
   FETCH_UFS,
-  SEND_SOLICITANTE
+  SEND_SOLICITANTE,
+FETCH_MUNICIPIOS_CORRESPONDENCIA
 } from "../../../../store/actions.type";
 
 export default {
@@ -179,6 +180,9 @@ export default {
   components: { ElInput },
   data() {
     return {
+      estrangeiroDisabled: false,
+      pessoaCpf: "",
+      pessoaPassaporte: "",
       pessoa: {
         estrangeiro: false,
         nome: null,
@@ -228,8 +232,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["municipios", "ufs"])
+    ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa"])
   },
+ 
   methods: {
     instantiate() {
       Vue.prototype.$cadastroPessoa = this;
@@ -242,6 +247,17 @@ export default {
     },
     getValidate() {
       return this.valid;
+    },
+    atualizarCpfPesquisado(resource) {
+      this.pessoa.cpf = resource.cpf;
+      this.pessoa.passaporte = resource.passaporte;
+      if(resource.cpf === null && resource.passaporte !== null){
+        this.pessoa.estrangeiro = true;
+        this.estrangeiroDisabled = true;
+      } else {
+        this.pessoa.estrangeiro = false;
+        this.estrangeiroDisabled = false;
+      }
     },
     isEPUrbano() {
       return (
@@ -262,7 +278,17 @@ export default {
         this.pessoa.enderecoCorrespondencia.municipio.id = municipioId;
         this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
       }
+      // this.pessoa.cpf = this.pessoaCpf;
+      // this.pessoa.passaporte = this.pessoaPassaporte;
       this.$store.dispatch(SEND_SOLICITANTE, this.pessoa);
+    },
+    tratarMunicipio() {
+      if(this.pessoa.enderecoPrincipal.municipio){
+        this.pessoa.enderecoPrincipal.municipio = this.pessoa.enderecoPrincipal.municipio.id; 
+      }
+      if(this.pessoa.enderecoCorrespondencia.municipio){
+        this.pessoa.enderecoCorrespondencia.municipio = this.pessoa.enderecoCorrespondencia.municipio.id; 
+      }
     },
     changeSemNumeroEndPrincipal() {
       this.removerMensagemErro("numeroPrincipal");
@@ -302,7 +328,7 @@ export default {
       if (uf !== null) {
         let idUf = this.ufs.find(u => u.sigla === uf).id;
         this.$store
-          .dispatch(FETCH_MUNICIPIOS, idUf)
+          .dispatch(FETCH_MUNICIPIOS_CORRESPONDENCIA, idUf)
           .finally(() => (this.municipioSelectLoader = false));
       }
     }

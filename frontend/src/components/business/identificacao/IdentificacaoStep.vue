@@ -25,7 +25,7 @@
 					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
 
 			.data
-				cadastrar-dados-pessoa(v-if="showCadastro()", ref="cadastroDadosPessoa")
+				cadastrar-dados-pessoa(v-show="showCadastro()", ref="cadastroDadosPessoa")
 				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()", ref="visualizarDadosPessoa")
 </template>
 
@@ -64,11 +64,23 @@ export default {
 
   methods: {
     acessar() {
-      this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource));
+      this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource))
+        .then((p) => {
+          if(this.$refs.cadastroDadosPessoa){
+            this.$refs.cadastroDadosPessoa.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+          }
+        });
+      
+    },
+    prepararDados() {
+      if(this.$refs.cadastroDadosPessoa){
+
+        this.$refs.cadastroDadosPessoa.tratarMunicipio();
+      }
     },
 
     getValidated () {
-      if(this.$refs.cadastroDadosPessoa) {
+      if(this.$refs.cadastroDadosPessoa && this.showCadastro() ) {
         this.$refs.cadastroDadosPessoa.validate();
         return this.$refs.cadastroDadosPessoa.getValidate();
       } else if(this.$refs.visualizarDadosPessoa){
@@ -77,7 +89,8 @@ export default {
       return false;
     },
     enviarParaStore() {
-      if(this.$refs.cadastroDadosPessoa) {
+      console.log(this.$refs.cadastroDadosPessoa && this.showCadastro());
+      if(this.$refs.cadastroDadosPessoa && this.showCadastro()) {
         this.$refs.cadastroDadosPessoa.enviarParaStore();
       } else if(this.$refs.visualizarDadosPessoa){
 

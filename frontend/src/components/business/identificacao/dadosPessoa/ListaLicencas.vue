@@ -1,7 +1,7 @@
 <template lang="pug">
 #lista-licenca
-    h3.title.withDivisor {{ $t(`${consultar_prefix}listaLicenca.titulo`) }}
-    .licencas(v-for="lista in listaLicencas")
+    h3.title.withDivisor(v-if="listaLicencas && listaLicencas.length > 0") {{ $t(`${consultar_prefix}listaLicenca.titulo`) }}
+    .licencas(v-if="listaLicencas && listaLicencas.length > 0" v-for="lista in listaLicencas")
         .protocolo {{ lista.protocolo.codigoFormatado }}
         .withDivisor.listMargin
             .flex
@@ -29,14 +29,16 @@
                 .flex-item
                     span.item-title-acoes {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                     span.item-content-acoes
-                        el-dropdown(trigger="click", v-if="lista.status !== 'INVALIDADO'")
+                        el-dropdown(trigger="click", v-if="lista.status !== 'INVALIDADO' && lista.status !== 'VENCIDO'")
                             span.el-dropdown-link.el-button.el-button--primary {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                                 i.el-icon-arrow-down.el-icon--right
                             el-dropdown-menu(slot="dropdown")
                                 el-dropdown-item(type="primary", v-if="lista.status === 'AGUARDANDO_PAGAMENTO_BOLETO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarBoleto`) }}
                                 el-dropdown-item(type="primary", v-if="lista.status === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
-                                el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
-                        span(v-if="lista.status === 'INVALIDADO'") -
+                                //- el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
+                        span(v-if="lista.status === 'INVALIDADO' || lista.status === 'VENCIDO'") -
+    .sem-licenca.withDivisor(v-if="!listaLicencas || listaLicencas.length <= 0")
+        | {{ $t(`${consultar_prefix}listaLicenca.semLicenca`) }}
 </template>
 
 <script>
@@ -132,7 +134,14 @@ export default {
 .el-dropdown-menu
     // margin-left: -100px !important
 
+
+
 #lista-licenca
+
+    .sem-licenca
+        text-align: center
+        font-size: 15px
+    
     .title
         margin-bottom: 20px
 

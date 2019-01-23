@@ -96,6 +96,11 @@ public final class PessoaDTO extends ResourceSupport {
 		this.enderecoCorrespondencia = pessoa.enderecoCorrespondencia;
 	}
 
+	public PessoaDTO(String cpf, String passaporte) {
+		this.cpf = cpf;
+		this.passaporte = passaporte;
+	}
+
 	/**
 	 * Getter se é estrangeiro.
 	 *

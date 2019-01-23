@@ -43,7 +43,7 @@ export const mutations = {
   [SET_ERROR]: (state, error) => state.errors.push(error),
   [SET_ERROR_TELA_BUSCA]: (state, error) => {
     state.errorTelaInicial = error;
-  },
+  }
 };
 
 export default {

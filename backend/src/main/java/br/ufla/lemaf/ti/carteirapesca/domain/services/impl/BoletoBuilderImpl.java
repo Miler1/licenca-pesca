@@ -177,7 +177,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 		return Pagador.novoPagador()
 			.comNome(pessoa.nome)
-			.comDocumento(pessoa.cpf)
+			.comDocumento(pessoa.cpf == null ? pessoa.passaporte.toString() : pessoa.cpf)
 			.comEndereco(montarEnderecoPessoa(pessoa));
 	}
 

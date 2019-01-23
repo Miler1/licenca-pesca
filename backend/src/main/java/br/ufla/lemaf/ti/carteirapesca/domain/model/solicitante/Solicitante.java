@@ -1,19 +1,20 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
-import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
-import br.ufla.lemaf.ti.carteirapesca.application.impl.RegistroApplicationImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.val;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,9 +25,14 @@ import java.util.List;
  * @since 1.0
  */
 @NoArgsConstructor
+@Getter
 @javax.persistence.Entity
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "solicitante")
 public class Solicitante implements Entity<Solicitante, SolicitanteId> {
+
+	private static AcessoServiceFacade acessoServiceFacade;
+
+	private static SolicitanteRopository solicitanteRopository;
 
 	@Embedded
 	@AttributeOverrides({
@@ -39,6 +45,17 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	@OrderBy(value="dataCriacao")
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Licenca> licencas = new ArrayList<>();
+
+	@Column(name = "numero_tentativas")
+	private Integer numeroTentativas;
+
+	@Column(name = "data_ultima_tentativa")
+	private Date dataUltimaTentativa;
+
+	@Column(name = "data_desbloqueio")
+	private Date dataDesbloqueio;
+
+
 
 	/**
 	 * Construtor de solicitante.
@@ -135,6 +152,34 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		 */
 		SolicitanteId gerarSolicitanteId(final CPF cpf, final Passaporte passaporte) {
 			return new SolicitanteId(cpf, passaporte);
+		}
+
+	}
+
+	public void desbloqueiaSolicitante() throws Exception {
+
+		if(this == null){
+			throw new Exception("Não existe solicitante para esse CPF/passaporte");
+		}
+
+		this.numeroTentativas = 0;
+		this.dataUltimaTentativa = null;
+		this.dataDesbloqueio = null;
+
+	}
+
+	public void atualizaNumeroTentativas() throws Exception {
+
+		if(this == null){
+			throw new Exception("Não existe solicitante para esse CPF/passaporte");
+		}
+
+		this.numeroTentativas = this.numeroTentativas + 1;
+		this.dataUltimaTentativa = new Date();
+
+		if(this.numeroTentativas == Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE) {
+
+			this.dataDesbloqueio = DateUtils.somarHorasData(new Date(), Constants.HORAS_BLOQUEIO_SOLICITANTE);
 		}
 
 	}
