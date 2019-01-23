@@ -29,7 +29,6 @@ export default {
       localizeValidation();
 	},
 	goHome() {
-		console.log('teste');
 		this.$store.dispatch(CANCELAR).then(p => {
 			this.step = 0;
 			this.$router.push({name: 'home'});
