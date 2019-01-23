@@ -96,7 +96,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	}
 
 	@Override
-	public List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoaDTO) throws Exception {
+	public List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoaDTO) {
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 

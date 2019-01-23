@@ -129,7 +129,6 @@ export const actions = {
     commit(ACTIVE_CADASTRO, false);
     commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
     commit(CLEAN_SOLICITANTE);
-    // commit(CLEAN_CPF_PESQUISA);
     commit(CLEAN_REGISTRO);
   }
 };
@@ -169,10 +168,6 @@ export const mutations = {
   [SET_CPF_PESQUISA]: (state, cpf) => {
     state.cpfPesquisa = cpf;
   },
-
-  // [CLEAN_CPF_PESQUISA]: (state, cpf) => {
-  //   state.cpfPesquisa = null;
-  // },
 
   [SET_PASSAPORTE_PESQUISA]: (state, passaporte) => {
     state.passaportePesquisa = passaporte;
