@@ -97,7 +97,7 @@ public final class PessoaDTO extends ResourceSupport {
 	}
 
 	public PessoaDTO(String cpf, String passaporte) {
-		this.cpf = cpf;
+		this.cpf = (cpf != null ? CPFUtils.unformat(cpf) : null);
 		this.passaporte = passaporte;
 	}
 
