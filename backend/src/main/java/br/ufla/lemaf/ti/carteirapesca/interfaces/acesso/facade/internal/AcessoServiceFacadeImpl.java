@@ -126,18 +126,6 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 	}
 
-//	public void limparTentativas() throws Exception {
-//
-//		if(this == null){
-//			throw new Exception("Não existe solicitante para esse CPF/passaporte");
-//		}
-//
-//		this.numeroTentativas = 0;
-//		this.dataUltimaTentativa = null;
-//		this.dataDesbloqueio = null;
-//
-//	}
-
 	@Override
 	public Boolean validaDadosAcessoLicencas(ValidacaoDTO validacaoDTO) throws Exception {
 

@@ -10,7 +10,8 @@ const VALIDACAO = {
       data: ["dd/MM/yyyy", "yyyy-MM-dd"]
     },
     botoes: {
-      validar: ["Validar dados"]
+      validar: ["Validar dados", " "],
+      cancelar: ["Cancelar", " "]
     },
     titulo: {
       tituloInicial: ["Confirmação de dados", "Fishing License"],
@@ -18,6 +19,21 @@ const VALIDACAO = {
       nomeMae: ["Nome da mãe", ""],
       dataNascimento: ["Data de Nascimento", ""],
       municipio: ["Município", ""]
+    },
+    cancel: {
+      titulo: [
+        "Confirmar cancelamento",
+        "Confirm cancellation",
+        "Confirmar cancelación"
+      ],
+      mensagem: [
+        "Deseja realmente cancelar a validação dos dados?",
+        "Do you really want to cancel data validation?"
+      ],
+      botoes: {
+        confirm: ["Confirmar", "Confirm", "Confirmar"],
+        cancel: ["Cancelar", "Cancel", "Cancelar"]
+      }
     }
   }
 };

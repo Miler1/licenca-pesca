@@ -106,7 +106,6 @@ public class AcessoController {
 		}
 	}
 
-
 	// tres tentativas ao dia
 
 	@CrossOrigin("*")
