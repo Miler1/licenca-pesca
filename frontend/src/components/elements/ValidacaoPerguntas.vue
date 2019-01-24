@@ -95,9 +95,8 @@ export default {
                 }
         },
         cancelarValidacao() {
-            
             this.$confirm(
-                translate(`${this.validacao_prefix}cancelamento.mensagem`),
+                translate(`${this.validacao_prefix}cancelamento.mensagemValidacao`),
                 translate(`${this.validacao_prefix}cancelamento.titulo`),
                 {
                 confirmButtonText: translate(

@@ -26,7 +26,7 @@ const VALIDACAO = {
         "Confirm cancellation",
         "Confirmar cancelación"
       ],
-      mensagem: [
+      mensagemValidacao: [
         "Deseja realmente cancelar a validação dos dados?",
         "Do you really want to cancel data validation?"
       ],
