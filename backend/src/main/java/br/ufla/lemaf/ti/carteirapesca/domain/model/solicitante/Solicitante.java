@@ -163,7 +163,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
 	}
 
-	public void desbloqueiaSolicitante() throws Exception {
+	public void limpaDadosDesbloqueioSolicitante() throws Exception {
 
 		if(this == null){
 			throw new Exception("Não existe solicitante para esse CPF/passaporte");
@@ -181,7 +181,8 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 			throw new Exception("Não existe solicitante para esse CPF/passaporte");
 		}
 
-		this.numeroTentativas = this.numeroTentativas + 1;
+		this.numeroTentativas = (this.numeroTentativas == null ? 1 : this.numeroTentativas + 1);
+
 		this.dataUltimaTentativa = new Date();
 
 		if(this.numeroTentativas == Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE) {

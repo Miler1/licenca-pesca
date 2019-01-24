@@ -1,6 +1,6 @@
 import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES } from "../mutations.type";
+import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_DADOS_VALIDACAO, CLEAN_CPF_PESQUISA } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import Vue from "vue";
 
@@ -119,7 +119,7 @@ export const actions = {
       })
       .catch(error => {
         if (error.response) {
-          commit(SET_ERROR_TELA_BUSCA, error.response.data);
+          commit(SET_ERROR_TELA_BUSCA, error.response.data.message);
           commit(CLEAN_SOLICITANTE);
         }
       });

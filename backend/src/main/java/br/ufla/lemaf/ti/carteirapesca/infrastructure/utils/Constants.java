@@ -36,6 +36,8 @@ public final class Constants {
 
 	public static final Integer HORAS_BLOQUEIO_SOLICITANTE = 2;
 
+	public static final Integer ZERAR_NUMERO_TENTATIVAS_POR_DIA = 24;
+
 	/**
 	 * Para evitar instanciação.
 	 */

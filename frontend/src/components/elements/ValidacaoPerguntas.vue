@@ -19,9 +19,10 @@
                             el-form-item(prop="dataNascimento")                           
                                 el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${validacao_prefix}format.data`)")
     .buttons
-        .right
-          el-button(icon="el-icon-check" type="default" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
-                                
+        .left
+            el-button(icon="el-icon-close" @click="cancelarValidacao") {{ $t(`${validacao_prefix}botoes.cancelar`) }}
+            el-button.right(icon="el-icon-check" type="primary" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
+                         
 </template>
 
 <script>
@@ -31,12 +32,13 @@ import Card from "../layouts/Card";
 import { INTERFACE_VALIDACAO_PREFIX } from "../../utils/messages/interface/registrar/validacao/validacao";
 import { translate } from "../../utils/helpers/internationalization";
 import Properties from "../../properties";
-import { FETCH_DADOS_CARTEIRA, VALIDA_DADOS, SEND_SOLICITANTE, BUSCAR_LICENCAS } from '../../store/actions.type';
+import { FETCH_DADOS_CARTEIRA, VALIDA_DADOS, SEND_SOLICITANTE, BUSCAR_LICENCAS, CANCELAR } from '../../store/actions.type';
 import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
 import StatusCard from "../layouts/StatusCard";
 import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
 import { numero } from '../../utils/validations/pessoa/pessoa_validations';
 import { numericLiteral, nullLiteral } from 'babel-types';
+import { PESSOA_RULES } from '../../utils/validations/pessoa/pessoa_rules';
 
 export default {
   name: "ValidacaoPerguntas",
@@ -92,6 +94,29 @@ export default {
                     this.estrangeiroDisabled = false;
                 }
         },
+        cancelarValidacao() {
+            this.$confirm(
+                translate(`${this.validacao_prefix}cancelamento.mensagemValidacao`),
+                translate(`${this.validacao_prefix}cancelamento.titulo`),
+                {
+                confirmButtonText: translate(
+                    `${this.validacao_prefix}cancelamento.botoes.confirmar`
+                ),
+                cancelButtonText: translate(
+                    `${this.validacao_prefix}cancelamento.botoes.cancelamento`
+                )
+                }
+            )
+                .then(() => {
+                    this.$store.dispatch(CANCELAR).then(p => {
+                    this.step = 0;
+                    this.$router.push({name: 'home'});
+                    });
+                })
+                .catch(() => {
+                    // DO nothing!
+                });
+        }
 
     }
 };
@@ -106,10 +131,13 @@ export default {
     
     .subtitulo    
         font-size: 15px;
-    
+
     .title
       font-weight: bold
       font-size: 17px
+
+    .right
+        float: right
 
     .custom
         padding-bottom: 10px
@@ -149,7 +177,6 @@ export default {
 
     .flex
         display: flex
-
         .flex-item
             flex: 1
             display: grid
