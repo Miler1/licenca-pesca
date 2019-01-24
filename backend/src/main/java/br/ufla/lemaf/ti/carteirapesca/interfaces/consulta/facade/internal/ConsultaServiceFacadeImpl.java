@@ -127,7 +127,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		data.put("cpfPassaporte", CarteiraBuilderImpl.identificadorPessoa(pessoa));
 
 		data.put("numLicenca", protocolo.getCodigoFormatado());
-		data.put("modalidade", licenca.modalidade().name().toUpperCase());
+		data.put("modalidade", licenca.modalidade().getNomePT().toUpperCase());
 
 		data.put("endereco", CarteiraBuilderImpl.campoEndereco(CarteiraBuilderImpl.endereco(pessoa)));
 		data.put("enderecoFontSize",enderecoFontSize);

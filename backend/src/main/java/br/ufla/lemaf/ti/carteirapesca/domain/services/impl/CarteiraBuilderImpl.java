@@ -26,6 +26,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import static br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade.*;
+
 /**
  * Buider da Carteira.
  * <p>
@@ -117,7 +119,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 			grafics.drawString(identificadorPessoa(pessoa), EIXO_X_COLUNA_2, EIXO_Y_LINHA_1);
 
 			grafics.drawString(protocolo.getCodigoFormatado(), EIXO_X_COLUNA_1, EIXO_Y_LINHA_2);
-			grafics.drawString(modalidade.name().toUpperCase(), EIXO_X_COLUNA_2, EIXO_Y_LINHA_2);
+			grafics.drawString(modalidade.getNomePT().toUpperCase(), EIXO_X_COLUNA_2, EIXO_Y_LINHA_2);
 
 			grafics.drawString(campoEndereco(endereco(pessoa)), EIXO_X_COLUNA_1, EIXO_Y_LINHA_3);
 
@@ -237,15 +239,14 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 * @return O campo de limite de captura
 	 */
 	public static String campoLimiteCaptura(Modalidade modalidade) {
-		switch (modalidade) {
-			case ESPORTIVA:
-				return "0 (ZERO)";
-			case RECREATIVA:
-				return "05 KG DE PEIXES INTEIROS";
-			case UNKNOWN:
-				return "";
-			default:
-				return "";
+		if(modalidade.getId().equals(Modalidades.PESCA_ESPORTIVA.id)) {
+
+			return "0 (ZERO)";
+		} else if(modalidade.getId().equals(Modalidades.PESCA_REACREATIVA.id)) {
+
+			return "05 KG DE PEIXES INTEIROS";
+		} else {
+			return "";
 		}
 
 	}
@@ -260,15 +261,14 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 */
 	@Deprecated
 	private static String campoValorCarteira(Modalidade modalidade) {
-		switch (modalidade) {
-			case ESPORTIVA:
-				return "R$41,20";
-			case RECREATIVA:
-				return "R$57,21";
-			case UNKNOWN:
-				return "";
-			default:
-				return "";
+		if(modalidade.getId().equals(Modalidades.PESCA_ESPORTIVA.id)) {
+
+			return "R$41,20";
+		} else if(modalidade.getId().equals(Modalidades.PESCA_REACREATIVA.id)) {
+
+			return "R$57,21";
+		} else {
+			return "";
 		}
 
 	}

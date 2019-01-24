@@ -1,9 +1,11 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
@@ -15,6 +17,7 @@ import org.springframework.hateoas.ResourceSupport;
 @Getter
 @EqualsAndHashCode(callSuper = false, doNotUseGetters = true)
 public final class InformacaoComplementarDTO extends ResourceSupport {
+
 
 	private Integer modalidadePesca;
 
@@ -88,4 +91,5 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 		this.modalidadeMaisPraticada = modalidadeMaisPraticada;
 		this.agenciaTurismo = agenciaTurismo;
 	}
+
 }

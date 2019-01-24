@@ -73,15 +73,16 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 	 *
 	 * @return A modalidade do protoco
 	 */
-	public Modalidade modalidade() {
+	public Modalidades modalidade() {
 		switch (ProtocoloValidator.FORMATED.matcher(codigoFormatado).group(1)) {
 			case "LPE":
-				return ESPORTIVA;
+				return Modalidades.PESCA_ESPORTIVA;
 			case "LPR":
-				return RECREATIVA;
+				return Modalidades.PESCA_REACREATIVA;
 			default:
-				return UNKNOWN;
+				return null;
 		}
+
 	}
 
 	/**

@@ -1,15 +1,22 @@
 package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.InformacaoComplementarRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.*;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.ModalidadeRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.InformacaoComplementarService;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.InformacaoComplementarAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
@@ -33,13 +40,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RegistroApplicationImpl implements RegistroApplication {
 
-	private static final Integer ESPORTIVA = Modalidade.ESPORTIVA.ordinal();
-	private static final Integer RECREATIVA = Modalidade.RECREATIVA.ordinal();
+	@Autowired
+	ModalidadeRepository modalidadeRepository;
+
+	@Autowired
+	StatusRepository statusRepository;
+
+	@Autowired
+	InformacaoComplementarRepository informacaoComplementarRepository;
+
+	private static final Integer ESPORTIVA = Modalidade.Modalidades.PESCA_ESPORTIVA.id;
+	private static final Integer RECREATIVA = Modalidade.Modalidades.PESCA_REACREATIVA.id;
 
 	private ProtocoloBuilder protocoloBuilder;
 	private CarteiraBuilder carteiraBuilder;
 	private BoletoBuilder boletoBuilder;
 	private LicencaRepository licencaRepository;
+	private  InformacaoComplementarService informacaoComplementarService;
 
 	private SolicitanteRopository solicitanteRopository;
 
@@ -53,15 +70,17 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 */
 	@Autowired
 	public RegistroApplicationImpl(final ProtocoloBuilder protocoloBuilder,
-	                               final CarteiraBuilder carteiraBuilder,
-	                               final BoletoBuilder boletoBuilder,
-	                               final SolicitanteRopository solicitanteRopository,
-	                               final LicencaRepository licencaRepository) {
+								   final CarteiraBuilder carteiraBuilder,
+								   final BoletoBuilder boletoBuilder,
+								   final SolicitanteRopository solicitanteRopository,
+								   final LicencaRepository licencaRepository,
+								   final InformacaoComplementarService informacaoComplementarService) {
 		this.protocoloBuilder = protocoloBuilder;
 		this.carteiraBuilder = carteiraBuilder;
 		this.boletoBuilder = boletoBuilder;
 		this.solicitanteRopository = solicitanteRopository;
 		this.licencaRepository = licencaRepository;
+		this.informacaoComplementarService = informacaoComplementarService;
 	}
 
 	/**
@@ -106,7 +125,13 @@ public class RegistroApplicationImpl implements RegistroApplication {
 //		var caminhoCarteira = carteiraBuilder.gerarCarteira(protocolo, modalidade, pessoa);
 		var caminhoBoleto = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
 
-		return new Licenca(protocolo, modalidade, caminhoBoleto);
+		Status status = statusRepository.findById(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id).get();
+
+		InformacaoComplementar informacaoComplementar = informacaoComplementarService.toInformacaoComplementar(resource.getInformacaoComplementar());
+
+//		informacaoComplementar = informacaoComplementarRepository.save(informacaoComplementar);
+
+		return new Licenca(protocolo, modalidade, caminhoBoleto, informacaoComplementar, status);
 	}
 
 	/**
@@ -143,20 +168,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 */
 	public Modalidade gerarModalidade(Integer tipo) {
 
-		if (tipo.equals(ESPORTIVA)) {
-
-			return Modalidade.ESPORTIVA;
-
-		} else if (tipo.equals(RECREATIVA)) {
-
-			return Modalidade.RECREATIVA;
-
-		} else {
-
-			return Modalidade.UNKNOWN;
-
-		}
-
+		return modalidadeRepository.findById(ESPORTIVA).get();
 	}
 
 	/**

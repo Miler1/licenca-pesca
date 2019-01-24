@@ -4,9 +4,11 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Entity
 @Getter
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "local_pesca")
 public class LocalPesca {

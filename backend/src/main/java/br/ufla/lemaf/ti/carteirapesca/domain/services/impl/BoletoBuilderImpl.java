@@ -189,15 +189,16 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 	 * @return O campo de valor da carteira
 	 */
 	private static String montarValorBoleto(Modalidade modalidade) {
-		switch (modalidade) {
-			case ESPORTIVA:
-				return "41.21";
-			case RECREATIVA:
-				return "57.21";
-			default:
-				return "";
-		}
 
+		if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_ESPORTIVA.id)) {
+
+			return "41.21";
+		} else if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_REACREATIVA.id)) {
+
+			return "57.21";
+		} else {
+			return "";
+		}
 	}
 
 	/**

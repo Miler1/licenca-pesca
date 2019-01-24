@@ -89,7 +89,6 @@ export default {
       return false;
     },
     enviarParaStore() {
-      console.log(this.$refs.cadastroDadosPessoa && this.showCadastro());
       if(this.$refs.cadastroDadosPessoa && this.showCadastro()) {
         this.$refs.cadastroDadosPessoa.enviarParaStore();
       } else if(this.$refs.visualizarDadosPessoa){

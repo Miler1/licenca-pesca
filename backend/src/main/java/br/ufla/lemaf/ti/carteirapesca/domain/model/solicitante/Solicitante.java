@@ -4,6 +4,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
@@ -11,6 +12,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFaca
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,6 +32,10 @@ import java.util.List;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "solicitante")
 public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
+	@Transient
+	@Autowired
+	private StatusRepository statusRepository;
+
 	private static AcessoServiceFacade acessoServiceFacade;
 
 	private static SolicitanteRopository solicitanteRopository;
@@ -44,7 +50,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	@JoinColumn(name = "id_solicitante")
 	@OrderBy(value="dataCriacao")
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Licenca> licencas = new ArrayList<>();
+	private List<Licenca> licenca = new ArrayList<>();
 
 	@Column(name = "numero_tentativas")
 	private Integer numeroTentativas;
@@ -84,23 +90,24 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @return {@code true} se alguma licença estiver ativa
 	 */
 	public boolean pussuiLicencaAtiva(Modalidade modalidade) {
-
-		return licencas
+		return licenca
 			.stream()
-			.anyMatch(licenca -> (licenca.status().sameValueAs(Status.ATIVO) || licenca.status().sameValueAs(Status.AGUARDANDO_PAGAMENTO_BOLETO)) && licenca.modalidade().sameValueAs(modalidade));
+			.anyMatch(licencaProcurada -> (licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
+				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id));
+//				&& licenca.modalidade().getId().equals(modalidade.getId()));
 	}
 
 	/**
 	 * Adiciona uma licença ao solicitante se não
 	 * houver uma liceça ativa.
 	 *
-	 * @param licenca A licença
+	 * @param licencaAdd A licença
 	 * @return O protocolo da licença
 	 */
-	public Protocolo adicionarLicenca(Licenca licenca) {
-		if (!pussuiLicencaAtiva(licenca.modalidade())) {
-			licencas.add(licenca);
-			return licenca.protocolo();
+	public Protocolo adicionarLicenca(Licenca licencaAdd) {
+		if (!pussuiLicencaAtiva(licencaAdd.modalidade())) {
+			licenca.add(licencaAdd);
+			return licencaAdd.protocolo();
 		} else {
 			return null;
 		}
@@ -110,7 +117,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @return Todas as Licencas do Solicitante
 	 */
 	public List<Licenca> buscarTodasLicencas() {
-		return licencas;
+		return licenca;
 	}
 
 	/**

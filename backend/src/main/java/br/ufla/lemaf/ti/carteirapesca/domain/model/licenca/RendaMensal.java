@@ -4,15 +4,17 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Entity
 @Getter
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "renda_mensal")
 public class RendaMensal {
 	@Id
 	@Column(name = "id")
-	private Long id;
+	private Integer id;
 
 	@Column(name = "descricao_pt")
 	private String descricaoPT;
