@@ -20,7 +20,7 @@
                                 el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${validacao_prefix}format.data`)")
     .buttons
         .left
-            el-button(icon="el-icon-close" @click="cancelar") {{ $t(`${validacao_prefix}botoes.cancelar`) }}
+            el-button(icon="el-icon-close" @click="cancelarValidacao") {{ $t(`${validacao_prefix}botoes.cancelar`) }}
             el-button.right(icon="el-icon-check" type="primary" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
                          
 </template>
@@ -94,17 +94,17 @@ export default {
                     this.estrangeiroDisabled = false;
                 }
         },
-        cancelar() {
+        cancelarValidacao() {
             
             this.$confirm(
-                translate(`${this.validacao_prefix}cancel.mensagem`),
-                translate(`${this.validacao_prefix}cancel.titulo`),
+                translate(`${this.validacao_prefix}cancelamento.mensagem`),
+                translate(`${this.validacao_prefix}cancelamento.titulo`),
                 {
                 confirmButtonText: translate(
-                    `${this.validacao_prefix}cancel.botoes.confirm`
+                    `${this.validacao_prefix}cancelamento.botoes.confirmar`
                 ),
                 cancelButtonText: translate(
-                    `${this.validacao_prefix}cancel.botoes.cancel`
+                    `${this.validacao_prefix}cancelamento.botoes.cancelamento`
                 )
                 }
             )

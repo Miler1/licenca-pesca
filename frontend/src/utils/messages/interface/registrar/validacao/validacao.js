@@ -20,7 +20,7 @@ const VALIDACAO = {
       dataNascimento: ["Data de Nascimento", ""],
       municipio: ["Município", ""]
     },
-    cancel: {
+    cancelamento: {
       titulo: [
         "Confirmar cancelamento",
         "Confirm cancellation",
@@ -31,8 +31,8 @@ const VALIDACAO = {
         "Do you really want to cancel data validation?"
       ],
       botoes: {
-        confirm: ["Confirmar", "Confirm", "Confirmar"],
-        cancel: ["Cancelar", "Cancel", "Cancelar"]
+        confirmar: ["Confirmar", "Confirm", "Confirmar"],
+        cancelamento: ["Cancelar", "Cancel", "Cancelar"]
       }
     }
   }
