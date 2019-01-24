@@ -166,7 +166,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	}
 
 	public Boolean getPodeRenovar() {
-		if (!status.sameValueAs(statusRepository.findById(Status.StatusEnum.ATIVO.id).get()) && !status.sameValueAs(statusRepository.findById(Status.StatusEnum.VENCIDO.id).get())) {
+		if (!status.getId().equals(Status.StatusEnum.ATIVO.id) && !status.getId().equals(Status.StatusEnum.VENCIDO.id)) {
 			return false;
 		}
 		var vencimento = this.getDataVencimento();
