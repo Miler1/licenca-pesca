@@ -156,7 +156,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
 	}
 
-	public void desbloqueiaSolicitante() throws Exception {
+	public void limpaDadosDesbloqueioSolicitante() throws Exception {
 
 		if(this == null){
 			throw new Exception("Não existe solicitante para esse CPF/passaporte");

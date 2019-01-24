@@ -44,6 +44,7 @@ public class AcessoController {
 	private SolicitanteRopository solicitanteRopository;
 
 
+
 	/**
 	 * Injeta a dependencia da controller.
 	 *
@@ -96,8 +97,6 @@ public class AcessoController {
 
 			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
 
-
-
 			return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
 		} else {
@@ -106,6 +105,9 @@ public class AcessoController {
 
 		}
 	}
+
+
+	// tres tentativas ao dia
 
 	@CrossOrigin("*")
 	@PostMapping("/buscarDados")
@@ -117,12 +119,12 @@ public class AcessoController {
 
 		} else {
 
+
 			var listaLicencaDTO = new ListaLicencaDTO();
 
 			var pessoa = acessoServiceFacade.acessar(acessoResource);
 
 			listaLicencaDTO.setPessoa(pessoa);
-
 
 
 			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));

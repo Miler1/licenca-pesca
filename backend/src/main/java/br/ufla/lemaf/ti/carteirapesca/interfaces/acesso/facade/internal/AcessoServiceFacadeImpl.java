@@ -5,7 +5,6 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
@@ -14,7 +13,6 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
-import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import lombok.var;
 import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
@@ -128,6 +126,18 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 	}
 
+//	public void limparTentativas() throws Exception {
+//
+//		if(this == null){
+//			throw new Exception("Não existe solicitante para esse CPF/passaporte");
+//		}
+//
+//		this.numeroTentativas = 0;
+//		this.dataUltimaTentativa = null;
+//		this.dataDesbloqueio = null;
+//
+//	}
+
 	@Override
 	public Boolean validaDadosAcessoLicencas(ValidacaoDTO validacaoDTO) throws Exception {
 
@@ -163,9 +173,12 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 			return dadosValidos;
 
-		}
+		} else {
 
-		return dadosValidos;
+			solicitante.limpaDadosDesbloqueioSolicitante();
+
+			return dadosValidos;
+		}
 
 	}
 
@@ -179,7 +192,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 			if(DateUtils.dataMaiorQue(new Date(), solicitante.getDataDesbloqueio())) {
 
-				solicitante.desbloqueiaSolicitante();
+				solicitante.limpaDadosDesbloqueioSolicitante();
 				solicitanteRopository.save(solicitante);
 
 				return false;
@@ -196,10 +209,6 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	private Boolean dadosAcessoValidos(ValidacaoDTO validacaoDTO) {
 
 		WebServiceUtils.validarWebService();
-
-//		var pessoa = WebServiceUtils
-//			.webServiceEU()
-//			.buscarPessoaFisicaPeloCpf(validacaoDTO.getAcessoResource().getCpf());
 
 		FiltroPessoa filtroPessoa = new FiltroPessoa();
 		filtroPessoa.isUsuario = false;
