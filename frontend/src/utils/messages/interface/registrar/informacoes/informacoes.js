@@ -43,8 +43,8 @@ const INFORMACOES = {
         "¿Cuál es el tipo de material / equipo que usted utiliza?"
       ],
       tipoIsca: [
-        "Qual tipo de isca você prefere?",
-        "What kind of bait do you prefer?",
+        "Qual tipo de isca você utiliza?",
+        "What kind of bait do you use?",
         "¿Qué tipo de cebo prefieres?"
       ],
       modalidadeMaisPraticada: [

@@ -8,8 +8,9 @@
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)" prop="modalidadePesca")
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePesca`) }}
-						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca")
-
+						//- h5.label-notes-valor {{ teste() }}			
+						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca") 
+				
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localizacaoPreferencialPesca`)" prop="localizacaoPreferencialPesca")
@@ -62,6 +63,8 @@
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
 							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :model="informacoesComplementares.agenciaTurismo" :list="informacoesComplementaresResource.agenciaTurismo")
+		#cadastro-valor-carteira
+			h5 {{valorCarteira()}}
 </template>
 
 <script>
@@ -150,6 +153,14 @@ export default {
 		getValid() {
 			return this.valid;
 		},
+		valorCarteira(){
+			if(this.informacoesComplementares.modalidadePesca == 0){
+				return "Valor total a pagar: R$ 41.21"
+			}else if(this.informacoesComplementares.modalidadePesca == 1){
+				return "Valor total a pagar: R$ 57.21"
+			}
+			return "Selecione uma modalidade para ver o valor da respectiva carteira"
+		},
     localizeField(field) {
       switch (this.$i18n.locale) {
         case "EN":
@@ -185,10 +196,15 @@ export default {
 
 		.label-notes
 			margin: -25px 0 10px 0px
-			padding: 0
+			padding: 5px
 			height: 20px
 			color: $--cor-texto-secundario
-
+		.label-notes-valor
+			margin: -25px 0 10px 0px
+			padding: 5px
+			padding-top: 10px
+			height: 20px
+			color: red	
 		.money-input
 			width: 250px
 

@@ -2,6 +2,8 @@
 	#informacoes-complementares-step
 		.info-wrapper
 			cadastro-info-complementares(ref="cadastroInfoComplementares")
+		.valor-carteira
+			//- h5.label-notes-valor {{ teste() }}	
 </template>
 
 <script>
