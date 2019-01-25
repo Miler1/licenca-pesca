@@ -56,12 +56,12 @@ const INFORMACOES = {
     notas: {
       modalidadePescaEsportiva: [
         "Modalidade esportiva: Pesca e solta o peixe;",
-        "Sport mode: Fishing and loosening the fish; Recreational mode: It takes the fish",
+        "Sport mode: Fishing and loosening the fish;",
         "Modalidad deportiva: Pesca y suelta el pescado; Modalidad recreativa: Lleva el pescado"
       ],
       modalidadePescaRecreativa: [
         "Modalidade recreativa: Leva o peixe",
-        "Sport mode: Fishing and loosening the fish; Recreational mode: It takes the fish",
+        "Recreational mode: Take the fish",
         "Modalidad deportiva: Pesca y suelta el pescado; Modalidad recreativa: Lleva el pescado"
       ],
       gastoMedioPesca: [
