@@ -53,11 +53,11 @@ public class DateUtils {
 	}
 
 
-	public static Date somarHorasData(Date data, Integer minutos) {
+	public static Date somarHorasData(Date data, Integer horas) {
 
 		Calendar c = Calendar.getInstance();
 		c.setTime(data);
-		c.add(Calendar.MINUTE, minutos);
+		c.add(Calendar.HOUR, horas);
 		return c.getTime();
 
 	}
