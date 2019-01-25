@@ -193,7 +193,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 				&& solicitante.getDataUltimaTentativa() != null
 				&& solicitante.getNumeroTentativas() < Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE){
 
-			Date dataUltimaTentaiva = DateUtils.somarHorasData(solicitante.getDataUltimaTentativa(), 1);
+			Date dataUltimaTentaiva = DateUtils.somarHorasData(solicitante.getDataUltimaTentativa(), 5);
 
 			if(DateUtils.dataMaiorQue(new Date(), dataUltimaTentaiva)){
 				solicitante.limpaDadosDesbloqueioSolicitante();
