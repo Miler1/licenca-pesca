@@ -8,7 +8,6 @@ export const InformacoesComplementaresDTO = {
   localPesca: null,
   materialPesca: null,
   tipoIsca: null,
-  modalidadeMaisPraticada: null,
   agenciaTurismo: null
 };
 

@@ -46,7 +46,6 @@ const INITIAL_STATE = {
     localPesca: LOCAL_PESCA_MOCK,
     materialPesca: MATERIAL_PESCA_MOCK,
     tipoIsca: TIPO_ISCA_MOCK,
-    modalidadeMaisPraticada: MODALIDADE_PESCA_MOCK,
     agenciaTurismo: AGENCIA_TURISMO_MOCK
   },
   registroResource: {
