@@ -26,7 +26,6 @@ public final class PessoaDTO extends ResourceSupport {
 
 	private String passaporte;
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 
 	private Integer sexo;

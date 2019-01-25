@@ -30,6 +30,7 @@ Vue.use(Vue2Filters);
 Vue.use(VueTheMask);
 Vue.use(Element, { i18n: (key, value) => i18n.t(key, value) });
 Vue.use(VeeElement, validator, false);
+Vue.use(require('vue-moment'));
 
 Vue.prototype.$bus = new Vue();
 ApiService.init();
