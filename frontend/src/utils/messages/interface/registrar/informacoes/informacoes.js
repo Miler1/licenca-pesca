@@ -47,11 +47,6 @@ const INFORMACOES = {
         "What kind of bait do you use?",
         "¿Qué tipo de cebo prefieres?"
       ],
-      modalidadeMaisPraticada: [
-        "Qual modalidade de pesca você mais pratica?",
-        "Which type of fishing do you practice most?",
-        "¿Cuál es la modalidad de pesca que más practica?"
-      ],
       agenciaTurismo: [
         "Costuma programar suas pescarias com agências de turismo?",
         "Do you usually plan your fisheries with tourism agencies?",
@@ -59,8 +54,13 @@ const INFORMACOES = {
       ]
     },
     notas: {
-      modalidadePesca: [
-        "Modalidade esportiva: Pesca e solta o peixe; Modalidade recreativa: Leva o peixe",
+      modalidadePescaEsportiva: [
+        "Modalidade esportiva: Pesca e solta o peixe;",
+        "Sport mode: Fishing and loosening the fish; Recreational mode: It takes the fish",
+        "Modalidad deportiva: Pesca y suelta el pescado; Modalidad recreativa: Lleva el pescado"
+      ],
+      modalidadePescaRecreativa: [
+        "Modalidade recreativa: Leva o peixe",
         "Sport mode: Fishing and loosening the fish; Recreational mode: It takes the fish",
         "Modalidad deportiva: Pesca y suelta el pescado; Modalidad recreativa: Lleva el pescado"
       ],
