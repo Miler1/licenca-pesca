@@ -22,9 +22,10 @@
           el-form-item(:label="$t(`${cadastrar_prefix}labels.passaporte`)" )
             el-input(v-model="pessoa.passaporte" v-mask="['XXXXXXXXXXXXXXXXXXXXXXXXXXXX']" disabled)
 
-        el-col(:span="6")
+        el-col(:span="6") | {{pessoa.dataNascimento}}
           el-form-item(:label="$t(`${cadastrar_prefix}labels.dataNascimento`)" prop="dataNascimento")
-            el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${cadastrar_prefix}format.data`)")
+            el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${cadastrar_prefix}format.data`)") 
+              
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.sexo`)" prop="sexo")
@@ -239,6 +240,7 @@ export default {
     instantiate() {
       Vue.prototype.$cadastroPessoa = this;
     },
+
     validate() {
       this.valid = false;
       this.$refs["pessoa"].validate(valid => {
@@ -248,6 +250,7 @@ export default {
     getValidate() {
       return this.valid;
     },
+    
     atualizarCpfPesquisado(resource) {
       this.pessoa.cpf = resource.cpf;
       this.pessoa.passaporte = resource.passaporte;

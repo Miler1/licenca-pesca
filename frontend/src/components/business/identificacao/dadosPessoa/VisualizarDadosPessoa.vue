@@ -31,7 +31,7 @@
       el-col(:span="6" v-if="!exist(pessoa.dataNascimento)")
         .align
           h4.label {{ $t(`${visualizar_prefix}label.dataNascimento`) }}
-          h4(:class="{'not-informed': exist(pessoa.dataNascimento)}") {{ localizeDate(pessoa.dataNascimento) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+          h4(:class="{'not-informed': exist(pessoa.dataNascimento)}") {{ pessoa.dataNascimento | moment('DD/MM/YYYY') | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
       el-col(:span="6" v-if="!exist(pessoa.nomeMae)")
         .align
@@ -148,10 +148,12 @@
 
 <script>
 import * as _ from "lodash";
+import Vue from "vue";
 import { ZONA_LOCALIZACAO, SEXO } from "../../../../model/constantes";
 import { VISUALIZAR_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/identificacao/visualizar";
 import { translate } from "../../../../utils/helpers/internationalization";
 import { SEND_SOLICITANTE } from "../../../../store/actions.type";
+import moment from "moment";
 
 export default {
   name: "VisualizarDadosPessoa",
@@ -170,31 +172,6 @@ export default {
     exist(attr) {
       return attr === null || _.isNil(attr);
     },
-
-    localizeDate(strDate) {
-      if (strDate === null) return null;
-      const DATE_PATTERN = new RegExp("([\\d]{2})\\/([\\d]{2})\\/([\\d]{4})");
-      if (DATE_PATTERN.test(strDate)) {
-        return translate("interface.geral.data", [
-          strDate.substring(0, 2),
-          strDate.substring(3, 5),
-          strDate.substring(6)
-        ]);
-      } else {
-        let date;
-        if (strDate instanceof Date) {
-          date = strDate;
-        } else {
-          date = new Date(strDate);
-        }
-        return translate("interface.geral.data", [
-          date.getDate(),
-          date.getMonth() + 1,
-          date.getFullYear()
-        ]);
-      }
-    },
-
     getZonaLocalizacao(localizacao) {
       if (localizacao === ZONA_LOCALIZACAO.URBANA) {
         return translate(
