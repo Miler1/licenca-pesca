@@ -57,7 +57,7 @@ public class DateUtils {
 
 		Calendar c = Calendar.getInstance();
 		c.setTime(data);
-		c.add(Calendar.MINUTE, horas);
+		c.add(Calendar.HOUR, horas);
 		return c.getTime();
 
 	}
