@@ -57,7 +57,7 @@ public final class PessoaDTO extends ResourceSupport {
 	          @JsonProperty("nome") final String nome,
 	          @JsonProperty("cpf") final String cpf,
 	          @JsonProperty("passaporte") final String passaporte,
-	          @JsonProperty("dataNascimento") Date dataNascimento,
+	          @JsonProperty("dataNascimento") final Date dataNascimento,
 	          @JsonProperty("sexo") final Integer sexo,
 	          @JsonProperty("nomeMae") final String nomeMae,
 	          @JsonProperty("email") final String email,

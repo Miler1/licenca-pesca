@@ -148,7 +148,6 @@
 
 <script>
 import * as _ from "lodash";
-import Vue from "vue";
 import { ZONA_LOCALIZACAO, SEXO } from "../../../../model/constantes";
 import { VISUALIZAR_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/identificacao/visualizar";
 import { translate } from "../../../../utils/helpers/internationalization";
