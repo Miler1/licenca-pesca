@@ -30,10 +30,6 @@ import java.util.List;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "solicitante")
 public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
-	private static AcessoServiceFacade acessoServiceFacade;
-
-	private static SolicitanteRopository solicitanteRopository;
-
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "cpf.numero", column = @Column(name = "nu_cpf")),
@@ -54,8 +50,6 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
 	@Column(name = "data_desbloqueio")
 	private Date dataDesbloqueio;
-
-
 
 	/**
 	 * Construtor de solicitante.

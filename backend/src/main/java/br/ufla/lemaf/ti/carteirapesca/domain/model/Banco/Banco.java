@@ -4,13 +4,21 @@ import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @javax.persistence.Entity
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "banco")
-public class Banco implements Entity<Banco, Long> {
+public class Banco implements Entity<Banco, Integer> {
+
+//	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".";
+//
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
+//	@SequenceGenerator(name = SEQUENCIA,
+//		sequenceName = SEQUENCIA,
+//		allocationSize=1)
+//	private Integer id;
 
 	@Column(name = "codigo")
 	private String codigo;
@@ -24,7 +32,7 @@ public class Banco implements Entity<Banco, Long> {
 	}
 
 	@Override
-	public Long identity() {
+	public Integer identity() {
 		return null;
 	}
 }

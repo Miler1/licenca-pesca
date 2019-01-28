@@ -4,27 +4,36 @@ import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @javax.persistence.Entity
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "beneficiario")
-public class Beneficiario implements Entity<Beneficiario, Long> {
+public class BeneficiarioTitulo implements Entity<BeneficiarioTitulo, Integer> {
+
+//	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".";
+//
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
+//	@SequenceGenerator(name = SEQUENCIA,
+//		sequenceName = SEQUENCIA,
+//		allocationSize=1)
+//	private Integer id;
 
 	private String nome;
+
+	@Column(name = "cpf_cnpj")
+	private String cpfCnpj;
 
 	@ManyToOne
 	@JoinColumn(name = "id_banco",
 		referencedColumnName="id")
 	private Banco banco;
 
-	@ManyToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco",
 		referencedColumnName="id")
-	private EnderecoBeneficiario endereco;
+	private Endereco endereco;
 
 	@Column(name = "codigo_beneficiario")
 	private String codigoBeneficiario;
@@ -47,13 +56,16 @@ public class Beneficiario implements Entity<Beneficiario, Long> {
 	@Column(name = "digito_nosso_numero")
 	private String digitoNossoNumero;
 
+	@Column(name = "fl_ativo")
+	private Boolean ativo;
+
 	@Override
-	public boolean sameIdentityAs(Beneficiario other) {
+	public boolean sameIdentityAs(BeneficiarioTitulo other) {
 		return false;
 	}
 
 	@Override
-	public Long identity() {
+	public Integer identity() {
 		return null;
 	}
 }

@@ -2,42 +2,58 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
+import java.time.LocalDate;
 
+@Getter
 @javax.persistence.Entity
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "titulo")
-public class Titulo implements Entity<Titulo, Long> {
+public class Titulo implements Entity<Titulo, Integer> {
+
+	private static final Integer QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO = 1;
+
+//	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".";
+//
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
+//	@SequenceGenerator(name = SEQUENCIA,
+//		sequenceName = SEQUENCIA,
+//		allocationSize=1)
+//	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "id_beneficiario",
 		referencedColumnName="id")
-	private Beneficiario beneficiario;
+	private BeneficiarioTitulo beneficiario;
+
+	@ManyToOne
+	@JoinColumn(name = "id_pagador",
+		referencedColumnName="id")
+	private PagadorTitulo pagador;
 
 	@Column(name = "dt_criacao")
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataCriacao;
+	private LocalDate dataCriacao;
 
 	@Column(name = "dt_processamento")
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataProcessamento;
+	private LocalDate dataProcessamento;
 
 	@Column(name = "dt_vencimento")
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataVencimento;
+	private LocalDate dataVencimento;
 
-	@Column(name = "especie_documento")
-	private String especieDocumento;
+	@ManyToOne
+	@JoinColumn(name = "id_especie_documento",
+		referencedColumnName="id")
+	private EspecieDocumento especieDocumento;
 
 	private String instrucoes;
 
 	@Column(name = "local_pagamento")
 	private String localPagamento;
+
+	@Column(name = "fl_enviado_banco")
+	private Boolean enviadoBanco;
 
 	@Override
 	public boolean sameIdentityAs(Titulo other) {
@@ -45,7 +61,30 @@ public class Titulo implements Entity<Titulo, Long> {
 	}
 
 	@Override
-	public Long identity() {
+	public Integer identity() {
 		return null;
 	}
+
+	public Titulo(BeneficiarioTitulo beneficiario, EspecieDocumento especieDocumento, PagadorTitulo pagador) {
+
+		this.beneficiario = beneficiario;
+		this.especieDocumento = especieDocumento;
+		this.pagador = pagador;
+
+		this.dataCriacao = LocalDate.now();
+		this.dataProcessamento = LocalDate.now();
+		this.dataVencimento = LocalDate.now().plusMonths(QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO);
+		this.setInstrucoes();
+		this.setLocalPagamento();
+
+	}
+
+	private void setInstrucoes() {
+		this.instrucoes = "Sr(a). Caixa: Não aceitar pagamento após vencimento";
+	}
+
+	private void setLocalPagamento() {
+		this.localPagamento = "Pagável em qualquer banco até o vencimento.";
+	}
+
 }
