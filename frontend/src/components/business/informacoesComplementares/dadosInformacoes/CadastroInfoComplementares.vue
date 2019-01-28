@@ -202,6 +202,7 @@ export default {
 			padding: 5px
 			padding-top: 20px
 			height: 20px
+			font-size: 14px;
 
 		.money-input
 			width: 250px

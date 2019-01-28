@@ -27,14 +27,16 @@
 			.data
 				cadastrar-dados-pessoa(v-show="showCadastro()", ref="cadastroDadosPessoa")
 				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()", ref="visualizarDadosPessoa")
+				validacao-perguntas(v-show="dadosSolicitanteAConfirmar" ref="validacaoPerguntas")
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import { ACESSAR } from "../../../store/actions.type";
+import { ACESSAR, BUSCA_DADOS_VALIDACAO } from "../../../store/actions.type";
 import { CPF_MASK, PASSAPORT_MASK } from "../../../utils/layout/mascaras";
 import InputElement from "../../elements/InputElement";
 import CadastrarDadosPessoa from "./dadosPessoa/CadastrarDadosPessoa";
+import ValidacaoPerguntas from "../../elements/ValidacaoPerguntas";
 import VisualizarDadosPessoa from "./dadosPessoa/VisualizarDadosPessoa";
 import {
   SEND_SOLICITANTE
@@ -46,7 +48,8 @@ export default {
   components: {
     InputElement,
     CadastrarDadosPessoa,
-    VisualizarDadosPessoa
+    VisualizarDadosPessoa,
+    ValidacaoPerguntas
   },
 
   data() {
@@ -59,12 +62,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "dadosSolicitanteAConfirmar", "existeSolicitante"])
   },
 
   methods: {
     acessar() {
-      this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource))
+      
+      this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource))
         .then((p) => {
           if(this.$refs.cadastroDadosPessoa){
             this.$refs.cadastroDadosPessoa.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));

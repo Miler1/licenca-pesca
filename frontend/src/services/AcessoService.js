@@ -10,8 +10,8 @@ const AcessoService = {
    * positivo, e trazendo um objeto PessoaDTO vazio em
    * caso negativo.
    */
-  acessar: acessoResource => {
-    return ApiService.postWithBlock(`${Properties.BASE_URL}/api/acessar`, acessoResource);
+  acessar: validacaoDTO => {
+    return ApiService.postWithBlock(`${Properties.BASE_URL}/api/acessar`, validacaoDTO);
   },
 
   buscarLicencas: validacaoDTO => {

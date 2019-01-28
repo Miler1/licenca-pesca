@@ -22,6 +22,7 @@
         .left
             el-button(icon="el-icon-close" @click="cancelarValidacao") {{ $t(`${validacao_prefix}botoes.cancelar`) }}
             el-button.right(icon="el-icon-check" type="primary" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
+            el-button.right(icon="el-icon-check" type="default" @click="validarDadosRegistrar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
                          
 </template>
 
@@ -32,7 +33,7 @@ import Card from "../layouts/Card";
 import { INTERFACE_VALIDACAO_PREFIX } from "../../utils/messages/interface/registrar/validacao/validacao";
 import { translate } from "../../utils/helpers/internationalization";
 import Properties from "../../properties";
-import { FETCH_DADOS_CARTEIRA, VALIDA_DADOS, SEND_SOLICITANTE, BUSCAR_LICENCAS, CANCELAR } from '../../store/actions.type';
+import { FETCH_DADOS_CARTEIRA, VALIDA_DADOS, SEND_SOLICITANTE, BUSCAR_LICENCAS, CANCELAR, ACESSAR } from '../../store/actions.type';
 import { PessoaDTO, ZonaLocalizacaoDTO } from "../../model/PessoaDTO";
 import StatusCard from "../layouts/StatusCard";
 import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
@@ -81,6 +82,19 @@ export default {
                 nomeMae: this.pessoa.nomeMae
             }
             this.$store.dispatch(BUSCAR_LICENCAS, dto);
+        },
+
+        validarDadosRegistrar(){
+            let dto = {
+                acessoResource: {
+                    cpf: this.pessoa.cpf,
+                    passaporte: this.pessoa.passaporte
+                },
+                dataNascimento: this.pessoa.dataNascimento,
+                nomeMae: this.pessoa.nomeMae
+            }
+            debugger
+            this.$store.dispatch(ACESSAR, dto);
         },
 
         atualizarCpfPesquisado(resource) {

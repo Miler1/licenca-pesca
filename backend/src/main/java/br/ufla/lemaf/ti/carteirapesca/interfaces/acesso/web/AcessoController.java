@@ -64,7 +64,7 @@ public class AcessoController {
 	 * Caso o mesmo tenha cadastro no entrada única, retorna seus dados,
 	 * e se o mesmo não tiver cadastro, retornará {@link PessoaDTO} vazio.
 	 *
-	 * @param acessoResource Paramêtro com o recurso de
+//	 * @param acessoResource Paramêtro com o recurso de
 	 *                       acesso do Usuário.
 	 * @return {@link PessoaDTO} Pessoa vazia caso não exista a mesma na
 	 * base de dados, ou a pessoa instanciada com
@@ -72,16 +72,22 @@ public class AcessoController {
 	 */
 	@CrossOrigin("*")
 	@PostMapping("/acessar")
-	public ResponseEntity<PessoaDTO> acessar(@RequestBody final AcessoResource acessoResource) {
+	public ResponseEntity<PessoaDTO> acessar(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
-		var pessoa = acessoServiceFacade.acessar(acessoResource);
+		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true) {
+			var pessoa = acessoServiceFacade.acessar(validacaoDTO.getAcessoResource());
 
-		pessoa.add(linkTo(methodOn(AcessoController.class)
-			.acessar(acessoResource))
-			.withSelfRel());
+			pessoa.add(linkTo(methodOn(AcessoController.class)
+				.acessar(validacaoDTO))
+				.withSelfRel());
 
-		return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
 
+			return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
+
+		}else {
+
+			throw new Exception("Dados não conferem. Após 3 tentativas erradas, o Cpf/passaporte será bloqueado por 2 horas.");
+		}
 	}
 
 	@CrossOrigin("*")
