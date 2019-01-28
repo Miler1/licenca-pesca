@@ -239,9 +239,6 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		if (Validate.isNull(info.getTipoIsca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "tipo de isca"));
 
-		if (Validate.isNull(info.getModalidadeMaisPraticada()))
-			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "modalidade mais praticada"));
-
 		if (Validate.isNull(info.getAgenciaTurismo()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "agência de turismo"));
 

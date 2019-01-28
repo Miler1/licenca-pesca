@@ -49,11 +49,6 @@
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.materialPesca`)" prop="materialPesca")
 						info-select(@value="informacoesComplementares.materialPesca = $event" :model="informacoesComplementares.materialPesca" :list="informacoesComplementaresResource.materialPesca")
 
-				//- el-col(:span="24")
-
-				//- 	el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadeMaisPraticada`)" prop="modalidadeMaisPraticada")
-				//- 		info-select(@value="informacoesComplementares.modalidadeMaisPraticada = $event" :model="informacoesComplementares.modalidadeMaisPraticada" :list="informacoesComplementaresResource.modalidadeMaisPraticada")
-				
 				el-col(:span="24")
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
 						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca"  :list="informacoesComplementaresResource.tipoIsca")
