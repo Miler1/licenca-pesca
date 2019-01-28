@@ -6,7 +6,7 @@ export const CONSULTAR_GERAL_MESSAGES_PREFIX = "interface.registrar.consultar.";
 
 const GERAL = {
   geral: {
-    titulo: ["Registrar Licença de Pesca", "Register Fishing License"],
+    titulo: ["Registrar Licença de Pesca Amadora (Esportiva ou Recreativa)", "Register Fishing License"],
     steps: {
       indices: {
         identificacao: ["Identificação", "Identification"],

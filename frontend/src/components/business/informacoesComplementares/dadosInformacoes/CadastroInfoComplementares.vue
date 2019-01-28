@@ -7,9 +7,10 @@
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)" prop="modalidadePesca")
-						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePesca`) }}
-						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca")
-
+						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePescaEsportiva`) }}
+						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePescaRecreativa`) }}
+						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca") 
+						h5.label-notes-valor {{valorCarteira()}}		
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localizacaoPreferencialPesca`)" prop="localizacaoPreferencialPesca")
@@ -48,20 +49,20 @@
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.materialPesca`)" prop="materialPesca")
 						info-select(@value="informacoesComplementares.materialPesca = $event" :model="informacoesComplementares.materialPesca" :list="informacoesComplementaresResource.materialPesca")
 
-				el-col(:span="24")
+				//- el-col(:span="24")
 
+				//- 	el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadeMaisPraticada`)" prop="modalidadeMaisPraticada")
+				//- 		info-select(@value="informacoesComplementares.modalidadeMaisPraticada = $event" :model="informacoesComplementares.modalidadeMaisPraticada" :list="informacoesComplementaresResource.modalidadeMaisPraticada")
+				
+				el-col(:span="24")
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
-						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca")
-
-				el-col(:span="24")
-
-					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadeMaisPraticada`)" prop="modalidadeMaisPraticada")
-						info-select(@value="informacoesComplementares.modalidadeMaisPraticada = $event" :model="informacoesComplementares.modalidadeMaisPraticada" :list="informacoesComplementaresResource.modalidadeMaisPraticada")
+						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca"  :list="informacoesComplementaresResource.tipoIsca")
 
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
 							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :model="informacoesComplementares.agenciaTurismo" :list="informacoesComplementaresResource.agenciaTurismo")
+
 </template>
 
 <script>
@@ -104,7 +105,6 @@ export default {
 				localPesca: null,
 				materialPesca: null,
 				tipoIsca: null,
-				modalidadeMaisPraticada: null,
 				agenciaTurismo: null
 			},
 			options: {
@@ -150,6 +150,15 @@ export default {
 		getValid() {
 			return this.valid;
 		},
+		valorCarteira(){
+			if(this.informacoesComplementares.modalidadePesca == 0){
+				return "Valor total a pagar: R$ 41.21"
+			}else if(this.informacoesComplementares.modalidadePesca == 1){
+				return "Valor total a pagar: R$ 57.21"
+			}
+			return "Selecione uma modalidade para ver o valor da respectiva carteira"
+		},
+
     localizeField(field) {
       switch (this.$i18n.locale) {
         case "EN":
@@ -185,11 +194,15 @@ export default {
 
 		.label-notes
 			margin: -25px 0 10px 0px
-			padding: 0
+			padding: 5px
 			height: 20px
 			color: $--cor-texto-secundario
+		.label-notes-valor
+			margin: -25px 0 10px 0px
+			padding: 5px
+			padding-top: 20px
+			height: 20px
 
 		.money-input
 			width: 250px
-
 </style>

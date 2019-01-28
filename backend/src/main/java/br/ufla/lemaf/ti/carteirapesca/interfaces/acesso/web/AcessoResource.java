@@ -1,6 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

@@ -5,6 +5,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
@@ -178,7 +179,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		if(solicitante != null && solicitante.getDataDesbloqueio() != null) {
 
-			if(DateUtils.dataMaiorQue(new Date(), solicitante.getDataDesbloqueio())) {
+			if (DateUtils.dataMaiorQue(new Date(), solicitante.getDataDesbloqueio())) {
 
 				solicitante.limpaDadosDesbloqueioSolicitante();
 				solicitanteRopository.save(solicitante);
@@ -187,7 +188,18 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 			}
 
 			return true;
-			
+
+		}else if(solicitante != null
+				&& solicitante.getDataUltimaTentativa() != null
+				&& solicitante.getNumeroTentativas() < Constants.NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE){
+
+			Date dataUltimaTentaiva = DateUtils.somarHorasData(solicitante.getDataUltimaTentativa(), 12);
+
+			if(DateUtils.dataMaiorQue(new Date(), dataUltimaTentaiva)){
+				solicitante.limpaDadosDesbloqueioSolicitante();
+				return false;
+			}
+
 		}
 
 		return false;

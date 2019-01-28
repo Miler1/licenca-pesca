@@ -75,6 +75,7 @@ public class AcessoController {
 	public ResponseEntity<PessoaDTO> acessar(@RequestBody final AcessoResource acessoResource) {
 
 		var pessoa = acessoServiceFacade.acessar(acessoResource);
+
 		pessoa.add(linkTo(methodOn(AcessoController.class)
 			.acessar(acessoResource))
 			.withSelfRel());
@@ -105,8 +106,6 @@ public class AcessoController {
 
 		}
 	}
-
-	// tres tentativas ao dia
 
 	@CrossOrigin("*")
 	@PostMapping("/buscarDados")
