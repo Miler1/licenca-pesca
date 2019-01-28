@@ -5,6 +5,7 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -14,14 +15,14 @@ public class Titulo implements Entity<Titulo, Integer> {
 
 	private static final Integer QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO = 1;
 
-//	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".";
-//
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
-//	@SequenceGenerator(name = SEQUENCIA,
-//		sequenceName = SEQUENCIA,
-//		allocationSize=1)
-//	private Integer id;
+	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".titulo_id_seq";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
+	@SequenceGenerator(name = SEQUENCIA,
+		sequenceName = SEQUENCIA,
+		allocationSize=1)
+	private Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "id_beneficiario",
@@ -32,6 +33,8 @@ public class Titulo implements Entity<Titulo, Integer> {
 	@JoinColumn(name = "id_pagador",
 		referencedColumnName="id")
 	private PagadorTitulo pagador;
+
+	private BigDecimal valor;
 
 	@Column(name = "dt_criacao")
 	private LocalDate dataCriacao;
@@ -47,12 +50,13 @@ public class Titulo implements Entity<Titulo, Integer> {
 		referencedColumnName="id")
 	private EspecieDocumento especieDocumento;
 
+	@Column(name = "instrucoes")
 	private String instrucoes;
 
 	@Column(name = "local_pagamento")
 	private String localPagamento;
 
-	@Column(name = "fl_enviado_banco")
+	@Column(name = "fl_enviado_banco", insertable = false)
 	private Boolean enviadoBanco;
 
 	@Override
@@ -65,15 +69,21 @@ public class Titulo implements Entity<Titulo, Integer> {
 		return null;
 	}
 
-	public Titulo(BeneficiarioTitulo beneficiario, EspecieDocumento especieDocumento, PagadorTitulo pagador) {
+	public Titulo() {}
+
+	public Titulo(BeneficiarioTitulo beneficiario,
+				  EspecieDocumento especieDocumento,
+				  PagadorTitulo pagador,
+				  BigDecimal valor) {
 
 		this.beneficiario = beneficiario;
-		this.especieDocumento = especieDocumento;
 		this.pagador = pagador;
 
+		this.valor = valor.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 		this.dataCriacao = LocalDate.now();
 		this.dataProcessamento = LocalDate.now();
 		this.dataVencimento = LocalDate.now().plusMonths(QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO);
+		this.especieDocumento = especieDocumento;
 		this.setInstrucoes();
 		this.setLocalPagamento();
 

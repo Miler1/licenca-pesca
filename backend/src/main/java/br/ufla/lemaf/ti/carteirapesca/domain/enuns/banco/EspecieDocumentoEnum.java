@@ -1,8 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.enuns.banco;
 
-import lombok.Getter;
-
-@Getter
 public enum EspecieDocumentoEnum {
 
 	DUPLICATA_MERCANTIL(1, "DM", "Duplicata Mercantil"),
@@ -14,7 +11,7 @@ public enum EspecieDocumentoEnum {
 	NOTA_DEBITO(7, "ND", "Nota de Débito"),
 	DUPLICATA_SERVICOS(8, "NS", "Duplicata de Serviços"),
 	CARTAO_CREDITO(9, "CC", "Cartão de crédito"),
-	OUTROS(10, "Outros", "Outros");
+	OUTROS(10, "OUTROS", "Outros");
 
 	private Integer id;
 	private String codigo;
@@ -26,6 +23,10 @@ public enum EspecieDocumentoEnum {
 		this.codigo = codigo;
 		this.descricao = descricao;
 
+	}
+
+	public String getCodigo() {
+		return codigo;
 	}
 
 }

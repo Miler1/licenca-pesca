@@ -11,19 +11,17 @@ import javax.persistence.*;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "banco")
 public class Banco implements Entity<Banco, Integer> {
 
-//	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".";
-//
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
-//	@SequenceGenerator(name = SEQUENCIA,
-//		sequenceName = SEQUENCIA,
-//		allocationSize=1)
-//	private Integer id;
+	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".banco_id_seq";
 
-	@Column(name = "codigo")
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
+	@SequenceGenerator(name = SEQUENCIA,
+		sequenceName = SEQUENCIA,
+		allocationSize=1)
+	private Integer id;
+
 	private String codigo;
 
-	@Column(name = "nome")
 	private String nome;
 
 	@Override

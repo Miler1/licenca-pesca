@@ -8,17 +8,17 @@ import javax.persistence.*;
 
 @Getter
 @javax.persistence.Entity
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "beneficiario")
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "beneficiario_titulo")
 public class BeneficiarioTitulo implements Entity<BeneficiarioTitulo, Integer> {
 
-//	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".";
-//
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
-//	@SequenceGenerator(name = SEQUENCIA,
-//		sequenceName = SEQUENCIA,
-//		allocationSize=1)
-//	private Integer id;
+	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".beneficiario_titulo_id_seq";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
+	@SequenceGenerator(name = SEQUENCIA,
+		sequenceName = SEQUENCIA,
+		allocationSize=1)
+	private Integer id;
 
 	private String nome;
 

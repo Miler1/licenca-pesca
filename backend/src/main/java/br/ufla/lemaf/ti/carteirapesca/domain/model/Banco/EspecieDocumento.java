@@ -4,6 +4,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Getter
@@ -11,6 +12,7 @@ import javax.persistence.Table;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "especie_documento")
 public class EspecieDocumento implements Entity<EspecieDocumento, Integer> {
 
+	@Id
 	private Integer id;
 
 	private String codigo;

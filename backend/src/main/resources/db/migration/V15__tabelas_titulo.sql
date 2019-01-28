@@ -21,7 +21,7 @@ CREATE TABLE carteira_pesca.endereco
 (
   id SERIAL NOT NULL,
   logradouro CHARACTER VARYING(200) NOT NULL,
-  numero CHARACTER VARYING(8) NOT NULL,
+  numero CHARACTER VARYING(8) NULL,
   complemento CHARACTER VARYING(50) NULL,
   bairro CHARACTER VARYING(100) NOT NULL,
   cep CHARACTER VARYING(10) NOT NULL,
@@ -45,7 +45,7 @@ COMMENT ON COLUMN carteira_pesca.endereco.cep IS 'CEP.';
 COMMENT ON COLUMN carteira_pesca.endereco.municipio IS 'Município.';
 COMMENT ON COLUMN carteira_pesca.endereco.estado IS 'Sigla do estado.';
 
-CREATE TABLE carteira_pesca.beneficiario
+CREATE TABLE carteira_pesca.beneficiario_titulo
 (
   id SERIAL NOT NULL,
   nome CHARACTER VARYING(200) NOT NULL,
@@ -74,25 +74,25 @@ CREATE TABLE carteira_pesca.beneficiario
 
 ) WITH(OIDS = FALSE);
 
-ALTER TABLE carteira_pesca.beneficiario OWNER TO postgres;
-GRANT ALL ON TABLE carteira_pesca.beneficiario TO postgres;
-GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE carteira_pesca.beneficiario TO carteira_pesca;
+ALTER TABLE carteira_pesca.beneficiario_titulo OWNER TO postgres;
+GRANT ALL ON TABLE carteira_pesca.beneficiario_titulo TO postgres;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE carteira_pesca.beneficiario_titulo TO carteira_pesca;
 
-COMMENT ON TABLE carteira_pesca.beneficiario IS 'Entidade responsável por armazenar os dados do beneficiario do título.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.nome IS 'Nome o beneficiário.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.cpf_cnpj IS 'CPF/CNPJ do beneficário (sem mascara).';
-COMMENT ON COLUMN carteira_pesca.beneficiario.id_banco IS 'Identifica a qual banco está vinculado a conta.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.id_endereco IS 'Identifica a qual o endereço do beneficiário.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.codigo_beneficiario IS 'Código do beneficiário.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.digito_codigo_beneficiario IS 'Digíto código do beneficiário.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.agencia IS 'Número agencia.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.digito_agencia IS 'Digíto número agência.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.convenio IS 'Número do convênio.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.carteira IS 'Número da carteira.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.nosso_numero IS
+COMMENT ON TABLE carteira_pesca.beneficiario_titulo IS 'Entidade responsável por armazenar os dados do beneficiario do título.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.nome IS 'Nome o beneficiário.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.cpf_cnpj IS 'CPF/CNPJ do beneficário (sem mascara).';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_banco IS 'Identifica a qual banco está vinculado a conta.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_endereco IS 'Identifica a qual o endereço do beneficiário.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.codigo_beneficiario IS 'Código do beneficiário.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.digito_codigo_beneficiario IS 'Digíto código do beneficiário.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.agencia IS 'Número agencia.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.digito_agencia IS 'Digíto número agência.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.convenio IS 'Número do convênio.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.carteira IS 'Número da carteira.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.nosso_numero IS
   'Código de controle que permite ao Banco e ao beneficiário identificar os dados da cobrança que deu origem ao boleto de pagamento.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.digito_nosso_numero IS 'Digíto nosso número.';
-COMMENT ON COLUMN carteira_pesca.beneficiario.fl_ativo IS 'Indica se a conta do beneficiário está ativa.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.digito_nosso_numero IS 'Digíto nosso número.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.fl_ativo IS 'Indica se a conta do beneficiário está ativa.';
 
 CREATE TABLE carteira_pesca.especie_documento
 (
@@ -144,17 +144,18 @@ CREATE TABLE carteira_pesca.titulo
   id_beneficiario INTEGER NOT NULL,
   id_pagador INTEGER NOT NULL,
   id_especie_documento INTEGER NOT NULL,
+  valor DOUBLE PRECISION NOT NULL,
   dt_criacao DATE NOT NULL,
   dt_processamento DATE NOT NULL,
   dt_vencimento DATE NOT NULL,
-  especie_documento CHARACTER VARYING(5) NOT NULL,
   instrucoes TEXT NULL,
   local_pagamento TEXT NULL,
+  fl_enviado_banco BOOLEAN NOT NULL DEFAULT FALSE,
 
   CONSTRAINT pk_titulo PRIMARY KEY(id),
 
   CONSTRAINT fk_endereco FOREIGN KEY (id_beneficiario)
-      REFERENCES carteira_pesca.beneficiario (id) MATCH SIMPLE
+      REFERENCES carteira_pesca.beneficiario_titulo (id) MATCH SIMPLE
       ON UPDATE RESTRICT ON DELETE RESTRICT
 
 ) WITH(OIDS = FALSE);
@@ -175,11 +176,10 @@ COMMENT ON COLUMN carteira_pesca.titulo.local_pagamento IS 'Locais onde o pagame
 
 INSERT INTO carteira_pesca.banco (id, codigo, nome) VALUES (1, '237', 'Banco Bradesco S.A.');
 
-INSERT INTO carteira_pesca.endereco (id, logradouro, numero, bairro, cep, municipio, estado) 
-    VALUES (1, 'Av Mário Ypiranga', '3280', 'Parque Dez de Novembro', '69050-030', 'Manaus', 'AM');
+INSERT INTO carteira_pesca.endereco(logradouro, numero, complemento, bairro, cep, municipio, estado) VALUES ('Av Mário Ypiranga', '3280', NULL, 'Parque Dez de Novembro', '69050-030', 'Manaus', 'AM');
 
-INSERT INTO carteira_pesca.beneficiario (id, nome, cpf_cnpj, id_banco, id_endereco, codigo_beneficiario, digito_codigo_beneficiario, agencia, digito_agencia, convenio, carteira, nosso_numero, digito_nosso_numero, fl_ativo)
-  VALUES (1, 'Instituto de Proteção Ambiental do Amazonas', '04624888000194', 1, 1, '16065', '2', '3739', '7', '4928031', '09', '00000001798', '4', TRUE);
+INSERT INTO carteira_pesca.beneficiario_titulo (nome, cpf_cnpj, id_banco, id_endereco, codigo_beneficiario, digito_codigo_beneficiario, agencia, digito_agencia, convenio, carteira, nosso_numero, digito_nosso_numero, fl_ativo)
+  VALUES ('Instituto de Proteção Ambiental do Amazonas', '04624888000194', 1, 1, '16065', '2', '3739', '7', '4928031', '09', '00000001798', '4', TRUE);
 
 
 INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (1, 'DM', 'Duplicata Mercantil');

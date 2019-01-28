@@ -11,6 +11,15 @@ import javax.persistence.*;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "pagador_titulo")
 public class PagadorTitulo implements Entity<BeneficiarioTitulo, Integer> {
 
+	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".pagador_titulo_id_seq";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
+	@SequenceGenerator(name = SEQUENCIA,
+		sequenceName = SEQUENCIA,
+		allocationSize=1)
+	private Integer id;
+
 	private String nome;
 
 	@Column(name = "cpf_passaporte")
@@ -30,6 +39,8 @@ public class PagadorTitulo implements Entity<BeneficiarioTitulo, Integer> {
 	public Integer identity() {
 		return null;
 	}
+
+	public PagadorTitulo() {}
 
 	public PagadorTitulo(String nome, String cpfPassaporte) {
 

@@ -3,7 +3,6 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -12,14 +11,14 @@ import javax.persistence.*;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "endereco")
 public class Endereco implements Entity<Endereco, Integer> {
 
-//	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".";
-//
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
-//	@SequenceGenerator(name = SEQUENCIA,
-//		sequenceName = SEQUENCIA,
-//		allocationSize=1)
-//	private Integer id;
+	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".endereco_id_seq";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
+	@SequenceGenerator(name = SEQUENCIA,
+		sequenceName = SEQUENCIA,
+		allocationSize=1)
+	private Integer id;
 
 	private String logradouro;
 
@@ -44,6 +43,8 @@ public class Endereco implements Entity<Endereco, Integer> {
 	public Integer identity() {
 		return null;
 	}
+
+	public Endereco() {}
 
 	public Endereco(String logradouro,
 					String numero,

@@ -23,8 +23,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Buider do Boleto.
@@ -98,7 +101,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 	}
 
-	private Titulo gerarTituloBradesco(Pessoa pessoa) {
+	private Titulo gerarTituloBradesco(Pessoa pessoa, Modalidade modalidade) {
 
 		val bradesco = new Bradesco();
 
@@ -108,7 +111,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 		PagadorTitulo pagadorTitulo = getPagadorTitulo(pessoa);
 
-		Titulo titulo = new Titulo(beneficiarioTitulo, especieDocumento, pagadorTitulo);
+		Titulo titulo = new Titulo(beneficiarioTitulo, especieDocumento, pagadorTitulo, getValorTitulo(modalidade));
 
 		tituloRepository.save(titulo);
 
@@ -128,7 +131,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco = endereco(pessoa);
 
 			Endereco enderecoPagador = new Endereco(endereco.logradouro,
-				endereco.numero.toString(),
+				(endereco.numero == null ? null : endereco.numero.toString()),
 				endereco.complemento,
 				endereco.bairro,
 				endereco.cep,
@@ -158,15 +161,15 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 							   	final Modalidade modalidade) {
 		val bradesco = new Bradesco();
 
-		Titulo titulo = gerarTituloBradesco(pessoa);
+		Titulo titulo = gerarTituloBradesco(pessoa, modalidade);
 
 		return Boleto.novoBoleto()
 			.comBanco(bradesco)
 			.comDatas(montarDatas(titulo))
 			.comBeneficiario(montarBeneficiario(titulo))
 			.comPagador(montarPagador(titulo))
-			.comValorBoleto(montarValorBoleto(modalidade))
-			.comNumeroDoDocumento(protocolo.getCodigoFormatado())
+			.comValorBoleto(titulo.getValor().setScale(2, BigDecimal.ROUND_HALF_EVEN))
+//			.comNumeroDoDocumento(protocolo.getCodigoFormatado())
 			.comEspecieDocumento(titulo.getEspecieDocumento().getCodigo())
 			.comInstrucoes(titulo.getInstrucoes())
 			.comLocaisDePagamento(titulo.getLocalPagamento());
@@ -193,14 +196,14 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 	 * @param modalidade A modalidade da carteira
 	 * @return O campo de valor da carteira
 	 */
-	private String montarValorBoleto(Modalidade modalidade) {
+	private BigDecimal getValorTitulo(Modalidade modalidade) {
 		switch (modalidade) {
 			case ESPORTIVA:
-				return "41.21";
+				return new BigDecimal(41.21);
 			case RECREATIVA:
-				return "57.21";
+				return new BigDecimal(57.21);
 			default:
-				return "";
+				return new BigDecimal(0);
 		}
 
 	}

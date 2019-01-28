@@ -11,11 +11,9 @@ import lombok.Setter;
 @Setter
 public class AcessoResource {
 
-
 	private String cpf;
 
 	private String passaporte;
-
 
 	/**
 	 * Construtor.

@@ -42,7 +42,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Licenca> licencas = new ArrayList<>();
 
-	@Column(name = "numero_tentativas")
+	@Column(name = "numero_tentativas", insertable = false)
 	private Integer numeroTentativas;
 
 	@Column(name = "data_ultima_tentativa")
