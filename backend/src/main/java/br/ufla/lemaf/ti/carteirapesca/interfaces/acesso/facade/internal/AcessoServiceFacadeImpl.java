@@ -64,7 +64,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	public PessoaDTO acessar(final AcessoResource resource) {
 
 		val pessoaDTOAssembler = new PessoaDTOAssembler();
-		AcessoResource recursoValidado;
+		AcessoResource acessoResource;
 
 		// CPF e Passaporte não podem ser ambos nulos.
 		if (resource.getCpf() == null && resource.getPassaporte() == null)
@@ -77,19 +77,19 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		 * resource.
 		 */
 		if (resource.getCpf() != null) {
-			recursoValidado = new AcessoResource(
+			acessoResource = new AcessoResource(
 				CPFUtils.unformat(resource.getCpf()),
 				resource.getPassaporte()
 			);
 		} else {
-			recursoValidado = new AcessoResource(
+			acessoResource = new AcessoResource(
 				resource.getCpf(),
 				resource.getPassaporte()
 			);
 		}
 		// Converte dado Pessoa em DTO de Pessoa
 		return pessoaDTOAssembler.toDTO(
-			acessoApplication.identificar(recursoValidado)
+			acessoApplication.identificar(acessoResource)
 		);
 
 	}
@@ -109,6 +109,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		return solicitante.buscarTodasLicencas();
 	}
+
 
 	private Solicitante buscarSolicitante(PessoaDTO pessoaDTO) {
 
@@ -138,8 +139,6 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		}
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
-
-
 
 		if(solicitanteBloqueado(validacaoDTO.getAcessoResource())){
 

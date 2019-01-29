@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
@@ -7,9 +8,11 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFaca
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -41,22 +44,11 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RequestMapping("/api")
 public class AcessoController {
 
-	private AcessoServiceFacade acessoServiceFacade;
-	private SolicitanteRopository solicitanteRopository;
-
-
-
-	/**
-	 * Injeta a dependencia da controller.
-	 *
-	 * @param acessoServiceFacade Serviço de Facade da camada
-	 *                            de interface.
-	 */
 	@Autowired
-	public AcessoController(final AcessoServiceFacade acessoServiceFacade) {
-		this.acessoServiceFacade = acessoServiceFacade;
-	}
+	private AcessoServiceFacade acessoServiceFacade;
 
+	@Autowired
+	private AcessoApplication acessoApplication;
 
 	/**
 	 * Controller para o acesso público. Recebe como parâmetro
@@ -117,6 +109,13 @@ public class AcessoController {
 	@PostMapping("/buscarDados")
 	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) throws Exception {
 
+		Pessoa pessoa = acessoApplication.identificar(acessoResource);
+
+		if(pessoa == null || pessoa.nome == null){
+
+			return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
+		}
+
 		if(acessoServiceFacade.solicitanteBloqueado(acessoResource)) {
 
 			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
@@ -125,18 +124,16 @@ public class AcessoController {
 
 			var listaLicencaDTO = new ListaLicencaDTO();
 
-			var pessoa = acessoServiceFacade.acessar(acessoResource);
+			PessoaDTO pessoaDTO = acessoServiceFacade.acessar(acessoResource);
 
-			listaLicencaDTO.setPessoa(pessoa);
+			listaLicencaDTO.setPessoa(pessoaDTO);
 
-			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
+			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoaDTO));
 
-
-			return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(preencherListaVerificacao(pessoaDTO), HttpStatus.ACCEPTED);
 		}
 
 	}
-
 
 	private static Map<String, Object[]> preencherListaVerificacao(PessoaDTO pessoa) throws IOException {
 

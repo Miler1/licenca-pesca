@@ -32,7 +32,7 @@ public interface RegistroServiceFacade {
 	 * @param resource O recurso de registro do usuário.
 	 * @return O Protocolo da licença.
 	 */
-	ProtocoloDTO registrar(RegistroResource resource);
+	ProtocoloDTO registrar(RegistroResource resource) throws Exception;
 
 	void atualizarCondicaoVencimento();
 

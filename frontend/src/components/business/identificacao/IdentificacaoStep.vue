@@ -67,21 +67,13 @@ export default {
 
   methods: {
     acessar() {
-      this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource));
-       if(this.$refs.validacaoPerguntas){
+      this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource))
+        .then(retorno => {
+          debugger 
+          if(this.$refs.validacaoPerguntas){
             this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
           }
-        // if(this.solicitante.nome == null){
-        //   this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource));
-        //    if(this.$refs.validacaoPerguntas){
-        //     this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
-        //   }
-        // } else {
-        //   this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource));
-        //   if(this.$refs.validacaoPerguntas){
-        //     this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
-        //   }
-        // }
+        });
     },
     prepararDados() {
       if(this.$refs.cadastroDadosPessoa){

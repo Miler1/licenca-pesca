@@ -103,7 +103,7 @@ export const actions = {
         commit(SET_LISTA_LICENCAS, data.licencas);
       })
       .catch(error => {
-        if (error.response) {
+        if(error.response) {
           commit(SET_ERROR_TELA_BUSCA, error.response.data);
           commit(CLEAN_SOLICITANTE);
         }
@@ -113,11 +113,19 @@ export const actions = {
   [BUSCA_DADOS_VALIDACAO]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
-        commit(SET_DADOS_SOLICITANTE_CONFIRMAR, true);
-        commit(ACTIVE_CADASTRO, true);
-        commit(CLEAN_SOLICITANTE);
-        commit(SET_ERROR_TELA_BUSCA, "");
-        commit(SET_BUSCA_MAES, data.maes);
+        debugger
+        if(!data.maes){
+          commit(SET_SOLICITANTE, null);
+          commit(ACTIVE_CADASTRO, data);
+          commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
+          commit(SET_CPF_PESQUISA, data.cpf);
+          commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
+        }else {
+          commit(SET_DADOS_SOLICITANTE_CONFIRMAR, true);
+          commit(CLEAN_SOLICITANTE);
+          commit(SET_ERROR_TELA_BUSCA, "");
+          commit(SET_BUSCA_MAES, data.maes);
+        }
       })
       .catch(error => {
         if (error.response) {
@@ -148,6 +156,7 @@ export const mutations = {
    * @param solicitante O solicitante do acesso
    */
   [SET_SOLICITANTE]: (state, solicitante) => {
+    debugger
     if (solicitante !== null) {
       state.solicitante = toSolicitanteDTO(solicitante);
     } else {
@@ -184,12 +193,16 @@ export const mutations = {
    * @param solicitante O solicitante do acesso
    */
   [ACTIVE_CADASTRO]: (state, solicitante) => {
+    debugger
     solicitante !== null && solicitante.nome === null
       ? (state.cadastroCanActive = true)
       : (state.cadastroCanActive = false);
   },
 
   [SET_DADOS_SOLICITANTE_CONFIRMAR]: (state, dadosSolicitanteAConfirmar) => {
+    // dadosSolicitanteAConfirmar !== null && dadosSolicitanteAConfirmar.nomeMae === null
+    //   ? (state.dadosSolicitanteAConfirmar = true)
+    //   : (state.dadosSolicitanteAConfirmar = false)
     state.dadosSolicitanteAConfirmar = dadosSolicitanteAConfirmar;
   }
 };

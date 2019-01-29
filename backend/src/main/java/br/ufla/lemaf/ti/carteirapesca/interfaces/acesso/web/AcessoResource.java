@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -34,7 +35,7 @@ public class AcessoResource {
 	public AcessoResource(@JsonProperty("cpf") String cpf,
 						  @JsonProperty("passaporte") String passaporte) {
 
-		this.cpf = cpf;
+		this.cpf = (cpf != null ? CPFUtils.format(cpf) : null);
 		this.passaporte = passaporte;
 	}
 
