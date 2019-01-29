@@ -50,12 +50,6 @@ public class BeneficiarioTitulo implements Entity<BeneficiarioTitulo, Integer> {
 
 	private String carteira;
 
-	@Column(name = "nosso_numero")
-	private String nossoNumero;
-
-	@Column(name = "digito_nosso_numero")
-	private String digitoNossoNumero;
-
 	@Column(name = "fl_ativo")
 	private Boolean ativo;
 

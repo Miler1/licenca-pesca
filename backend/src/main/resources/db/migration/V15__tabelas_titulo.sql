@@ -58,8 +58,6 @@ CREATE TABLE carteira_pesca.beneficiario_titulo
   digito_agencia CHARACTER VARYING(2) NOT NULL,
   convenio CHARACTER VARYING(10) NOT NULL,
   carteira CHARACTER VARYING(5) NOT NULL,
-  nosso_numero CHARACTER VARYING(20) NOT NULL,
-  digito_nosso_numero CHARACTER VARYING(2) NOT NULL,
   fl_ativo BOOLEAN NOT NULL DEFAULT TRUE,
 
   CONSTRAINT pk_beneficiario PRIMARY KEY(id),
@@ -89,9 +87,7 @@ COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.agencia IS 'Número agencia
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.digito_agencia IS 'Digíto número agência.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.convenio IS 'Número do convênio.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.carteira IS 'Número da carteira.';
-COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.nosso_numero IS
-  'Código de controle que permite ao Banco e ao beneficiário identificar os dados da cobrança que deu origem ao boleto de pagamento.';
-COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.digito_nosso_numero IS 'Digíto nosso número.';
+
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.fl_ativo IS 'Indica se a conta do beneficiário está ativa.';
 
 CREATE TABLE carteira_pesca.especie_documento
@@ -151,6 +147,7 @@ CREATE TABLE carteira_pesca.titulo
   instrucoes TEXT NULL,
   local_pagamento TEXT NULL,
   fl_enviado_banco BOOLEAN NOT NULL DEFAULT FALSE,
+  nosso_numero CHARACTER VARYING(20) NOT NULL,
 
   CONSTRAINT pk_titulo PRIMARY KEY(id),
 
@@ -173,13 +170,15 @@ COMMENT ON COLUMN carteira_pesca.titulo.dt_processamento IS 'Data que o titulo f
 COMMENT ON COLUMN carteira_pesca.titulo.dt_vencimento IS 'Data de vencimento.';
 COMMENT ON COLUMN carteira_pesca.titulo.instrucoes IS 'Instruções de pagamento.';
 COMMENT ON COLUMN carteira_pesca.titulo.local_pagamento IS 'Locais onde o pagamento poderá ser realizado.';
+COMMENT ON COLUMN carteira_pesca.titulo.nosso_numero IS
+  'Código de controle que permite ao Banco e ao beneficiário identificar os dados da cobrança que deu origem ao boleto de pagamento.';
 
 INSERT INTO carteira_pesca.banco (id, codigo, nome) VALUES (1, '237', 'Banco Bradesco S.A.');
 
 INSERT INTO carteira_pesca.endereco(logradouro, numero, complemento, bairro, cep, municipio, estado) VALUES ('Av Mário Ypiranga', '3280', NULL, 'Parque Dez de Novembro', '69050-030', 'Manaus', 'AM');
 
-INSERT INTO carteira_pesca.beneficiario_titulo (nome, cpf_cnpj, id_banco, id_endereco, codigo_beneficiario, digito_codigo_beneficiario, agencia, digito_agencia, convenio, carteira, nosso_numero, digito_nosso_numero, fl_ativo)
-  VALUES ('Instituto de Proteção Ambiental do Amazonas', '04624888000194', 1, 1, '16065', '2', '3739', '7', '4928031', '09', '00000001798', '4', TRUE);
+INSERT INTO carteira_pesca.beneficiario_titulo (nome, cpf_cnpj, id_banco, id_endereco, codigo_beneficiario, digito_codigo_beneficiario, agencia, digito_agencia, convenio, carteira, fl_ativo)
+  VALUES ('Instituto de Proteção Ambiental do Amazonas', '04624888000194', 1, 1, '16065', '2', '3739', '7', '4928031', '09', TRUE);
 
 
 INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (1, 'DM', 'Duplicata Mercantil');

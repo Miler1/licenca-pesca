@@ -1,6 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
@@ -14,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -40,22 +40,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RequestMapping("/api")
 public class AcessoController {
 
-	private AcessoServiceFacade acessoServiceFacade;
-	private SolicitanteRopository solicitanteRopository;
-
-
-
-	/**
-	 * Injeta a dependencia da controller.
-	 *
-	 * @param acessoServiceFacade Serviço de Facade da camada
-	 *                            de interface.
-	 */
 	@Autowired
-	public AcessoController(final AcessoServiceFacade acessoServiceFacade) {
-		this.acessoServiceFacade = acessoServiceFacade;
-	}
+	private AcessoServiceFacade acessoServiceFacade;
 
+	@Autowired
+	private TituloRepository tituloRepository;
+
+	@Autowired
+	private RemessaBuilderImpl remessaBuilder;
 
 	/**
 	 * Controller para o acesso público. Recebe como parâmetro
@@ -169,6 +161,19 @@ public class AcessoController {
 
 		maes[posicao++] = CarteiraUtils.capitalize(pessoa.getNomeMae());
 		listasVerificacao.put("maes", maes);
+
+	}
+
+
+	@CrossOrigin("*")
+	@GetMapping("/remessa")
+	public ResponseEntity<Titulo> testeGeraRemessa() {
+
+		var titulos = tituloRepository.findAll();
+
+		remessaBuilder.geraRemessa(titulos);
+
+		return new ResponseEntity<>(titulos.get(0), HttpStatus.ACCEPTED);
 
 	}
 

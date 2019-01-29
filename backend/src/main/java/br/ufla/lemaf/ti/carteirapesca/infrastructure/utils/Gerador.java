@@ -18,7 +18,6 @@ public class Gerador {
 
 		try {
 
-
 			ClassPathResource resource = new ClassPathResource(file);
 			InputStream resourceInputStream = resource.getInputStream();
 

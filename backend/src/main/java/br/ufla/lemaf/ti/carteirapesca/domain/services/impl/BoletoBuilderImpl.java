@@ -1,16 +1,20 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
-import br.com.caelum.stella.boleto.*;
 import br.com.caelum.stella.boleto.Beneficiario;
+import br.com.caelum.stella.boleto.Boleto;
+import br.com.caelum.stella.boleto.Datas;
+import br.com.caelum.stella.boleto.Pagador;
 import br.com.caelum.stella.boleto.bancos.Bradesco;
 import br.com.caelum.stella.boleto.transformer.GeradorDeBoleto;
 import br.com.caelum.stella.format.CNPJFormatter;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.banco.EspecieDocumentoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Endereco;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.*;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.EspecieDocumentoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.PagadorTituloRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
@@ -26,8 +30,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Buider do Boleto.
@@ -244,9 +246,9 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			.comCarteira(beneficiarioTitulo.getCarteira())
 			.comCodigoBeneficiario(beneficiarioTitulo.getCodigoBeneficiario())
 			.comDigitoCodigoBeneficiario(beneficiarioTitulo.getDigitoCodigoBeneficiario())
-			.comNossoNumero(beneficiarioTitulo.getNossoNumero())
+			.comNossoNumero(titulo.getNossoNumero())
 			.comDocumento(new CNPJFormatter().format(beneficiarioTitulo.getCpfCnpj()))
-			.comDigitoNossoNumero(beneficiarioTitulo.getDigitoNossoNumero())
+//			.comDigitoNossoNumero(titulo.getDigitoNossoNumero())
 			.comEndereco(montarEndereco(beneficiarioTitulo.getEndereco()));
 
 		return beneficiario;

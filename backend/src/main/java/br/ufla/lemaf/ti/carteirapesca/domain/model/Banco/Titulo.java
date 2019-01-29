@@ -8,12 +8,11 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Getter
 @javax.persistence.Entity
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "titulo")
 public class Titulo implements Entity<Titulo, Integer> {
 
-	private static final Integer QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO = 1;
+	private static final Integer QTD_MESES_VENCIMENTO_TITULO_APOS_EMISSAO = 1;
 
 	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".titulo_id_seq";
 
@@ -59,6 +58,9 @@ public class Titulo implements Entity<Titulo, Integer> {
 	@Column(name = "fl_enviado_banco", insertable = false)
 	private Boolean enviadoBanco;
 
+	@Column(name = "nosso_numero")
+	private String nossoNumero;
+
 	@Override
 	public boolean sameIdentityAs(Titulo other) {
 		return false;
@@ -82,8 +84,9 @@ public class Titulo implements Entity<Titulo, Integer> {
 		this.valor = valor.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 		this.dataCriacao = LocalDate.now();
 		this.dataProcessamento = LocalDate.now();
-		this.dataVencimento = LocalDate.now().plusMonths(QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO);
+		this.dataVencimento = LocalDate.now().plusMonths(QTD_MESES_VENCIMENTO_TITULO_APOS_EMISSAO);
 		this.especieDocumento = especieDocumento;
+		this.nossoNumero = String.format("%1$11s", "");
 		this.setInstrucoes();
 		this.setLocalPagamento();
 
