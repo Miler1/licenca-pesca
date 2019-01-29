@@ -114,7 +114,7 @@ export const actions = {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
         if(!data.maes){
-          commit(SET_SOLICITANTE, null);
+          commit(SET_SOLICITANTE, data);
           commit(ACTIVE_CADASTRO, data);
           commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
           commit(SET_CPF_PESQUISA, data.cpf);
