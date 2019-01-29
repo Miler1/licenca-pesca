@@ -116,7 +116,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			.comNumeroDoDocumento(protocolo.getCodigoFormatado())
 			.comEspecieDocumento("OU")
 			.comInstrucoes(
-				""
+				modalidade.getNomePT()
 			)
 			.comLocaisDePagamento(
 				"Pagável em qualquer banco até o vencimento."

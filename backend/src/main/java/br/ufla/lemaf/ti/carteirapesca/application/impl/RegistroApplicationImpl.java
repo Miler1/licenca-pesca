@@ -235,7 +235,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 */
 	public Modalidade gerarModalidade(Integer tipo) {
 
-		return modalidadeRepository.findById(ESPORTIVA).get();
+		return modalidadeRepository.findById(tipo).get();
 	}
 
 	/**
