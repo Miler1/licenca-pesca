@@ -109,9 +109,9 @@ public class AcessoController {
 	@PostMapping("/buscarDados")
 	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) throws Exception {
 
-		Pessoa pessoa = acessoApplication.identificar(acessoResource);
+		PessoaDTO pessoa = acessoServiceFacade.acessar(acessoResource);
 
-		if(pessoa == null || pessoa.nome == null){
+		if(pessoa == null || pessoa.getNome() == null){
 
 			return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
 		}
@@ -124,13 +124,13 @@ public class AcessoController {
 
 			var listaLicencaDTO = new ListaLicencaDTO();
 
-			PessoaDTO pessoaDTO = acessoServiceFacade.acessar(acessoResource);
+			pessoa = acessoServiceFacade.acessar(acessoResource);
 
-			listaLicencaDTO.setPessoa(pessoaDTO);
+			listaLicencaDTO.setPessoa(pessoa);
 
-			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoaDTO));
+			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
 
-			return new ResponseEntity<>(preencherListaVerificacao(pessoaDTO), HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
 		}
 
 	}
