@@ -2,7 +2,7 @@
 	#step-controller
 		.left
 			el-button(icon="el-icon-arrow-left" type="primary" @click="prevStep" v-if="!activeStep('IDENTIFICACAO')") {{ $t(`${registrar_prefix}steps.botoes.voltar`) }}
-			el-button(icon="el-icon-close" @click="cancelar") {{ $t(`${registrar_prefix}steps.botoes.cancelar`) }}
+			el-button(icon="el-icon-close" v-if="!dadosSolicitanteAConfirmar" @click="cancelar") {{ $t(`${registrar_prefix}steps.botoes.cancelar`) }}
 		.center(v-if="enabled()")
 			h4.footer-label {{ $t(`${registrar_prefix}steps.label`, [step + 1, totalSteps]) }}
 		.right(v-if="enabled()")
@@ -33,7 +33,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante"])
+    ...mapGetters(["solicitante", "cadastroCanActive", "dadosSolicitanteAConfirmar", "existeSolicitante"])
   },
 
   methods: {

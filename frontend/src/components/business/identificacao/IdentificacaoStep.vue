@@ -68,11 +68,13 @@ export default {
   methods: {
     acessar() {
       this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource))
-        .then(retorno => {
-          if(this.$refs.cadastroDadosPessoa) {
-            this.$refs.cadastroDadosPessoa.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
-          }
-        });
+
+        if(this.$refs.validacaoPerguntas) {
+          this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+        }
+        if(this.$refs.cadastroDadosPessoa){
+          this.$refs.cadastroDadosPessoa.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+        }
     },
     prepararDados() {
       if(this.$refs.cadastroDadosPessoa){

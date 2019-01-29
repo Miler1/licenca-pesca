@@ -197,9 +197,6 @@ export const mutations = {
   },
 
   [SET_DADOS_SOLICITANTE_CONFIRMAR]: (state, dadosSolicitanteAConfirmar) => {
-    // dadosSolicitanteAConfirmar !== null && dadosSolicitanteAConfirmar.nomeMae === null
-    //   ? (state.dadosSolicitanteAConfirmar = true)
-    //   : (state.dadosSolicitanteAConfirmar = false)
     state.dadosSolicitanteAConfirmar = dadosSolicitanteAConfirmar;
   }
 };
