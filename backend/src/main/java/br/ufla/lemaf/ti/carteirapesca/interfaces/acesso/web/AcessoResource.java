@@ -34,7 +34,7 @@ public class AcessoResource {
 	public AcessoResource(@JsonProperty("cpf") String cpf,
 						  @JsonProperty("passaporte") String passaporte) {
 
-		this.cpf = "13090989646";
+		this.cpf = cpf;
 		this.passaporte = passaporte;
 	}
 

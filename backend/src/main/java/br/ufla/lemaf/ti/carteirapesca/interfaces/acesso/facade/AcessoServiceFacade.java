@@ -32,10 +32,10 @@ public interface AcessoServiceFacade {
 	 * em {@link PessoaDTO} com o
 	 * {@link br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler}.
 	 *
-	 * @param resource O recurso de acesso do usuário.
+//	 * @param resource O recurso de acesso do usuário.
 	 * @return A DTO de Pessoa.
 	 */
-	PessoaDTO acessar(AcessoResource resource);
+	PessoaDTO acessar(AcessoResource acessoResource);
 
 	List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa) throws Exception;
 

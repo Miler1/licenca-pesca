@@ -74,6 +74,7 @@ import InfoSelect from "../../../elements/InfoSelect";
 import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registrar/informacoes/informacoes";
 import { INFORMACOES_RULES } from "../../../../utils/validations/informacoes/informacoes_rules";
 import { SEND_INFORMACOES_COMPLEMENTARES } from "../../../../store/actions.type";
+import { returnStatement } from 'babel-types';
 
 export default {
   name: "CadastroInfoComplementares",
@@ -174,8 +175,7 @@ export default {
 
   created() {
     this.instantiate();
-  },
-
+	},
   beforeDestroy() {
 		this.enviarParaStore();
   }

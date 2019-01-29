@@ -67,18 +67,24 @@ export default {
 
   methods: {
     acessar() {
-      
-      this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource))
-        .then((p) => {
-          if(this.$refs.cadastroDadosPessoa){
-            this.$refs.cadastroDadosPessoa.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+      this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource));
+       if(this.$refs.validacaoPerguntas){
+            this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
           }
-        });
-      
+        // if(this.solicitante.nome == null){
+        //   this.$store.dispatch(ACESSAR, this.generateAcessoResource(this.resource));
+        //    if(this.$refs.validacaoPerguntas){
+        //     this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+        //   }
+        // } else {
+        //   this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource));
+        //   if(this.$refs.validacaoPerguntas){
+        //     this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+        //   }
+        // }
     },
     prepararDados() {
       if(this.$refs.cadastroDadosPessoa){
-
         this.$refs.cadastroDadosPessoa.tratarMunicipio();
       }
     },
@@ -93,7 +99,6 @@ export default {
       return false;
     },
     enviarParaStore() {
-      console.log(this.$refs.cadastroDadosPessoa && this.showCadastro());
       if(this.$refs.cadastroDadosPessoa && this.showCadastro()) {
         this.$refs.cadastroDadosPessoa.enviarParaStore();
       } else if(this.$refs.visualizarDadosPessoa){

@@ -11,6 +11,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -74,20 +75,19 @@ public class AcessoController {
 	@PostMapping("/acessar")
 	public ResponseEntity<PessoaDTO> acessar(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
-		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true) {
+		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true){
+
 			var pessoa = acessoServiceFacade.acessar(validacaoDTO.getAcessoResource());
 
 			pessoa.add(linkTo(methodOn(AcessoController.class)
 				.acessar(validacaoDTO))
 				.withSelfRel());
 
-
 			return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
 
-		}else {
-
-			throw new Exception("Dados não conferem. Após 3 tentativas erradas, o Cpf/passaporte será bloqueado por 2 horas.");
 		}
+
+		throw new Exception("Dados não conferem. Após 3 tentativas erradas, o Cpf/passaporte será bloqueado por 2 horas.");
 	}
 
 	@CrossOrigin("*")
@@ -123,19 +123,18 @@ public class AcessoController {
 
 		} else {
 
-
 			var listaLicencaDTO = new ListaLicencaDTO();
 
 			var pessoa = acessoServiceFacade.acessar(acessoResource);
 
 			listaLicencaDTO.setPessoa(pessoa);
 
-
 			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
 
 
 			return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
 		}
+
 	}
 
 

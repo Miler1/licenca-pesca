@@ -21,8 +21,8 @@
     .buttons
         .left
             el-button(icon="el-icon-close" @click="cancelarValidacao") {{ $t(`${validacao_prefix}botoes.cancelar`) }}
-            el-button.right(icon="el-icon-check" type="primary" @click="validarDados" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
-            el-button.right(icon="el-icon-check" type="default" @click="validarDadosRegistrar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
+            el-button.right(icon="el-icon-check" v-if="!visualizarBotaoValidar()" type="primary" @click="validarDadosBuscar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
+            el-button.right(icon="el-icon-check" v-if="visualizarBotaoValidar()" type="primary" @click="validarDadosRegistrar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
                          
 </template>
 
@@ -72,7 +72,7 @@ export default {
             Vue.prototype.$validacaoPerguntas = this;
         },
 
-        validarDados(){
+        validarDadosBuscar(){
             let dto = {
                 acessoResource: {
                     cpf: this.pessoa.cpf,
@@ -107,6 +107,9 @@ export default {
                     this.pessoa.estrangeiro = false;
                     this.estrangeiroDisabled = false;
                 }
+        },
+        visualizarBotaoValidar(){
+            return this.$router.history.current.name == "registrar";
         },
         cancelarValidacao() {
             this.$confirm(

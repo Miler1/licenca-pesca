@@ -86,6 +86,7 @@ export const actions = {
       .then(({ data }) => {
         commit(SET_SOLICITANTE, data);
         commit(ACTIVE_CADASTRO, data);
+        commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
         commit(SET_CPF_PESQUISA, data.cpf);
         commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
       })
@@ -113,6 +114,7 @@ export const actions = {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
         commit(SET_DADOS_SOLICITANTE_CONFIRMAR, true);
+        commit(ACTIVE_CADASTRO, true);
         commit(CLEAN_SOLICITANTE);
         commit(SET_ERROR_TELA_BUSCA, "");
         commit(SET_BUSCA_MAES, data.maes);
