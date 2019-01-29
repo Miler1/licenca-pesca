@@ -118,6 +118,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		}
 	}
 
+
 	/**
 	 * Ativa Licença. Caso o Status seja AGUARDANDO será ativado.
 	 * Mas se o Status for ATIVO ou INVALIDADO a operação será anulada.
@@ -153,6 +154,10 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	public Date getDataVencimentoBoleto() {
 
 		return dataVencimentoBoleto;
+	}
+
+	public InformacaoComplementar getInformacaoComplementar() {
+		return informacaoComplementar;
 	}
 
 	public void setDataVencimentoBoleto() {

@@ -72,11 +72,13 @@ public class RegistroController {
 
 	@CrossOrigin("*")
 	@PostMapping("/renovar")
-	public ResponseEntity<Void> renovar(
-		@RequestBody final String protocolo) {
+	public ResponseEntity<ProtocoloDTO> renovar(
+		@RequestBody final RegistroResource registroResource) {
 
+		var protocoloLicenca = registroServiceFacade
+			.renovarLicenca(registroResource);
 
-		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(protocoloLicenca, HttpStatus.ACCEPTED);
 
 	}
 

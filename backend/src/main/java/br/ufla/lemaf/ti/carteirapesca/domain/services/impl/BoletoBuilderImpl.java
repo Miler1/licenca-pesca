@@ -7,6 +7,8 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 
@@ -53,11 +56,22 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 				montarBoleto(pessoa, protocolo, modalidade)
 			);
 
+
+			var formatterNovo = new ProtocoloFormatter("$1-$2/$3-$4", ProtocoloValidator.FORMATED_RENOVADO, "$1$2$3$4", ProtocoloValidator.UNFORMATED_RENOVADO);
+
+			String codigoProtocolo;
+
+			if(protocolo.getProtocoloNaoFormatado().length() != 9){
+				codigoProtocolo = formatterNovo.unformat(protocolo.getCodigo());
+			} else {
+				codigoProtocolo = protocolo.getProtocoloNaoFormatado();
+			}
+
 			var caminhoBoleto = Paths.get(
 				Properties.pathBoletoPagamentoCarteiraPesca()
-					+ protocolo.getProtocoloNaoFormatado()
+					+ codigoProtocolo
 					+ "/"
-					+ protocolo.getProtocoloNaoFormatado()
+					+ codigoProtocolo
 					+ "-banco-santander.pdf"
 			);
 

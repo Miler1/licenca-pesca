@@ -3,10 +3,9 @@
 		h2 {{ $t(`${consultar_prefix}titulos.licenca`) }}
 		card(v-if="licenca !== null")
 			.licenca
-				h2.titulo {{ licenca.protocolo }}
+				h2.titulo {{ licenca.protocolo.codigoFormatado ?  licenca.protocolo.codigoFormatado : licenca.protocolo }}
 				.buttons
-					el-button(icon="el-icon-download" v-if="licenca.status === 0" type="primary" @click="baixarBoleto(licenca.protocolo)") {{ $t(`${consultar_prefix}botoes.downloadBoleto`) }}
-					el-button(icon="el-icon-download" v-if="licenca.status === 1" type="primary" @click="baixarCarteira(licenca.protocolo)") {{ $t(`${consultar_prefix}botoes.downloadLicenca`) }}
+					el-button(icon="el-icon-download" type="primary" @click="baixarBoleto(licenca.protocolo)") {{ $t(`${consultar_prefix}botoes.downloadBoleto`) }}
 		.no-data(v-if="licenca === null")
 			h2 {{ $t(`${consultar_prefix}data.semLicenca`) }}
 
@@ -46,7 +45,10 @@ export default {
     },
 
     baixarBoleto(protocolo) {
-      let protocoloDesformatado = protocolo.replace("/", "").replace("-", "");
+      if(protocolo.codigoFormatado) {
+        protocolo = protocolo.codigoFormatado;
+      }
+      let protocoloDesformatado = protocolo.replace("/", "").replace("-", "").replace("-","");
       this.$store.dispatch(ATIVAR_LICENCA);
 
       const href =

@@ -62,7 +62,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		return assembler.toDTO(registroApplication.registrar(
 			new RegistroResource(
 				pessoaValidada,
-				resource.getInformacaoComplementar()
+				resource.getInformacaoComplementar(), null
 			)));
 
 	}
@@ -71,6 +71,22 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	public void atualizarCondicaoVencimento() {
 		licencaRepository.alterarVencimento(new Date());
 		return ;
+	}
+
+	@Override
+	public ProtocoloDTO renovarLicenca(RegistroResource resource) {
+		val assembler = new ProtocoloDTOAssembler();
+
+		validateResource(resource);
+
+		val pessoaValidada = new PessoaDTO(resource.getPessoa());
+
+		return assembler.toDTO(registroApplication.renovarLicenca(
+			new RegistroResource(
+				pessoaValidada,
+				resource.getInformacaoComplementar(), resource.getProtocolo()
+			),resource.getProtocolo()));
+
 	}
 
 	/**

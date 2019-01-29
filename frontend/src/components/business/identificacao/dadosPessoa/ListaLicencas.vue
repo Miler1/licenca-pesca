@@ -112,11 +112,12 @@ export default {
 
         window.open(href, "_blank");
       },
-      renovar() {
-          console.log('renovar');
+      renovar(lista) {
+          let protocoloDesformatado = lista.protocolo.codigoFormatado.replace("/", "").replace("-", "").replace("-", "");
+          this.$router.push({ name: 'renovar', params: { protocolo: protocoloDesformatado }})
       },
       verificarRenovacao(lista) {
-          return lista.status === 'VENCIDO' || lista.podeRenovar;
+          return lista.status.codigo === 'VENCIDO' || lista.podeRenovar;
       }
   }
 

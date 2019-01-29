@@ -36,4 +36,6 @@ public interface RegistroServiceFacade {
 
 	void atualizarCondicaoVencimento();
 
+	ProtocoloDTO renovarLicenca(RegistroResource resource);
+
 }

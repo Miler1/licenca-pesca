@@ -26,6 +26,9 @@ public class InformacaoComplementarServiceImpl implements  InformacaoComplementa
 	@Autowired
 	private TipoIscaRepository tipoIscaRepository;
 
+	@Autowired
+	private MaterialPescaRepository materialPescaRepository;
+
 	@Override
 	public InformacaoComplementar toInformacaoComplementar(InformacaoComplementarDTO informacaoComplementarDTO) {
 		InformacaoComplementar informacaoComplementar = new InformacaoComplementar();
@@ -33,12 +36,14 @@ public class InformacaoComplementarServiceImpl implements  InformacaoComplementa
 		informacaoComplementar.setAgenciaTurismo(informacaoComplementarDTO.getAgenciaTurismo());
 		informacaoComplementar.setFaixaEtaria(faixaEtariaRepository.findById(informacaoComplementarDTO.getFaixaEtaria()).get());
 		informacaoComplementar.setLocalPesca(preferenciaLocalPescaRepository.findById(informacaoComplementarDTO.getLocalPesca()).get());
+		informacaoComplementar.setPreferenciaLocalPesca(preferenciaLocalPescaRepository.findById(informacaoComplementarDTO.getLocalizacaoPreferencialPesca()).get());
 		informacaoComplementar.setModalidadePesca(modalidadeRepository.findById(informacaoComplementarDTO.getModalidadePesca()).get());
 		informacaoComplementar.setModalidadeMaisPraticada(modalidadeRepository.findById(informacaoComplementarDTO.getModalidadeMaisPraticada()).get());
 		informacaoComplementar.setRendaMensal(rendaMensalRepository.findById(informacaoComplementarDTO.getRendaMensal()).get());
 		informacaoComplementar.setTipoIsca(tipoIscaRepository.findById(informacaoComplementarDTO.getTipoIsca()).get());
 		informacaoComplementar.setDiasPescaPorAno(informacaoComplementarDTO.getDiasPescaPorAno());
 		informacaoComplementar.setGastoMedioPesca(informacaoComplementarDTO.getGastoMedioPesca());
+		informacaoComplementar.setMaterialPesca(materialPescaRepository.findById(informacaoComplementarDTO.getMaterialPesca()).get());
 
 		return informacaoComplementar;
 	}

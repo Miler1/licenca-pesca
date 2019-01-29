@@ -68,6 +68,27 @@ public final class Protocolo extends ValueObjectBase<Protocolo> {
 
 	}
 
+	public Protocolo(String protocolo, ProtocoloFormatter formatter) {
+
+		if (formatter.isFormatted(protocolo)) {
+
+			this.codigo = formatter.unformat(protocolo);
+			this.codigoFormatado = protocolo;
+
+		} else if (formatter.canBeFormatted(protocolo)) {
+
+			this.codigo = protocolo;
+			this.codigoFormatado = formatter.format(protocolo);
+
+		} else {
+
+			this.codigoFormatado = protocolo;
+			this.codigo = protocolo;
+
+		}
+
+	}
+
 	/**
 	 * Busca a modalidade do protoco.
 	 *

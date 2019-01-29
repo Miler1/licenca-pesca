@@ -6,7 +6,7 @@
         el-step(:title="$t(`${registrar_prefix}steps.indices.informacoes`)" icon="el-icon-edit-outline")
         el-step(:title="$t(`${registrar_prefix}steps.indices.resumo`)" icon="el-icon-document")
 
-      informacaoes-complementares-step(v-show="activeStep('INFORMACOES_COMPLEMENTARES')", ref="informacoesComplementaresStep")
+      renovar-info-complementares(v-show="activeStep('INFORMACOES_COMPLEMENTARES')", ref="informacoesComplementaresStep")
       resumo-step(v-show="activeStep('RESUMO')", ref="resumo")
 
 
@@ -29,16 +29,17 @@ import Card from "../layouts/Card";
 import Properties from "../../properties";
 import StepController from "../layouts/StepController";
 import ResumoStep from "../business/resumo/ResumoStep";
+import { translate } from "../../utils/helpers/internationalization";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
-import InformacaoesComplementaresStep from "../business/informacoesComplementares/informacoesComplementaresStep";
-import { FETCH_LICENCA } from "../../store/actions.type";
+import RenovarInfoComplementares from "../business/informacoesComplementares/RenovarInformacoesComplementares";
+import { FETCH_INFORMACAO_LICENCA,RENOVAR_CARTEIRA } from "../../store/actions.type";
 
 export default {
   name: "RenovarLicenca",
 
   components: {
     ResumoStep,
-    InformacaoesComplementaresStep,
+    RenovarInfoComplementares,
     StepController,
     Card
   },
@@ -52,13 +53,11 @@ export default {
 
   computed: {
 
-    ...mapGetters(["showStepsController", "cadastroCanActive", "registroResource", "protocolo"])
+    ...mapGetters(["showStepsController", "cadastroCanActive", "registroResource", "protocolo", "licenca"])
   },
 
   mounted(){
-    this.$store.dispatch(FETCH_LICENCA, this.$route.params.protocolo).then(p => {
-        console.log(p);
-    });
+    this.$store.dispatch(FETCH_INFORMACAO_LICENCA, this.$route.params.protocolo);
   },
 
   methods: {
@@ -70,9 +69,9 @@ export default {
     nextStep() {
         if(this.activeStep('INFORMACOES_COMPLEMENTARES')) {
             if(this.checkValidationInformacoesComplementares()) {
-            this.$refs.informacoesComplementaresStep.enviarParaStore();
-            this.$refs.resumo.scroll();
-            this.step++;
+              this.$refs.informacoesComplementaresStep.enviarParaStore();
+              this.$refs.resumo.scroll();
+              this.step++;
             }
         } else {
             if (this.step++ >= 2) this.step = 2;
@@ -109,8 +108,8 @@ export default {
 
             registro.solicitante.dataNascimento =  date.getDate() + '/' + (date.getMonth() + 1)+ '/' + date.getFullYear();
           }
-
-          this.$store.dispatch(REGISTRAR, registro).then(p => {
+          registro.protocolo = this.$route.params.protocolo;
+          this.$store.dispatch(RENOVAR_CARTEIRA, registro).then(p => {
             let protocolo = p.replace("/", "").replace("-", "");
             this.$router.push({
               name: "consultar",

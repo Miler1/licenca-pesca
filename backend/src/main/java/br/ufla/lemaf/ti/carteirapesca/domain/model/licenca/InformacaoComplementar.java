@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
 @Setter
 @Entity
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "informacao_complementar")
@@ -20,29 +19,35 @@ public class InformacaoComplementar {
 	private Boolean agenciaTurismo;
 
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_faixa_etaria", referencedColumnName = "id")
 	private FaixaEtaria faixaEtaria;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_preferencia_local_pesca", referencedColumnName = "id")
+	private PreferenciaLocalPesca preferenciaLocalPesca;
+
+	@ManyToOne
+	@JoinColumn(name = "id_local_pesca", referencedColumnName = "id")
 	private PreferenciaLocalPesca localPesca;
 
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_modalidade", referencedColumnName = "id")
 	private Modalidade modalidadePesca;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_modalidade_mais_praticada", referencedColumnName = "id")
 	private Modalidade modalidadeMaisPraticada;
 
+	@ManyToOne
+	@JoinColumn(name = "id_material_pesca", referencedColumnName = "id")
+	private MaterialPesca materialPesca;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_renda_mensal", referencedColumnName = "id")
 	private RendaMensal rendaMensal;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_tipo_isca", referencedColumnName = "id")
 	private TipoIsca tipoIsca;
 
@@ -55,4 +60,52 @@ public class InformacaoComplementar {
 	@OneToOne(mappedBy = "informacaoComplementar")
 	private Licenca licenca;
 
+
+	public Integer getId() {
+		return id;
+	}
+
+	public Boolean getAgenciaTurismo() {
+		return agenciaTurismo;
+	}
+
+	public FaixaEtaria getFaixaEtaria() {
+		return faixaEtaria;
+	}
+
+	public PreferenciaLocalPesca getLocalPesca() {
+		return localPesca;
+	}
+
+	public Modalidade getModalidadePesca() {
+		return modalidadePesca;
+	}
+
+	public Modalidade getModalidadeMaisPraticada() {
+		return modalidadeMaisPraticada;
+	}
+
+	public RendaMensal getRendaMensal() {
+		return rendaMensal;
+	}
+
+	public TipoIsca getTipoIsca() {
+		return tipoIsca;
+	}
+
+	public Integer getDiasPescaPorAno() {
+		return diasPescaPorAno;
+	}
+
+	public Double getGastoMedioPesca() {
+		return gastoMedioPesca;
+	}
+
+	public PreferenciaLocalPesca getPreferenciaLocalPesca() {
+		return preferenciaLocalPesca;
+	}
+
+	public MaterialPesca getMaterialPesca() {
+		return materialPesca;
+	}
 }

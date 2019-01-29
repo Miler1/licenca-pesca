@@ -3,6 +3,8 @@ package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 import br.com.caelum.stella.format.BaseFormatter;
 import br.com.caelum.stella.format.Formatter;
 
+import java.util.regex.Pattern;
+
 /**
  * Formata o protocolo.
  *
@@ -22,6 +24,14 @@ public class ProtocoloFormatter implements Formatter {
 			"$1-$2/$3",
 			ProtocoloValidator.UNFORMATED,
 			"$1$2$3");
+	}
+
+	public ProtocoloFormatter(String formatter, Pattern patternFormatado, String unformatter, Pattern patternDesformatado) {
+		this.base = new BaseFormatter(
+			patternFormatado,
+			formatter,
+			patternDesformatado,
+			unformatter);
 	}
 
 	@Override

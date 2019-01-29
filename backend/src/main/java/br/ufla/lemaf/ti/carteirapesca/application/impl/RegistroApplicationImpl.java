@@ -14,6 +14,8 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.InformacaoComplementarService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.InformacaoComplementarAssembler;
@@ -21,6 +23,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import lombok.var;
 import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
@@ -95,9 +98,9 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		Modalidade modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
 		if (!solicitante.pussuiLicencaAtiva(modalidade)) {
 
-			var licenca = criarLicenca(resource);
+			var licenca = criarLicenca(resource, null);
 
-			protocolo = solicitante.adicionarLicenca(licenca);
+			protocolo = solicitante.adicionarLicenca(licenca, false);
 
 		} else {
 
@@ -109,16 +112,74 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		return protocolo;
 	}
 
+	@Override
+	public Protocolo renovarLicenca(RegistroResource resource, String codigoProtocolo) {
+
+		var solicitante = getSolicitante(resource);
+
+
+		String protocoloNovo = this.calcularNovoProtocolo(codigoProtocolo);
+
+		var licenca = criarLicenca(resource, protocoloNovo);
+
+
+		Protocolo protocolo = solicitante.adicionarLicenca(licenca, true);
+
+
+		solicitanteRopository.save(solicitante);
+
+		return protocolo;
+	}
+
+
+
+	private String calcularNovoProtocolo(String protocolo){
+
+		var formatterNovo = new ProtocoloFormatter("$1-$2/$3-$4", ProtocoloValidator.FORMATED_RENOVADO, "$1$2$3$4", ProtocoloValidator.UNFORMATED_RENOVADO);
+
+		val formatterAntigo = new ProtocoloFormatter();
+
+		if(protocolo.length() == 9){
+			return formatterAntigo.format(protocolo) + "-01";
+		}
+		protocolo = formatterNovo.format(protocolo);
+
+		String[] partes = protocolo.split("-");
+		String ultimaParte = partes[partes.length - 1];
+
+		Integer valor = Integer.valueOf(ultimaParte);
+
+		valor++;
+
+		ultimaParte = valor.toString();
+
+		if(ultimaParte.length() == 1) {
+			ultimaParte = "0" + ultimaParte;
+		}
+
+		protocolo = partes[0] + "-" + partes[1] + "-" + ultimaParte;
+
+		return protocolo;
+	}
+
 	/**
 	 * Cria uma licença de pesca.
 	 *
 	 * @param resource Os dados de registro.
 	 * @return A Licenca
 	 */
-	private Licenca criarLicenca(final RegistroResource resource) {
+	private Licenca criarLicenca(final RegistroResource resource, String codigoProtocolo) {
 
 		var modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
-		var protocolo = new Protocolo(protocoloBuilder.gerarProtocolo(modalidade));
+
+		var protocolo = new Protocolo();
+
+		if(codigoProtocolo == null){
+
+			protocolo = new Protocolo(protocoloBuilder.gerarProtocolo(modalidade));
+		} else {
+			protocolo = new Protocolo(codigoProtocolo);
+		}
 
 		var pessoa = buscarDadosSolicitante(getSolicitante(resource));
 
@@ -236,4 +297,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		return boletoBuilder.gerarBoleto(licenca.getProtocolo(), licenca.modalidade(), pessoa);
 	}
+
+
+
 }

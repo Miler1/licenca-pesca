@@ -104,8 +104,8 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @param licencaAdd A licença
 	 * @return O protocolo da licença
 	 */
-	public Protocolo adicionarLicenca(Licenca licencaAdd) {
-		if (!pussuiLicencaAtiva(licencaAdd.modalidade())) {
+	public Protocolo adicionarLicenca(Licenca licencaAdd, Boolean renovando) {
+		if (renovando || !pussuiLicencaAtiva(licencaAdd.modalidade())) {
 			licenca.add(licencaAdd);
 			return licencaAdd.protocolo();
 		} else {
@@ -162,6 +162,8 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		}
 
 	}
+
+
 
 	public void limpaDadosDesbloqueioSolicitante() throws Exception {
 
