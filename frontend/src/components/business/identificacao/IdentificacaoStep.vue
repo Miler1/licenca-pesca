@@ -27,7 +27,7 @@
 			.data
 				cadastrar-dados-pessoa(v-show="showCadastro()", ref="cadastroDadosPessoa")
 				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()", ref="visualizarDadosPessoa")
-				validacao-perguntas(v-show="dadosSolicitanteAConfirmar" ref="validacaoPerguntas")
+				validacao-perguntas(v-show="dadosSolicitanteAConfirmar" ref="validacaoPerguntas", @nextFunction="confirmarValidar")
 </template>
 
 <script>
@@ -69,8 +69,8 @@ export default {
     acessar() {
       this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource))
         .then(retorno => {
-          if(this.$refs.validacaoPerguntas){
-            this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
+          if(this.$refs.cadastroDadosPessoa) {
+            this.$refs.cadastroDadosPessoa.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
           }
         });
     },
@@ -110,6 +110,9 @@ export default {
       return { cpf, passaporte };
     },
 
+    confirmarValidar() {
+      console.log('teste');
+    },
     showCadastro() {
       return this.cadastroCanActive;
     },

@@ -53,7 +53,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ProtocoloDTO registrar(final RegistroResource resource) throws Exception{
+	public ProtocoloDTO registrar(final RegistroResource resource) {
 
 		val assembler = new ProtocoloDTOAssembler();
 

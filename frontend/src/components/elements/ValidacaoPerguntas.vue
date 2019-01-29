@@ -93,8 +93,7 @@ export default {
                 dataNascimento: this.pessoa.dataNascimento,
                 nomeMae: this.pessoa.nomeMae
             }
-            debugger
-            this.$store.dispatch(ACESSAR, dto);
+            this.$store.dispatch(ACESSAR, dto).then();
         },
 
         atualizarCpfPesquisado(resource) {

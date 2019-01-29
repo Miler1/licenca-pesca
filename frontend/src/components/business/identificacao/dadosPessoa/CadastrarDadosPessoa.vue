@@ -106,8 +106,6 @@
             el-select(v-model="pessoa.enderecoPrincipal.municipio" :loading="municipioSelectLoader" ref="enderecoPrincipal" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)" )
               el-option(v-for="municipio in municipios" :key="municipio.id" :value="municipio.id" :label="municipio.nome")
 
-      //- el-row(:gutter="20")
-
       .enderecoCorrespondencia(v-if="!isEPUrbano()")
         el-row(:gutter="20")
           el-col(:span="24")
@@ -233,7 +231,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa"])
+    ...mapGetters(["municipios","solicitante", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa"])
   },
  
   methods: {
@@ -252,6 +250,7 @@ export default {
     },
     
     atualizarCpfPesquisado(resource) {
+      console.log('res', resource);
       this.pessoa.cpf = resource.cpf;
       this.pessoa.passaporte = resource.passaporte;
       if(resource.cpf === null && resource.passaporte !== null){

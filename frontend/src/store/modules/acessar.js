@@ -155,7 +155,6 @@ export const mutations = {
    * @param solicitante O solicitante do acesso
    */
   [SET_SOLICITANTE]: (state, solicitante) => {
-    debugger
     if (solicitante !== null) {
       state.solicitante = toSolicitanteDTO(solicitante);
     } else {
@@ -192,7 +191,6 @@ export const mutations = {
    * @param solicitante O solicitante do acesso
    */
   [ACTIVE_CADASTRO]: (state, solicitante) => {
-    debugger
     solicitante !== null && solicitante.nome === null
       ? (state.cadastroCanActive = true)
       : (state.cadastroCanActive = false);
