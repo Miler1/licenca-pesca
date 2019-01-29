@@ -125,6 +125,12 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Protocolo protocolo = solicitante.adicionarLicenca(licenca, true);
 
+		for(Licenca licenca1: solicitante.getLicenca()){
+			String protocoloSemFormatacao = licenca1.getProtocolo().getCodigoFormatado().replace("-", "").replace("/", "");
+			if(protocoloSemFormatacao.equals(codigoProtocolo)){
+				licenca1.setStatus(statusRepository.findById(Status.StatusEnum.RENOVADO.id).get());
+			}
+		}
 
 		solicitanteRopository.save(solicitante);
 

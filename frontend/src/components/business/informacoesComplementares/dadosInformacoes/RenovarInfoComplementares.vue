@@ -6,8 +6,7 @@
 
                 el-col(:span="24")
 
-                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)" prop="modalidadePesca")
-                        h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePesca`) }}
+                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)")
                         el-radio-group(v-model="informacoesComplementares.modalidadePesca")
                             el-radio-button(v-for="l in informacoesComplementaresResource.modalidadePesca" :key="l.cod" :label="l.cod" disabled) {{ localizeField(l) }}
                
@@ -48,7 +47,7 @@
 
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localPesca`)" prop="localPesca")
                         el-radio-group(v-model="informacoesComplementares.localPesca")  
-                            el-radio-button(v-for="l in informacoesComplementaresResource.localizacaoPreferencialPesca" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
+                            el-radio-button(v-for="l in informacoesComplementaresResource.localPesca" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
 
                 el-col(:span="24")
 
@@ -64,11 +63,11 @@
                             el-radio-button(v-for="l in informacoesComplementaresResource.tipoIsca" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
 
 
-                el-col(:span="24")
+                //- el-col(:span="24")
 
-                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadeMaisPraticada`)" prop="modalidadeMaisPraticada")
-                        el-radio-group(v-model="informacoesComplementares.modalidadeMaisPraticada")  
-                            el-radio-button(v-for="l in informacoesComplementaresResource.modalidadeMaisPraticada" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
+                //-     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadeMaisPraticada`)" prop="modalidadeMaisPraticada")
+                //-         el-radio-group(v-model="informacoesComplementares.modalidadeMaisPraticada")  
+                //-             el-radio-button(v-for="l in informacoesComplementaresResource.modalidadeMaisPraticada" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
 
                         
                 el-col(:span="24")
@@ -151,13 +150,12 @@ export default {
         licenca (novaLicenca) {
             this.informacoesComplementares = JSON.parse(JSON.stringify(novaLicenca.informacaoComplementar));
             this.informacoesComplementares.modalidadePesca = this.informacoesComplementares.modalidadePesca.id;
-            this.informacoesComplementares.localizacaoPreferencialPesca = this.informacoesComplementares.preferenciaLocalPesca.id;
+            this.informacoesComplementares.localizacaoPreferencialPesca = this.informacoesComplementares.localizacaoPreferencialPesca.id;
             this.informacoesComplementares.localPesca = this.informacoesComplementares.localPesca.id;
             this.informacoesComplementares.rendaMensal = this.informacoesComplementares.rendaMensal.id;
             this.informacoesComplementares.faixaEtaria = this.informacoesComplementares.faixaEtaria.id;
             this.informacoesComplementares.materialPesca = this.informacoesComplementares.materialPesca.id;
             this.informacoesComplementares.tipoIsca = this.informacoesComplementares.tipoIsca.id;
-            this.informacoesComplementares.modalidadeMaisPraticada = this.informacoesComplementares.modalidadeMaisPraticada.id;
             if(this.informacoesComplementares.agenciaTurismo){
                 this.informacoesComplementares.agenciaTurismo = 0;
             } else {

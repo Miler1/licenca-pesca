@@ -107,11 +107,6 @@ export default {
       )
         .then(() => {
           let registro = this.registroResource;
-          let date = this.registroResource.solicitante.dataNascimento;
-          if(typeof(date) !== "string"){
-
-            registro.solicitante.dataNascimento =  date.getDate() + '/' + (date.getMonth() + 1)+ '/' + date.getFullYear();
-          }
 
           this.$store.dispatch(REGISTRAR, registro).then(p => {
             let protocolo = p.replace("/", "").replace("-", "");

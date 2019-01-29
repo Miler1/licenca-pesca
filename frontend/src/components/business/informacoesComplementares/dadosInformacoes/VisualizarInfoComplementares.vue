@@ -58,12 +58,6 @@
 		el-row.section(:gutter="20")
 			el-col(:span="24")
 				.align
-					h4.label {{ $t(`${visualizar_prefix}labels.modalidadeMaisPraticada`) }}
-					h4(:class="{'not-informed': !exist(info.modalidadeMaisPraticada)}") {{ localeData(informacoesComplementaresResource.modalidadeMaisPraticada, info.modalidadeMaisPraticada) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
-
-		el-row.section(:gutter="20")
-			el-col(:span="24")
-				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.agenciaTurismo`) }}
 					h4(:class="{'not-informed': !exist(info.agenciaTurismo)}") {{ localeData(informacoesComplementaresResource.agenciaTurismo, info.agenciaTurismo) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 

@@ -81,6 +81,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 
 		val pessoaValidada = new PessoaDTO(resource.getPessoa());
 
+
 		return assembler.toDTO(registroApplication.renovarLicenca(
 			new RegistroResource(
 				pessoaValidada,
@@ -252,9 +253,6 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 
 		if (Validate.isNull(info.getTipoIsca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "tipo de isca"));
-
-		if (Validate.isNull(info.getModalidadeMaisPraticada()))
-			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "modalidade mais praticada"));
 
 		if (Validate.isNull(info.getAgenciaTurismo()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "agência de turismo"));

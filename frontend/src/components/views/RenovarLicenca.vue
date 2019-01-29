@@ -110,7 +110,7 @@ export default {
           }
           registro.protocolo = this.$route.params.protocolo;
           this.$store.dispatch(RENOVAR_CARTEIRA, registro).then(p => {
-            let protocolo = p.replace("/", "").replace("-", "");
+            let protocolo = p.replace("/", "").replace("-", "").replace("-", "");
             this.$router.push({
               name: "consultar",
               params: { protocolo: protocolo }

@@ -3,7 +3,7 @@
 		h2 {{ $t(`${consultar_prefix}titulos.licenca`) }}
 		card(v-if="licenca !== null")
 			.licenca
-				h2.titulo {{ licenca.protocolo.codigoFormatado ?  licenca.protocolo.codigoFormatado : licenca.protocolo }}
+				h2.titulo {{ $route.params.protocolo }}
 				.buttons
 					el-button(icon="el-icon-download" type="primary" @click="baixarBoleto(licenca.protocolo)") {{ $t(`${consultar_prefix}botoes.downloadBoleto`) }}
 		.no-data(v-if="licenca === null")

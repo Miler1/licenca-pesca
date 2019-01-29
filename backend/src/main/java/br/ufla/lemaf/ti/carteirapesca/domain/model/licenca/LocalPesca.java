@@ -15,7 +15,7 @@ public class LocalPesca {
 
 	@Id
 	@Column(name = "id")
-	private Long id;
+	private Integer id;
 
 	@Column(name = "descricao_pt")
 	private String descricaoPT;

@@ -18,8 +18,6 @@ export const INFORMACOES_RULES = {
   materialPesca: [required("materialPesca", "change")],
 
   tipoIsca: [required("tipoIsca", "change")],
-
-  modalidadeMaisPraticada: [required("modalidadeMaisPraticada", "change")],
-
+  
   agenciaTurismo: [required("agenciaTurismo", "change")]
 };

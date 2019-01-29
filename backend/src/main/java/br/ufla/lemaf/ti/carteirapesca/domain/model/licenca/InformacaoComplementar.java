@@ -25,19 +25,15 @@ public class InformacaoComplementar {
 
 	@ManyToOne
 	@JoinColumn(name = "id_preferencia_local_pesca", referencedColumnName = "id")
-	private PreferenciaLocalPesca preferenciaLocalPesca;
+	private PreferenciaLocalPesca localizacaoPreferencialPesca;
 
 	@ManyToOne
 	@JoinColumn(name = "id_local_pesca", referencedColumnName = "id")
-	private PreferenciaLocalPesca localPesca;
+	private LocalPesca localPesca;
 
 	@ManyToOne
 	@JoinColumn(name = "id_modalidade", referencedColumnName = "id")
 	private Modalidade modalidadePesca;
-
-	@ManyToOne
-	@JoinColumn(name = "id_modalidade_mais_praticada", referencedColumnName = "id")
-	private Modalidade modalidadeMaisPraticada;
 
 	@ManyToOne
 	@JoinColumn(name = "id_material_pesca", referencedColumnName = "id")
@@ -73,16 +69,12 @@ public class InformacaoComplementar {
 		return faixaEtaria;
 	}
 
-	public PreferenciaLocalPesca getLocalPesca() {
+	public LocalPesca getLocalPesca() {
 		return localPesca;
 	}
 
 	public Modalidade getModalidadePesca() {
 		return modalidadePesca;
-	}
-
-	public Modalidade getModalidadeMaisPraticada() {
-		return modalidadeMaisPraticada;
 	}
 
 	public RendaMensal getRendaMensal() {
@@ -101,8 +93,8 @@ public class InformacaoComplementar {
 		return gastoMedioPesca;
 	}
 
-	public PreferenciaLocalPesca getPreferenciaLocalPesca() {
-		return preferenciaLocalPesca;
+	public PreferenciaLocalPesca getLocalizacaoPreferencialPesca() {
+		return localizacaoPreferencialPesca;
 	}
 
 	public MaterialPesca getMaterialPesca() {
