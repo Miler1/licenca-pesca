@@ -35,7 +35,7 @@ public class AcessoResource {
 	public AcessoResource(@JsonProperty("cpf") String cpf,
 						  @JsonProperty("passaporte") String passaporte) {
 
-		this.cpf = (cpf != null ? CPFUtils.format(cpf) : null);
+		this.cpf = cpf;
 		this.passaporte = passaporte;
 	}
 

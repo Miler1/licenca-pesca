@@ -113,7 +113,6 @@ export const actions = {
   [BUSCA_DADOS_VALIDACAO]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
-        debugger
         if(!data.maes){
           commit(SET_SOLICITANTE, null);
           commit(ACTIVE_CADASTRO, data);

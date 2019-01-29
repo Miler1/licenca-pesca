@@ -69,7 +69,6 @@ export default {
     acessar() {
       this.$store.dispatch(BUSCA_DADOS_VALIDACAO, this.generateAcessoResource(this.resource))
         .then(retorno => {
-          debugger 
           if(this.$refs.validacaoPerguntas){
             this.$refs.validacaoPerguntas.atualizarCpfPesquisado(this.generateAcessoResource(this.resource));
           }
