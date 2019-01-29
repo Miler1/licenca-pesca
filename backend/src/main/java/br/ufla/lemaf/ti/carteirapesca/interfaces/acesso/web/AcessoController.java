@@ -57,8 +57,6 @@ public class AcessoController {
 	 * Caso o mesmo tenha cadastro no entrada única, retorna seus dados,
 	 * e se o mesmo não tiver cadastro, retornará {@link PessoaDTO} vazio.
 	 *
-//	 * @param acessoResource Paramêtro com o recurso de
-	 *                       acesso do Usuário.
 	 * @return {@link PessoaDTO} Pessoa vazia caso não exista a mesma na
 	 * base de dados, ou a pessoa instanciada com
 	 * seus dados caso exista. Em forma de {@link ResponseEntity}

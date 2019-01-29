@@ -27,7 +27,7 @@
 			.data
 				cadastrar-dados-pessoa(v-show="showCadastro()", ref="cadastroDadosPessoa")
 				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()", ref="visualizarDadosPessoa")
-				validacao-perguntas(v-show="dadosSolicitanteAConfirmar" ref="validacaoPerguntas", @nextFunction="confirmarValidar")
+				validacao-perguntas(v-show="dadosSolicitanteAConfirmar" ref="validacaoPerguntas")
 </template>
 
 <script>
@@ -110,10 +110,6 @@ export default {
       }
 
       return { cpf, passaporte };
-    },
-
-    confirmarValidar() {
-      console.log('teste');
     },
     showCadastro() {
       return this.cadastroCanActive;

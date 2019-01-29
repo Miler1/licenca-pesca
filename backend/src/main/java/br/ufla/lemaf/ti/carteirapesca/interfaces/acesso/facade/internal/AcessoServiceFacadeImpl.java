@@ -149,8 +149,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		if(solicitante != null && solicitante.getNumeroTentativas() != null && solicitante.getNumeroTentativas() == 3) {
 
-			throw new Exception("Cpf / passaporte bi" +
-				"loqueado, tente novamente após 2 horas");
+			throw new Exception("Cpf / passaporte bloqueado, tente novamente após 2 horas");
 
 		}
 

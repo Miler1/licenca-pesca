@@ -154,7 +154,6 @@ export default {
 			}
 			return "Selecione uma modalidade para ver o valor da respectiva carteira"
 		},
-
     localizeField(field) {
       switch (this.$i18n.locale) {
         case "EN":
@@ -172,7 +171,6 @@ export default {
       return field.length > 4;
     }
   },
-
   created() {
     this.instantiate();
 	},

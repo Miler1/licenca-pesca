@@ -231,7 +231,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["municipios","solicitante", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa"])
+    ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa"])
   },
  
   methods: {
@@ -250,7 +250,6 @@ export default {
     },
     
     atualizarCpfPesquisado(resource) {
-      console.log('res', resource);
       this.pessoa.cpf = resource.cpf;
       this.pessoa.passaporte = resource.passaporte;
       if(resource.cpf === null && resource.passaporte !== null){
