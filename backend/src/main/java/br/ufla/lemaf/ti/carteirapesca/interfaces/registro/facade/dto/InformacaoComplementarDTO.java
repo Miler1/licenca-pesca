@@ -37,6 +37,8 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 
 	private Integer tipoIsca;
 
+	private Integer peixeMaisPescado;
+
 	private Boolean agenciaTurismo;
 
 	/**
@@ -73,7 +75,8 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 	                          @JsonProperty("localPesca") final Integer localPesca,
 	                          @JsonProperty("materialPesca") final Integer materialPesca,
 	                          @JsonProperty("tipoIsca") final Integer tipoIsca,
-	                          @JsonProperty("agenciaTurismo") final Boolean agenciaTurismo) {
+	                          @JsonProperty("agenciaTurismo") final Boolean agenciaTurismo,
+							  @JsonProperty("peixeMaisPescado") final  Integer peixeMaisPescado) {
 		this.modalidadePesca = modalidade;
 		this.localizacaoPreferencialPesca = localizacaoPreferencialPesca;
 		this.rendaMensal = rendaMensal;
@@ -84,6 +87,7 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 		this.materialPesca = materialPesca;
 		this.tipoIsca = tipoIsca;
 		this.agenciaTurismo = agenciaTurismo;
+		this.peixeMaisPescado = peixeMaisPescado;
 	}
 
 }

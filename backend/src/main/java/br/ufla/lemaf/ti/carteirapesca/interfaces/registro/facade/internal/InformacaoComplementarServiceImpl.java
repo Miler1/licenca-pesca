@@ -32,6 +32,9 @@ public class InformacaoComplementarServiceImpl implements  InformacaoComplementa
 	@Autowired
 	private LocalPescaRepository localPescaRepository;
 
+	@Autowired
+	private PeixeMaisPescadoRepository peixeMaisPescadoRepository;
+
 	@Override
 	public InformacaoComplementar toInformacaoComplementar(InformacaoComplementarDTO informacaoComplementarDTO) {
 		InformacaoComplementar informacaoComplementar = new InformacaoComplementar();
@@ -46,6 +49,7 @@ public class InformacaoComplementarServiceImpl implements  InformacaoComplementa
 		informacaoComplementar.setDiasPescaPorAno(informacaoComplementarDTO.getDiasPescaPorAno());
 		informacaoComplementar.setGastoMedioPesca(informacaoComplementarDTO.getGastoMedioPesca());
 		informacaoComplementar.setMaterialPesca(materialPescaRepository.findById(informacaoComplementarDTO.getMaterialPesca()).get());
+		informacaoComplementar.setPeixeMaisPescado(peixeMaisPescadoRepository.findById(informacaoComplementarDTO.getPeixeMaisPescado()).get());
 
 		return informacaoComplementar;
 	}

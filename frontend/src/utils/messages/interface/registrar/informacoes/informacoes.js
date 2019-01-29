@@ -51,6 +51,11 @@ const INFORMACOES = {
         "Costuma programar suas pescarias com agências de turismo?",
         "Do you usually plan your fisheries with tourism agencies?",
         "¿Usted suele programar sus pesquerías con agencias de turismo?"
+      ],
+      peixeMaisPescado: [
+        "Qual peixe você mais costuma pescar?",
+        "Which fish do you most fish?",
+        "¿Cuál es el pescado que más suele pescar?"
       ]
     },
     notas: {

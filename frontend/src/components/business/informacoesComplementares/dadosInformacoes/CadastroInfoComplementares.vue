@@ -57,6 +57,10 @@
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
 							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :model="informacoesComplementares.agenciaTurismo" :list="informacoesComplementaresResource.agenciaTurismo")
+				
+				el-col(:span="24")
+					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
+							info-select(@value="informacoesComplementares.peixeMaisPescado = $event" :model="informacoesComplementares.peixeMaisPescado" :list="informacoesComplementaresResource.peixeMaisPescado")
 
 </template>
 
@@ -100,7 +104,8 @@ export default {
 				localPesca: null,
 				materialPesca: null,
 				tipoIsca: null,
-				agenciaTurismo: null
+				agenciaTurismo: null,
+				peixeMaisPescado: null
 			},
 			options: {
 				container: '#container',

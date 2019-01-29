@@ -28,7 +28,8 @@ import {
   MATERIAL_PESCA_MOCK,
   MODALIDADE_PESCA_MOCK,
   RENDA_MENSAL_MOCK,
-  TIPO_ISCA_MOCK
+  TIPO_ISCA_MOCK,
+  PEIXE_MAIS_PESCADO
 } from "../../utils/layout/mockData";
 import InformacoesComplementaresService from "../../services/InformacoesComplementaresService";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
@@ -48,7 +49,8 @@ const INITIAL_STATE = {
     localPesca: LOCAL_PESCA_MOCK,
     materialPesca: MATERIAL_PESCA_MOCK,
     tipoIsca: TIPO_ISCA_MOCK,
-    agenciaTurismo: AGENCIA_TURISMO_MOCK
+    agenciaTurismo: AGENCIA_TURISMO_MOCK,
+    peixeMaisPescado: PEIXE_MAIS_PESCADO
   },
   registroResource: {
     informacoesComplementares: InformacoesComplementaresDTO,

@@ -1,7 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
-import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -47,11 +46,17 @@ public class InformacaoComplementar {
 	@JoinColumn(name = "id_tipo_isca", referencedColumnName = "id")
 	private TipoIsca tipoIsca;
 
+	@ManyToOne
+	@JoinColumn(name = "id_peixe_mais_pescado", referencedColumnName = "id")
+	private PeixeMaisPescado peixeMaisPescado;
+
+
 	@Column(name = "nu_dia_ano")
 	private Integer diasPescaPorAno;
 
 	@Column(name="nu_gasto_medio")
 	private Double gastoMedioPesca;
+
 
 	@OneToOne(mappedBy = "informacaoComplementar")
 	private Licenca licenca;
@@ -99,5 +104,9 @@ public class InformacaoComplementar {
 
 	public MaterialPesca getMaterialPesca() {
 		return materialPesca;
+	}
+
+	public PeixeMaisPescado getPeixeMaisPescado() {
+		return peixeMaisPescado;
 	}
 }

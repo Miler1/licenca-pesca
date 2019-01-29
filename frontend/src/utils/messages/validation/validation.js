@@ -112,6 +112,8 @@ const VALIDATION = {
     tipoIsca: { required: [required("Qual tipo de isca você utiliza?"), required("What kind of bait do you use?", en)] },
 
     agenciaTurismo: { required: [required("Costuma programar suas pescarias com agências de turismo?"), required("Do you usually plan your fisheries with tourism agencies?", en)] }
+    ,
+    peixeMaisPescado: { required: [required("Qual peixe você mais costuma pescar?"), required("Which fish do you most fish?", en)] }
   }
 };
 

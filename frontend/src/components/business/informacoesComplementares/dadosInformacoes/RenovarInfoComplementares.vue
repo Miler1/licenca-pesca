@@ -62,19 +62,17 @@
                         el-radio-group(v-model="informacoesComplementares.tipoIsca")  
                             el-radio-button(v-for="l in informacoesComplementaresResource.tipoIsca" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
 
-
-                //- el-col(:span="24")
-
-                //-     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadeMaisPraticada`)" prop="modalidadeMaisPraticada")
-                //-         el-radio-group(v-model="informacoesComplementares.modalidadeMaisPraticada")  
-                //-             el-radio-button(v-for="l in informacoesComplementaresResource.modalidadeMaisPraticada" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
-
-                        
                 el-col(:span="24")
 
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
                         el-radio-group(v-model="informacoesComplementares.agenciaTurismo")  
                             el-radio-button(v-for="l in informacoesComplementaresResource.agenciaTurismo" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
+
+                el-col(:span="24")
+
+                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
+                        el-select(v-model="informacoesComplementares.peixeMaisPescado")
+                            el-option(v-for="l in informacoesComplementaresResource.peixeMaisPescado" :key="l.cod" :value="l.cod" :label="localizeField(l)")
 
 </template>
 
@@ -119,7 +117,8 @@ export default {
                 materialPesca: null,
                 tipoIsca: null,
                 modalidadeMaisPraticada: null,
-                agenciaTurismo: null
+                agenciaTurismo: null,
+                peixeMaisPescado: null
             },
             options: {
                 container: '#container',
@@ -156,6 +155,7 @@ export default {
             this.informacoesComplementares.faixaEtaria = this.informacoesComplementares.faixaEtaria.id;
             this.informacoesComplementares.materialPesca = this.informacoesComplementares.materialPesca.id;
             this.informacoesComplementares.tipoIsca = this.informacoesComplementares.tipoIsca.id;
+            this.informacoesComplementares.peixeMaisPescado = this.informacoesComplementares.peixeMaisPescado.id;
             if(this.informacoesComplementares.agenciaTurismo){
                 this.informacoesComplementares.agenciaTurismo = 0;
             } else {
