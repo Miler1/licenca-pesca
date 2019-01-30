@@ -18,7 +18,6 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.InformacaoComplementarService;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.InformacaoComplementarAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
@@ -153,9 +152,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		String[] partes = protocolo.split("-");
 		String ultimaParte = partes[partes.length - 1];
 
-		Integer valor = Integer.valueOf(ultimaParte);
-
-		valor++;
+		Integer valor = Integer.valueOf(ultimaParte) + 1;
 
 		ultimaParte = valor.toString();
 
@@ -189,14 +186,12 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		var pessoa = buscarDadosSolicitante(getSolicitante(resource));
 
-//		var caminhoCarteira = carteiraBuilder.gerarCarteira(protocolo, modalidade, pessoa);
 		var caminhoBoleto = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
 
 		Status status = statusRepository.findById(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id).get();
 
 		InformacaoComplementar informacaoComplementar = informacaoComplementarService.toInformacaoComplementar(resource.getInformacaoComplementar());
 
-//		informacaoComplementar = informacaoComplementarRepository.save(informacaoComplementar);
 
 		return new Licenca(protocolo, modalidade, caminhoBoleto, informacaoComplementar, status);
 	}

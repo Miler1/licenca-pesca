@@ -37,7 +37,7 @@ INSERT INTO carteira_pesca.peixe_mais_pescado (id, descricao_pt, descricao_en, d
 (13, 'Tucunaré', 'Tucunaré', 'Tucunaré'),
 (14, 'Outros', 'Others', 'Otro');
 
-ALTER TABLE carteira_pesca.informacaoa_complementar ADD COLUMN id_peixe_mais_pescado integer;
+ALTER TABLE carteira_pesca.informacao_complementar ADD COLUMN id_peixe_mais_pescado integer;
 COMMENT ON COLUMN carteira_pesca.informacao_complementar.id_peixe_mais_pescado IS 'Identificador único da entidade peixe_mais_pescado que realizará o relacionamento entre peixe_mais_pescado e informacao_complementar.';
 
 ALTER TABLE carteira_pesca.informacao_complementar ADD

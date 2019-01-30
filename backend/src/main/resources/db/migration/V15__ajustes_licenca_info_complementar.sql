@@ -27,7 +27,7 @@ COMMENT ON COLUMN carteira_pesca.status.id IS 'Identificador único da entidade.
 COMMENT ON COLUMN carteira_pesca.status.descricao IS 'Descrição do status da licença.';
 COMMENT ON COLUMN carteira_pesca.status.codigo IS 'Código do status da licença.';
 
-COMMENT ON COLUMN carteira_pesca.informacao_complementar.id_status IS 'Identificador único da entidade status que realizará o relacionamento entre status e informacao_complementar.';
+COMMENT ON COLUMN carteira_pesca.licenca.id_status IS 'Identificador único da entidade status que realizará o relacionamento entre status e informacao_complementar.';
 
 ALTER TABLE carteira_pesca.licenca ADD 
   CONSTRAINT fk_l_status FOREIGN KEY (id_status)
