@@ -42,9 +42,8 @@ homolog)
 
 
     echo "Executando operações no servidor..."
-    scp target/backend-1.0.0-SNAPSHOT.jar gustavolopes@177.93.109.141:/tmp/
 
-    scp backend/target/central-colosso-2.0.4.RELEASE.jar lemaf@177.105.35.45:/home/lemaf/releases_homolog
+    scp backend/target/backend-1.0.0-SNAPSHOT.jar lemaf@177.105.35.45:/home/lemaf/releases_homolog/AM/carteira-pesca/
 
     echo "Arquivo enviado com sucesso para o servidor!" ;;
 
