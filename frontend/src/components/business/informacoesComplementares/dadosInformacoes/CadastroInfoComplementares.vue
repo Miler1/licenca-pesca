@@ -9,10 +9,9 @@
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)" prop="modalidadePesca")
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePescaEsportiva`) }}
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePescaRecreativa`) }}
-						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca") 
-						h5.label-notes-valor {{valorCarteira()}}		
+						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca" @change="verificarModalidadeParaDefinirIsca") 
+						h5.label-notes-valor {{ valorCarteira() }}		
 				el-col(:span="24")
-
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localizacaoPreferencialPesca`)" prop="localizacaoPreferencialPesca")
 						info-select(@value="informacoesComplementares.localizacaoPreferencialPesca = $event" :model="informacoesComplementares.localizacaoPreferencialPesca" :list="informacoesComplementaresResource.localizacaoPreferencialPesca")
 
@@ -51,10 +50,9 @@
 
 				el-col(:span="24")
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
-						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca"  :list="informacoesComplementaresResource.tipoIsca")
+						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" :tipoIscaDisabled="tipoIscaDisabled" )
 
 				el-col(:span="24")
-
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
 							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :model="informacoesComplementares.agenciaTurismo" :list="informacoesComplementaresResource.agenciaTurismo")
 				
@@ -79,6 +77,8 @@ import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registr
 import { INFORMACOES_RULES } from "../../../../utils/validations/informacoes/informacoes_rules";
 import { SEND_INFORMACOES_COMPLEMENTARES } from "../../../../store/actions.type";
 import { returnStatement } from 'babel-types';
+import { numero } from '../../../../utils/validations/pessoa/pessoa_validations';
+import { translate } from '../../../../utils/helpers/internationalization';
 
 export default {
   name: "CadastroInfoComplementares",
@@ -125,7 +125,7 @@ export default {
 				x: false,
 				y: true
 			},
-
+			tipoIscaDisabled: false
 		};
   },
 
@@ -148,16 +148,32 @@ export default {
 				SEND_INFORMACOES_COMPLEMENTARES, this.informacoesComplementares
 			);
 		},
+		verificarModalidadeParaDefinirIsca() {
+			if (this.informacoesComplementares.modalidadePesca == 0) {
+				this.informacoesComplementares.tipoIsca = 1;
+				this.tipoIscaDisabled = true;
+			}else {
+				this.informacoesComplementares.tipoIsca = null;
+				this.tipoIscaDisabled = false;
+			}
+		},
 		getValid() {
 			return this.valid;
 		},
 		valorCarteira(){
-			if(this.informacoesComplementares.modalidadePesca == 0){
-				return "Valor total a pagar: R$ 41.21"
-			}else if(this.informacoesComplementares.modalidadePesca == 1){
-				return "Valor total a pagar: R$ 57.21"
+			if (this.informacoesComplementares.modalidadePesca == 0) {
+				return translate(
+          `${this.cadastrar_info_prefix}valoresCarteira.modalidades.esportiva`
+        );
+			} else if (this.informacoesComplementares.modalidadePesca == 1) {
+					return translate(
+          `${this.cadastrar_info_prefix}valoresCarteira.modalidades.recreativa`
+        );
 			}
-			return "Selecione uma modalidade para ver o valor da respectiva carteira"
+				return translate(
+          `${this.cadastrar_info_prefix}valoresCarteira.modalidades.mensagemInicial`
+        );
+
 		},
     localizeField(field) {
       switch (this.$i18n.locale) {
@@ -201,6 +217,9 @@ export default {
 			padding-top: 20px
 			height: 20px
 			font-size: 14px;
+		.el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner
+			background-color: #409EFF
+			color: white
 
 		.money-input
 			width: 250px
