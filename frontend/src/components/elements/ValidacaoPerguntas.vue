@@ -21,8 +21,8 @@
     .buttons
         .left
             el-button(icon="el-icon-close" @click="cancelarValidacao") {{ $t(`${validacao_prefix}botoes.cancelar`) }}
-            el-button.right(icon="el-icon-check" v-if="!visualizarBotaoValidar()" type="primary" @click="confirmarDadosAoBuscar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
-            el-button.right(icon="el-icon-check" v-if="visualizarBotaoValidar()" type="primary" @click="confirmarDadosAoRegistrar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
+            el-button.right(icon="el-icon-check" v-if="!visualizarBotaoValidar()" type="primary" @click="confirmacaoDadosAoBuscar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
+            el-button.right(icon="el-icon-check" v-if="visualizarBotaoValidar()" type="primary" @click="confirmacaoDadosAoRegistrar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
                          
 </template>
 
@@ -72,7 +72,7 @@ export default {
             Vue.prototype.$validacaoPerguntas = this;
         },
 
-        confirmarDadosAoBuscar(){
+        confirmacaoDadosAoBuscar(){
             let dto = {
                 acessoResource: {
                     cpf: this.pessoa.cpf,
@@ -84,7 +84,7 @@ export default {
             this.$store.dispatch(BUSCAR_LICENCAS, dto);
         },
 
-        confirmarDadosAoRegistrar(){
+        confirmacaoDadosAoRegistrar(){
             let dto = {
                 acessoResource: {
                     cpf: this.pessoa.cpf,
