@@ -12,7 +12,6 @@
 						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca" @change="verificarModalidadeParaDefinirIsca") 
 						h5.label-notes-valor {{valorCarteira()}}		
 				el-col(:span="24")
-					| {{informacoesComplementares.modalidadePesca}}
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localizacaoPreferencialPesca`)" prop="localizacaoPreferencialPesca")
 						info-select(@value="informacoesComplementares.localizacaoPreferencialPesca = $event" :model="informacoesComplementares.localizacaoPreferencialPesca" :list="informacoesComplementaresResource.localizacaoPreferencialPesca")
 
@@ -50,7 +49,6 @@
 						info-select(@value="informacoesComplementares.materialPesca = $event" :model="informacoesComplementares.materialPesca" :list="informacoesComplementaresResource.materialPesca")
 
 				el-col(:span="24")
-					| {{informacoesComplementares.tipoIsca}}
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
 						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" :tipoIscaDisabled="tipoIscaDisabled" )
 
