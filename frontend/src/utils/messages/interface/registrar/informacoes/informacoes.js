@@ -80,10 +80,6 @@ const INFORMACOES = {
         esportiva: ["Valor total a pagar: R$ 41.21", "Total amount to pay: R$ 41.21"],
         recreativa: ["Valor total a pagar: R$ 57.21", "Total amount to pay: R$ 57.21"],
         mensagemInicial: ["Selecione uma modalidade para ver o valor da respectiva carteira", "Select a mode to see the value"]
-      },
-      zonaLocalizacao: {
-        urbana: ["Urbana", "Urban"],
-        rural: ["Rural", "Rural"]
       }
     },
     titulos: {
