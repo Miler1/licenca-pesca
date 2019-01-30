@@ -86,6 +86,7 @@ export const actions = {
       .then(({ data }) => {
         commit(SET_SOLICITANTE, data);
         commit(ACTIVE_CADASTRO, data);
+        commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
         commit(SET_CPF_PESQUISA, data.cpf);
         commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
       })
@@ -102,7 +103,7 @@ export const actions = {
         commit(SET_LISTA_LICENCAS, data.licencas);
       })
       .catch(error => {
-        if (error.response) {
+        if(error.response) {
           commit(SET_ERROR_TELA_BUSCA, error.response.data);
           commit(CLEAN_SOLICITANTE);
         }
@@ -112,10 +113,18 @@ export const actions = {
   [BUSCA_DADOS_VALIDACAO]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
-        commit(SET_DADOS_SOLICITANTE_CONFIRMAR, true);
-        commit(CLEAN_SOLICITANTE);
-        commit(SET_ERROR_TELA_BUSCA, "");
-        commit(SET_BUSCA_MAES, data.maes);
+        if(!data.maes){
+          commit(SET_SOLICITANTE, data);
+          commit(ACTIVE_CADASTRO, data);
+          commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
+          commit(SET_CPF_PESQUISA, data.cpf);
+          commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
+        }else {
+          commit(SET_DADOS_SOLICITANTE_CONFIRMAR, true);
+          commit(CLEAN_SOLICITANTE);
+          commit(SET_ERROR_TELA_BUSCA, "");
+          commit(SET_BUSCA_MAES, data.maes);
+        }
       })
       .catch(error => {
         if (error.response) {

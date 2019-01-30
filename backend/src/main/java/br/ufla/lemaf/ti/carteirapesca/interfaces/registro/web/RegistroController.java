@@ -57,7 +57,7 @@ public class RegistroController {
 	@CrossOrigin("*")
 	@PostMapping("/registrar")
 	public ResponseEntity<ProtocoloDTO> registrar(
-		@RequestBody final RegistroResource registroResource) {
+		@RequestBody final RegistroResource registroResource) throws Exception {
 
 		var protocoloLicenca = registroServiceFacade
 			.registrar(registroResource);
@@ -65,6 +65,18 @@ public class RegistroController {
 		protocoloLicenca.add(linkTo(methodOn(RegistroController.class)
 			.registrar(registroResource))
 			.withSelfRel());
+
+		return new ResponseEntity<>(protocoloLicenca, HttpStatus.ACCEPTED);
+
+	}
+
+	@CrossOrigin("*")
+	@PostMapping("/renovar")
+	public ResponseEntity<ProtocoloDTO> renovar(
+		@RequestBody final RegistroResource registroResource) {
+
+		var protocoloLicenca = registroServiceFacade
+			.renovarLicenca(registroResource);
 
 		return new ResponseEntity<>(protocoloLicenca, HttpStatus.ACCEPTED);
 

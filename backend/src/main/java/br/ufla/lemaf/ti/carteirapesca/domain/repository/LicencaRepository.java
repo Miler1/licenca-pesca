@@ -1,5 +1,6 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
+package br.ufla.lemaf.ti.carteirapesca.domain.repository;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

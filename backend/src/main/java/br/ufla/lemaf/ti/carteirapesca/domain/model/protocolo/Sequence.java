@@ -33,8 +33,8 @@ public final class Sequence implements ValueObject<Sequence> {
 	@Column(name = "vl_sequencia")
 	private Integer valor;
 
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "id_modalidade")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_modalidade", referencedColumnName = "id")
 	private Modalidade modalidade;
 
 	@Column(name = "nu_ano_sequencia")

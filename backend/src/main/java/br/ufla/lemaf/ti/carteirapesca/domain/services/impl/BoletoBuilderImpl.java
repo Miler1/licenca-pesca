@@ -17,6 +17,8 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.PagadorTituloRepos
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -76,11 +78,21 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 				montarBoleto(pessoa, protocolo, modalidade)
 			);
 
+			var formatterNovo = new ProtocoloFormatter("$1-$2/$3-$4", ProtocoloValidator.FORMATED_RENOVADO, "$1$2$3$4", ProtocoloValidator.UNFORMATED_RENOVADO);
+
+			String codigoProtocolo;
+
+			if(protocolo.getProtocoloNaoFormatado().length() != 9){
+				codigoProtocolo = formatterNovo.unformat(protocolo.getCodigo());
+			} else {
+				codigoProtocolo = protocolo.getProtocoloNaoFormatado();
+			}
+
 			var caminhoBoleto = Paths.get(
 				Properties.pathBoletoPagamentoCarteiraPesca()
-					+ protocolo.getProtocoloNaoFormatado()
+					+ codigoProtocolo
 					+ "/"
-					+ protocolo.getProtocoloNaoFormatado()
+					+ codigoProtocolo
 					+ "-banco-bradesco.pdf"
 			);
 
@@ -198,16 +210,18 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 	 * @param modalidade A modalidade da carteira
 	 * @return O campo de valor da carteira
 	 */
-	private BigDecimal getValorTitulo(Modalidade modalidade) {
-		switch (modalidade) {
-			case ESPORTIVA:
-				return new BigDecimal(41.21);
-			case RECREATIVA:
-				return new BigDecimal(57.21);
-			default:
-				return new BigDecimal(0);
-		}
 
+	private BigDecimal getValorTitulo(Modalidade modalidade) {
+
+		if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_ESPORTIVA.id)) {
+
+			return new BigDecimal(41.21);
+		} else if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_REACREATIVA.id)) {
+
+			return new BigDecimal(57.21);
+		} else {
+			return new BigDecimal(0);
+		}
 	}
 
 	/**

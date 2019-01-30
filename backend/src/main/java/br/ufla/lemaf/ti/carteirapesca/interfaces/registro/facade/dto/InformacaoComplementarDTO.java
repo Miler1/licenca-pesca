@@ -1,9 +1,11 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
@@ -15,6 +17,7 @@ import org.springframework.hateoas.ResourceSupport;
 @Getter
 @EqualsAndHashCode(callSuper = false, doNotUseGetters = true)
 public final class InformacaoComplementarDTO extends ResourceSupport {
+
 
 	private Integer modalidadePesca;
 
@@ -34,7 +37,7 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 
 	private Integer tipoIsca;
 
-	private Integer modalidadeMaisPraticada;
+	private Integer peixeMaisPescado;
 
 	private Boolean agenciaTurismo;
 
@@ -57,8 +60,6 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 	 *                                     material de pesca
 	 * @param tipoIsca                     Inteiro representando o
 	 *                                     tipo de isca
-	 * @param modalidadeMaisPraticada      Inteiro representando a modalidade
-	 *                                     de pesca nais praticada
 	 * @param agenciaTurismo               {@code true} se o usuário costuma
 	 *                                     contratar agências de turismo para a
 	 *                                     prática
@@ -74,8 +75,8 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 	                          @JsonProperty("localPesca") final Integer localPesca,
 	                          @JsonProperty("materialPesca") final Integer materialPesca,
 	                          @JsonProperty("tipoIsca") final Integer tipoIsca,
-	                          @JsonProperty("modalidadeMaisPraticada") final Integer modalidadeMaisPraticada,
-	                          @JsonProperty("agenciaTurismo") final Boolean agenciaTurismo) {
+	                          @JsonProperty("agenciaTurismo") final Boolean agenciaTurismo,
+							  @JsonProperty("peixeMaisPescado") final  Integer peixeMaisPescado) {
 		this.modalidadePesca = modalidade;
 		this.localizacaoPreferencialPesca = localizacaoPreferencialPesca;
 		this.rendaMensal = rendaMensal;
@@ -85,7 +86,8 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 		this.localPesca = localPesca;
 		this.materialPesca = materialPesca;
 		this.tipoIsca = tipoIsca;
-		this.modalidadeMaisPraticada = modalidadeMaisPraticada;
 		this.agenciaTurismo = agenciaTurismo;
+		this.peixeMaisPescado = peixeMaisPescado;
 	}
+
 }

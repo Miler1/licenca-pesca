@@ -68,15 +68,15 @@ public class ProtocoloBuilderImpl implements ProtocoloBuilder {
 	 */
 	private static String construirEtapaModalidade(final Modalidade modalidade) {
 
-		switch (modalidade) {
-			case ESPORTIVA:
-				return PREFIX_ESPORTIVA;
-			case RECREATIVA:
-				return PREFIX_RECREATIVA;
-			default:
-				throw new ProtocoloException("protocolo.modalidade");
-		}
+		if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_ESPORTIVA.id)) {
 
+			return PREFIX_ESPORTIVA;
+		} else if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_REACREATIVA.id)) {
+
+			return PREFIX_RECREATIVA;
+		} else {
+			throw new ProtocoloException("protocolo.modalidade");
+		}
 	}
 
 

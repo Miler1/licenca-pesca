@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
@@ -42,12 +43,16 @@ public class AcessoController {
 
 	@Autowired
 	private AcessoServiceFacade acessoServiceFacade;
+	private SolicitanteRopository solicitanteRopository;
 
 	@Autowired
 	private TituloRepository tituloRepository;
 
 	@Autowired
 	private RemessaBuilderImpl remessaBuilder;
+
+	@Autowired
+	private AcessoApplication acessoApplication;
 
 	/**
 	 * Controller para o acesso público. Recebe como parâmetro
@@ -56,24 +61,27 @@ public class AcessoController {
 	 * Caso o mesmo tenha cadastro no entrada única, retorna seus dados,
 	 * e se o mesmo não tiver cadastro, retornará {@link PessoaDTO} vazio.
 	 *
-	 * @param acessoResource Paramêtro com o recurso de
-	 *                       acesso do Usuário.
 	 * @return {@link PessoaDTO} Pessoa vazia caso não exista a mesma na
 	 * base de dados, ou a pessoa instanciada com
 	 * seus dados caso exista. Em forma de {@link ResponseEntity}
 	 */
 	@CrossOrigin("*")
 	@PostMapping("/acessar")
-	public ResponseEntity<PessoaDTO> acessar(@RequestBody final AcessoResource acessoResource) {
+	public ResponseEntity<PessoaDTO> acessar(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
-		var pessoa = acessoServiceFacade.acessar(acessoResource);
+		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true){
 
-		pessoa.add(linkTo(methodOn(AcessoController.class)
-			.acessar(acessoResource))
-			.withSelfRel());
+			var pessoa = acessoServiceFacade.acessar(validacaoDTO.getAcessoResource());
 
-		return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
+			pessoa.add(linkTo(methodOn(AcessoController.class)
+				.acessar(validacaoDTO))
+				.withSelfRel());
 
+			return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
+
+		}
+
+		throw new Exception("Dados não conferem. Após 3 tentativas erradas, o Cpf/passaporte será bloqueado por 2 horas.");
 	}
 
 	@CrossOrigin("*")
@@ -103,6 +111,13 @@ public class AcessoController {
 	@PostMapping("/buscarDados")
 	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) throws Exception {
 
+		PessoaDTO pessoa = acessoServiceFacade.acessar(acessoResource);
+
+		if(pessoa == null || pessoa.getNome() == null){
+
+			return new ResponseEntity<>(pessoa, HttpStatus.ACCEPTED);
+		}
+
 		if(acessoServiceFacade.solicitanteBloqueado(acessoResource)) {
 
 			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
@@ -112,7 +127,7 @@ public class AcessoController {
 
 			var listaLicencaDTO = new ListaLicencaDTO();
 
-			var pessoa = acessoServiceFacade.acessar(acessoResource);
+			pessoa = acessoServiceFacade.acessar(acessoResource);
 
 			listaLicencaDTO.setPessoa(pessoa);
 
@@ -122,6 +137,7 @@ public class AcessoController {
 
 			return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
 		}
+
 	}
 
 

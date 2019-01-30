@@ -1,9 +1,11 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -31,10 +33,9 @@ public interface AcessoServiceFacade {
 	 * em {@link PessoaDTO} com o
 	 * {@link br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler}.
 	 *
-	 * @param resource O recurso de acesso do usuário.
 	 * @return A DTO de Pessoa.
 	 */
-	PessoaDTO acessar(AcessoResource resource);
+	PessoaDTO acessar(AcessoResource acessoResource);
 
 	List<Licenca> buscarLicencasPorPessoaDTO(PessoaDTO pessoa) throws Exception;
 

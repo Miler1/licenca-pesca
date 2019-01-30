@@ -19,6 +19,8 @@ public class RegistroResource {
 
 	private InformacaoComplementarDTO informacaoComplementar;
 
+	private String protocolo;
+
 	/**
 	 * Construtor.
 	 *
@@ -27,10 +29,11 @@ public class RegistroResource {
 	 */
 	@JsonCreator
 	public RegistroResource(@JsonProperty("pessoa") final PessoaDTO pessoa,
-	                        @JsonProperty("informacaoComplementar")
-	                        final InformacaoComplementarDTO informacaoComplementar) {
+	                        @JsonProperty("informacaoComplementar")final InformacaoComplementarDTO informacaoComplementar,
+							@JsonProperty("protocolo") final String protocolo) {
 		this.pessoa = pessoa;
 		this.informacaoComplementar = informacaoComplementar;
+		this.protocolo = protocolo;
 	}
 
 }

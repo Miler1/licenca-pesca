@@ -31,6 +31,10 @@ public class ProtocoloValidator implements Validator<String> {
 	public static final Pattern FORMATED = Pattern.compile("(LP[ER])-([\\d]{4})/([\\d]{2})");
 	public static final Pattern UNFORMATED = Pattern.compile("(LP[ER])([\\d]{4})([\\d]{2})");
 
+
+	public static final Pattern FORMATED_RENOVADO = Pattern.compile("(LP[ER])-([\\d]{4})/([\\d]{2})-([\\d]{2})");
+	public static final Pattern UNFORMATED_RENOVADO = Pattern.compile("(LP[ER])([\\d]{4})([\\d]{2})([\\d]{2})");
+
 	private static final Integer UNFORMATED_LENGTH = 9;
 
 	private final boolean isFormatted;

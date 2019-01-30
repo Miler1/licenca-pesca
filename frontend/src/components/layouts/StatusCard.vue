@@ -8,7 +8,8 @@ div
         | {{ $t(`${consultar_prefix}listaLicenca.situacao.invalido`) }}
     span.status-card.vencido(v-if="situacao === 'VENCIDO'")
         | {{ $t(`${consultar_prefix}listaLicenca.situacao.vencido`) }}
-
+    span.status-card.renovado(v-if="situacao === 'RENOVADO'")
+        | {{ $t(`${consultar_prefix}listaLicenca.situacao.renovado`) }}
 </template>
 
 <script>
@@ -63,6 +64,11 @@ export default {
 
 .ativo
     background-color: #00b33c
+    color: white
+    font-size: 13px
+
+.renovado
+    background-color: #3f51b5
     color: white
     font-size: 13px
 

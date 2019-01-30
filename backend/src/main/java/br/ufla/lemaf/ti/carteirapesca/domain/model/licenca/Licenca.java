@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.var;
 import org.apache.commons.lang3.Validate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -30,6 +32,9 @@ import java.util.GregorianCalendar;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "licenca")
 public class Licenca implements Entity<Licenca, Protocolo> {
 
+	@Autowired
+	private static StatusRepository statusRepository;
+
 	// Anos para a licença vencer após ativada
 	private static final Integer ANOS_VENCIMENTO_LICENCA = 1;
 	private static final Integer MES_ANTES_DE_VENCER = -1;
@@ -39,16 +44,16 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@AttributeOverride(name = "codigoFormatado", column = @Column(name = "tx_protocolo"))
 	private Protocolo protocolo;
 
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "id_modalidade")
+	@ManyToOne
+	@JoinColumn(name="id_modalidade")
 	private Modalidade modalidade;
 
 	@Column(name = "dt_criacao")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataCriacao;
 
-	@Column(name = "id_status")
-	@Enumerated(EnumType.ORDINAL)
+	@ManyToOne
+	@JoinColumn(name="id_status")
 	private Status status;
 
 	@Column(name = "dt_ativacao")
@@ -73,6 +78,11 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimentoBoleto;
 
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name="id_informacao_complementar")
+	private InformacaoComplementar informacaoComplementar;
+
+
 	/**
 	 * Construtor da Licenca de pesca.
 	 * <p>
@@ -86,7 +96,9 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 */
 	public Licenca(final Protocolo protocolo,
 	               final Modalidade modalidade,
-	               final String caminhoBoleto) {
+	               final String caminhoBoleto,
+				   final InformacaoComplementar informacaoComplementar,
+				   final Status status) {
 		try {
 			Validate.notNull(protocolo);
 			Validate.notNull(modalidade);
@@ -95,8 +107,9 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.protocolo = protocolo;
 			this.modalidade = modalidade;
 			this.dataCriacao = new Date();
-			this.status = Status.AGUARDANDO_PAGAMENTO_BOLETO;
+			this.status = status;
 			this.caminhoBoleto = caminhoBoleto;
+			this.informacaoComplementar = informacaoComplementar;
 			this.setDataVencimentoBoleto();
 
 		} catch (IllegalArgumentException | NullPointerException ex) {
@@ -105,15 +118,16 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		}
 	}
 
+
 	/**
 	 * Ativa Licença. Caso o Status seja AGUARDANDO será ativado.
 	 * Mas se o Status for ATIVO ou INVALIDADO a operação será anulada.
 	 */
 	public void ativar() {
-		if (!status.sameValueAs(Status.AGUARDANDO_PAGAMENTO_BOLETO)) {
-			throw new LicencaException("licenca.statusInvalido.ativar", status.name());
+		if (!status.getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id)) {
+			throw new LicencaException("licenca.statusInvalido.ativar", status.getDescricao());
 		}
-		status = Status.ATIVO;
+		status = statusRepository.findById(Status.StatusEnum.ATIVO.id).get();
 		dataAtivacao = new Date();
 	}
 
@@ -121,10 +135,10 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 * Invalidar uma licença. A mesma já não pode ser inválida.
 	 */
 	public void invalidar() {
-		if (status.sameValueAs(Status.INVALIDADO)) {
+		if (status.getId().equals(statusRepository.findById(Status.StatusEnum.INVALIDADO.id).get().getId())) {
 			throw new LicencaException("licenca.statusInvalido.invalidar");
 		}
-		status = Status.INVALIDADO;
+		status = statusRepository.findById(Status.StatusEnum.INVALIDADO.id).get();
 	}
 	
 	/**
@@ -142,6 +156,10 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		return dataVencimentoBoleto;
 	}
 
+	public InformacaoComplementar getInformacaoComplementar() {
+		return informacaoComplementar;
+	}
+
 	public void setDataVencimentoBoleto() {
 
 		Calendar calendar = Calendar.getInstance();
@@ -153,7 +171,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	}
 
 	public Boolean getPodeRenovar() {
-		if (!status.sameValueAs(Status.ATIVO) && !status.sameValueAs(Status.VENCIDO)) {
+		if (!status.getId().equals(Status.StatusEnum.ATIVO.id) && !status.getId().equals(Status.StatusEnum.VENCIDO.id)) {
 			return false;
 		}
 		var vencimento = this.getDataVencimento();

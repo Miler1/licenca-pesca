@@ -19,5 +19,7 @@ export const INFORMACOES_RULES = {
 
   tipoIsca: [required("tipoIsca", "change")],
   
-  agenciaTurismo: [required("agenciaTurismo", "change")]
+  agenciaTurismo: [required("agenciaTurismo", "change")],
+
+  peixeMaisPescado: [required("peixeMaisPescado", "change")]
 };

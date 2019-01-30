@@ -20,6 +20,8 @@ import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -64,7 +66,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 	public PessoaDTO acessar(final AcessoResource resource) {
 
 		val pessoaDTOAssembler = new PessoaDTOAssembler();
-		AcessoResource recursoValidado;
+		AcessoResource acessoResource;
 
 		// CPF e Passaporte não podem ser ambos nulos.
 		if (resource.getCpf() == null && resource.getPassaporte() == null)
@@ -77,19 +79,19 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		 * resource.
 		 */
 		if (resource.getCpf() != null) {
-			recursoValidado = new AcessoResource(
+			acessoResource = new AcessoResource(
 				CPFUtils.unformat(resource.getCpf()),
 				resource.getPassaporte()
 			);
 		} else {
-			recursoValidado = new AcessoResource(
+			acessoResource = new AcessoResource(
 				resource.getCpf(),
 				resource.getPassaporte()
 			);
 		}
 		// Converte dado Pessoa em DTO de Pessoa
 		return pessoaDTOAssembler.toDTO(
-			acessoApplication.identificar(recursoValidado)
+			acessoApplication.identificar(acessoResource)
 		);
 
 	}
@@ -109,6 +111,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		return solicitante.buscarTodasLicencas();
 	}
+
 
 	private Solicitante buscarSolicitante(PessoaDTO pessoaDTO) {
 
@@ -139,8 +142,6 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		Solicitante solicitante = buscarSolicitante(pessoaDTO);
 
-
-
 		if(solicitanteBloqueado(validacaoDTO.getAcessoResource())){
 
 			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
@@ -164,7 +165,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		} else {
 
-			solicitante.limpaDadosDesbloqueioSolicitante();
+			if(solicitante != null){
+
+				solicitante.limpaDadosDesbloqueioSolicitante();
+			}
 
 			return dadosValidos;
 		}
