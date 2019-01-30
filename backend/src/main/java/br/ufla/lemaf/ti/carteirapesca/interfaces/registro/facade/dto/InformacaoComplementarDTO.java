@@ -1,11 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
