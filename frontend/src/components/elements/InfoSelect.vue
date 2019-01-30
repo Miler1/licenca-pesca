@@ -1,8 +1,8 @@
 <template lang="pug">
 	#info-select
-		el-radio-group(v-model="model" v-if="!changeToSelect(list)")
+		el-radio-group(v-model="model" v-if="!changeToSelect(list)" @change="change")
 			el-radio-button(v-for="l in list" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
-		el-select(v-model="model" v-if="changeToSelect(list)" :loading="list.length === 0")
+		el-select(v-model="model" v-if="changeToSelect(list)" :loading="list.length === 0" @change="change")
 			el-option(v-for="l in list" :key="l.cod" :value="l.cod" :label="localizeField(l)")
 
 </template>
@@ -36,6 +36,9 @@ export default {
 
     changeToSelect(list) {
       return list.length > 4 || list.length === 0;
+    },
+    change(change){
+      this.$emit("change", change);
     }
   }
 };

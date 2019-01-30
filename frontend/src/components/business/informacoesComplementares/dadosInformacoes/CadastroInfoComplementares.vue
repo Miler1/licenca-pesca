@@ -9,10 +9,10 @@
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)" prop="modalidadePesca")
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePescaEsportiva`) }}
 						h5.label-notes {{ $t(`${cadastrar_info_prefix}notas.modalidadePescaRecreativa`) }}
-						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca") 
+						info-select(@value="informacoesComplementares.modalidadePesca = $event" :model="informacoesComplementares.modalidadePesca" :list="informacoesComplementaresResource.modalidadePesca" @change="verificarModalidadeParaDefinirIsca") 
 						h5.label-notes-valor {{valorCarteira()}}		
 				el-col(:span="24")
-
+					| {{informacoesComplementares.modalidadePesca}}
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localizacaoPreferencialPesca`)" prop="localizacaoPreferencialPesca")
 						info-select(@value="informacoesComplementares.localizacaoPreferencialPesca = $event" :model="informacoesComplementares.localizacaoPreferencialPesca" :list="informacoesComplementaresResource.localizacaoPreferencialPesca")
 
@@ -50,8 +50,9 @@
 						info-select(@value="informacoesComplementares.materialPesca = $event" :model="informacoesComplementares.materialPesca" :list="informacoesComplementaresResource.materialPesca")
 
 				el-col(:span="24")
+					| {{informacoesComplementares.tipoIsca}}
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
-						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca"  :list="informacoesComplementaresResource.tipoIsca")
+						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" )
 
 				el-col(:span="24")
 
@@ -79,6 +80,7 @@ import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registr
 import { INFORMACOES_RULES } from "../../../../utils/validations/informacoes/informacoes_rules";
 import { SEND_INFORMACOES_COMPLEMENTARES } from "../../../../store/actions.type";
 import { returnStatement } from 'babel-types';
+import { numero } from '../../../../utils/validations/pessoa/pessoa_validations';
 
 export default {
   name: "CadastroInfoComplementares",
@@ -147,6 +149,14 @@ export default {
 			this.$store.dispatch(
 				SEND_INFORMACOES_COMPLEMENTARES, this.informacoesComplementares
 			);
+		},
+		verificarModalidadeParaDefinirIsca() {
+			if(this.informacoesComplementares.modalidadePesca == 0){
+				this.informacoesComplementares.tipoIsca = 1;
+				this.informacoesComplementares.tipoIsca.setAttribute("disable", "");
+			}else {
+				this.informacoesComplementares.tipoIsca = null;
+			}
 		},
 		getValid() {
 			return this.valid;

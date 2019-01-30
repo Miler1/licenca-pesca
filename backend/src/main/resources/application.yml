@@ -36,8 +36,8 @@ spring:
         ddl-auto: validate
 
   flyway:
-    enabled: true
-    baseline-on-migrate: true
+    enabled: false
+    baseline-on-migrate: false
 
   jackson:
     time-zone: UTC
@@ -50,13 +50,13 @@ spring:
 #      client-secret: 28d98d105cfcbba8d3be86447c9e5c28a932caa65d2a8c38e1d69cb7acb8f013c4495c9f31e6c46f4b87c08db7ddcf18d11203180a5b037d9fabcd9b898a38a6
 
 #       Módulo - LP0 - Gustavo
-      client-id: b7613a4152fbb9dfe6f8d526a5ec5e7eab59f8a169a1fdf57ba3ff234fd76928c2a25b5e39852e5e031030f97d11ba32b959872a9f4c78b2bac7f861de368d49
-      client-secret: 89a87e6d9264e7c1c58a50afb9498b3c6b12b31bb260894001655f07c9840b4fec958291eaead52acf2160bc6b9f32bd5cbf495af3adfea3716f4d0bbbc0a245
+#      client-id: b7613a4152fbb9dfe6f8d526a5ec5e7eab59f8a169a1fdf57ba3ff234fd76928c2a25b5e39852e5e031030f97d11ba32b959872a9f4c78b2bac7f861de368d49
+#      client-secret: 89a87e6d9264e7c1c58a50afb9498b3c6b12b31bb260894001655f07c9840b4fec958291eaead52acf2160bc6b9f32bd5cbf495af3adfea3716f4d0bbbc0a245
 
 
 #       Módulo - LP1 - Joyce
-#      client-id: 398a20646b37c8f9ad8a4c1b53f7108e2b04c8d524b427d512ba2d99c3d002ac2b499098228200971a4e14fc0f1cdba67283bfef8154e7286d5882ee4266e3ce
-#      client-secret: f463b60e0abfe70b31fe316cd548f7ca019115f1c8969bdfd1f57e3ca0708d5faaf7a0bbb0ede643bb31f7c442c5392eb801d792ebec0fddfa3e127b84aa2fdb
+      client-id: 398a20646b37c8f9ad8a4c1b53f7108e2b04c8d524b427d512ba2d99c3d002ac2b499098228200971a4e14fc0f1cdba67283bfef8154e7286d5882ee4266e3ce
+      client-secret: f463b60e0abfe70b31fe316cd548f7ca019115f1c8969bdfd1f57e3ca0708d5faaf7a0bbb0ede643bb31f7c442c5392eb801d792ebec0fddfa3e127b84aa2fdb
 
       # Módulo - LP1 - Hiago
 #      client-id: 5835eed6bddf39b6a6844b5f9645e360b5c003bb9d65be17ef7cd5863f713b0e7bcfafaa691e4482af6a20c775c19dadcf22eb1e1edc0617c2ac06605e047b98
