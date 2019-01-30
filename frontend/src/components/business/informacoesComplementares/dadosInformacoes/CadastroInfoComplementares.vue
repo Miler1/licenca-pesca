@@ -52,7 +52,7 @@
 				el-col(:span="24")
 					| {{informacoesComplementares.tipoIsca}}
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
-						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" )
+						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" :desabilitar="desabilitar" )
 
 				el-col(:span="24")
 
@@ -87,6 +87,7 @@ export default {
 	components: { InfoSelect, money: Money },
   data() {
     return {
+			tipoIscaDisabled: false,
 			money: {
 				decimal: ",",
 				thousands: ".",
@@ -127,7 +128,7 @@ export default {
 				x: false,
 				y: true
 			},
-
+			desabilitar: false
 		};
   },
 
@@ -151,20 +152,25 @@ export default {
 			);
 		},
 		verificarModalidadeParaDefinirIsca() {
-			if(this.informacoesComplementares.modalidadePesca == 0){
+			if (this.informacoesComplementares.modalidadePesca == 0) {
 				this.informacoesComplementares.tipoIsca = 1;
-				this.informacoesComplementares.tipoIsca.setAttribute("disable", "");
+				debugger
+				this.tipoIscaDisabled = true;
+				this.desabilitar = true;
+				// document.getElementById('tipoIsca').disabled = true;
+				// this.informacoesComplementares.tipoIsca.setAttribute("disable", "");
 			}else {
 				this.informacoesComplementares.tipoIsca = null;
+				this.desabilitar = false;
 			}
 		},
 		getValid() {
 			return this.valid;
 		},
 		valorCarteira(){
-			if(this.informacoesComplementares.modalidadePesca == 0){
+			if (this.informacoesComplementares.modalidadePesca == 0) {
 				return "Valor total a pagar: R$ 41.21"
-			}else if(this.informacoesComplementares.modalidadePesca == 1){
+			} else if (this.informacoesComplementares.modalidadePesca == 1) {
 				return "Valor total a pagar: R$ 57.21"
 			}
 			return "Selecione uma modalidade para ver o valor da respectiva carteira"
