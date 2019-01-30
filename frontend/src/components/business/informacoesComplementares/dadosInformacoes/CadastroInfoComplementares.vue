@@ -52,7 +52,7 @@
 				el-col(:span="24")
 					| {{informacoesComplementares.tipoIsca}}
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
-						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" :desabilitar="desabilitar" )
+						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" :tipoIscaDisabled="tipoIscaDisabled" )
 
 				el-col(:span="24")
 
@@ -87,7 +87,6 @@ export default {
 	components: { InfoSelect, money: Money },
   data() {
     return {
-			tipoIscaDisabled: false,
 			money: {
 				decimal: ",",
 				thousands: ".",
@@ -128,7 +127,7 @@ export default {
 				x: false,
 				y: true
 			},
-			desabilitar: false
+			tipoIscaDisabled: false
 		};
   },
 
@@ -155,13 +154,13 @@ export default {
 			if (this.informacoesComplementares.modalidadePesca == 0) {
 				this.informacoesComplementares.tipoIsca = 1;
 				debugger
+				// this.tipoIscaDisabled = true;
 				this.tipoIscaDisabled = true;
-				this.desabilitar = true;
 				// document.getElementById('tipoIsca').disabled = true;
 				// this.informacoesComplementares.tipoIsca.setAttribute("disable", "");
 			}else {
 				this.informacoesComplementares.tipoIsca = null;
-				this.desabilitar = false;
+				this.tipoIscaDisabled = false;
 			}
 		},
 		getValid() {
