@@ -127,6 +127,8 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 		Titulo titulo = new Titulo(beneficiarioTitulo, especieDocumento, pagadorTitulo, getValorTitulo(modalidade));
 
+		titulo.setNossoNumero(tituloRepository.count());
+
 		tituloRepository.save(titulo);
 
 		return titulo;
@@ -183,7 +185,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			.comBeneficiario(montarBeneficiario(titulo))
 			.comPagador(montarPagador(titulo))
 			.comValorBoleto(titulo.getValor().setScale(2, BigDecimal.ROUND_HALF_EVEN))
-//			.comNumeroDoDocumento(protocolo.getCodigoFormatado())
+			.comNumeroDoDocumento(titulo.getNossoNumero())
 			.comEspecieDocumento(titulo.getEspecieDocumento().getCodigo())
 			.comInstrucoes(titulo.getInstrucoes())
 			.comLocaisDePagamento(titulo.getLocalPagamento());
@@ -198,7 +200,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 	private Datas montarDatas(Titulo titulo) {
 
 		return Datas.novasDatas()
-			.comDocumento(titulo.getDataCriacao().getDayOfMonth(), titulo.getDataCriacao().getMonthValue(), titulo.getDataCriacao().getYear())
+			.comDocumento(titulo.getDataEmissao().getDayOfMonth(), titulo.getDataEmissao().getMonthValue(), titulo.getDataEmissao().getYear())
 			.comProcessamento(titulo.getDataProcessamento().getDayOfMonth(), titulo.getDataProcessamento().getMonthValue(), titulo.getDataProcessamento().getYear())
 			.comVencimento(titulo.getDataVencimento().getDayOfMonth(), titulo.getDataVencimento().getMonthValue(), titulo.getDataVencimento().getYear());
 	}

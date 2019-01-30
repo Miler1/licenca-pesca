@@ -124,7 +124,6 @@ public class AcessoController {
 
 		} else {
 
-
 			var listaLicencaDTO = new ListaLicencaDTO();
 
 			pessoa = acessoServiceFacade.acessar(acessoResource);

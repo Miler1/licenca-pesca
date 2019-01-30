@@ -4,6 +4,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,6 +17,9 @@ public class EspecieDocumento implements Entity<EspecieDocumento, Integer> {
 	private Integer id;
 
 	private String codigo;
+
+	@Column(name = "codigo_remessa")
+	private String codigoRemessa;
 
 	private String descricao;
 

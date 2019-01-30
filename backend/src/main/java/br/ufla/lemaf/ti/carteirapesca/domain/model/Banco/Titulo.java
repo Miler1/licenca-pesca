@@ -1,8 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -36,8 +38,8 @@ public class Titulo implements Entity<Titulo, Integer> {
 
 	private BigDecimal valor;
 
-	@Column(name = "dt_criacao")
-	private LocalDate dataCriacao;
+	@Column(name = "dt_emissao")
+	private LocalDate dataEmissao;
 
 	@Column(name = "dt_processamento")
 	private LocalDate dataProcessamento;
@@ -81,16 +83,18 @@ public class Titulo implements Entity<Titulo, Integer> {
 
 		this.beneficiario = beneficiario;
 		this.pagador = pagador;
-
 		this.valor = valor.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-		this.dataCriacao = LocalDate.now();
+		this.dataEmissao = LocalDate.now();
 		this.dataProcessamento = LocalDate.now();
 		this.dataVencimento = LocalDate.now().plusMonths(QTD_MESES_VENCIMENTO_TITULO_APOS_EMISSAO);
 		this.especieDocumento = especieDocumento;
-		this.nossoNumero = String.format("%1$11s", "");
 		this.setInstrucoes();
 		this.setLocalPagamento();
 
+	}
+
+	public void setNossoNumero(Long qtdTitulosCadastrados) {
+		this.nossoNumero = Long.toString(qtdTitulosCadastrados + 1);
 	}
 
 	private void setInstrucoes() {

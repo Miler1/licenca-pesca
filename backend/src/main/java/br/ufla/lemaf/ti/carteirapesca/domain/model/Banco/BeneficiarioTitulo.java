@@ -22,6 +22,8 @@ public class BeneficiarioTitulo implements Entity<BeneficiarioTitulo, Integer> {
 
 	private String nome;
 
+	private String sigla;
+
 	@Column(name = "cpf_cnpj")
 	private String cpfCnpj;
 
@@ -45,6 +47,12 @@ public class BeneficiarioTitulo implements Entity<BeneficiarioTitulo, Integer> {
 
 	@Column(name = "digito_agencia")
 	private String digitoAgencia;
+
+	@Column(name = "conta_corrente")
+	private String contaCorrente;
+
+	@Column(name = "digito_conta_corrente")
+	private String digitoContaCorrente;
 
 	private String convenio;
 

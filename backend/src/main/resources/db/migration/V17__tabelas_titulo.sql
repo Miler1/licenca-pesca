@@ -49,13 +49,16 @@ CREATE TABLE carteira_pesca.beneficiario_titulo
 (
   id SERIAL NOT NULL,
   nome CHARACTER VARYING(200) NOT NULL,
+  sigla CHARACTER VARYING(10) NULL,
   cpf_cnpj CHARACTER VARYING(14) NOT NULL,
   id_banco INTEGER NOT NULL,
   id_endereco INTEGER NOT NULL,
   codigo_beneficiario CHARACTER VARYING(10) NOT NULL,
   digito_codigo_beneficiario CHARACTER VARYING(2) NOT NULL,
   agencia CHARACTER VARYING(5) NOT NULL,
-  digito_agencia CHARACTER VARYING(2) NOT NULL,
+  digito_agencia CHARACTER VARYING(1) NOT NULL,
+  conta_corrente CHARACTER VARYING(5) NOT NULL,
+  digito_conta_corrente CHARACTER VARYING(1) NOT NULL,
   convenio CHARACTER VARYING(10) NOT NULL,
   carteira CHARACTER VARYING(5) NOT NULL,
   fl_ativo BOOLEAN NOT NULL DEFAULT TRUE,
@@ -77,7 +80,8 @@ GRANT ALL ON TABLE carteira_pesca.beneficiario_titulo TO postgres;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE carteira_pesca.beneficiario_titulo TO carteira_pesca;
 
 COMMENT ON TABLE carteira_pesca.beneficiario_titulo IS 'Entidade responsável por armazenar os dados do beneficiario do título.';
-COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.nome IS 'Nome o beneficiário.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.nome IS 'Nome do beneficiário.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.sigla IS 'sigla do nome beneficiário.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.cpf_cnpj IS 'CPF/CNPJ do beneficário (sem mascara).';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_banco IS 'Identifica a qual banco está vinculado a conta.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_endereco IS 'Identifica a qual o endereço do beneficiário.';
@@ -94,6 +98,7 @@ CREATE TABLE carteira_pesca.especie_documento
 (
   id INTEGER NOT NULL,
   codigo CHARACTER VARYING(10) NOT NULL,
+  codigo_remessa CHARACTER VARYING(2) NOT NULL,
   descricao CHARACTER VARYING(100) NOT NULL,
 
   CONSTRAINT pk_especie_documento PRIMARY KEY(id)
@@ -141,13 +146,13 @@ CREATE TABLE carteira_pesca.titulo
   id_pagador INTEGER NOT NULL,
   id_especie_documento INTEGER NOT NULL,
   valor DOUBLE PRECISION NOT NULL,
-  dt_criacao DATE NOT NULL,
+  dt_emissao DATE NOT NULL,
   dt_processamento DATE NOT NULL,
   dt_vencimento DATE NOT NULL,
   instrucoes TEXT NULL,
   local_pagamento TEXT NULL,
   fl_enviado_banco BOOLEAN NOT NULL DEFAULT FALSE,
-  nosso_numero CHARACTER VARYING(20) NOT NULL,
+  nosso_numero CHARACTER VARYING(11) NOT NULL,
 
   CONSTRAINT pk_titulo PRIMARY KEY(id),
 
@@ -165,7 +170,7 @@ COMMENT ON TABLE carteira_pesca.titulo IS 'Entidade responsável por armazenar o
 COMMENT ON COLUMN carteira_pesca.titulo.id_beneficiario IS 'Beneficiário do título.';
 COMMENT ON COLUMN carteira_pesca.titulo.id_pagador IS 'Responsável pela pagamento do titulo.';
 COMMENT ON COLUMN carteira_pesca.titulo.id_especie_documento IS 'Espécie de documento.';
-COMMENT ON COLUMN carteira_pesca.titulo.dt_criacao IS 'Data que o titulo foi gerado.';
+COMMENT ON COLUMN carteira_pesca.titulo.dt_emissao IS 'Data que o titulo foi gerado.';
 COMMENT ON COLUMN carteira_pesca.titulo.dt_processamento IS 'Data que o titulo foi processado pelo banco.';
 COMMENT ON COLUMN carteira_pesca.titulo.dt_vencimento IS 'Data de vencimento.';
 COMMENT ON COLUMN carteira_pesca.titulo.instrucoes IS 'Instruções de pagamento.';
@@ -177,17 +182,16 @@ INSERT INTO carteira_pesca.banco (id, codigo, nome) VALUES (1, '237', 'Banco Bra
 
 INSERT INTO carteira_pesca.endereco(logradouro, numero, complemento, bairro, cep, municipio, estado) VALUES ('Av Mário Ypiranga', '3280', NULL, 'Parque Dez de Novembro', '69050-030', 'Manaus', 'AM');
 
-INSERT INTO carteira_pesca.beneficiario_titulo (nome, cpf_cnpj, id_banco, id_endereco, codigo_beneficiario, digito_codigo_beneficiario, agencia, digito_agencia, convenio, carteira, fl_ativo)
-  VALUES ('Instituto de Proteção Ambiental do Amazonas', '04624888000194', 1, 1, '16065', '2', '3739', '7', '4928031', '09', TRUE);
+INSERT INTO carteira_pesca.beneficiario_titulo (nome, sigla, cpf_cnpj, id_banco, id_endereco, codigo_beneficiario, digito_codigo_beneficiario, agencia, digito_agencia, conta_corrente, digito_conta_corrente, convenio, carteira, fl_ativo)
+  VALUES ('Instituto de Proteção Ambiental do Amazonas', 'IPAAM', '04624888000194', 1, 1, '16065', '2', '3739', '7', '16065', '2', '4928031', '09', TRUE);
 
-
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (1, 'DM', 'Duplicata Mercantil');
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (2, 'NP', 'Nota Promissória');
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (3, 'NS', 'Nota de Seguro');
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (4, 'CS', 'Cobrança Seriada');
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (5, 'REC', 'Recibo');
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (6, 'LC', 'Letras de Câmbio');
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (7, 'ND', 'Nota de Débito');
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (8, 'NS', 'Duplicata de Serviços');
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (9, 'CC', 'Cartão de crédito');
-INSERT INTO carteira_pesca.especie_documento (id, codigo, descricao) VALUES (10, 'OUTROS', 'Outros');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (1, 'DM', '01', 'Duplicata Mercantil');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (2, 'NP', '02','Nota Promissória');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (3, 'NS', '03','Nota de Seguro');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (4, 'CS', '04','Cobrança Seriada');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (5, 'REC', '05', 'Recibo');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (6, 'LC', '10', 'Letras de Câmbio');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (7, 'ND', '11', 'Nota de Débito');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (8, 'NS', '12', 'Duplicata de Serviços');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (9, 'CC', '31','Cartão de crédito');
+INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (10, 'OUTROS', '99', 'Outros');

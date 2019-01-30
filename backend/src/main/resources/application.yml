@@ -69,7 +69,9 @@ spring:
 
   carteira-pesca:
     base-path: arquivos/carteira/
-    path-boleto: arquivos/boleto/
+    path-arquivo-boleto: arquivos/boleto/
+    path-arquivo-remessa: arquivos/remessa/
+
 
   arquivos:
     base-path-arquivos-dados: src/main/resources/gerador/
