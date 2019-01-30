@@ -153,11 +153,7 @@ export default {
 		verificarModalidadeParaDefinirIsca() {
 			if (this.informacoesComplementares.modalidadePesca == 0) {
 				this.informacoesComplementares.tipoIsca = 1;
-				debugger
-				// this.tipoIscaDisabled = true;
 				this.tipoIscaDisabled = true;
-				// document.getElementById('tipoIsca').disabled = true;
-				// this.informacoesComplementares.tipoIsca.setAttribute("disable", "");
 			}else {
 				this.informacoesComplementares.tipoIsca = null;
 				this.tipoIscaDisabled = false;
