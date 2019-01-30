@@ -1,5 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -11,11 +13,15 @@ import lombok.Setter;
 @Setter
 public class AcessoResource {
 
+	private ValidacaoDTO validacaoDTO;
 
 	private String cpf;
 
 	private String passaporte;
 
+	public ValidacaoDTO getValidacaoDTO() {
+		return validacaoDTO;
+	}
 
 	/**
 	 * Construtor.

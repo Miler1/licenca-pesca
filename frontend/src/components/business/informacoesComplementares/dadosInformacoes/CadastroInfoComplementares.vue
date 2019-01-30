@@ -74,6 +74,7 @@ import InfoSelect from "../../../elements/InfoSelect";
 import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registrar/informacoes/informacoes";
 import { INFORMACOES_RULES } from "../../../../utils/validations/informacoes/informacoes_rules";
 import { SEND_INFORMACOES_COMPLEMENTARES } from "../../../../store/actions.type";
+import { returnStatement } from 'babel-types';
 
 export default {
   name: "CadastroInfoComplementares",
@@ -153,7 +154,6 @@ export default {
 			}
 			return "Selecione uma modalidade para ver o valor da respectiva carteira"
 		},
-
     localizeField(field) {
       switch (this.$i18n.locale) {
         case "EN":
@@ -171,11 +171,9 @@ export default {
       return field.length > 4;
     }
   },
-
   created() {
     this.instantiate();
-  },
-
+	},
   beforeDestroy() {
 		this.enviarParaStore();
   }
@@ -197,6 +195,7 @@ export default {
 			padding: 5px
 			padding-top: 20px
 			height: 20px
+			font-size: 14px;
 
 		.money-input
 			width: 250px

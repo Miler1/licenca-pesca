@@ -57,7 +57,7 @@ public class RegistroController {
 	@CrossOrigin("*")
 	@PostMapping("/registrar")
 	public ResponseEntity<ProtocoloDTO> registrar(
-		@RequestBody final RegistroResource registroResource) {
+		@RequestBody final RegistroResource registroResource) throws Exception {
 
 		var protocoloLicenca = registroServiceFacade
 			.registrar(registroResource);
