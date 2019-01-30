@@ -217,8 +217,7 @@ export default {
 			padding-top: 20px
 			height: 20px
 			font-size: 14px;
-		
-		.el-radio-button__orig-radio:disabled:checked
+		.el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner
 			background-color: #409EFF
 			color: white
 

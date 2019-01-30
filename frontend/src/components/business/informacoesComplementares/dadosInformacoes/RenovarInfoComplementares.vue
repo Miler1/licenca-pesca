@@ -231,7 +231,7 @@ export default {
         .money-input
             width: 250px
         
-        .el-radio-button__orig-radio:disabled:checked
+        .el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner
             background-color: #409EFF
             color: white
 </style>
