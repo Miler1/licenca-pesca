@@ -12,16 +12,19 @@ export default {
 
   components: { CadastroInfoComplementares },
   methods: {
-	  validate() {
-			this.$refs.cadastroInfoComplementares.validate();
-			return this.$refs.cadastroInfoComplementares.getValid();
-		},
-		enviarParaStore() {
-			this.$refs.cadastroInfoComplementares.enviarParaStore();
-		},
-		scroll() {
-			this.$refs.cadastroInfoComplementares.scroll();
-		}
+	validate() {
+		this.$refs.cadastroInfoComplementares.validate();
+		return this.$refs.cadastroInfoComplementares.getValid();
+	},
+	enviarParaStore() {
+		this.$refs.cadastroInfoComplementares.enviarParaStore();
+	},
+	scroll() {
+		this.$refs.cadastroInfoComplementares.scroll();
+	},
+	setInformacao() {
+		this.$refs.cadastroInfoComplementares.setInformacao();
+	}
   }
 };
 </script>

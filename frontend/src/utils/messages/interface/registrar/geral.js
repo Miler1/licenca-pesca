@@ -7,6 +7,7 @@ export const CONSULTAR_GERAL_MESSAGES_PREFIX = "interface.registrar.consultar.";
 const GERAL = {
   geral: {
     titulo: ["Registrar Licença de Pesca Amadora (Esportiva ou Recreativa)", "Register Fishing License"],
+    tituloRenovar: ["Registrar Licença de Pesca Amadora (Esportiva ou Recreativa)", "Register Fishing License"],
     steps: {
       indices: {
         identificacao: ["Identificação", "Identification"],
@@ -38,7 +39,8 @@ const GERAL = {
         aguardandoBoleto: ["Aguardando pagamento do boleto", "Waiting for payment of the bank slip"],
         invalido: ["Inválido", "Invalid"],
         ativo: ["Ativo", "Active"],
-        vencido: ["Vencido", "Expired"]
+        vencido: ["Vencido", "Expired"],
+        renovado: ["Renovado", "Renewed"]
       },
       acoesOpcoes:{
         gerarBoleto: ["Gerar boleto", "Generate bank slip"],

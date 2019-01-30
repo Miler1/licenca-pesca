@@ -165,7 +165,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		} else {
 
-			solicitante.limpaDadosDesbloqueioSolicitante();
+			if(solicitante != null){
+
+				solicitante.limpaDadosDesbloqueioSolicitante();
+			}
 
 			return dadosValidos;
 		}

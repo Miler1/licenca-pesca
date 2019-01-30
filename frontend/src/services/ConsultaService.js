@@ -9,6 +9,9 @@ const ConsultaService = {
   consultar: protocolo =>
     ApiService.query(`${Properties.BASE_URL}/api/consultar`, { protocolo }),
 
+  
+  consultarLicenca: protocolo =>
+    ApiService.query(`${Properties.BASE_URL}/api/consultarCarteira`, {protocolo}),
   /**
    * Serviço para download do boleto
    * dado o protocolo.

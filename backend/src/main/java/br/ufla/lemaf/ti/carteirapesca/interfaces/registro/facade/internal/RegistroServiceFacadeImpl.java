@@ -1,11 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.internal;
 
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoController;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.RegistroServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.*;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
@@ -64,7 +62,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		return assembler.toDTO(registroApplication.registrar(
 			new RegistroResource(
 				pessoaValidada,
-				resource.getInformacaoComplementar()
+				resource.getInformacaoComplementar(), null
 			)));
 
 	}
@@ -73,6 +71,23 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	public void atualizarCondicaoVencimento() {
 		licencaRepository.alterarVencimento(new Date());
 		return ;
+	}
+
+	@Override
+	public ProtocoloDTO renovarLicenca(RegistroResource resource) {
+		val assembler = new ProtocoloDTOAssembler();
+
+		validateResource(resource);
+
+		val pessoaValidada = new PessoaDTO(resource.getPessoa());
+
+
+		return assembler.toDTO(registroApplication.renovarLicenca(
+			new RegistroResource(
+				pessoaValidada,
+				resource.getInformacaoComplementar(), resource.getProtocolo()
+			),resource.getProtocolo()));
+
 	}
 
 	/**
@@ -242,6 +257,8 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		if (Validate.isNull(info.getAgenciaTurismo()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "agência de turismo"));
 
+		if (Validate.isNull(info.getPeixeMaisPescado()))
+			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "peixe mais pescado"));
 		return camposInvalidos;
 
 	}

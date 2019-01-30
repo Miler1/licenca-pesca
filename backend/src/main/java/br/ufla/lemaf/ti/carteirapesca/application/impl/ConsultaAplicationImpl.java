@@ -2,8 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;

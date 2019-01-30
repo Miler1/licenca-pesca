@@ -2,14 +2,21 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.web;
 
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoController;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.ConsultaServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.CarteiraDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.LicencaPescaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroController;
@@ -58,6 +65,8 @@ public class ConsultaController {
 	@Autowired
 	private ProtocoloBuilder protocoloBuilder;
 
+	@Autowired
+	private AcessoServiceFacade acessoServiceFacade;
 
 	@Autowired
 	private RegistroApplication registroApplication;
@@ -96,6 +105,44 @@ public class ConsultaController {
 
 	}
 
+	@CrossOrigin("*")
+	@GetMapping("/consultarCarteira")
+	public ResponseEntity<CarteiraDTO> consultarCarteira(@RequestParam final String protocolo) {
+
+		CarteiraDTO carteiraDTO = new CarteiraDTO();
+
+		var licenca = facade.consultar(protocolo);
+
+
+		carteiraDTO.setLicenca(licenca);
+
+
+		var  cpf = "";
+		var passaporte = "";
+		if(licenca.solicitante().getIdentity().cpf() != null){
+			cpf = licenca.solicitante().getIdentity().cpf().getNumero();
+		}
+		if(licenca.solicitante().getIdentity().passaporte() != null){
+			passaporte = licenca.solicitante().getIdentity().passaporte().getNumero();
+		}
+
+		AcessoResource acessoResource = new AcessoResource(cpf, passaporte);
+
+		var pessoa = acessoServiceFacade.acessar(acessoResource);
+
+		pessoa.add(linkTo(methodOn(AcessoController.class)
+			.acessar(acessoResource))
+			.withSelfRel());
+
+		carteiraDTO.setPessoaDTO(pessoa);
+
+		if(licenca == null) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(carteiraDTO, HttpStatus.OK);
+	}
+
 	/**
 	 * Download do boleto.
 	 *
@@ -113,7 +160,7 @@ public class ConsultaController {
 			String caminhoBoleto;
 
 			if(licenca.getDataVencimentoBoleto().compareTo(new Date()) != -1) {
-				caminhoBoleto = facade.buscarCaminho(protocolo, Constants.BOLETO);
+				caminhoBoleto = licenca.getCaminhoBoleto();
 			} else {
 				caminhoBoleto = registroApplication.regerarBoleto(licenca);
 			}
@@ -147,7 +194,15 @@ public class ConsultaController {
 
 		try {
 
-			var protocoloObj = new Protocolo(protocolo);
+			Protocolo protocoloObj;
+			if (protocolo.length() > 9) {
+
+				var formatterNovo = new ProtocoloFormatter("$1-$2/$3-$4", ProtocoloValidator.FORMATED_RENOVADO, "$1$2$3$4", ProtocoloValidator.UNFORMATED_RENOVADO);
+				protocoloObj = new Protocolo(protocolo, formatterNovo);
+			} else {
+				protocoloObj = new Protocolo(protocolo);
+			}
+
 			var licenca = consultaApplication.consulta(protocoloObj);
 			var solicitante = licenca.solicitante();
 			var pessoa = registroApplication.buscarDadosSolicitante(solicitante);

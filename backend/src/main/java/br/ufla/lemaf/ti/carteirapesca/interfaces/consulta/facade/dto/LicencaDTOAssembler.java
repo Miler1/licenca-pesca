@@ -23,8 +23,8 @@ public class LicencaDTOAssembler {
 
 		return new LicencaDTO(
 			licenca.protocolo().getCodigoFormatado(),
-			licenca.modalidade().ordinal(),
-			licenca.status().ordinal(),
+			licenca.modalidade().getId(),
+			licenca.status().getId(),
 			setDate(licenca.dataCriacao()),
 			setDate(licenca.dataAtivacao())
 		);

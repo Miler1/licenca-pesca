@@ -6,6 +6,7 @@ import {
   SET_MODALIDADE_PESCA,
   SET_MUNICIPIOS, SET_MUNICIPIOS_CORRESPONDENCIA, SET_PROTOCOLO,
   SET_UFS,
+  SET_REGISTRO_SOLICITANTE,
   CLEAN_REGISTRO
 } from "../mutations.type";
 import {
@@ -15,7 +16,8 @@ import {
   FETCH_UFS,
   REGISTRAR,
   SEND_INFORMACOES_COMPLEMENTARES,
-  SEND_SOLICITANTE
+  SEND_SOLICITANTE,
+  RENOVAR_CARTEIRA
 } from "../actions.type";
 import AcessoService from "../../services/AcessoService";
 import {
@@ -26,7 +28,8 @@ import {
   MATERIAL_PESCA_MOCK,
   MODALIDADE_PESCA_MOCK,
   RENDA_MENSAL_MOCK,
-  TIPO_ISCA_MOCK
+  TIPO_ISCA_MOCK,
+  PEIXE_MAIS_PESCADO
 } from "../../utils/layout/mockData";
 import InformacoesComplementaresService from "../../services/InformacoesComplementaresService";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
@@ -46,7 +49,8 @@ const INITIAL_STATE = {
     localPesca: LOCAL_PESCA_MOCK,
     materialPesca: MATERIAL_PESCA_MOCK,
     tipoIsca: TIPO_ISCA_MOCK,
-    agenciaTurismo: AGENCIA_TURISMO_MOCK
+    agenciaTurismo: AGENCIA_TURISMO_MOCK,
+    peixeMaisPescado: PEIXE_MAIS_PESCADO
   },
   registroResource: {
     informacoesComplementares: InformacoesComplementaresDTO,
@@ -104,6 +108,24 @@ export const actions = {
       commit(SET_PROTOCOLO, data.numero);
       Vue.prototype.$message.success(
         `A licença ${data.numero} foi criada com sucesso.`
+      );
+      return data.numero;
+    }).catch(error => {
+      Vue.prototype.$message.error(
+        `Não foi possível conectar ao servidor.`
+      );
+    });
+  },
+
+  [RENOVAR_CARTEIRA]: ({commit}, registroResource) => {
+    return RegistroService.renovar({
+      pessoa: registroResource.solicitante,
+      informacaoComplementar: registroResource.informacoesComplementares,
+      protocolo: registroResource.protocolo
+    }).then(({ data }) => {
+      commit(SET_PROTOCOLO, data.numero);
+      Vue.prototype.$message.success(
+        `A licença ${data.numero} foi renovada com sucesso.`
       );
       return data.numero;
     }).catch(error => {
@@ -200,6 +222,11 @@ export const mutations = {
   [CADASTRAR_SOLICITANTE]: (state, solicitante) => {
     // delete solicitante.confirmarEmail;
     state.registroResource.solicitante = toSolicitanteDTO(solicitante);
+  },
+
+  [SET_REGISTRO_SOLICITANTE]: (state, solicitante) => {
+
+    state.registroResource.solicitante = solicitante;
   },
 
   [CLEAN_REGISTRO]: (state) => {

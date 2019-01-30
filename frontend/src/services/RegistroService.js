@@ -12,6 +12,10 @@ const RegistroService = {
    */
   registrar: registroResource => {
     return ApiService.postWithBlock(`${Properties.BASE_URL}/api/registrar`, registroResource);
+  },
+  
+  renovar: registroResource => {
+    return ApiService.postWithBlock(`${Properties.BASE_URL}/api/renovar`, registroResource);
   }
 };
 

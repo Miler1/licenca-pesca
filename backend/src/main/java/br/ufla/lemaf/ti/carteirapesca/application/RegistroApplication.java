@@ -33,4 +33,7 @@ public interface RegistroApplication {
 	Pessoa buscarDadosSolicitante(Solicitante solicitante);
 
 	String regerarBoleto(Licenca licenca);
+
+	Protocolo renovarLicenca(RegistroResource resource, String protocolo);
+
 }

@@ -1,9 +1,11 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
@@ -15,6 +17,7 @@ import org.springframework.hateoas.ResourceSupport;
 @Getter
 @EqualsAndHashCode(callSuper = false, doNotUseGetters = true)
 public final class InformacaoComplementarDTO extends ResourceSupport {
+
 
 	private Integer modalidadePesca;
 
@@ -33,6 +36,8 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 	private Integer materialPesca;
 
 	private Integer tipoIsca;
+
+	private Integer peixeMaisPescado;
 
 	private Boolean agenciaTurismo;
 
@@ -70,7 +75,8 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 	                          @JsonProperty("localPesca") final Integer localPesca,
 	                          @JsonProperty("materialPesca") final Integer materialPesca,
 	                          @JsonProperty("tipoIsca") final Integer tipoIsca,
-	                          @JsonProperty("agenciaTurismo") final Boolean agenciaTurismo) {
+	                          @JsonProperty("agenciaTurismo") final Boolean agenciaTurismo,
+							  @JsonProperty("peixeMaisPescado") final  Integer peixeMaisPescado) {
 		this.modalidadePesca = modalidade;
 		this.localizacaoPreferencialPesca = localizacaoPreferencialPesca;
 		this.rendaMensal = rendaMensal;
@@ -81,5 +87,7 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 		this.materialPesca = materialPesca;
 		this.tipoIsca = tipoIsca;
 		this.agenciaTurismo = agenciaTurismo;
+		this.peixeMaisPescado = peixeMaisPescado;
 	}
+
 }

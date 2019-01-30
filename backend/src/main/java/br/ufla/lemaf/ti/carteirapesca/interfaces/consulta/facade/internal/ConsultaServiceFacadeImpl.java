@@ -59,14 +59,24 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 	@Override
 	public Licenca consultar(final String protocolo) {
 
-		var formatter = new ProtocoloFormatter();
+		String protocoloValido;
+		if(protocolo.length() == 9) {
 
-		var protocoloValido = formatter.isFormatted(protocolo)
+			var formatter = new ProtocoloFormatter();
+
+			protocoloValido = formatter.isFormatted(protocolo)
+				? ProtocoloUtils.unformat(protocolo)
+				: protocolo;
+
+			return application.consulta(new Protocolo(protocoloValido));
+		}
+
+		var formatterNovo = new ProtocoloFormatter("$1-$2/$3-$4", ProtocoloValidator.FORMATED_RENOVADO, "$1$2$3$4", ProtocoloValidator.UNFORMATED_RENOVADO);
+
+		protocoloValido = formatterNovo.isFormatted(protocolo)
 			? ProtocoloUtils.unformat(protocolo)
 			: protocolo;
-
-		return application.consulta(new Protocolo(protocoloValido));
-
+		return application.consulta(new Protocolo(protocoloValido, formatterNovo));
 	}
 
 	@Override
@@ -85,11 +95,25 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 	public String buscarCaminho(final String protocolo, final Integer tipo) {
 		var formatter = new ProtocoloFormatter();
 
-		var protocoloValido = new Protocolo(
-			formatter.isFormatted(protocolo)
-				? ProtocoloUtils.unformat(protocolo)
-				: protocolo
-		);
+
+		var formatterNovo = new ProtocoloFormatter("$1-$2/$3-$4", ProtocoloValidator.FORMATED_RENOVADO, "$1$2$3$4", ProtocoloValidator.UNFORMATED_RENOVADO);
+
+		Protocolo protocoloValido;
+
+		if(formatter.canBeFormatted(protocolo)){
+
+			 protocoloValido = new Protocolo(
+				formatter.isFormatted(protocolo)
+					? ProtocoloUtils.unformat(protocolo)
+					: protocolo
+			);
+		} else {
+			protocoloValido = new Protocolo(
+				formatterNovo.isFormatted(protocolo)
+					? ProtocoloUtils.unformat(protocolo)
+					: protocolo
+			);
+		}
 
 		if (tipo.equals(Constants.BOLETO)) {
 
@@ -127,7 +151,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		data.put("cpfPassaporte", CarteiraBuilderImpl.identificadorPessoa(pessoa));
 
 		data.put("numLicenca", protocolo.getCodigoFormatado());
-		data.put("modalidade", licenca.modalidade().name().toUpperCase());
+		data.put("modalidade", licenca.modalidade().getNomePT().toUpperCase());
 
 		data.put("endereco", CarteiraBuilderImpl.campoEndereco(CarteiraBuilderImpl.endereco(pessoa)));
 		data.put("enderecoFontSize",enderecoFontSize);

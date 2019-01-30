@@ -1,6 +1,6 @@
 import { STATUS_MOCK } from "../../utils/layout/mockData";
-import { SET_LICENCA, SET_LICENCA_ATIVA, SET_DADOS_CARTEIRA } from "../mutations.type";
-import { ATIVAR_LICENCA, FETCH_LICENCA, FETCH_DADOS_CARTEIRA } from "../actions.type";
+import { SET_LICENCA, SET_LICENCA_ATIVA, SET_DADOS_CARTEIRA, SET_REGISTRO_SOLICITANTE } from "../mutations.type";
+import { ATIVAR_LICENCA, FETCH_LICENCA, FETCH_DADOS_CARTEIRA, FETCH_INFORMACAO_LICENCA, CADASTRAR_SOLICITANTE } from "../actions.type";
 import ConsultaService from "../../services/ConsultaService";
 
 const INITIAL_STATE = {
@@ -21,7 +21,8 @@ export const getters = {
 
   licenca: state => state.licenca,
 
-  licencaPesca: state => state.licencaPesca
+  licencaPesca: state => state.licencaPesca,
+  
 };
 
 /**
@@ -37,6 +38,13 @@ export const actions = {
       commit(SET_LICENCA, data);
     });
   },
+  [FETCH_INFORMACAO_LICENCA]: ({ commit }, protocolo) => {
+    ConsultaService.consultarLicenca(protocolo).then(({ data }) => {
+      commit(SET_LICENCA, data.licenca);
+      commit(SET_REGISTRO_SOLICITANTE, data.pessoaDTO);
+    });
+  },
+  
   
   [ATIVAR_LICENCA]: ({ commit }) => {
     commit(SET_LICENCA_ATIVA);

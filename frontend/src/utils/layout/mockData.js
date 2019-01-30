@@ -231,3 +231,97 @@ export const STATUS_MOCK = [
     descricao_es: "Inactivada"
   }
 ];
+
+
+export const PEIXE_MAIS_PESCADO = [
+  {
+    cod: 0,
+    descricao_pt: 'Apapá',
+    descricao_en: 'Apapá',
+    descricao_es: 'Apapá'
+  },
+  {
+    cod: 1,
+    descricao_pt: 'Aruanã',
+    descricao_en: 'Aruanã',
+    descricao_es: 'Aruanã'
+  },
+  {
+    cod: 2,
+    descricao_pt: 'Caparari',
+    descricao_en: 'Caparari',
+    descricao_es: 'Caparari'
+  },
+  {
+    cod: 3,
+    descricao_pt: 'Jacundá',
+    descricao_en: 'Jacundá',
+    descricao_es: 'Jacundá'
+  },
+  {
+    cod: 4,
+    descricao_pt: 'Matrinxã',
+    descricao_en: 'Matrinxã',
+    descricao_es: 'Matrinxã'
+  },
+  {
+    cod: 5,
+    descricao_pt: 'Pescada',
+    descricao_en: 'Pescada',
+    descricao_es: 'Pescada'
+  },
+  {
+    cod: 6,
+    descricao_pt: 'Piranha',
+    descricao_en: 'Piranha',
+    descricao_es: 'Piranha'
+  },
+  {
+    cod: 7,
+    descricao_pt: 'Pirarara',
+    descricao_en: 'Pirarara',
+    descricao_es: 'Pirarara'
+  },
+  {
+    cod: 8,
+    descricao_pt: 'Pirarucu',
+    descricao_en: 'Pirarucu',
+    descricao_es: 'Pirarucu'
+  },
+  {
+    cod: 9,
+    descricao_pt: 'Piraíba',
+    descricao_en: 'Piraíba',
+    descricao_es: 'Piraíba'
+  },
+  {
+    cod: 10,
+    descricao_pt: 'Surubim',
+    descricao_en: 'Surubim',
+    descricao_es: 'Surubim'
+  },
+  {
+    cod: 11,
+    descricao_pt: 'Tambaqui',
+    descricao_en: 'Tambaqui',
+    descricao_es: 'Tambaqui'
+  },
+  {
+    cod: 12,
+    descricao_pt: 'Traíra',
+    descricao_en: 'Traíra',
+    descricao_es: 'Traíra'
+  },
+  {
+    cod: 13,
+    descricao_pt: 'Tucunaré',
+    descricao_en: 'Tucunaré',
+    descricao_es: 'Tucunaré'
+  },
+  {
+    cod: 14,
+    descricao_pt: 'Outros',
+    descricao_en: 'Others',
+    descricao_es: 'Otro'
+  }
+]
