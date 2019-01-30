@@ -56,11 +56,11 @@ public class RemessaBuilderImpl implements Remessa240Builder {
 		return header;
 	}
 
-	private Record createDadosTitulo(FlatFile<Record> flatFile, Boleto boleto) throws SQLException, ClassNotFoundException {
+//	private Record createDadosTitulo(FlatFile<Record> flatFile, Boleto boleto) throws SQLException, ClassNotFoundException {
 
-		Endereco enderecoPadrao = boleto.getContaReceber().getCliente().getEnderecoPadrao();
-		Conta dadosConta = boleto.getContaReceber().getConta();
-		Emitente emitente = EmitenteDAO.getInstance().getEmitente();
+//		Endereco enderecoPadrao = boleto.getContaReceber().getCliente().getEnderecoPadrao();
+//		Conta dadosConta = boleto.getContaReceber().getConta();
+//		Emitente emitente = EmitenteDAO.getInstance().getEmitente();
 
 //		Record dadosTitulo = flatFile.createRecord("DetalheDadosTitulo");
 //
@@ -122,7 +122,7 @@ public class RemessaBuilderImpl implements Remessa240Builder {
 //		dadosTitulo.setValue("CodigoMoeda", "1"); //NE026
 //		dadosTitulo.setValue("NumeroSequencial", "000001"); //Numero do lote //Numero do lote
 
-		return dadosTitulo;
-	}
+//		return dadosTitulo;
+//	}
 
 }
