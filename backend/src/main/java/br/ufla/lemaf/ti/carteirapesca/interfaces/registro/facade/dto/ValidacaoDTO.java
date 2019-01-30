@@ -28,4 +28,8 @@ public class ValidacaoDTO {
 		this.dataNascimento = dataNascimento;
 		this.nomeMae = nomeMae;
 	}
+
+	public ValidacaoDTO (AcessoResource acessoResource){
+		this.acessoResource = acessoResource;
+	}
 }

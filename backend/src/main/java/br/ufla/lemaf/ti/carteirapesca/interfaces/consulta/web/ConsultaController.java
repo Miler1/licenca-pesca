@@ -19,6 +19,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.CarteiraDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.LicencaPescaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroController;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 import lombok.extern.slf4j.Slf4j;
@@ -107,7 +108,7 @@ public class ConsultaController {
 
 	@CrossOrigin("*")
 	@GetMapping("/consultarCarteira")
-	public ResponseEntity<CarteiraDTO> consultarCarteira(@RequestParam final String protocolo) {
+	public ResponseEntity<CarteiraDTO> consultarCarteira(@RequestParam final String protocolo) throws Exception {
 
 		CarteiraDTO carteiraDTO = new CarteiraDTO();
 
@@ -130,8 +131,10 @@ public class ConsultaController {
 
 		var pessoa = acessoServiceFacade.acessar(acessoResource);
 
+		ValidacaoDTO validacaoDTO = new ValidacaoDTO(acessoResource);
+
 		pessoa.add(linkTo(methodOn(AcessoController.class)
-			.acessar(acessoResource))
+			.acessar(validacaoDTO))
 			.withSelfRel());
 
 		carteiraDTO.setPessoaDTO(pessoa);
