@@ -9,9 +9,7 @@
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)")
                         el-radio-group(v-model="informacoesComplementares.modalidadePesca")
                             el-radio-button(v-for="l in informacoesComplementaresResource.modalidadePesca" :key="l.cod" :label="l.cod" disabled) {{ localizeField(l) }}
-               
-               
-               
+                            
                 el-col(:span="24")
 
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localizacaoPreferencialPesca`)" prop="localPesca")
@@ -232,5 +230,8 @@ export default {
 
         .money-input
             width: 250px
-
+        
+        .el-radio-button__orig-radio:disabled:checked
+            background-color: #409EFF
+            color: white
 </style>

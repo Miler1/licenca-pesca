@@ -53,7 +53,6 @@
 						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" :tipoIscaDisabled="tipoIscaDisabled" )
 
 				el-col(:span="24")
-
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
 							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :model="informacoesComplementares.agenciaTurismo" :list="informacoesComplementaresResource.agenciaTurismo")
 				
@@ -218,6 +217,10 @@ export default {
 			padding-top: 20px
 			height: 20px
 			font-size: 14px;
+		
+		.el-radio-button__orig-radio:disabled:checked
+			background-color: #409EFF
+			color: white
 
 		.money-input
 			width: 250px
