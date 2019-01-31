@@ -18,7 +18,7 @@
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.rendaMensal`)" prop="rendaMensal")
-						info-select(@value="informacoesComplementares.rendaMensal = $event" :model="informacoesComplementares.rendaMensal" :list="informacoesComplementaresResource.rendaMensal")
+						info-select.cor-placeholder(@value="informacoesComplementares.rendaMensal = $event" :model="informacoesComplementares.rendaMensal" :list="informacoesComplementaresResource.rendaMensal")
 
 				el-col(:span="24")
 
@@ -40,7 +40,7 @@
 				
 				el-col(:span="24")
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
-							info-select(@value="informacoesComplementares.peixeMaisPescado = $event" :model="informacoesComplementares.peixeMaisPescado" :list="informacoesComplementaresResource.peixeMaisPescado")
+							info-select.cor-placeholder(@value="informacoesComplementares.peixeMaisPescado = $event" :model="informacoesComplementares.peixeMaisPescado" :list="informacoesComplementaresResource.peixeMaisPescado")
 
 				el-col(:span="24")
 
@@ -215,7 +215,11 @@ export default {
 			color: white
 		.el-form--label-top .el-form-item__label
 			padding: 0 0 1px 0;
-			
+		
+		.cor-placeholder
+			::-webkit-input-placeholder 
+				color: #606266;
+
 		.money-input
 			width: 250px
 </style>
