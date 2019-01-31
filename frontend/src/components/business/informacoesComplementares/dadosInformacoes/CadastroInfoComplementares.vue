@@ -37,6 +37,10 @@
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localPesca`)" prop="localPesca")
 						info-select(@value="informacoesComplementares.localPesca = $event" :model="informacoesComplementares.localPesca" :list="informacoesComplementaresResource.localPesca")
+				
+				el-col(:span="24")
+					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
+							info-select(@value="informacoesComplementares.peixeMaisPescado = $event" :model="informacoesComplementares.peixeMaisPescado" :list="informacoesComplementaresResource.peixeMaisPescado")
 
 				el-col(:span="24")
 
@@ -50,11 +54,6 @@
 				el-col(:span="24")
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
 							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :model="informacoesComplementares.agenciaTurismo" :list="informacoesComplementaresResource.agenciaTurismo")
-				
-				el-col(:span="24")
-					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
-							info-select(@value="informacoesComplementares.peixeMaisPescado = $event" :model="informacoesComplementares.peixeMaisPescado" :list="informacoesComplementaresResource.peixeMaisPescado")
-
 </template>
 
 <script>

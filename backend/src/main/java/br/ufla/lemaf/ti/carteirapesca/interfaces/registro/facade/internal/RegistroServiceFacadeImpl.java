@@ -230,7 +230,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		if (Validate.isNull(info.getModalidadePesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "modalidade de pesca"));
 
-		if (Validate.isNull(info.getLocalPesca()))
+		if (Validate.isNull(info.getLocalizacaoPreferencialPesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "local de pesca"));
 
 		if (Validate.isNull(info.getRendaMensal()))
@@ -242,7 +242,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		if (Validate.isNull(info.getGastoMedioPesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "gasto médio por pesca"));
 
-		if (Validate.isNull(info.getLocalizacaoPreferencialPesca()))
+		if (Validate.isNull(info.getLocalPesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "localização preferencial de pesca"));
 
 		if (Validate.isNull(info.getMaterialPesca()))

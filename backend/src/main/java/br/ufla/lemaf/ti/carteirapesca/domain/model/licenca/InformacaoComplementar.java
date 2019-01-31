@@ -22,18 +22,13 @@ public class InformacaoComplementar {
 
 	@Getter
 	@ManyToOne
-	@JoinColumn(name = "id_faixa_etaria", referencedColumnName = "id")
-	private FaixaEtaria faixaEtaria;
-
-	@Getter
-	@ManyToOne
 	@JoinColumn(name = "id_preferencia_local_pesca", referencedColumnName = "id")
-	private PreferenciaLocalPesca localizacaoPreferencialPesca;
+	private PreferenciaLocalPesca localPesca ;
 
 	@Getter
 	@ManyToOne
 	@JoinColumn(name = "id_local_pesca", referencedColumnName = "id")
-	private LocalPesca localPesca;
+	private LocalPesca localizacaoPreferencialPesca;
 
 	@Getter
 	@ManyToOne
