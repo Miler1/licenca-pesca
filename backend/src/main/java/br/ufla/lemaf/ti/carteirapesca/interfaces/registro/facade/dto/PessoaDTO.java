@@ -1,10 +1,12 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.EnderecoEstrangeiro;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Date;
@@ -38,6 +40,9 @@ public final class PessoaDTO extends ResourceSupport {
 
 	private EnderecoDTO enderecoCorrespondencia;
 
+	@Setter
+	private EnderecoEstrangeiro enderecoEstrangeiro;
+
 	/**
 	 * Construtor.
 	 *
@@ -62,7 +67,8 @@ public final class PessoaDTO extends ResourceSupport {
 	          @JsonProperty("nomeMae") final String nomeMae,
 	          @JsonProperty("email") final String email,
 	          @JsonProperty("enderecoPrincipal") final EnderecoDTO enderecoPrincipal,
-	          @JsonProperty("enderecoCorrespondencia") final EnderecoDTO enderecoCorrespondencia) {
+	          @JsonProperty("enderecoCorrespondencia") final EnderecoDTO enderecoCorrespondencia,
+	          @JsonProperty("enderecoEstrangeiro") final EnderecoEstrangeiro enderecoEstrangeiro) {
 		this.estrangeiro = estrangeiro;
 		this.nome = nome;
 		this.cpf = cpf;
@@ -73,6 +79,7 @@ public final class PessoaDTO extends ResourceSupport {
 		this.email = email;
 		this.enderecoPrincipal = enderecoPrincipal;
 		this.enderecoCorrespondencia = enderecoCorrespondencia;
+		this.enderecoEstrangeiro = enderecoEstrangeiro;
 	}
 
 	/**
@@ -93,6 +100,7 @@ public final class PessoaDTO extends ResourceSupport {
 		this.email = pessoa.email;
 		this.enderecoPrincipal = pessoa.enderecoPrincipal;
 		this.enderecoCorrespondencia = pessoa.enderecoCorrespondencia;
+		this.enderecoEstrangeiro = pessoa.enderecoEstrangeiro;
 	}
 
 	public PessoaDTO(String cpf, String passaporte) {
@@ -225,5 +233,9 @@ public final class PessoaDTO extends ResourceSupport {
 
 	public PessoaEUDTO toPessoaEUDTO(){
 		return new PessoaEUDTO(this);
+	}
+
+	public EnderecoEstrangeiro getEnderecoEstrangeiro() {
+		return enderecoEstrangeiro;
 	}
 }

@@ -90,9 +90,18 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 			);
 		}
 		// Converte dado Pessoa em DTO de Pessoa
-		return pessoaDTOAssembler.toDTO(
+		PessoaDTO pessoaDTO = pessoaDTOAssembler.toDTO(
 			acessoApplication.identificar(acessoResource)
 		);
+
+		Solicitante solicitante;
+		if(pessoaDTO.getCpf() != null){
+			solicitante = solicitanteRopository.findByIdentityCpfNumero(pessoaDTO.getCpf());
+		} else {
+			solicitante = solicitanteRopository.findByIdentityPassaporteNumero(pessoaDTO.getPassaporte());
+		}
+		pessoaDTO.setEnderecoEstrangeiro(solicitante.getEnderecoEstrangeiro());
+		return pessoaDTO;
 
 	}
 

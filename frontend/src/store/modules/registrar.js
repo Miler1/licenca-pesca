@@ -6,7 +6,9 @@ import {
   SET_MODALIDADE_PESCA,
   SET_MUNICIPIOS, SET_MUNICIPIOS_CORRESPONDENCIA, SET_PROTOCOLO,
   SET_UFS,
+  SET_NACIONALIDADE,
   SET_REGISTRO_SOLICITANTE,
+  SET_PAISES,
   CLEAN_REGISTRO
 } from "../mutations.type";
 import {
@@ -14,12 +16,15 @@ import {
   FETCH_MUNICIPIOS,
   FETCH_MUNICIPIOS_CORRESPONDENCIA,
   FETCH_UFS,
+  FETCH_NACIONALIDADES,
+  FETCH_PAISES,
   REGISTRAR,
   SEND_INFORMACOES_COMPLEMENTARES,
   SEND_SOLICITANTE,
   RENOVAR_CARTEIRA
 } from "../actions.type";
 import AcessoService from "../../services/AcessoService";
+import ConsultaService from "../../services/ConsultaService";
 import {
   AGENCIA_TURISMO_MOCK,
   FAIXA_ETARIA_MOCK,
@@ -41,6 +46,8 @@ const INITIAL_STATE = {
   municipios: [],
   municipiosCorrespondencia: [],
   ufs: [],
+  paises: [],
+  nacionalidades: [],
   informacoesComplementaresResource: {
     modalidadePesca: MODALIDADE_PESCA_MOCK,
     localizacaoPreferencialPesca: LOCALIZACAO_PREF_PESCA_MOCK,
@@ -89,7 +96,11 @@ export const getters = {
 
   registroResource: state => state.registroResource,
 
-  protocolo: state => state.protocolo
+  protocolo: state => state.protocolo,
+
+  nacionalidades: state => state.nacionalidades,
+
+  paises: state => state.paises
 };
 
 /**
@@ -179,6 +190,25 @@ export const actions = {
         commit(SET_ERROR, error);
       });
   },
+  [FETCH_NACIONALIDADES]: ({ commit }) => {
+    ConsultaService.fetchPaises()
+      .then(({ data }) => {
+        commit(SET_NACIONALIDADE, data);
+      })
+      .catch(error => {
+        commit(SET_ERROR, error);
+      });
+  },
+
+  [FETCH_PAISES]: ({ commit }) => {
+    ConsultaService.fetchPaises()
+      .then(({ data }) => {
+        commit(SET_PAISES, data);
+      })
+      .catch(error => {
+        commit(SET_ERROR, error);
+      });
+  },
 
   [FETCH_MODALIDADE_PESCA]: ({ commit }) => {
     InformacoesComplementaresService.fetchModalidadePesca()
@@ -203,6 +233,9 @@ export const mutations = {
    */
   [SET_MUNICIPIOS]: (state, municipios) => (state.municipios = municipios),
 
+  [SET_NACIONALIDADE]: (state, nacionalidades) => (state.nacionalidades = nacionalidades),
+
+  [SET_PAISES]: (state, paises) => (state.paises = paises),
 
   [SET_MUNICIPIOS_CORRESPONDENCIA]: (state, municipios) => (state.municipiosCorrespondencia = municipios),
 

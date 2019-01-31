@@ -2,13 +2,17 @@ package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Pais;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.PaisRepository;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Camada de aplicação da etapa de consulta.
@@ -22,6 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConsultaAplicationImpl implements ConsultaApplication {
 
 	private LicencaRepository licencaRepository;
+
+	@Autowired
+	private PaisRepository paisRepository;
 
 	/**
 	 * Injetando dependências.
@@ -59,6 +66,11 @@ public class ConsultaAplicationImpl implements ConsultaApplication {
 
 		return licenca.getCaminhoBoleto();
 
+	}
+
+	@Override
+	public List<Pais> fetchPaises() {
+		return paisRepository.findAll();
 	}
 
 	/**

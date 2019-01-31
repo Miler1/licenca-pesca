@@ -55,7 +55,8 @@ export const toSolicitanteDTO = solicitante => {
     nomeMae: solicitante.nomeMae,
     email: solicitante.email,
     enderecoPrincipal: toEndereco(solicitante.enderecoPrincipal),
-    enderecoCorrespondencia: toEndereco(solicitante.enderecoCorrespondencia)
+    enderecoCorrespondencia: toEndereco(solicitante.enderecoCorrespondencia),
+    enderecoEstrangeiro: solicitante.enderecoEstrangeiro
   };
 };
 

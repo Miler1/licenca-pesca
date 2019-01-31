@@ -99,6 +99,8 @@ export const actions = {
     AcessoService.buscarLicencas(acessoResource)
       .then(({ data }) => {
         commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
+        data.pessoa.enderecoEstrangeiro.nacionalidadeNome = data.pessoa.enderecoEstrangeiro.nacionalidade.nome;
+        data.pessoa.enderecoEstrangeiro.paisNome = data.pessoa.enderecoEstrangeiro.pais.nome;
         commit(SET_SOLICITANTE, data.pessoa);
         commit(SET_LISTA_LICENCAS, data.licencas);
       })
