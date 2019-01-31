@@ -37,8 +37,8 @@ public class InformacaoComplementarServiceImpl implements  InformacaoComplementa
 		InformacaoComplementar informacaoComplementar = new InformacaoComplementar();
 
 		informacaoComplementar.setAgenciaTurismo(informacaoComplementarDTO.getAgenciaTurismo());
-		informacaoComplementar.setLocalizacaoPreferencialPesca(localPescaRepository.findById(informacaoComplementarDTO.getLocalPesca()).get());
-		informacaoComplementar.setLocalPesca(preferenciaLocalPescaRepository.findById(informacaoComplementarDTO.getLocalizacaoPreferencialPesca()).get());
+		informacaoComplementar.setLocalizacaoPreferencialPesca(localPescaRepository.findById(informacaoComplementarDTO.getLocalizacaoPreferencialPesca()).get());
+		informacaoComplementar.setLocalPesca(preferenciaLocalPescaRepository.findById(informacaoComplementarDTO.getLocalPesca()).get());
 		informacaoComplementar.setModalidadePesca(modalidadeRepository.findById(informacaoComplementarDTO.getModalidadePesca()).get());
 		informacaoComplementar.setRendaMensal(rendaMensalRepository.findById(informacaoComplementarDTO.getRendaMensal()).get());
 		informacaoComplementar.setTipoIsca(tipoIscaRepository.findById(informacaoComplementarDTO.getTipoIsca()).get());
