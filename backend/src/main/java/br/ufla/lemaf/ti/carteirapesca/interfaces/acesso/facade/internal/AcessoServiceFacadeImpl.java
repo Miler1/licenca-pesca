@@ -78,7 +78,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		 * recursoValidado com os valores de
 		 * resource.
 		 */
-		if (resource.getCpf() != null) {
+		if (resource.getCpf() != null && !resource.getCpf().isEmpty()) {
 			acessoResource = new AcessoResource(
 				CPFUtils.unformat(resource.getCpf()),
 				resource.getPassaporte()
