@@ -100,7 +100,10 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		} else {
 			solicitante = solicitanteRopository.findByIdentityPassaporteNumero(pessoaDTO.getPassaporte());
 		}
-		pessoaDTO.setEnderecoEstrangeiro(solicitante.getEnderecoEstrangeiro());
+		if(solicitante != null){
+
+			pessoaDTO.setEnderecoEstrangeiro(solicitante.getEnderecoEstrangeiro());
+		}
 		return pessoaDTO;
 
 	}
