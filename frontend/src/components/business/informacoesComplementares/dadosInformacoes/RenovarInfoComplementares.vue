@@ -7,7 +7,7 @@
                 el-col(:span="24")
 
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.modalidadePesca`)")
-                        el-radio-group(v-model="informacoesComplementares.modalidadePesca"  @change="verificarModalidadeParaDefinirIsca")
+                        el-radio-group(v-model="informacoesComplementares.modalidadePesca")
                             el-radio-button(v-for="l in informacoesComplementaresResource.modalidadePesca" :key="l.cod" :label="l.cod" disabled) {{ localizeField(l) }}
                             
                 el-col(:span="24")
@@ -39,6 +39,12 @@
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localPesca`)" prop="localPesca")
                         el-radio-group(v-model="informacoesComplementares.localPesca")  
                             el-radio-button(v-for="l in informacoesComplementaresResource.localPesca" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
+                
+                el-col(:span="24")
+
+                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
+                        el-select(v-model="informacoesComplementares.peixeMaisPescado")
+                            el-option(v-for="l in informacoesComplementaresResource.peixeMaisPescado" :key="l.cod" :value="l.cod" :label="localizeField(l)")
 
                 el-col(:span="24")
 
@@ -50,7 +56,7 @@
                 el-col(:span="24")
 
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
-                        el-radio-group(v-model="informacoesComplementares.tipoIsca" :tipoIscaDisabled="tipoIscaDisabled")  
+                        el-radio-group(v-model="informacoesComplementares.tipoIsca" v-if="!verificaBloqueio()" :disabled="tipoIscaDisabled" )
                             el-radio-button(v-for="l in informacoesComplementaresResource.tipoIsca" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
 
                 el-col(:span="24")
@@ -58,12 +64,6 @@
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
                         el-radio-group(v-model="informacoesComplementares.agenciaTurismo")  
                             el-radio-button(v-for="l in informacoesComplementaresResource.agenciaTurismo" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
-
-                el-col(:span="24")
-
-                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
-                        el-select(v-model="informacoesComplementares.peixeMaisPescado")
-                            el-option(v-for="l in informacoesComplementaresResource.peixeMaisPescado" :key="l.cod" :value="l.cod" :label="localizeField(l)")
 
 </template>
 
@@ -128,7 +128,6 @@ export default {
                 y: true
             },
             tipoIscaDisabled: false
-
         };
   },
 
@@ -163,12 +162,12 @@ export default {
         this.valid = valid;
       });
     },
-    verificarModalidadeParaDefinirIsca() {
+    verificaBloqueio() {
         if (this.informacoesComplementares.modalidadePesca == 0) {
             this.informacoesComplementares.tipoIsca = 1;
             this.tipoIscaDisabled = true;
         }else {
-            this.informacoesComplementares.tipoIsca = null;
+            this.informacoesComplementares.tipoIsca;
             this.tipoIscaDisabled = false;
         }
     },
