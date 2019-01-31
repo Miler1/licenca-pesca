@@ -30,8 +30,8 @@ export default {
 	},
 	goHome() {
 		this.$store.dispatch(CANCELAR).then(p => {
-			// this.$router.push({name: 'home'});
-			window.location = "/";
+			this.$router.push({name: 'home'});
+			// window.location = "/";
 		});
 	}
   }
