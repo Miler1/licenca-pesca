@@ -220,6 +220,8 @@ export default {
 		.el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner
 			background-color: #409EFF
 			color: white
+		.el-form--label-top .el-form-item__label
+			padding: 0 0 1px 0;
 			
 		.money-input
 			width: 250px
