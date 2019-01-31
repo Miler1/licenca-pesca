@@ -95,8 +95,8 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	public boolean pussuiLicencaAtiva(Modalidade modalidade) {
 		return licenca
 			.stream()
-			.anyMatch(licencaProcurada -> (licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
-				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id)
+			.anyMatch(licencaProcurada -> ((licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
+				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id))
 				&& licencaProcurada.modalidade().getId().equals(modalidade.getId()));
 	}
 
