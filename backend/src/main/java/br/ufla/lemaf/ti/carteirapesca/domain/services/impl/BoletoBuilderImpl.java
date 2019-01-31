@@ -7,10 +7,14 @@ import br.com.caelum.stella.boleto.Pagador;
 import br.com.caelum.stella.boleto.bancos.Bradesco;
 import br.com.caelum.stella.boleto.transformer.GeradorDeBoleto;
 import br.com.caelum.stella.format.CNPJFormatter;
-import br.ufla.lemaf.ti.carteirapesca.domain.enuns.banco.EspecieDocumentoEnum;
+import br.ufla.lemaf.ti.carteirapesca.domain.enuns.EspecieDocumentoEnum;
+import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoArquivoEnum;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.EspecieDocumentoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.PagadorTituloRepository;
@@ -59,24 +63,19 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 	@Autowired
 	private TituloRepository tituloRepository;
 
-	/**
-	 * Cria o boleto da carteira de pesca.
-	 *
-	 * @param protocolo  O Protocolo
-	 * @param modalidade A modalidade
-	 * @param pessoa     A PEssoa solicitante
-	 * @return O caminho do arquivo do boleto
-	 */
+	@Autowired
+	private TipoArquivoRepository tipoArquivoRepository;
+
 	@Override
-	public String gerarBoleto(final Protocolo protocolo,
+	public Titulo gerarBoleto(final Protocolo protocolo,
 	                          final Modalidade modalidade,
 	                          final Pessoa pessoa) {
 
 		try {
 
-			var geradorDeBoleto = new GeradorDeBoleto(
-				montarBoleto(pessoa, protocolo, modalidade)
-			);
+			Titulo titulo = gerarTituloBradesco(pessoa, modalidade);
+
+			var geradorDeBoleto = new GeradorDeBoleto(montarBoleto(titulo));
 
 			var formatterNovo = new ProtocoloFormatter("$1-$2/$3-$4", ProtocoloValidator.FORMATED_RENOVADO, "$1$2$3$4", ProtocoloValidator.UNFORMATED_RENOVADO);
 
@@ -88,22 +87,28 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 				codigoProtocolo = protocolo.getProtocoloNaoFormatado();
 			}
 
+			String nomeBoleto = codigoProtocolo + "-banco-bradesco.pdf";
+
 			var caminhoBoleto = Paths.get(
 				Properties.pathBoletoPagamentoCarteiraPesca()
 					+ codigoProtocolo
 					+ "/"
-					+ codigoProtocolo
-					+ "-banco-bradesco.pdf"
+					+ nomeBoleto
 			);
 
 			var boleto = caminhoBoleto.toFile();
 
-			if (!boleto.exists())
+			if (!boleto.exists()) {
 				Files.createDirectories(caminhoBoleto.getParent());
+			}
 
 			geradorDeBoleto.geraPDF(caminhoBoleto.toString());
 
-			return caminhoBoleto.toString();
+			TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.BOLETO.getCodigo());
+
+			titulo.setArquivoBoleto(new Arquivo(caminhoBoleto.toString(), nomeBoleto, tipoArquivo));
+
+			return titulo;
 
 		} catch (IOException | NullPointerException e) {
 
@@ -128,8 +133,6 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 		Titulo titulo = new Titulo(beneficiarioTitulo, especieDocumento, pagadorTitulo, getValorTitulo(modalidade));
 
 		titulo.setNossoNumero(tituloRepository.count());
-
-		tituloRepository.save(titulo);
 
 		return titulo;
 
@@ -164,20 +167,9 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 	}
 
-	/**
-	 * Monta os campos do boleto.
-	 *
-	 * @param pessoa A pessoa solicitante
-	 * @param protocolo O protocolo da licença
-	 * @param modalidade A modalidade da licença
-	 * @return O boleto
-	 */
-	private Boleto montarBoleto(final Pessoa pessoa,
-							   	final Protocolo protocolo,
-							   	final Modalidade modalidade) {
-		val bradesco = new Bradesco();
+	private Boleto montarBoleto(Titulo titulo) {
 
-		Titulo titulo = gerarTituloBradesco(pessoa, modalidade);
+		val bradesco = new Bradesco();
 
 		return Boleto.novoBoleto()
 			.comBanco(bradesco)
@@ -192,11 +184,6 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 	}
 
-	/**
-	 * Monta os dados de data do boleto.
-	 *
-	 * @return Objeto com as datas para o boleto
-	 */
 	private Datas montarDatas(Titulo titulo) {
 
 		return Datas.novasDatas()
@@ -204,14 +191,6 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			.comProcessamento(titulo.getDataProcessamento().getDayOfMonth(), titulo.getDataProcessamento().getMonthValue(), titulo.getDataProcessamento().getYear())
 			.comVencimento(titulo.getDataVencimento().getDayOfMonth(), titulo.getDataVencimento().getMonthValue(), titulo.getDataVencimento().getYear());
 	}
-
-	/**
-	 * Constroi o campo valor carteira.
-	 * <p>
-	 *
-	 * @param modalidade A modalidade da carteira
-	 * @return O campo de valor da carteira
-	 */
 
 	private BigDecimal getValorTitulo(Modalidade modalidade) {
 
@@ -226,13 +205,6 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 		}
 	}
 
-	/**
-	 * Busca o endereço do solicitante
-	 * da carteira.
-	 *
-	 * @param pessoa A Pessoa solicitante
-	 * @return O endereço
-	 */
 	private main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco(Pessoa pessoa) {
 		return pessoa.enderecos
 			.stream()
@@ -242,14 +214,6 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			.orElseThrow(ResourceNotFoundException::new);
 	}
 
-	/**
-	 * Monta o beneficiario.
-	 * <p>
-	 * Dado fantasia por falta de definições.
-	 *
-	 * @return O BeneficiarioTitulo
-	 * @implNote Reimplementar com dados reais
-	 */
 	private Beneficiario montarBeneficiario(Titulo titulo) {
 
 		BeneficiarioTitulo beneficiarioTitulo = titulo.getBeneficiario();

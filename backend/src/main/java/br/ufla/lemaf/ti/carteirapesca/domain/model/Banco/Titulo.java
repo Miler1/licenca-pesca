@@ -1,10 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -17,23 +17,17 @@ public class Titulo implements Entity<Titulo, Integer> {
 
 	private static final Integer QTD_MESES_VENCIMENTO_TITULO_APOS_EMISSAO = 1;
 
-	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".titulo_id_seq";
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
-	@SequenceGenerator(name = SEQUENCIA,
-		sequenceName = SEQUENCIA,
-		allocationSize=1)
+	@SuppressWarnings("unused")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "id_beneficiario",
-		referencedColumnName="id")
+	@JoinColumn(name = "id_beneficiario", referencedColumnName="id")
 	private BeneficiarioTitulo beneficiario;
 
 	@ManyToOne
-	@JoinColumn(name = "id_pagador",
-		referencedColumnName="id")
+	@JoinColumn(name = "id_pagador", referencedColumnName="id")
 	private PagadorTitulo pagador;
 
 	private BigDecimal valor;
@@ -48,8 +42,7 @@ public class Titulo implements Entity<Titulo, Integer> {
 	private LocalDate dataVencimento;
 
 	@ManyToOne
-	@JoinColumn(name = "id_especie_documento",
-		referencedColumnName="id")
+	@JoinColumn(name = "id_especie_documento", referencedColumnName="id")
 	private EspecieDocumento especieDocumento;
 
 	@Column(name = "instrucoes")
@@ -63,6 +56,17 @@ public class Titulo implements Entity<Titulo, Integer> {
 
 	@Column(name = "nosso_numero")
 	private String nossoNumero;
+
+	@Column(name = "dt_geracao_remessa")
+	private LocalDate dataGeracaoRemessa;
+
+	@Column(name = "dt_pagamento")
+	private LocalDate dataPagamento;
+
+	@Setter
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_arquivo", referencedColumnName="id")
+	private Arquivo arquivoBoleto;
 
 	@Override
 	public boolean sameIdentityAs(Titulo other) {

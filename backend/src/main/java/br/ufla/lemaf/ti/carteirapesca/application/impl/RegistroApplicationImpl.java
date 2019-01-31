@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
@@ -173,12 +174,11 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 */
 	private Licenca criarLicenca(final RegistroResource resource, String codigoProtocolo) {
 
-		var modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
+		Modalidade modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
 
-		var protocolo = new Protocolo();
+		Protocolo protocolo;
 
 		if(codigoProtocolo == null){
-
 			protocolo = new Protocolo(protocoloBuilder.gerarProtocolo(modalidade));
 		} else {
 			protocolo = new Protocolo(codigoProtocolo);
@@ -186,14 +186,13 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		var pessoa = buscarDadosSolicitante(getSolicitante(resource));
 
-		var caminhoBoleto = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
+		Titulo titulo = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
 
 		Status status = statusRepository.findById(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id).get();
 
 		InformacaoComplementar informacaoComplementar = informacaoComplementarService.toInformacaoComplementar(resource.getInformacaoComplementar());
 
-
-		return new Licenca(protocolo, modalidade, caminhoBoleto, informacaoComplementar, status);
+		return new Licenca(protocolo, modalidade, informacaoComplementar, status, titulo);
 	}
 
 	/**
@@ -291,12 +290,15 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	@Override
 	public String regerarBoleto(Licenca licenca) {
 
+		Pessoa pessoa = buscarDadosSolicitante(licenca.getSolicitante());
+
+		Titulo titulo = boletoBuilder.gerarBoleto(licenca.getProtocolo(), licenca.modalidade(), pessoa);
+
 		licenca.setDataVencimentoBoleto();
+		licenca.setTitulo(titulo);
 		licencaRepository.save(licenca);
 
-		Pessoa pessoa = buscarDadosSolicitante(licenca.solicitante());
-
-		return boletoBuilder.gerarBoleto(licenca.getProtocolo(), licenca.modalidade(), pessoa);
+		return titulo.getArquivoBoleto().getCaminhoArquivo();
 	}
 
 

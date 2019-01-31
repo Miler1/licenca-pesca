@@ -15,14 +15,20 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -182,13 +188,27 @@ public class AcessoController {
 
 	@CrossOrigin("*")
 	@GetMapping("/remessa")
-	public ResponseEntity<Titulo> testeGeraRemessa() {
+	public ResponseEntity<InputStreamResource> testeGeraRemessa() throws IOException {
 
-		var titulos = tituloRepository.findAll();
+		List<Titulo> titulos = tituloRepository.findAll();
 
-		remessaBuilder.geraRemessa(titulos);
+		String pathArquivoRemessa = remessaBuilder.geraRemessa(titulos);
 
-		return new ResponseEntity<>(titulos.get(0), HttpStatus.ACCEPTED);
+		var httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.TEXT_PLAIN);
+
+		var isr = new InputStreamResource(new FileInputStream(new File(pathArquivoRemessa)));
+
+		return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
+
+
+//		HttpHeaders respHeaders = new HttpHeaders();
+//		respHeaders.setContentType(MediaType.TEXT_PLAIN);
+//		respHeaders.setContentLength(12345678);
+//		respHeaders.setContentDispositionFormData("attachment", "CB310101.REM");
+//
+//		InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(pathArquivoRemessa)));
+//		return new ResponseEntity<>(isr, respHeaders, HttpStatus.OK);
 
 	}
 

@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.domain.enuns.banco;
+package br.ufla.lemaf.ti.carteirapesca.domain.enuns;
 
 public enum EspecieDocumentoEnum {
 

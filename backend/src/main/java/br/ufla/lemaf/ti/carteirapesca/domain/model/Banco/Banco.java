@@ -11,13 +11,9 @@ import javax.persistence.*;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "banco")
 public class Banco implements Entity<Banco, Integer> {
 
-	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".banco_id_seq";
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
-	@SequenceGenerator(name = SEQUENCIA,
-		sequenceName = SEQUENCIA,
-		allocationSize=1)
+	@SuppressWarnings("unused")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String codigo;

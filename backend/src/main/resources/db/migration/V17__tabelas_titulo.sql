@@ -139,6 +139,52 @@ COMMENT ON COLUMN carteira_pesca.pagador_titulo.id IS 'Identificador único da e
 COMMENT ON COLUMN carteira_pesca.pagador_titulo.nome IS 'Nome pagador.';
 COMMENT ON COLUMN carteira_pesca.pagador_titulo.cpf_passaporte IS 'CPF se for brasileiro ou Passaporte caso pessoa estrangeira.';
 
+CREATE TABLE carteira_pesca.tipo_arquivo
+(
+  id SERIAL NOT NULL,
+  codigo CHARACTER VARYING(20) NOT NULL,
+  descricao CHARACTER VARYING(100) NOT NULL,
+
+  CONSTRAINT pk_tipo_arquivo PRIMARY KEY(id)
+
+) WITH(OIDS = FALSE);
+
+ALTER TABLE carteira_pesca.tipo_arquivo OWNER TO postgres;
+GRANT ALL ON TABLE carteira_pesca.tipo_arquivo TO postgres;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE carteira_pesca.tipo_arquivo TO carteira_pesca;
+
+COMMENT ON TABLE carteira_pesca.tipo_arquivo IS 'Entidade responsável por armazenar os tipo de arquivo.';
+COMMENT ON COLUMN carteira_pesca.tipo_arquivo.id IS 'Identificador único da entidade.';
+COMMENT ON COLUMN carteira_pesca.tipo_arquivo.codigo IS 'Codigo do tipo de arquivo.';
+COMMENT ON COLUMN carteira_pesca.tipo_arquivo.descricao IS 'Descrição do tipo de documento.';
+
+CREATE TABLE carteira_pesca.arquivo
+(
+  id SERIAL NOT NULL,
+  caminho_arquivo CHARACTER VARYING(150) NOT NULL,
+  nome CHARACTER VARYING(100) NOT NULL,
+  dt_cadastro TIMESTAMP NOT NULL DEFAULT now(),
+  id_tipo_arquivo INTEGER NOT NULL,
+
+  CONSTRAINT pk_arquivo PRIMARY KEY(id),
+
+  CONSTRAINT fk_tipo_arquivo FOREIGN KEY (id_tipo_arquivo)
+    REFERENCES carteira_pesca.tipo_arquivo (id) MATCH SIMPLE
+    ON UPDATE RESTRICT ON DELETE RESTRICT
+
+) WITH(OIDS = FALSE);
+
+ALTER TABLE carteira_pesca.arquivo OWNER TO postgres;
+GRANT ALL ON TABLE carteira_pesca.arquivo TO postgres;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE carteira_pesca.arquivo TO carteira_pesca;
+
+COMMENT ON TABLE carteira_pesca.arquivo IS 'Entidade responsável por armazenar os dados das instituições bancárias.';
+COMMENT ON COLUMN carteira_pesca.arquivo.id IS 'Identificador único da entidade.';
+COMMENT ON COLUMN carteira_pesca.arquivo.caminho_arquivo IS 'Caminho completo onde o arquivo está salvo.';
+COMMENT ON COLUMN carteira_pesca.arquivo.nome IS 'Nome do arquivo.';
+COMMENT ON COLUMN carteira_pesca.arquivo.dt_cadastro IS 'Data de cadastro do arquivo.';
+COMMENT ON COLUMN carteira_pesca.arquivo.id_tipo_arquivo IS 'Tipo de arquivo.';
+
 CREATE TABLE carteira_pesca.titulo
 (
   id SERIAL NOT NULL,
@@ -153,11 +199,26 @@ CREATE TABLE carteira_pesca.titulo
   local_pagamento TEXT NULL,
   fl_enviado_banco BOOLEAN NOT NULL DEFAULT FALSE,
   nosso_numero CHARACTER VARYING(11) NOT NULL,
+  dt_geracao_remessa TIMESTAMP NULL,
+  dt_pagamento DATE NULL,
+  id_arquivo INTEGER NOT NULL,
 
   CONSTRAINT pk_titulo PRIMARY KEY(id),
 
-  CONSTRAINT fk_endereco FOREIGN KEY (id_beneficiario)
+  CONSTRAINT fk_beneficiario_titulo FOREIGN KEY (id_beneficiario)
       REFERENCES carteira_pesca.beneficiario_titulo (id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT,
+
+  CONSTRAINT fk_pagador_titulo FOREIGN KEY (id_pagador)
+      REFERENCES carteira_pesca.pagador_titulo (id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT,
+
+  CONSTRAINT fk_especie_documento FOREIGN KEY (id_especie_documento)
+      REFERENCES carteira_pesca.especie_documento (id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT,
+
+  CONSTRAINT fk_arquivo FOREIGN KEY (id_arquivo)
+      REFERENCES carteira_pesca.arquivo (id) MATCH SIMPLE
       ON UPDATE RESTRICT ON DELETE RESTRICT
 
 ) WITH(OIDS = FALSE);
@@ -177,6 +238,9 @@ COMMENT ON COLUMN carteira_pesca.titulo.instrucoes IS 'Instruções de pagamento
 COMMENT ON COLUMN carteira_pesca.titulo.local_pagamento IS 'Locais onde o pagamento poderá ser realizado.';
 COMMENT ON COLUMN carteira_pesca.titulo.nosso_numero IS
   'Código de controle que permite ao Banco e ao beneficiário identificar os dados da cobrança que deu origem ao boleto de pagamento.';
+COMMENT ON COLUMN carteira_pesca.titulo.dt_geracao_remessa IS 'Data de vencimento.';
+
+
 
 INSERT INTO carteira_pesca.banco (id, codigo, nome) VALUES (1, '237', 'Banco Bradesco S.A.');
 
@@ -195,3 +259,13 @@ INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descri
 INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (8, 'NS', '12', 'Duplicata de Serviços');
 INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (9, 'CC', '31','Cartão de crédito');
 INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (10, 'OUTROS', '99', 'Outros');
+
+INSERT INTO carteira_pesca.tipo_arquivo (id, codigo, descricao) VALUES (1, 'BOLETO', 'Arquivo pdf do boleto que foi gerado');
+INSERT INTO carteira_pesca.tipo_arquivo (id, codigo, descricao) VALUES (2, 'REMESSA', 'Arquivo com os dados dos boletos que são enviados ao banco');
+INSERT INTO carteira_pesca.tipo_arquivo (id, codigo, descricao) VALUES (3, 'RETORNO', 'Arquivo com os dados dos boletos que foram processador pelo banco');
+
+ALTER TABLE carteira_pesca.licenca ADD COLUMN id_titulo INTEGER NULL;
+
+ALTER TABLE carteira_pesca.licenca ADD CONSTRAINT fk_titulo FOREIGN KEY (id_titulo)
+      REFERENCES carteira_pesca.titulo (id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT;
