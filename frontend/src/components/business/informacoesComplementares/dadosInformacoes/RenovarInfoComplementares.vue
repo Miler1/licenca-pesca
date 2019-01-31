@@ -146,7 +146,6 @@ export default {
             this.informacoesComplementares.materialPesca = this.informacoesComplementares.materialPesca.id;
             this.informacoesComplementares.tipoIsca = this.informacoesComplementares.tipoIsca.id;
             this.informacoesComplementares.peixeMaisPescado = this.informacoesComplementares.peixeMaisPescado.id;
-            debugger
             if(this.informacoesComplementares.agenciaTurismo){
                 this.informacoesComplementares.agenciaTurismo = 1;
             } else {
