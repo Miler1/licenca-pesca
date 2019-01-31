@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.EnderecoEstrangeiro;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
@@ -8,8 +9,10 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,6 +38,10 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	@Autowired
 	private StatusRepository statusRepository;
 
+	private static AcessoServiceFacade acessoServiceFacade;
+
+	private static SolicitanteRopository solicitanteRopository;
+
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "cpf.numero", column = @Column(name = "nu_cpf")),
@@ -55,6 +62,11 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 
 	@Column(name = "data_desbloqueio")
 	private Date dataDesbloqueio;
+
+	@Setter
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name="id_endereco_estrangeiro")
+	private EnderecoEstrangeiro enderecoEstrangeiro;
 
 	/**
 	 * Construtor de solicitante.
@@ -85,9 +97,17 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	public boolean pussuiLicencaAtiva(Modalidade modalidade) {
 		return licenca
 			.stream()
-			.anyMatch(licencaProcurada -> (licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
-				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id)
+			.anyMatch(licencaProcurada -> ((licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
+				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id))
 				&& licencaProcurada.modalidade().getId().equals(modalidade.getId()));
+	}
+
+	public boolean pussuiLicencaMesmaModalidade(Modalidade modalidade) {
+		return licenca
+			.stream()
+			.anyMatch(licencaProcurada -> ((licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
+				licencaProcurada.getStatus().getId().equals(licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id))
+				&& licencaProcurada.modalidade().getNomePT().equals(modalidade.getNomePT())));
 	}
 
 	/**

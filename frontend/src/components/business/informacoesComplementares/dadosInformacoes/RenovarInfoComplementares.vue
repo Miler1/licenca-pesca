@@ -34,18 +34,17 @@
                         .money-input.el-input.el-input-group.el-input-group--prepend
                             .el-input-group__prepend R$
                             money.v-money.el-input__inner.money-input(v-model="informacoesComplementares.gastoMedioPesca" , :value="informacoesComplementares.gastoMedioPesca", v-bind='money')
-
-                el-col(:span="24")
-
-                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.faixaEtaria`)" prop="faixaEtaria")
-                        el-select(v-model="informacoesComplementares.faixaEtaria")
-                            el-option(v-for="l in informacoesComplementaresResource.faixaEtaria" :key="l.cod" :value="l.cod" :label="localizeField(l)")
-
                 el-col(:span="24")
 
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localPesca`)" prop="localPesca")
                         el-radio-group(v-model="informacoesComplementares.localPesca")  
                             el-radio-button(v-for="l in informacoesComplementaresResource.localPesca" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
+                
+                el-col(:span="24")
+
+                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
+                        el-select(v-model="informacoesComplementares.peixeMaisPescado")
+                            el-option(v-for="l in informacoesComplementaresResource.peixeMaisPescado" :key="l.cod" :value="l.cod" :label="localizeField(l)")
 
                 el-col(:span="24")
 
@@ -57,20 +56,15 @@
                 el-col(:span="24")
 
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
-                        el-radio-group(v-model="informacoesComplementares.tipoIsca")  
+                        el-radio-group(v-model="informacoesComplementares.tipoIsca" v-if="!verificaBloqueio()" :disabled="tipoIscaDisabled" )
                             el-radio-button(v-for="l in informacoesComplementaresResource.tipoIsca" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
 
                 el-col(:span="24")
-
+				    
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
                         el-radio-group(v-model="informacoesComplementares.agenciaTurismo")  
-                            el-radio-button(v-for="l in informacoesComplementaresResource.agenciaTurismo" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
-
-                el-col(:span="24")
-
-                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
-                        el-select(v-model="informacoesComplementares.peixeMaisPescado")
-                            el-option(v-for="l in informacoesComplementaresResource.peixeMaisPescado" :key="l.cod" :value="l.cod" :label="localizeField(l)")
+                            el-radio-button(v-for="l in informacoesComplementaresResource.agenciaTurismo" :key="l.cod" :label="l.cod") {{ localizeField(l) }} 
+                    | {{informacoesComplementaresResource.agenciaTurismo}}
 
 </template>
 
@@ -110,7 +104,6 @@ export default {
                 rendaMensal: null,
                 diasPescaPorAno: 1,
                 gastoMedioPesca: 0,
-                faixaEtaria: null,
                 localPesca: null,
                 materialPesca: null,
                 tipoIsca: null,
@@ -135,7 +128,7 @@ export default {
                 x: false,
                 y: true
             },
-
+            tipoIscaDisabled: false
         };
   },
 
@@ -150,14 +143,13 @@ export default {
             this.informacoesComplementares.localizacaoPreferencialPesca = this.informacoesComplementares.localizacaoPreferencialPesca.id;
             this.informacoesComplementares.localPesca = this.informacoesComplementares.localPesca.id;
             this.informacoesComplementares.rendaMensal = this.informacoesComplementares.rendaMensal.id;
-            this.informacoesComplementares.faixaEtaria = this.informacoesComplementares.faixaEtaria.id;
             this.informacoesComplementares.materialPesca = this.informacoesComplementares.materialPesca.id;
             this.informacoesComplementares.tipoIsca = this.informacoesComplementares.tipoIsca.id;
             this.informacoesComplementares.peixeMaisPescado = this.informacoesComplementares.peixeMaisPescado.id;
             if(this.informacoesComplementares.agenciaTurismo){
-                this.informacoesComplementares.agenciaTurismo = 0;
-            } else {
                 this.informacoesComplementares.agenciaTurismo = 1;
+            } else {
+                this.informacoesComplementares.agenciaTurismo = 0;
             }
         }
   }, 
@@ -170,6 +162,15 @@ export default {
         this.$refs["informacoesComplementares"].validate((valid) => {
         this.valid = valid;
       });
+    },
+    verificaBloqueio() {
+        if (this.informacoesComplementares.modalidadePesca == 0) {
+            this.informacoesComplementares.tipoIsca = 1;
+            this.tipoIscaDisabled = true;
+        }else {
+            this.informacoesComplementares.tipoIsca;
+            this.tipoIscaDisabled = false;
+        }
     },
     enviarParaStore() {
         this.$store.dispatch(

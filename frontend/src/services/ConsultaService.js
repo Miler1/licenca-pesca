@@ -31,7 +31,10 @@ const ConsultaService = {
    * dado o protocolo.
    */
   buscarDadosCarteira: protocolo =>
-    ApiService.query(`${Properties.BASE_URL}/api/informacao-carteira`, { protocolo })
+    ApiService.query(`${Properties.BASE_URL}/api/informacao-carteira`, { protocolo }),
+
+  fetchPaises: () =>
+    ApiService.query(`${Properties.BASE_URL}/api/fetch-paises`)
 };
 
 export default ConsultaService;

@@ -38,4 +38,6 @@ public interface RegistroServiceFacade {
 
 	ProtocoloDTO renovarLicenca(RegistroResource resource);
 
+	void atualizarCondicaoInvalido();
+
 }

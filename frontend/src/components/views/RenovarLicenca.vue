@@ -32,7 +32,7 @@ import ResumoStep from "../business/resumo/ResumoStep";
 import { translate } from "../../utils/helpers/internationalization";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
 import RenovarInfoComplementares from "../business/informacoesComplementares/RenovarInformacoesComplementares";
-import { FETCH_INFORMACAO_LICENCA,RENOVAR_CARTEIRA } from "../../store/actions.type";
+import { FETCH_INFORMACAO_LICENCA,RENOVAR_CARTEIRA, CANCELAR } from "../../store/actions.type";
 
 export default {
   name: "RenovarLicenca",

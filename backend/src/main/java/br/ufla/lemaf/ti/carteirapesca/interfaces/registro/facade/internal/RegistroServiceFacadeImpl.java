@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -88,6 +89,28 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 				resource.getInformacaoComplementar(), resource.getProtocolo()
 			),resource.getProtocolo()));
 
+	}
+
+	@Override
+	public void atualizarCondicaoInvalido() {
+
+		Date dataInvalidado = new Date();
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(dataInvalidado);
+		c.add(Calendar.DATE, -3);
+
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
+		if(Calendar.SUNDAY == dayOfWeek ) {
+
+			c.add(Calendar.DATE, +1);
+		} else if(Calendar.SATURDAY == dayOfWeek) {
+
+			c.add(Calendar.DATE, 2);
+		}
+
+		licencaRepository.alterarInvalidado(c.getTime());
 	}
 
 	/**
@@ -230,7 +253,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		if (Validate.isNull(info.getModalidadePesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "modalidade de pesca"));
 
-		if (Validate.isNull(info.getLocalPesca()))
+		if (Validate.isNull(info.getLocalizacaoPreferencialPesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "local de pesca"));
 
 		if (Validate.isNull(info.getRendaMensal()))
@@ -242,10 +265,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		if (Validate.isNull(info.getGastoMedioPesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "gasto médio por pesca"));
 
-		if (Validate.isNull(info.getFaixaEtaria()))
-			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "faixa etária"));
-
-		if (Validate.isNull(info.getLocalizacaoPreferencialPesca()))
+		if (Validate.isNull(info.getLocalPesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "localização preferencial de pesca"));
 
 		if (Validate.isNull(info.getMaterialPesca()))

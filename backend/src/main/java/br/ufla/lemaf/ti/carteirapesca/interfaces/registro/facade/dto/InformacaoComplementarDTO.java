@@ -1,11 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
@@ -29,8 +27,6 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 
 	private Double gastoMedioPesca;
 
-	private Integer faixaEtaria;
-
 	private Integer localPesca;
 
 	private Integer materialPesca;
@@ -52,8 +48,7 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 	 *                                     faixa da renda mensal
 	 * @param diasPescaPorAno              Número de dias de pesca por ano
 	 * @param gastoMedioPesca              Valor médio do gastos com pesca
-	 * @param faixaEtaria                  Inteiro representando a
-	 *                                     faixa etária
+
 	 * @param localPesca                   Inteiro representando o local da
 	 *                                     pesca
 	 * @param materialPesca                Inteiro representando o
@@ -71,7 +66,6 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 	                          @JsonProperty("rendaMensal") final Integer rendaMensal,
 	                          @JsonProperty("diasPescaPorAno") final Integer diasPescaPorAno,
 	                          @JsonProperty("gastoMedioPesca") final Double gastoMedioPesca,
-	                          @JsonProperty("faixaEtaria") final Integer faixaEtaria,
 	                          @JsonProperty("localPesca") final Integer localPesca,
 	                          @JsonProperty("materialPesca") final Integer materialPesca,
 	                          @JsonProperty("tipoIsca") final Integer tipoIsca,
@@ -82,7 +76,6 @@ public final class InformacaoComplementarDTO extends ResourceSupport {
 		this.rendaMensal = rendaMensal;
 		this.diasPescaPorAno = diasPescaPorAno;
 		this.gastoMedioPesca = gastoMedioPesca;
-		this.faixaEtaria = faixaEtaria;
 		this.localPesca = localPesca;
 		this.materialPesca = materialPesca;
 		this.tipoIsca = tipoIsca;

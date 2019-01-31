@@ -18,7 +18,7 @@
 				el-col(:span="24")
 
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.rendaMensal`)" prop="rendaMensal")
-						info-select(@value="informacoesComplementares.rendaMensal = $event" :model="informacoesComplementares.rendaMensal" :list="informacoesComplementaresResource.rendaMensal")
+						info-select.cor-placeholder(@value="informacoesComplementares.rendaMensal = $event" :model="informacoesComplementares.rendaMensal" :list="informacoesComplementaresResource.rendaMensal")
 
 				el-col(:span="24")
 
@@ -35,13 +35,12 @@
 
 				el-col(:span="24")
 
-					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.faixaEtaria`)" prop="faixaEtaria")
-						info-select(@value="informacoesComplementares.faixaEtaria = $event" :model="informacoesComplementares.faixaEtaria" :list="informacoesComplementaresResource.faixaEtaria")
-
-				el-col(:span="24")
-
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localPesca`)" prop="localPesca")
 						info-select(@value="informacoesComplementares.localPesca = $event" :model="informacoesComplementares.localPesca" :list="informacoesComplementaresResource.localPesca")
+				
+				el-col(:span="24")
+					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
+							info-select.cor-placeholder(@value="informacoesComplementares.peixeMaisPescado = $event" :model="informacoesComplementares.peixeMaisPescado" :list="informacoesComplementaresResource.peixeMaisPescado")
 
 				el-col(:span="24")
 
@@ -51,15 +50,10 @@
 				el-col(:span="24")
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
 						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" :tipoIscaDisabled="tipoIscaDisabled" )
-
+				
 				el-col(:span="24")
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
 							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :model="informacoesComplementares.agenciaTurismo" :list="informacoesComplementaresResource.agenciaTurismo")
-				
-				el-col(:span="24")
-					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.peixeMaisPescado`)" prop="peixeMaisPescado")
-							info-select(@value="informacoesComplementares.peixeMaisPescado = $event" :model="informacoesComplementares.peixeMaisPescado" :list="informacoesComplementaresResource.peixeMaisPescado")
-
 </template>
 
 <script>
@@ -101,7 +95,6 @@ export default {
 				rendaMensal: null,
 				diasPescaPorAno: 1,
 				gastoMedioPesca: 0,
-				faixaEtaria: null,
 				localPesca: null,
 				materialPesca: null,
 				tipoIsca: null,
@@ -207,19 +200,25 @@ export default {
 	#cadastro-info-complementares
 
 		.label-notes
-			margin: -25px 0 10px 0px
+			margin: -15px 0px 10px 0
 			padding: 5px
 			height: 20px
 			color: $--cor-texto-secundario
+
 		.label-notes-valor
-			margin: -25px 0 10px 0px
 			padding: 5px
-			padding-top: 20px
 			height: 20px
 			font-size: 14px;
+
 		.el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner
 			background-color: #409EFF
 			color: white
+		.el-form--label-top .el-form-item__label
+			padding: 0 0 1px 0;
+		
+		.cor-placeholder
+			::-webkit-input-placeholder 
+				color: #606266;
 
 		.money-input
 			width: 250px

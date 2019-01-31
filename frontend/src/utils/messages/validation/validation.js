@@ -84,7 +84,21 @@ const VALIDATION = {
         required("Access description", en)
       ]
     },
-
+    nacionalidade: {
+      required: [required("Nacionalidade"), required("Nationality", en)]
+    },
+    descricaoEndereco: {
+      required: [required("Descrição do endereço"), required("Adress description", en)]
+    },
+    cidade: {
+      required: [required("Cidade"), required("City", en)]
+    },
+    estado: {
+      required: [required("Estado/Provincia"), required("State/Province", en)]
+    },
+    pais: {
+      required: [required("País"), required("Country", en)]
+    },
     modalidadePesca: {
       required: [required("Modalidade de pesca"), required("Fishing mode", en)]
     },
@@ -102,8 +116,6 @@ const VALIDATION = {
     gastoMedioPesca: {
       required: [required("Qual o gasto médio com pesca?"), required("What is the average fishing spend?", en)]
     },
-
-    faixaEtaria: { required: [required("Qual a sua faixa de idade?"), required("What is your age range?", en)] },
 
     localPesca: { required: [required("Onde você prefere pescar?"), required("Where do you prefer to fish?", en)] },
 

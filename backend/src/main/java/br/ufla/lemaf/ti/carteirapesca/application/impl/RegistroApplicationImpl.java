@@ -4,14 +4,11 @@ import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.InformacaoComplementarRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.*;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.ModalidadeRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
@@ -51,6 +48,9 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 	@Autowired
 	InformacaoComplementarRepository informacaoComplementarRepository;
+
+	@Autowired
+	EnderecoEstrangeiroRepository enderecoEstrangeiroRepository;
 
 	private static final Integer ESPORTIVA = Modalidade.Modalidades.PESCA_ESPORTIVA.id;
 	private static final Integer RECREATIVA = Modalidade.Modalidades.PESCA_REACREATIVA.id;
@@ -102,11 +102,21 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 			protocolo = solicitante.adicionarLicenca(licenca, false);
 
-		} else {
+		}else if(!solicitante.pussuiLicencaMesmaModalidade(modalidade)){
+
+			throw new SolicitanteException("solicitante.licenca.mesma.modalidade");
+
+		}else {
 
 			throw new SolicitanteException("solicitante.licenca.ativa");
 		}
 
+			if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
+
+			solicitante.setEnderecoEstrangeiro(resource.getPessoa().getEnderecoEstrangeiro());
+		} else {
+			solicitante.setEnderecoEstrangeiro(null);
+		}
 		solicitanteRopository.save(solicitante);
 
 		return protocolo;

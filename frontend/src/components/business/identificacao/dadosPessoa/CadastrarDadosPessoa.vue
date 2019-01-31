@@ -156,6 +156,39 @@
             el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoCorrespondencia.municipio")
               el-select(v-model="pessoa.enderecoCorrespondencia.municipio" ref="enderecoCorrespondencia" :loading="municipioSelectLoader" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
                 el-option(v-for="municipio in municipiosCorrespondencia" :key="municipio.id" :value="municipio.id" :label="municipio.nome")
+      
+      div(v-if="pessoa.passaporte", ref="enderecoEstrangeiro")
+        el-row(:gutter="20")
+
+          el-col(:span="24")
+            h3.titulo {{ $t(`${cadastrar_prefix}titulos.enderecoEstrangeiro`) }}
+          
+        el-row(:gutter="20")
+
+          el-col(:span="9")
+            el-form-item(:label="$t(`${cadastrar_prefix}labels.nacionalidade`)" prop="enderecoEstrangeiro.nacionalidade")
+              el-select.full-width(v-model="pessoa.enderecoEstrangeiro.nacionalidade" :loading="nacionalidadeSelectLoader" ref="nacionalidade" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)" )
+                el-option(v-for="nacionalidade in nacionalidades" :key="nacionalidade.id" :value="nacionalidade.id" :label="nacionalidade.nome")
+
+          el-col(:span="15")
+            el-form-item(:label="$t(`${cadastrar_prefix}labels.descricaoEndereco`)" prop="enderecoEstrangeiro.descricaoEndereco")
+              el-input(v-model="pessoa.enderecoEstrangeiro.descricaoEndereco")
+        
+        el-row(:gutter="20")
+
+          el-col(:span="12")
+            el-form-item(:label="$t(`${cadastrar_prefix}labels.cidade`)" prop="enderecoEstrangeiro.cidade")
+              el-input(v-model="pessoa.enderecoEstrangeiro.cidade")
+
+          el-col(:span="12")
+            el-form-item(:label="$t(`${cadastrar_prefix}labels.estado`)" prop="enderecoEstrangeiro.estado")
+              el-input(v-model="pessoa.enderecoEstrangeiro.estado")
+        
+        el-row(:gutter="20")
+          el-col(:span="9")
+            el-form-item(:label="$t(`${cadastrar_prefix}labels.pais`)" prop="enderecoEstrangeiro.pais")
+              el-select.full-width(v-model="pessoa.enderecoEstrangeiro.pais" :loading="paisesSelectLoader" ref="pais" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)" )
+                el-option(v-for="pais in paises" :key="pais.id" :value="pais.id" :label="pais.nome")
 
 </template>
 
@@ -170,6 +203,8 @@ import { CADASTRO_MESSAGES_PREFIX } from "../../../../utils/messages/interface/r
 import {
   FETCH_MUNICIPIOS,
   FETCH_UFS,
+  FETCH_NACIONALIDADES,
+  FETCH_PAISES,
   SEND_SOLICITANTE,
 FETCH_MUNICIPIOS_CORRESPONDENCIA
 } from "../../../../store/actions.type";
@@ -219,6 +254,13 @@ export default {
           municipio: null,
           municipioNome: null,
           descricaoAcesso: null
+        },
+        enderecoEstrangeiro: {
+          nacionalidade: null,
+          descricaoEndereco: null,
+          cidade: null,
+          estado: null,
+          pais: null
         }
       },
       zonaLocalizacao: ZonaLocalizacaoDTO,
@@ -226,12 +268,13 @@ export default {
       genero_options: GENERO_OPTIONS,
       cadastrar_prefix: CADASTRO_MESSAGES_PREFIX,
       municipioSelectLoader: true,
+      paisesSelectLoader: true,
       ufSelectLoader: true,
       valid: false
     };
   },
   computed: {
-    ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa"])
+    ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa", "nacionalidades", "paises"])
   },
  
   methods: {
@@ -278,6 +321,17 @@ export default {
         this.pessoa.enderecoCorrespondencia.municipio = {};
         this.pessoa.enderecoCorrespondencia.municipio.id = municipioId;
         this.pessoa.enderecoCorrespondencia.municipioNome = this.$refs["enderecoCorrespondencia"].selectedLabel;
+      }
+      if(this.$refs["enderecoEstrangeiro"]){
+        let nacionalidadeId = this.pessoa.enderecoEstrangeiro.nacionalidade;
+        let paisId = this.pessoa.enderecoEstrangeiro.pais;
+        this.pessoa.enderecoEstrangeiro.pais = {};
+        this.pessoa.enderecoEstrangeiro.pais.id = paisId;
+        this.pessoa.enderecoEstrangeiro.paisNome = this.$refs["pais"].selectedLabel;
+        this.pessoa.enderecoEstrangeiro.nacionalidade = {};
+        this.pessoa.enderecoEstrangeiro.nacionalidade.id = nacionalidadeId;
+        this.pessoa.enderecoEstrangeiro.nacionalidadeNome = this.$refs["nacionalidade"].selectedLabel;
+
       }
       // this.pessoa.cpf = this.pessoaCpf;
       // this.pessoa.passaporte = this.pessoaPassaporte;
@@ -332,11 +386,25 @@ export default {
           .dispatch(FETCH_MUNICIPIOS_CORRESPONDENCIA, idUf)
           .finally(() => (this.municipioSelectLoader = false));
       }
+    },
+    fetchNacionalidade() {
+      this.nacionalidadeSelectLoader = true;
+      this.$store
+        .dispatch(FETCH_NACIONALIDADES)
+        .finally(() => (this.nacionalidadeSelectLoader = false));
+    },
+    fetchPaises() {
+      this.paisesSelectLoader = true;
+      this.$store
+        .dispatch(FETCH_PAISES)
+        .finally(() => (this.paisesSelectLoader = false));
     }
   },
   created() {
     this.instantiate();
     this.fetchUfs();
+    this.fetchNacionalidade();
+    this.fetchPaises();
   },
 
   beforeDestroy() {
@@ -383,4 +451,6 @@ export default {
 
     .el-form-item__label[for="enderecoCorrespondencia.semNumero"]
       color: transparent
+    .full-width
+      width: 100%
 </style>

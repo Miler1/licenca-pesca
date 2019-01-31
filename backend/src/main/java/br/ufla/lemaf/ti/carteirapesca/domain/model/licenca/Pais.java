@@ -10,18 +10,15 @@ import javax.persistence.Table;
 
 @Entity
 @Getter
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "preferencia_local_pesca")
-public class PreferenciaLocalPesca {
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "pais")
+public class Pais {
 	@Id
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "descricao_pt")
-	private String descricaoPT;
+	@Column(name = "nome")
+	private String nome;
 
-	@Column(name = "descricao_en")
-	private String descricaoEN;
-
-	@Column(name = "descricao_es")
-	private String descricaoES;
+	@Column(name = "sigla")
+	private String sigla;
 }

@@ -27,11 +27,6 @@ const INFORMACOES = {
         "What is the average fishing spend?",
         "¿Cuál es el gasto medio con la pesca?"
       ],
-      faixaEtaria: [
-        "Qual a sua faixa de idade?",
-        "What is your age range?",
-        "¿Cuál es su rango de edad?"
-      ],
       localPesca: [
         "Onde você prefere pescar?",
         "Where do you prefer to fish?",
