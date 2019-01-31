@@ -55,6 +55,19 @@ export const PESSOA_RULES = {
     descricaoAcesso: [required("descricaoAcesso")]
   },
 
+  enderecoEstrangeiro: {
+
+    nacionalidade: [required("nacionalidade", "change")],
+
+    descricaoEndereco: [required("descricaoEndereco")],
+
+    cidade: [required("cidade")],
+
+    estado: [required("estado")],
+
+    pais: [required("pais", "change")],
+  },
+
   enderecoCorrespondencia: {
     logradouro: [required("logradouro")],
 

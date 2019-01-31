@@ -30,4 +30,10 @@ public interface LicencaRepository extends JpaRepository<Licenca, Integer> {
 	@Modifying
 	@Query("update Licenca l set l.status = 3 where l.dataVencimento < :date and l.status = 1")
 	void alterarVencimento(Date date);
+
+
+	@Transactional
+	@Modifying
+	@Query("update Licenca l set l.status = 2 where l.dataVencimentoBoleto < :date and l.status = 0")
+	void alterarInvalidado(Date date);
 }

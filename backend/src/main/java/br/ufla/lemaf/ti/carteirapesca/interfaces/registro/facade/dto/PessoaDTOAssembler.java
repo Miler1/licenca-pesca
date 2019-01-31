@@ -37,7 +37,8 @@ public class PessoaDTOAssembler {
 			pessoa.nomeMae,
 			setEmail(pessoa.contatos),
 			searchEndereco(pessoa.enderecos, Constants.ENDERECO_PRINCIPAL),
-			searchEndereco(pessoa.enderecos, Constants.ENDERECO_CORRESPONDENCIA)
+			searchEndereco(pessoa.enderecos, Constants.ENDERECO_CORRESPONDENCIA),
+			null
 		);
 	}
 

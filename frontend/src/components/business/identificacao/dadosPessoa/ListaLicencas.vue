@@ -95,7 +95,7 @@ export default {
         },
       gerarBoleto(lista) {
         let protocolo = lista.protocolo.codigoFormatado;
-        let protocoloDesformatado = protocolo.replace("/", "").replace("-", "");
+        let protocoloDesformatado = protocolo.replace("/", "").replace("-", "").replace("-", "");
 
         const href =
             `${Properties.BASE_URL}/api/boleto?protocolo=` + protocoloDesformatado;
@@ -104,7 +104,7 @@ export default {
       },
       gerarCarteira(lista) {
         let protocolo = lista.protocolo.codigoFormatado;
-        let protocoloDesformatado = protocolo.replace("/", "").replace("-", "");
+        let protocoloDesformatado = protocolo.replace("/", "").replace("-", "").replace("-", "");
 
         const href =
         `${Properties.BASE_URL}/api/carteira?protocolo=` +

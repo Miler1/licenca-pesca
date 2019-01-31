@@ -144,6 +144,46 @@
             h4.label {{ $t(`${visualizar_prefix}label.uf`) }}
             h4(:class="{'not-informed': exist(pessoa.enderecoCorrespondencia.uf)}") {{ pessoa.enderecoCorrespondencia.uf | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
+    .enderecoCorrespondencia(v-if="pessoa.estrangeiro && pessoa.enderecoEstrangeiro")
+        h3.title.withDivisor {{ $t(`${visualizar_prefix}titulo.enderecoEstrangeiro`) }}
+        el-row.section(:gutter="20")
+
+          el-col(:span="6" v-if="!exist(pessoa.enderecoEstrangeiro.nacionalidade)")
+            .align
+              h4.label {{ $t(`${visualizar_prefix}label.nacionalidade`) }}
+              h4(
+              :class="{'not-informed': exist(pessoa.enderecoEstrangeiro.nacionalidadeNome)}"
+              ) {{ pessoa.enderecoEstrangeiro.nacionalidadeNome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+          
+          el-col(:span="6" v-if="!exist(pessoa.enderecoEstrangeiro.descricaoEndereco)")
+            .align
+              h4.label {{ $t(`${visualizar_prefix}label.descricaoEndereco`) }}
+              h4(
+              :class="{'not-informed': exist(pessoa.enderecoEstrangeiro.descricaoEndereco)}"
+              ) {{ pessoa.enderecoEstrangeiro.descricaoEndereco | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+
+          el-col(:span="6" v-if="!exist(pessoa.enderecoEstrangeiro.cidade)")
+            .align
+              h4.label {{ $t(`${visualizar_prefix}label.cidade`) }}
+              h4(
+              :class="{'not-informed': exist(pessoa.enderecoEstrangeiro.cidade)}"
+              ) {{ pessoa.enderecoEstrangeiro.cidade | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+
+          el-col(:span="6" v-if="!exist(pessoa.enderecoEstrangeiro.estado)")
+            .align
+              h4.label {{ $t(`${visualizar_prefix}label.estado`) }}
+              h4(
+              :class="{'not-informed': exist(pessoa.enderecoEstrangeiro.estado)}"
+              ) {{ pessoa.enderecoEstrangeiro.estado | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+        
+        el-row.section(:gutter="20")
+          el-col(:span="6" v-if="!exist(pessoa.enderecoEstrangeiro.pais)")
+            .align
+              h4.label {{ $t(`${visualizar_prefix}label.pais`) }}
+              h4(
+              :class="{'not-informed': exist(pessoa.enderecoEstrangeiro.paisNome)}"
+              ) {{ pessoa.enderecoEstrangeiro.paisNome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+
 </template>
 
 <script>

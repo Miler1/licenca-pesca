@@ -78,7 +78,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		 * recursoValidado com os valores de
 		 * resource.
 		 */
-		if (resource.getCpf() != null) {
+		if (resource.getCpf() != null && !resource.getCpf().isEmpty()) {
 			acessoResource = new AcessoResource(
 				CPFUtils.unformat(resource.getCpf()),
 				resource.getPassaporte()
@@ -90,9 +90,21 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 			);
 		}
 		// Converte dado Pessoa em DTO de Pessoa
-		return pessoaDTOAssembler.toDTO(
+		PessoaDTO pessoaDTO = pessoaDTOAssembler.toDTO(
 			acessoApplication.identificar(acessoResource)
 		);
+
+		Solicitante solicitante;
+		if(pessoaDTO.getCpf() != null){
+			solicitante = solicitanteRopository.findByIdentityCpfNumero(pessoaDTO.getCpf());
+		} else {
+			solicitante = solicitanteRopository.findByIdentityPassaporteNumero(pessoaDTO.getPassaporte());
+		}
+		if(solicitante != null){
+
+			pessoaDTO.setEnderecoEstrangeiro(solicitante.getEnderecoEstrangeiro());
+		}
+		return pessoaDTO;
 
 	}
 
