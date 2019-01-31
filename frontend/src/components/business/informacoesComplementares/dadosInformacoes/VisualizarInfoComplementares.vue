@@ -35,11 +35,6 @@
 		el-row.section(:gutter="20")
 			el-col(:span="24")
 				.align
-					h4.label {{ $t(`${visualizar_prefix}labels.faixaEtaria`) }}
-					h4(:class="{'not-informed': !exist(info.faixaEtaria)}") {{ localeData(informacoesComplementaresResource.faixaEtaria, info.faixaEtaria) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
-		el-row.section(:gutter="20")
-			el-col(:span="24")
-				.align
 					h4.label {{ $t(`${visualizar_prefix}labels.localPesca`) }}
 					h4(:class="{'not-informed': !exist(info.localPesca)}") {{ localeData(informacoesComplementaresResource.localPesca, info.localPesca) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}		
 		

@@ -34,13 +34,6 @@
                         .money-input.el-input.el-input-group.el-input-group--prepend
                             .el-input-group__prepend R$
                             money.v-money.el-input__inner.money-input(v-model="informacoesComplementares.gastoMedioPesca" , :value="informacoesComplementares.gastoMedioPesca", v-bind='money')
-
-                el-col(:span="24")
-
-                    el-form-item(:label="$t(`${cadastrar_info_prefix}labels.faixaEtaria`)" prop="faixaEtaria")
-                        el-select(v-model="informacoesComplementares.faixaEtaria")
-                            el-option(v-for="l in informacoesComplementaresResource.faixaEtaria" :key="l.cod" :value="l.cod" :label="localizeField(l)")
-
                 el-col(:span="24")
 
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localPesca`)" prop="localPesca")
@@ -110,7 +103,6 @@ export default {
                 rendaMensal: null,
                 diasPescaPorAno: 1,
                 gastoMedioPesca: 0,
-                faixaEtaria: null,
                 localPesca: null,
                 materialPesca: null,
                 tipoIsca: null,
@@ -151,7 +143,6 @@ export default {
             this.informacoesComplementares.localizacaoPreferencialPesca = this.informacoesComplementares.localizacaoPreferencialPesca.id;
             this.informacoesComplementares.localPesca = this.informacoesComplementares.localPesca.id;
             this.informacoesComplementares.rendaMensal = this.informacoesComplementares.rendaMensal.id;
-            this.informacoesComplementares.faixaEtaria = this.informacoesComplementares.faixaEtaria.id;
             this.informacoesComplementares.materialPesca = this.informacoesComplementares.materialPesca.id;
             this.informacoesComplementares.tipoIsca = this.informacoesComplementares.tipoIsca.id;
             this.informacoesComplementares.peixeMaisPescado = this.informacoesComplementares.peixeMaisPescado.id;

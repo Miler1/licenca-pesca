@@ -11,8 +11,6 @@ export const INFORMACOES_RULES = {
 
   gastoMedioPesca: [required("gastoMedioPesca", "change")],
 
-  faixaEtaria: [required("faixaEtaria", "change")],
-
   localPesca: [required("localPesca", "change")],
 
   materialPesca: [required("materialPesca", "change")],

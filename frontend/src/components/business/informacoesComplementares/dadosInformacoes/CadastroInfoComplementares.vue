@@ -35,11 +35,6 @@
 
 				el-col(:span="24")
 
-					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.faixaEtaria`)" prop="faixaEtaria")
-						info-select(@value="informacoesComplementares.faixaEtaria = $event" :model="informacoesComplementares.faixaEtaria" :list="informacoesComplementaresResource.faixaEtaria")
-
-				el-col(:span="24")
-
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.localPesca`)" prop="localPesca")
 						info-select(@value="informacoesComplementares.localPesca = $event" :model="informacoesComplementares.localPesca" :list="informacoesComplementaresResource.localPesca")
 
@@ -101,7 +96,6 @@ export default {
 				rendaMensal: null,
 				diasPescaPorAno: 1,
 				gastoMedioPesca: 0,
-				faixaEtaria: null,
 				localPesca: null,
 				materialPesca: null,
 				tipoIsca: null,

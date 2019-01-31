@@ -103,8 +103,6 @@ const VALIDATION = {
       required: [required("Qual o gasto médio com pesca?"), required("What is the average fishing spend?", en)]
     },
 
-    faixaEtaria: { required: [required("Qual a sua faixa de idade?"), required("What is your age range?", en)] },
-
     localPesca: { required: [required("Onde você prefere pescar?"), required("Where do you prefer to fish?", en)] },
 
     materialPesca: { required: [required("Qual o tipo de material / equipamento você utiliza?"), required("What kind of material / equipment do you use?", en)] },

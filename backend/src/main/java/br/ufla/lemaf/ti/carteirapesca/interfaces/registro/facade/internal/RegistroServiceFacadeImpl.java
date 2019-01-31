@@ -242,9 +242,6 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		if (Validate.isNull(info.getGastoMedioPesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "gasto médio por pesca"));
 
-		if (Validate.isNull(info.getFaixaEtaria()))
-			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "faixa etária"));
-
 		if (Validate.isNull(info.getLocalizacaoPreferencialPesca()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "localização preferencial de pesca"));
 

@@ -45,7 +45,6 @@ const INITIAL_STATE = {
     modalidadePesca: MODALIDADE_PESCA_MOCK,
     localizacaoPreferencialPesca: LOCALIZACAO_PREF_PESCA_MOCK,
     rendaMensal: RENDA_MENSAL_MOCK,
-    faixaEtaria: FAIXA_ETARIA_MOCK,
     localPesca: LOCAL_PESCA_MOCK,
     materialPesca: MATERIAL_PESCA_MOCK,
     tipoIsca: TIPO_ISCA_MOCK,
