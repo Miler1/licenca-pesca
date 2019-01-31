@@ -18,6 +18,11 @@ public class AtualizacaoVencimento {
 	@Scheduled(cron = " 0 0 0 1/1 * ?")
 	public void atualizacaoAutomatica() {
 		log.info("Atualização automática");
+
+		// Verifica vencimento
 		registroServiceFacade.atualizarCondicaoVencimento();
+
+		// Verifica invalido
+		registroServiceFacade.atualizarCondicaoInvalido();
 	}
 }

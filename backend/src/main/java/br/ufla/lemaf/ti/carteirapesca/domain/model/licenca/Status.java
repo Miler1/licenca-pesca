@@ -29,11 +29,11 @@ public class Status {
 
 	public enum StatusEnum{
 
-		AGUARDANDO_PAGAMENTO_BOLETO(0, "Tombado", "AGUARDANDO_PAGAMENTO_BOLETO"),
-		ATIVO(1, "Sincronizado", "ATIVO"),
-		INVALIDADO(2, "Não Sincronizado", "INVALIDADO"),
-		VENCIDO(3, "Exportado", "VENCIDO"),
-		RENOVADO(4, "Rascunho", "RENOVADO");
+		AGUARDANDO_PAGAMENTO_BOLETO(0, "Aguardando pagamento do boleto", "AGUARDANDO_PAGAMENTO_BOLETO"),
+		ATIVO(1, "Ativo", "ATIVO"),
+		INVALIDADO(2, "Invalidado", "INVALIDADO"),
+		VENCIDO(3, "Vencido", "VENCIDO"),
+		RENOVADO(4, "Renovado", "RENOVADO");
 
 		public Integer id;
 		public String descricao;

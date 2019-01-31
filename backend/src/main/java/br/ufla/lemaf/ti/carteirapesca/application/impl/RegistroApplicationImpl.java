@@ -105,7 +105,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			throw new SolicitanteException("solicitante.licenca.ativa");
 		}
 
-		if(!resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
+		if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
 
 			solicitante.setEnderecoEstrangeiro(resource.getPessoa().getEnderecoEstrangeiro());
 		} else {
