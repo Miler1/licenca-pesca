@@ -25,7 +25,12 @@ const CADASTRO = {
       email: ["E-mail:", "Email:"],
       confirmarEmail: ["Confirmar e-mail:", "Confirm email:"],
       descricaoAcesso: ["Descrição de acesso:", "Access description:"],
-      semNumero: ["Sem número", "No number"]
+      semNumero: ["Sem número", "No number"],
+      nacionalidade: ["Nacionalidade:", "Nationality:"],
+      descricaoEndereco: ["Descrição do endereço:", "Adress description:"],
+      cidade: ["Cidade:", "City:"],
+      estado: ["Estado/Provincia:", "State/Province:"],
+      pais: ["País:", "Country:"]
     },
     dados: {
       genero: {
@@ -41,6 +46,7 @@ const CADASTRO = {
     titulos: {
       dadosPessoais: ["Dados pessoais", "Personal data"],
       dadosContato: ["Dados de contato", "Contact data"],
+      enderecoEstrangeiro: ["Endereço de origem", "Origin Address"],
       enderecoPrincipal: ["Dados de endereço", "Address data"],
       enderecoCorrespondencia: [
         "Endereço de correspondência",

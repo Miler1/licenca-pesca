@@ -13,7 +13,8 @@ const VISUALIZAR = {
       enderecoCorrespondencia: [
         "Endereço de Correspondência",
         "Mailing Address"
-      ]
+      ],
+      enderecoEstrangeiro: ["Endereço de origem", "Origin address"]
     },
     label: {
       cpf: ["CPF", "CPF"],
@@ -30,7 +31,12 @@ const VISUALIZAR = {
       cep: ["CEP", "Postal code"],
       municipio: ["Município", "County"],
       uf: ["UF", "State"],
-      descricaoAcesso: ["Descrição de acesso", "Access description"]
+      descricaoAcesso: ["Descrição de acesso", "Access description"],
+      nacionalidade: ["Nacionalidade", "Nationality"],
+      descricaoEndereco: ["Descrição do endereço", "Adress description"],
+      cidade: ["Cidade", "City"],
+      estado: ["Estado/Provincia", "State/Province"],
+      pais: ["País", "Country"]
     },
     dados: {
       genero: {

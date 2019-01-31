@@ -84,7 +84,21 @@ const VALIDATION = {
         required("Access description", en)
       ]
     },
-
+    nacionalidade: {
+      required: [required("Nacionalidade"), required("Nationality", en)]
+    },
+    descricaoEndereco: {
+      required: [required("Descrição do endereço"), required("Adress description", en)]
+    },
+    cidade: {
+      required: [required("Cidade"), required("City", en)]
+    },
+    estado: {
+      required: [required("Estado/Provincia"), required("State/Province", en)]
+    },
+    pais: {
+      required: [required("País"), required("Country", en)]
+    },
     modalidadePesca: {
       required: [required("Modalidade de pesca"), required("Fishing mode", en)]
     },

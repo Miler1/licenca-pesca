@@ -1,0 +1,24 @@
+package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
+
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import lombok.Getter;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Getter
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "pais")
+public class Pais {
+	@Id
+	@Column(name = "id")
+	private Integer id;
+
+	@Column(name = "nome")
+	private String nome;
+
+	@Column(name = "sigla")
+	private String sigla;
+}

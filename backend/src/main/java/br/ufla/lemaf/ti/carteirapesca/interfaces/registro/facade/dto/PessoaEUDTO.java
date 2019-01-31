@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.EnderecoEstrangeiro;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,6 +32,8 @@ public class PessoaEUDTO extends ResourceSupport {
 	private EnderecoEUDTO enderecoPrincipal;
 
 	private EnderecoEUDTO enderecoCorrespondencia;
+
+	private EnderecoEstrangeiro enderecoEstrangeiro;
 
 	/**
 	 * Construtor.
@@ -80,6 +83,7 @@ public class PessoaEUDTO extends ResourceSupport {
 		this.email = pessoaDTO.getEmail();
 		this.enderecoPrincipal = pessoaDTO.getEnderecoPrincipal().toEUDTO();
 		this.enderecoCorrespondencia = pessoaDTO.getEnderecoCorrespondencia().toEUDTO();
+
 	}
 
 
@@ -102,6 +106,7 @@ public class PessoaEUDTO extends ResourceSupport {
 		this.email = pessoa.email;
 		this.enderecoPrincipal = pessoa.enderecoPrincipal;
 		this.enderecoCorrespondencia = pessoa.enderecoCorrespondencia;
+		this.enderecoEstrangeiro = pessoa.enderecoEstrangeiro;
 	}
 
 	/**
@@ -195,6 +200,10 @@ public class PessoaEUDTO extends ResourceSupport {
 	 */
 	public EnderecoEUDTO getEnderecoCorrespondencia() {
 		return enderecoCorrespondencia;
+	}
+
+	public EnderecoEstrangeiro getEnderecoEstrangeiro() {
+		return enderecoEstrangeiro;
 	}
 
 	/**

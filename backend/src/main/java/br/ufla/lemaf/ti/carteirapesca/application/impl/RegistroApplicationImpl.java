@@ -1,16 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.InformacaoComplementarRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.*;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.*;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.ModalidadeRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
@@ -26,6 +20,7 @@ import lombok.val;
 import lombok.var;
 import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +45,10 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 	@Autowired
 	InformacaoComplementarRepository informacaoComplementarRepository;
+
+	@Autowired
+	EnderecoEstrangeiroRepository enderecoEstrangeiroRepository;
+
 
 	private static final Integer ESPORTIVA = Modalidade.Modalidades.PESCA_ESPORTIVA.id;
 	private static final Integer RECREATIVA = Modalidade.Modalidades.PESCA_REACREATIVA.id;
@@ -106,6 +105,12 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			throw new SolicitanteException("solicitante.licenca.ativa");
 		}
 
+		if(!resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
+
+			solicitante.setEnderecoEstrangeiro(resource.getPessoa().getEnderecoEstrangeiro());
+		} else {
+			solicitante.setEnderecoEstrangeiro(null);
+		}
 		solicitanteRopository.save(solicitante);
 
 		return protocolo;
@@ -261,6 +266,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			solicitante = new Solicitante(cpf, passaporte);
 			cadastrarPessoa(resource.getPessoa().toPessoaEUDTO());
 		}
+
 
 		return solicitante;
 	}

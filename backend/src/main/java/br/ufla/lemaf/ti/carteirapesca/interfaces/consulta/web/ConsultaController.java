@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.web;
 
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Pais;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
@@ -34,6 +35,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -244,5 +246,16 @@ public class ConsultaController {
 
 		return new ResponseEntity<>(licencaPesca, HttpStatus.OK);
 	}
+
+
+	@CrossOrigin("*")
+	@GetMapping("/fetch-paises")
+	public ResponseEntity<List<Pais>> fetchPaises(){
+
+		var listPaises = consultaApplication.fetchPaises();
+
+		return new ResponseEntity<>(listPaises, HttpStatus.OK);
+	}
+
 
 }
