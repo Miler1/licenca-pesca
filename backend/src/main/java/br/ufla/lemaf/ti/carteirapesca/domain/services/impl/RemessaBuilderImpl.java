@@ -1,15 +1,18 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.BeneficiarioTitulo;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Endereco;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.PagadorTitulo;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.Remessa240Builder;
+import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoArquivoEnum;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RemessaRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.Remessa400Builder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.jrimum.texgit.FlatFile;
 import org.jrimum.texgit.Record;
 import org.jrimum.texgit.Texgit;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -24,7 +27,13 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class RemessaBuilderImpl implements Remessa240Builder {
+public class RemessaBuilderImpl implements Remessa400Builder {
+
+	@Autowired
+	RemessaRepository remessaRepository;
+
+	@Autowired
+	TipoArquivoRepository tipoArquivoRepository;
 
 	private static final String PATH_TEMPLATE_REMESSA = "/home/hiagosouza/git/amazonas/carteira-de-pesca/backend/src/main/resources/templates/banco/remessa/bradesco_remessa_cnab400.txg.xml";
 	private static final DateTimeFormatter FORMATO_DATA_REMESSA = DateTimeFormatter.ofPattern("ddMMYY");
@@ -33,23 +42,33 @@ public class RemessaBuilderImpl implements Remessa240Builder {
 	@Override
 	public String geraRemessa(List<Titulo> titulos) throws IOException {
 
+		Remessa ultimaRemessaEnviada = null; //remessaRepository.findByDataCadastroMax();
+		Remessa remessa;
+
+		if(ultimaRemessaEnviada != null) {
+			remessa = new Remessa(ultimaRemessaEnviada.getSequencia() + 1);
+		} else {
+			remessa = new Remessa(1);
+		}
+
 		File file = new File(PATH_TEMPLATE_REMESSA);
 		FlatFile<Record> ff = Texgit.createFlatFile(file);
 
-		ff.addRecord(geraCabecalho(ff, titulos.get(0)));
+		ff.addRecord(geraCabecalho(ff, titulos.get(0), remessa));
 
 		Integer index = 0;
 		for (Titulo titulo : titulos) {
 			ff.addRecord(geraTramsacao(ff, titulo, index));
+			index++;
 		}
 
 		ff.addRecord(geraTrailler(ff));
 
-		return geraArquivo(ff);
+		return geraArquivo(ff, remessa);
 
 	}
 
-	private Record geraCabecalho(FlatFile<Record> flatFile, Titulo titulo) {
+	private Record geraCabecalho(FlatFile<Record> flatFile, Titulo titulo, Remessa remessa) {
 		BeneficiarioTitulo beneficiario = titulo.getBeneficiario();
 
 		Record header = flatFile.createRecord("Header");
@@ -58,8 +77,7 @@ public class RemessaBuilderImpl implements Remessa240Builder {
 		header.setValue("NomeEmpresa", completaStringComEspacosEsquerda(30, beneficiario.getSigla()));
 		header.setValue("DataGravacaoArquivo", LocalDate.now().format(FORMATO_DATA_REMESSA));
 		header.setValue("EspacoBranco", completaStringComEspacosEsquerda(8, ""));
-		header.setValue("NumeroSequencialRemessa", String.format("%1$7s", ""));
-//		header.setValue("sequencia", String.format("%1$3d", ""));
+		header.setValue("NumeroSequencialRemessa", String.format("%1$7s", remessa.getSequencia()));
 
 		return header;
 	}
@@ -71,7 +89,7 @@ public class RemessaBuilderImpl implements Remessa240Builder {
 		BeneficiarioTitulo beneficiario = titulo.getBeneficiario();
 
 		transacao.setValue("OpcionalAgenciaDebito", completaStringComZerosEsquerda(5, ""));
-		transacao.setValue("OpcionalDigitoAgenciaDebito", completaStringComEspacosEsquerda(1, ""));
+		transacao.setValue("OpcionalDigitoAgenciaDebito", completaStringComZerosEsquerda(1, ""));
 		transacao.setValue("OpcionalRazaoContaCorrente", completaStringComZerosEsquerda(5, ""));
 		transacao.setValue("OpcionalContaCorrente", completaStringComZerosEsquerda(7, ""));
 		transacao.setValue("OpcionalDigitoContaCorrente", completaStringComZerosEsquerda(1, ""));
@@ -148,7 +166,7 @@ public class RemessaBuilderImpl implements Remessa240Builder {
 		transacao.setValue("CepPagador", cep.substring(0, 5));
 		transacao.setValue("SufixoCepPagador", cep.substring(5, 8));
 		transacao.setValue("SegundaMensagem", completaStringComEspacosEsquerda(60, ""));
-		transacao.setValue("sequencia", completaStringComEspacosEsquerda(6, index.toString()));
+		transacao.setValue("sequencia",  index.toString());
 
 		return transacao;
 
@@ -203,10 +221,10 @@ public class RemessaBuilderImpl implements Remessa240Builder {
 
 	}
 
-	private String geraArquivo(FlatFile<Record> ff) throws IOException {
+	private String geraArquivo(FlatFile<Record> ff, Remessa remessa) throws IOException {
 
 		//TODO Implementar solução de nome permanete para a remessa com as variáveis alfanumericas
-		String nomeArquivoRemessa = "CB" + LocalDate.now().format(FORMATO_DATA_NOME_ARQUIVO_REMESSA) + "01.REM";
+		String nomeArquivoRemessa = "CB" + LocalDate.now().format(FORMATO_DATA_NOME_ARQUIVO_REMESSA) + remessa.getSequencialNomeArquivo() + ".REM";
 		String diretorioDiaGeracaoRemessa = LocalDate.now().format(FORMATO_DATA_REMESSA);
 
 		Path pathRemessa = Paths.get(Properties.pathArquivoRemessa() + "/" + diretorioDiaGeracaoRemessa + "/" + nomeArquivoRemessa);
@@ -215,6 +233,11 @@ public class RemessaBuilderImpl implements Remessa240Builder {
 		if(!arquivoRemessa.exists()) {
 			Files.createDirectories(pathRemessa.getParent());
 		}
+
+		TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.REMESSA.getCodigo());
+		remessa.setArquivo(new Arquivo(pathRemessa.toString(), nomeArquivoRemessa, tipoArquivo));
+
+		remessaRepository.save(remessa);
 
 		Files.write(pathRemessa, ff.write());
 

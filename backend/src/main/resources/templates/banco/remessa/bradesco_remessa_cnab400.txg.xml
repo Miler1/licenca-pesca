@@ -69,7 +69,7 @@
                     <Field name="NumeroSequencialRemessa" length="7" type="INTEGER" padding="ZERO_LEFT" />
                     <Field name="Filler2" length="277" />
                     <!-- <Field name="NumeroSequencialRegistro" length="6" type="INTEGER" padding="ZERO_LEFT" /> -->
-                    <SequencialNumber name="sequencia" type="INTEGER" length="6" position="15" padding="ZERO_LEFT" />
+                    <SequencialNumber name="sequencia" value="1" type="INTEGER" length="6" position="15" padding="ZERO_LEFT" />
                 </GroupOfFields>
             </Record>
             <Record name="TransacaoTitulo" repeatable="true">
@@ -121,9 +121,10 @@
                     <Field name="CepPagador" length="5"/>
                     <Field name="SufixoCepPagador" length="3"/>
                     <Field name="SegundaMensagem" length="60"/>
+                    <Field name="sequencia" length="6" padding="ZERO_LEFT"/>
                     <!--<Field name="NumeroSequencialRegistro" length="6"/>-->
 
-                    <SequencialNumber name="sequencia" type="INTEGER" length="6" position="48" padding="ZERO_LEFT" />
+                    <!--<SequencialNumber name="sequencia" type="INTEGER" length="6" position="48" padding="ZERO_LEFT" />-->
                 </GroupOfFields>
             </Record>
             <Record name="Trailler">
