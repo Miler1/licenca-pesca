@@ -148,9 +148,9 @@ export default {
             this.informacoesComplementares.peixeMaisPescado = this.informacoesComplementares.peixeMaisPescado.id;
             debugger
             if(this.informacoesComplementares.agenciaTurismo){
-                this.informacoesComplementares.agenciaTurismo = 0;
-            } else {
                 this.informacoesComplementares.agenciaTurismo = 1;
+            } else {
+                this.informacoesComplementares.agenciaTurismo = 0;
             }
         }
   }, 
