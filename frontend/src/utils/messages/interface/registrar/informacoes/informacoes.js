@@ -27,11 +27,6 @@ const INFORMACOES = {
         "What is the average fishing spend?",
         "¿Cuál es el gasto medio con la pesca?"
       ],
-      faixaEtaria: [
-        "Qual a sua faixa de idade?",
-        "What is your age range?",
-        "¿Cuál es su rango de edad?"
-      ],
       localPesca: [
         "Onde você prefere pescar?",
         "Where do you prefer to fish?",
@@ -74,6 +69,13 @@ const INFORMACOES = {
         "Including means of transport, food, lodging, equipment and others. In Brazilian real.",
         "Incluyendo medios de transporte, alimentación, hospedaje, equipos y otros. En el Real brasileño."
       ]
+    },
+    valoresCarteira: {
+      modalidades: {
+        esportiva: ["Valor total a pagar: R$ 41.21", "Total amount to pay: R$ 41.21"],
+        recreativa: ["Valor total a pagar: R$ 57.21", "Total amount to pay: R$ 57.21"],
+        mensagemInicial: ["Selecione uma modalidade para ver o valor da respectiva carteira", "Select a mode to see the value"]
+      }
     },
     titulos: {
       informacoesComplementares: [

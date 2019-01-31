@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Getter
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "local_pesca")
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "preferencia_local_pesca")
 public class PreferenciaLocalPesca {
 	@Id
 	@Column(name = "id")
