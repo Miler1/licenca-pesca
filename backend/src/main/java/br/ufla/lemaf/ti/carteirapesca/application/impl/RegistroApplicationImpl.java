@@ -100,12 +100,16 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 			protocolo = solicitante.adicionarLicenca(licenca, false);
 
-		} else {
+		}else if(!solicitante.pussuiLicencaMesmaModalidade(modalidade)){
+
+			throw new SolicitanteException("solicitante.licenca.mesma.modalidade");
+
+		}else {
 
 			throw new SolicitanteException("solicitante.licenca.ativa");
 		}
 
-		if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
+			if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
 
 			solicitante.setEnderecoEstrangeiro(resource.getPessoa().getEnderecoEstrangeiro());
 		} else {
