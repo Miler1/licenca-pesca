@@ -146,9 +146,9 @@ export default {
             this.informacoesComplementares.tipoIsca = this.informacoesComplementares.tipoIsca.id;
             this.informacoesComplementares.peixeMaisPescado = this.informacoesComplementares.peixeMaisPescado.id;
             if(this.informacoesComplementares.agenciaTurismo){
-                this.informacoesComplementares.agenciaTurismo = 0;
-            } else {
                 this.informacoesComplementares.agenciaTurismo = 1;
+            } else {
+                this.informacoesComplementares.agenciaTurismo = 0;
             }
         }
   }, 
