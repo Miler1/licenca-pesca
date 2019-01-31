@@ -50,7 +50,7 @@
 				el-col(:span="24")
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.tipoIsca`)" prop="tipoIsca")
 						info-select(@value="informacoesComplementares.tipoIsca = $event" :model="informacoesComplementares.tipoIsca" :list="informacoesComplementaresResource.tipoIsca" :tipoIscaDisabled="tipoIscaDisabled" )
-
+				
 				el-col(:span="24")
 					el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
 							info-select(@value="informacoesComplementares.agenciaTurismo = $event" :model="informacoesComplementares.agenciaTurismo" :list="informacoesComplementaresResource.agenciaTurismo")

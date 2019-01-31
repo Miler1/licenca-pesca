@@ -60,10 +60,11 @@
                             el-radio-button(v-for="l in informacoesComplementaresResource.tipoIsca" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
 
                 el-col(:span="24")
-
+				    
                     el-form-item(:label="$t(`${cadastrar_info_prefix}labels.agenciaTurismo`)" prop="agenciaTurismo")
                         el-radio-group(v-model="informacoesComplementares.agenciaTurismo")  
-                            el-radio-button(v-for="l in informacoesComplementaresResource.agenciaTurismo" :key="l.cod" :label="l.cod") {{ localizeField(l) }}
+                            el-radio-button(v-for="l in informacoesComplementaresResource.agenciaTurismo" :key="l.cod" :label="l.cod") {{ localizeField(l) }} 
+                    | {{informacoesComplementaresResource.agenciaTurismo}}
 
 </template>
 
@@ -145,6 +146,7 @@ export default {
             this.informacoesComplementares.materialPesca = this.informacoesComplementares.materialPesca.id;
             this.informacoesComplementares.tipoIsca = this.informacoesComplementares.tipoIsca.id;
             this.informacoesComplementares.peixeMaisPescado = this.informacoesComplementares.peixeMaisPescado.id;
+            debugger
             if(this.informacoesComplementares.agenciaTurismo){
                 this.informacoesComplementares.agenciaTurismo = 0;
             } else {
