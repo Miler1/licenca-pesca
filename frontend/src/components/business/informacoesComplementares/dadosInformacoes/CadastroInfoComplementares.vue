@@ -207,21 +207,20 @@ export default {
 	#cadastro-info-complementares
 
 		.label-notes
+			margin: -15px 0px 10px 0
 			padding: 5px
 			height: 20px
 			color: $--cor-texto-secundario
 
 		.label-notes-valor
-			margin: -25px 0 10px 0px
 			padding: 5px
-			padding-top: 20px
 			height: 20px
 			font-size: 14px;
 
 		.el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner
 			background-color: #409EFF
 			color: white
-
+			
 		.money-input
 			width: 250px
 </style>
