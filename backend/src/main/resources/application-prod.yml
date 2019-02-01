@@ -5,11 +5,12 @@ logging:
   level:
     br.ufla.lemaf.ti: ERROR
     org.hibernate: ERROR
-  file: /var/log/application/carteira_pesca.log
+  file: /dados/logs/carteira-pesca/carteira_pesca.log
 
 spring:
 
   application:
+    urlBase: http://sistemas.ipaam.am.gov.br/carteira-pesca/
     name: Glide
     version: @project.version@
 
@@ -35,3 +36,17 @@ spring:
   jackson:
     time-zone: UTC
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+
+  security:
+    entradaUnica:
+      client-id: 7212ad07d6da519b0d95fd94d2e2b62a2443f1aae07b95a8aa3b1b5b3a84bc5dc981305a2a905474f2eaa5e7c6b84a924f08b28476ffddaba8db4eefccebdbe3
+      client-secret: 0a940507425458e7714c3c7c6abbaf1b149ddcd1245f6620de0e658b40183beb3d10316e8bb5e9c383ec299fa95e2cbf3ef62d7d192a4bdcd34e1ceb2cda2bf3
+      portal-seguranca:
+        url: http://sistemas.ipaam.am.gov.br/portal-seguranca/
+      cadastro-unificado:
+        url: http://sistemas.ipaam.am.gov.br/cadastro-unificado
+
+  carteira-pesca:
+    base-path: /dados/carteira-pesca/carteira/
+    path-arquivo-boleto: /dados/carteira-pesca/boleto/
+    path-arquivo-remessa: /dados/carteira-pesca/remessa/
