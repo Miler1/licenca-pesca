@@ -153,7 +153,7 @@
               h4.label {{ $t(`${visualizar_prefix}label.nacionalidade`) }}
               h4(
               :class="{'not-informed': exist(pessoa.enderecoEstrangeiro.nacionalidadeNome)}"
-              ) {{ pessoa.enderecoEstrangeiro.nacionalidadeNome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+              ) {{ (pessoa.enderecoEstrangeiro.nacionalidadeNome) | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
           
           el-col(:span="6" v-if="!exist(pessoa.enderecoEstrangeiro.descricaoEndereco)")
             .align

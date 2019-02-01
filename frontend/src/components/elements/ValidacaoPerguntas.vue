@@ -68,13 +68,10 @@ export default {
 
     created() {
         this.$store.subscribe((mutation, state) => {
-        if(mutation.type === "CLEAN_PESQUISA" || mutation.type === "SET_BUSCA_MAES"){
-            this.pessoa = {
-                dataNascimento: null,
-                cpf: null,
-                nomeMae: null
-            };
-        }
+        if(mutation.type === "CLEAN_PESQUISA" || mutation.type === "SET_BUSCA_MAES" ){
+            this.pessoa.dataNascimento = null;
+            this.pessoa.nomeMae = null;
+        } 
         });
     },
     methods: {

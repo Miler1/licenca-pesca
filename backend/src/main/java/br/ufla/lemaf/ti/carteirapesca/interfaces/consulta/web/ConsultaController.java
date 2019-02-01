@@ -119,9 +119,13 @@ public class ConsultaController {
 		var passaporte = "";
 		if(licenca.solicitante().getIdentity().cpf() != null){
 			cpf = licenca.solicitante().getIdentity().cpf().getNumero();
+		} else {
+			cpf = null;
 		}
 		if(licenca.solicitante().getIdentity().passaporte() != null){
 			passaporte = licenca.solicitante().getIdentity().passaporte().getNumero();
+		} else {
+			passaporte = null;
 		}
 
 		AcessoResource acessoResource = new AcessoResource(cpf, passaporte);
