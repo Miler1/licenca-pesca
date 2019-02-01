@@ -40,6 +40,11 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private static final Integer MES_ANTES_DE_VENCER = -1;
 	private static final Integer QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO = 1;
 
+	@Id
+	@SuppressWarnings("unused")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
 	@Embedded
 	@AttributeOverride(name = "codigoFormatado", column = @Column(name = "tx_protocolo"))
 	private Protocolo protocolo;
@@ -139,11 +144,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	public Date getDataVencimento() {
 
 		return dataVencimento;
-	}
-
-	public Date getDataVencimentoBoleto() {
-
-		return dataVencimentoBoleto;
 	}
 
 	public InformacaoComplementar getInformacaoComplementar() {
@@ -251,14 +251,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	public Protocolo identity() {
 		return protocolo;
 	}
-
-	// --- Calculos internos
-
-	// Surrugate key para o Hibernate
-	@Id
-	@SuppressWarnings("unused")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 
 	public Protocolo getProtocolo() {
 		return protocolo;

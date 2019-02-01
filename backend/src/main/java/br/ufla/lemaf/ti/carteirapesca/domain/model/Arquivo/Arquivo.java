@@ -12,14 +12,9 @@ import java.util.Date;
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "arquivo")
 public class Arquivo implements Entity<Arquivo, Integer> {
 
-	private static final String SEQUENCIA = Constants.SCHEMA_CARTEIRA_PESCA + ".arquivo_id_seq";
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCIA)
-	@SequenceGenerator(name = SEQUENCIA,
-		sequenceName = SEQUENCIA,
-		allocationSize=1)
-	private Integer id;
+	@SuppressWarnings("unused")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
 	@Column(name = "caminho_arquivo")
 	private String caminhoArquivo;
