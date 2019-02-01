@@ -23,7 +23,9 @@
 						el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
 						el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
 					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
-
+			.block
+				.error-pagina-inicial
+					| {{errorTelaInicial}}
 			.data
 				cadastrar-dados-pessoa(v-show="showCadastro()", ref="cadastroDadosPessoa")
 				visualizar-dados-pessoa(:pessoa="solicitante" v-if="showVisualizar()", ref="visualizarDadosPessoa")
@@ -62,7 +64,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["solicitante", "cadastroCanActive", "dadosSolicitanteAConfirmar", "existeSolicitante"])
+    ...mapGetters(["solicitante", "cadastroCanActive","errorTelaInicial", "dadosSolicitanteAConfirmar", "existeSolicitante"])
   },
 
   methods: {
