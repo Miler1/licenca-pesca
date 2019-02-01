@@ -68,8 +68,7 @@
                     <Field name="IdentificacaoSistema" value="MX" length="2" />
                     <Field name="NumeroSequencialRemessa" length="7" type="INTEGER" padding="ZERO_LEFT" />
                     <Field name="Filler2" length="277" />
-                    <!-- <Field name="NumeroSequencialRegistro" length="6" type="INTEGER" padding="ZERO_LEFT" /> -->
-                    <SequencialNumber name="sequencia" value="1" type="INTEGER" length="6" position="15" padding="ZERO_LEFT" />
+                    <Field name="sequencia" length="6" padding="ZERO_LEFT"/>
                 </GroupOfFields>
             </Record>
             <Record name="TransacaoTitulo" repeatable="true">
@@ -106,11 +105,11 @@
                     <Field name="EspecieTitulo" length="2" />
                     <Field name="Identificacao" value="N" length="1" />
                     <Field name="DataEmissaoTitulo" length="6" type="DATE" format="DATE_DDMMYY"/>
-                    <Field name="PrimeiraInstrucao" length="02"/>
-                    <Field name="SegundaInstrucao" length="02"/>
+                    <Field name="PrimeiraInstrucao" length="2"/>
+                    <Field name="SegundaInstrucao" length="2"/>
                     <Field name="ValorCobradoDiasAtraso" length="13"/>
                     <Field name="DataLimiteConcessaoDesconto" length="6" type="DATE" format="DATE_DDMMYY"/>
-                    <Field name="ValorDeconto" length="13"/>
+                    <Field name="ValorDesconto" length="13"/>
                     <Field name="ValorIOF" length="13"/>
                     <Field name="ValorAbatimentoASerConcedidoOuCancelado" length="13"/>
                     <Field name="IdentificacaoTipoInscricaoPagador" length="2"/>
@@ -131,7 +130,8 @@
                 <GroupOfFields>
                     <IdType name="IdentificacaoRegistro" value="9" length="1" position="1" />
                     <Field name="EspacoBranco" length="393" />
-                    <SequencialNumber name="sequencia" type="INTEGER" length="6" position="3" padding="ZERO_LEFT" />
+                    <Field name="sequencia" length="6" padding="ZERO_LEFT"/>
+                    <!--<SequencialNumber name="sequencia" type="INTEGER" length="6" position="3" padding="ZERO_LEFT" />-->
                 </GroupOfFields>
             </Record>
         </GroupOfRecords>

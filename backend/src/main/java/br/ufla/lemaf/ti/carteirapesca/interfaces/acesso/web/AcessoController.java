@@ -96,9 +96,9 @@ public class AcessoController {
 
 		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true){
 
-			var listaLicencaDTO = new ListaLicencaDTO();
+			ListaLicencaDTO listaLicencaDTO = new ListaLicencaDTO();
 
-			var pessoa = acessoServiceFacade.acessar(validacaoDTO.getAcessoResource());
+			PessoaDTO pessoa = acessoServiceFacade.acessar(validacaoDTO.getAcessoResource());
 
 			listaLicencaDTO.setPessoa(pessoa);
 
@@ -107,9 +107,7 @@ public class AcessoController {
 			return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
 		} else {
-
 			throw new Exception("Dados não conferem. Após 3 tentativas erradas, o Cpf/passaporte será bloqueado por 2 horas.");
-
 		}
 	}
 
@@ -130,15 +128,13 @@ public class AcessoController {
 
 		} else {
 
-			var listaLicencaDTO = new ListaLicencaDTO();
+			ListaLicencaDTO listaLicencaDTO = new ListaLicencaDTO();
 
 			pessoa = acessoServiceFacade.acessar(acessoResource);
 
 			listaLicencaDTO.setPessoa(pessoa);
 
-
 			listaLicencaDTO.setLicencas(acessoServiceFacade.buscarLicencasPorPessoaDTO(pessoa));
-
 
 			return new ResponseEntity<>(preencherListaVerificacao(pessoa), HttpStatus.ACCEPTED);
 		}
@@ -148,9 +144,7 @@ public class AcessoController {
 
 	private static Map<String, Object[]> preencherListaVerificacao(PessoaDTO pessoa) throws IOException {
 
-
 		Map<String, Object[]> listasVerificacao = new HashMap<>();
-
 
 		if (!Validate.isNull(pessoa.getCpf())) {
 
@@ -194,10 +188,10 @@ public class AcessoController {
 
 		String pathArquivoRemessa = remessaBuilder.geraRemessa(titulos);
 
-		var httpHeaders = new HttpHeaders();
+		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.TEXT_PLAIN);
 
-		var isr = new InputStreamResource(new FileInputStream(new File(pathArquivoRemessa)));
+		InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(pathArquivoRemessa)));
 
 		return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 

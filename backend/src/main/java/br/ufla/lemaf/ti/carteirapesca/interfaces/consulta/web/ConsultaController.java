@@ -117,11 +117,11 @@ public class ConsultaController {
 
 		var  cpf = "";
 		var passaporte = "";
-		if(licenca.getSolicitante().getIdentity().cpf() != null){
-			cpf = licenca.getSolicitante().getIdentity().cpf().getNumero();
+		if(licenca.solicitante().getIdentity().cpf() != null){
+			cpf = licenca.solicitante().getIdentity().cpf().getNumero();
 		}
-		if(licenca.getSolicitante().getIdentity().passaporte() != null){
-			passaporte = licenca.getSolicitante().getIdentity().passaporte().getNumero();
+		if(licenca.solicitante().getIdentity().passaporte() != null){
+			passaporte = licenca.solicitante().getIdentity().passaporte().getNumero();
 		}
 
 		AcessoResource acessoResource = new AcessoResource(cpf, passaporte);
@@ -202,7 +202,7 @@ public class ConsultaController {
 			}
 
 			var licenca = consultaApplication.consulta(protocoloObj);
-			var solicitante = licenca.getSolicitante();
+			var solicitante = licenca.solicitante();
 			var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
 			var carteira = facade.gerarCarteira(protocoloObj, licenca, pessoa);
 
@@ -235,7 +235,7 @@ public class ConsultaController {
 
 		var protocoloObj = new Protocolo(protocolo);
 		var licenca = consultaApplication.consulta(protocoloObj);
-		var solicitante = licenca.getSolicitante();
+		var solicitante = licenca.solicitante();
 		var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
 
 		var licencaPesca = new LicencaPescaDTO(licenca, protocoloObj, pessoa);

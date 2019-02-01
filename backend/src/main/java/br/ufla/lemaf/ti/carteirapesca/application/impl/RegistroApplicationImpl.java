@@ -300,7 +300,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	@Override
 	public String regerarBoleto(Licenca licenca) {
 
-		Pessoa pessoa = buscarDadosSolicitante(licenca.getSolicitante());
+		Pessoa pessoa = buscarDadosSolicitante(licenca.solicitante());
 
 		Titulo titulo = boletoBuilder.gerarBoleto(licenca.getProtocolo(), licenca.modalidade(), pessoa);
 

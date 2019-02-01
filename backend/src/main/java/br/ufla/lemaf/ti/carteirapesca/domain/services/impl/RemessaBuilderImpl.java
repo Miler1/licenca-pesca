@@ -42,7 +42,7 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 	@Override
 	public String geraRemessa(List<Titulo> titulos) throws IOException {
 
-		Remessa ultimaRemessaEnviada = null; //remessaRepository.findByDataCadastroMax();
+		Remessa ultimaRemessaEnviada = remessaRepository.buscaUltimaRemessaGerada();
 		Remessa remessa;
 
 		if(ultimaRemessaEnviada != null) {
@@ -56,13 +56,13 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 
 		ff.addRecord(geraCabecalho(ff, titulos.get(0), remessa));
 
-		Integer index = 0;
+		Integer index = 2;
 		for (Titulo titulo : titulos) {
 			ff.addRecord(geraTramsacao(ff, titulo, index));
 			index++;
 		}
 
-		ff.addRecord(geraTrailler(ff));
+		ff.addRecord(geraTrailler(ff, index));
 
 		return geraArquivo(ff, remessa);
 
@@ -77,7 +77,8 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 		header.setValue("NomeEmpresa", completaStringComEspacosEsquerda(30, beneficiario.getSigla()));
 		header.setValue("DataGravacaoArquivo", LocalDate.now().format(FORMATO_DATA_REMESSA));
 		header.setValue("EspacoBranco", completaStringComEspacosEsquerda(8, ""));
-		header.setValue("NumeroSequencialRemessa", String.format("%1$7s", remessa.getSequencia()));
+		header.setValue("NumeroSequencialRemessa", remessa.getSequencia());
+		header.setValue("sequencia", 1);
 
 		return header;
 	}
@@ -148,7 +149,7 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 		transacao.setValue("SegundaInstrucao", "09");
 		transacao.setValue("ValorCobradoDiasAtraso", completaStringComZerosEsquerda(13, ""));
 		transacao.setValue("DataLimiteConcessaoDesconto", titulo.getDataVencimento().format(FORMATO_DATA_REMESSA));
-		transacao.setValue("ValorDeconto", completaStringComZerosEsquerda(13, ""));
+		transacao.setValue("ValorDesconto", completaStringComZerosEsquerda(13, "1"));
 		transacao.setValue("ValorIOF", completaStringComZerosEsquerda(13, ""));
 		transacao.setValue("ValorAbatimentoASerConcedidoOuCancelado", completaStringComZerosEsquerda(13, ""));
 
@@ -163,20 +164,21 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 		transacao.setValue("PrimeiraMensagem", completaStringComEspacosEsquerda(12, ""));
 
 		String cep = pagador.getEndereco().getCep();
-		transacao.setValue("CepPagador", cep.substring(0, 5));
-		transacao.setValue("SufixoCepPagador", cep.substring(5, 8));
+		transacao.setValue("CepPagador", cep.replaceAll("-", "").substring(0, 5));
+		transacao.setValue("SufixoCepPagador", cep.replaceAll("-", "").substring(5, 8));
 		transacao.setValue("SegundaMensagem", completaStringComEspacosEsquerda(60, ""));
-		transacao.setValue("sequencia",  index.toString());
+		transacao.setValue("sequencia", index);
 
 		return transacao;
 
 	}
 
-	private Record geraTrailler(FlatFile<Record> flatFile) {
+	private Record geraTrailler(FlatFile<Record> flatFile, Integer index) {
 
 		Record trailler = flatFile.createRecord("Trailler");
 
 		trailler.setValue("EspacoBranco", completaStringComEspacosEsquerda(393, ""));
+		trailler.setValue("sequencia", index);
 
 		return trailler;
 	}
