@@ -94,7 +94,7 @@ const VALIDATION = {
       required: [required("Cidade"), required("City", en)]
     },
     estado: {
-      required: [required("Estado/Provincia"), required("State/Province", en)]
+      required: [required("Estado/Província"), required("State/Province", en)]
     },
     pais: {
       required: [required("País"), required("Country", en)]
