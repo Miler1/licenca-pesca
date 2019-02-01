@@ -66,11 +66,10 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 
 	}
 
-	public FlatFile<Record> construirInformacoesRemessa(List<Titulo> titulos, Remessa novaRemessa) {
+	public FlatFile<Record> construirInformacoesRemessa(List<Titulo> titulos, Remessa novaRemessa) throws IOException {
 
 		ClassPathResource resource = new ClassPathResource(PATH_TEMPLATE_REMESSA);
-		File file = new File(resource.getPath());
-		FlatFile<Record> ff = Texgit.createFlatFile(file);
+		FlatFile<Record> ff = Texgit.createFlatFile(resource.getFile());
 
 		ff.addRecord(geraCabecalho(ff, titulos.get(0), novaRemessa));
 
