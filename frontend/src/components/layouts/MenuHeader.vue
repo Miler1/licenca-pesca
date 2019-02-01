@@ -4,7 +4,11 @@
 			.left
 				.home(v-on:click="goHome()")
 					.logo-image
-					.logo-text IPAAM
+					.logo-text 
+						.sigla
+							| IPAAM
+						.completo
+							| Instituto de Proteção Ambiental do Amazonas
 			.right
 				.locale
 					i.mdi.mdi-translate
@@ -22,11 +26,11 @@ export default {
   name: "MenuHeader",
   mixins: [],
   data() {
-    return { langs: ["PT-BR", "EN"] };
+	return { langs: ["PT-BR", "EN"] };
   },
   methods: {
-    handleLocale() {
-      localizeValidation();
+	handleLocale() {
+	  localizeValidation();
 	},
 	goHome() {
 		this.$store.dispatch(CANCELAR).then(p => {
@@ -68,18 +72,25 @@ export default {
 
 				.logo-image
 					color: white
-					height: 50px
-					width: 50px
+					height: 100px
+					width: 170px
 					margin-right: 10px
 					margin-left: 10px
-					background: url("../../assets/ipaam-logo.png") no-repeat center
+					background: url("../../assets/logo-Governo-2018.png") no-repeat center
 					background-size: contain
 
 				.logo-text
+					padding-left: 20px
 					font-family: "Lato", Helvetica, sans-serif
 					font-weight: bold
-					color: $--cor-tema-primario
+					color: black
 					font-size: $--fonte-titulo
+					border-left: 1px solid #999
+					.completo
+						font-size: 12px
+						width: 190px
+					.sigla
+						font-size: 19px
 
 			.right
 				display: flex
