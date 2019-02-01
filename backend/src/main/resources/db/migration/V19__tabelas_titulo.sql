@@ -230,8 +230,6 @@ COMMENT ON COLUMN carteira_pesca.titulo.local_pagamento IS 'Locais onde o pagame
 COMMENT ON COLUMN carteira_pesca.titulo.nosso_numero IS 'Código de controle que permite ao Banco e ao beneficiário identificar os dados da cobrança que deu origem ao boleto de pagamento.';
 COMMENT ON COLUMN carteira_pesca.titulo.dt_geracao_remessa IS 'Data de vencimento.';
 
-
-
 INSERT INTO carteira_pesca.banco (id, codigo, nome) VALUES (1, '237', 'Banco Bradesco S.A.');
 
 INSERT INTO carteira_pesca.endereco(logradouro, numero, complemento, bairro, cep, municipio, estado) VALUES ('Av Mário Ypiranga', '3280', NULL, 'Parque Dez de Novembro', '69050-030', 'Manaus', 'AM');
