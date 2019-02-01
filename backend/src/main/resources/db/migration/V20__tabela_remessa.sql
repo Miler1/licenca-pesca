@@ -5,14 +5,13 @@ CREATE TABLE carteira_pesca.remessa
   numero_sequencial INTEGER NOT NULL,
   sequencia_nome_arquivo CHARACTER VARYING(2) NOT NULL,
   dt_cadastro TIMESTAMP NOT NULL DEFAULT now(),
-
   CONSTRAINT pk_remessa PRIMARY KEY(id),
-
-  CONSTRAINT fk_arquivo FOREIGN KEY (id_arquivo)
+  CONSTRAINT fk_r_arquivo FOREIGN KEY (id_arquivo)
     REFERENCES carteira_pesca.arquivo (id) MATCH SIMPLE
     ON UPDATE RESTRICT ON DELETE RESTRICT
-
-) WITH(OIDS = FALSE);
+) WITH (
+  OIDS=FALSE
+);
 
 ALTER TABLE carteira_pesca.remessa OWNER TO postgres;
 GRANT ALL ON TABLE carteira_pesca.remessa TO postgres;

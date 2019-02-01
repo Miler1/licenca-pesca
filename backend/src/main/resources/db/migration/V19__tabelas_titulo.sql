@@ -3,10 +3,10 @@ CREATE TABLE carteira_pesca.banco
   id SERIAL NOT NULL,
   codigo CHARACTER VARYING(5) NOT NULL,
   nome CHARACTER VARYING(150) NOT NULL,
-
   CONSTRAINT pk_banco PRIMARY KEY(id)
-
-) WITH(OIDS = FALSE);
+) WITH (
+  OIDS=FALSE
+);
 
 ALTER TABLE carteira_pesca.banco OWNER TO postgres;
 GRANT ALL ON TABLE carteira_pesca.banco TO postgres;
@@ -27,10 +27,10 @@ CREATE TABLE carteira_pesca.endereco
   cep CHARACTER VARYING(10) NOT NULL,
   municipio CHARACTER VARYING(100) NOT NULL,
   estado CHARACTER VARYING(2) NOT NULL,
-
   CONSTRAINT pk_endereco PRIMARY KEY(id)
-
-) WITH(OIDS = FALSE);
+) WITH (
+  OIDS=FALSE
+);
 
 ALTER TABLE carteira_pesca.endereco OWNER TO postgres;
 GRANT ALL ON TABLE carteira_pesca.endereco TO postgres;
@@ -62,18 +62,16 @@ CREATE TABLE carteira_pesca.beneficiario_titulo
   convenio CHARACTER VARYING(10) NOT NULL,
   carteira CHARACTER VARYING(5) NOT NULL,
   fl_ativo BOOLEAN NOT NULL DEFAULT TRUE,
-
   CONSTRAINT pk_beneficiario PRIMARY KEY(id),
-
-  CONSTRAINT fk_banco FOREIGN KEY (id_banco)
-      REFERENCES carteira_pesca.banco (id) MATCH SIMPLE
-      ON UPDATE RESTRICT ON DELETE RESTRICT,
-
-  CONSTRAINT fk_endereco FOREIGN KEY (id_endereco)
-      REFERENCES carteira_pesca.endereco (id) MATCH SIMPLE
-      ON UPDATE RESTRICT ON DELETE RESTRICT
-
-) WITH(OIDS = FALSE);
+  CONSTRAINT fk_bt_banco FOREIGN KEY (id_banco)
+    REFERENCES carteira_pesca.banco (id) MATCH SIMPLE
+    ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT fk_bt_endereco FOREIGN KEY (id_endereco)
+    REFERENCES carteira_pesca.endereco (id) MATCH SIMPLE
+    ON UPDATE RESTRICT ON DELETE RESTRICT
+) WITH (
+  OIDS=FALSE
+);
 
 ALTER TABLE carteira_pesca.beneficiario_titulo OWNER TO postgres;
 GRANT ALL ON TABLE carteira_pesca.beneficiario_titulo TO postgres;
@@ -100,10 +98,10 @@ CREATE TABLE carteira_pesca.especie_documento
   codigo CHARACTER VARYING(10) NOT NULL,
   codigo_remessa CHARACTER VARYING(2) NOT NULL,
   descricao CHARACTER VARYING(100) NOT NULL,
-
   CONSTRAINT pk_especie_documento PRIMARY KEY(id)
-
-) WITH(OIDS = FALSE);
+) WITH (
+  OIDS=FALSE
+);
 
 ALTER TABLE carteira_pesca.especie_documento OWNER TO postgres;
 GRANT ALL ON TABLE carteira_pesca.especie_documento TO postgres;
@@ -120,15 +118,13 @@ CREATE TABLE carteira_pesca.pagador_titulo
   nome CHARACTER VARYING(200) NOT NULL,
   cpf_passaporte CHARACTER VARYING(28) NOT NULL,
   id_endereco INTEGER NOT NULL,
-
   CONSTRAINT pk_pagador_titulo PRIMARY KEY(id),
-
-  CONSTRAINT fk_endereco FOREIGN KEY (id_endereco)
+  CONSTRAINT fk_pt_endereco FOREIGN KEY (id_endereco)
     REFERENCES carteira_pesca.endereco (id) MATCH SIMPLE
     ON UPDATE RESTRICT ON DELETE RESTRICT
-
-
-) WITH(OIDS = FALSE);
+) WITH (
+  OIDS=FALSE
+);
 
 ALTER TABLE carteira_pesca.pagador_titulo OWNER TO postgres;
 GRANT ALL ON TABLE carteira_pesca.pagador_titulo TO postgres;
@@ -144,10 +140,10 @@ CREATE TABLE carteira_pesca.tipo_arquivo
   id SERIAL NOT NULL,
   codigo CHARACTER VARYING(20) NOT NULL,
   descricao CHARACTER VARYING(100) NOT NULL,
-
   CONSTRAINT pk_tipo_arquivo PRIMARY KEY(id)
-
-) WITH(OIDS = FALSE);
+) WITH (
+  OIDS=FALSE
+);
 
 ALTER TABLE carteira_pesca.tipo_arquivo OWNER TO postgres;
 GRANT ALL ON TABLE carteira_pesca.tipo_arquivo TO postgres;
@@ -165,14 +161,13 @@ CREATE TABLE carteira_pesca.arquivo
   nome CHARACTER VARYING(100) NOT NULL,
   dt_cadastro TIMESTAMP NOT NULL DEFAULT now(),
   id_tipo_arquivo INTEGER NOT NULL,
-
   CONSTRAINT pk_arquivo PRIMARY KEY(id),
-
-  CONSTRAINT fk_tipo_arquivo FOREIGN KEY (id_tipo_arquivo)
+  CONSTRAINT fk_a_tipo_arquivo FOREIGN KEY (id_tipo_arquivo)
     REFERENCES carteira_pesca.tipo_arquivo (id) MATCH SIMPLE
     ON UPDATE RESTRICT ON DELETE RESTRICT
-
-) WITH(OIDS = FALSE);
+) WITH (
+  OIDS=FALSE
+);
 
 ALTER TABLE carteira_pesca.arquivo OWNER TO postgres;
 GRANT ALL ON TABLE carteira_pesca.arquivo TO postgres;
@@ -202,26 +197,22 @@ CREATE TABLE carteira_pesca.titulo
   dt_geracao_remessa TIMESTAMP NULL,
   dt_pagamento DATE NULL,
   id_arquivo INTEGER NOT NULL,
-
   CONSTRAINT pk_titulo PRIMARY KEY(id),
-
-  CONSTRAINT fk_beneficiario_titulo FOREIGN KEY (id_beneficiario)
-      REFERENCES carteira_pesca.beneficiario_titulo (id) MATCH SIMPLE
-      ON UPDATE RESTRICT ON DELETE RESTRICT,
-
-  CONSTRAINT fk_pagador_titulo FOREIGN KEY (id_pagador)
-      REFERENCES carteira_pesca.pagador_titulo (id) MATCH SIMPLE
-      ON UPDATE RESTRICT ON DELETE RESTRICT,
-
-  CONSTRAINT fk_especie_documento FOREIGN KEY (id_especie_documento)
-      REFERENCES carteira_pesca.especie_documento (id) MATCH SIMPLE
-      ON UPDATE RESTRICT ON DELETE RESTRICT,
-
-  CONSTRAINT fk_arquivo FOREIGN KEY (id_arquivo)
-      REFERENCES carteira_pesca.arquivo (id) MATCH SIMPLE
-      ON UPDATE RESTRICT ON DELETE RESTRICT
-
-) WITH(OIDS = FALSE);
+  CONSTRAINT fk_t_beneficiario_titulo FOREIGN KEY (id_beneficiario)
+    REFERENCES carteira_pesca.beneficiario_titulo (id) MATCH SIMPLE
+    ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT fk_t_pagador_titulo FOREIGN KEY (id_pagador)
+    REFERENCES carteira_pesca.pagador_titulo (id) MATCH SIMPLE
+    ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT fk_t_especie_documento FOREIGN KEY (id_especie_documento)
+    REFERENCES carteira_pesca.especie_documento (id) MATCH SIMPLE
+    ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT fk_t_arquivo FOREIGN KEY (id_arquivo)
+    REFERENCES carteira_pesca.arquivo (id) MATCH SIMPLE
+    ON UPDATE RESTRICT ON DELETE RESTRICT
+) WITH (
+  OIDS=FALSE
+);
 
 ALTER TABLE carteira_pesca.titulo OWNER TO postgres;
 GRANT ALL ON TABLE carteira_pesca.titulo TO postgres;
@@ -236,11 +227,8 @@ COMMENT ON COLUMN carteira_pesca.titulo.dt_processamento IS 'Data que o titulo f
 COMMENT ON COLUMN carteira_pesca.titulo.dt_vencimento IS 'Data de vencimento.';
 COMMENT ON COLUMN carteira_pesca.titulo.instrucoes IS 'Instruções de pagamento.';
 COMMENT ON COLUMN carteira_pesca.titulo.local_pagamento IS 'Locais onde o pagamento poderá ser realizado.';
-COMMENT ON COLUMN carteira_pesca.titulo.nosso_numero IS
-  'Código de controle que permite ao Banco e ao beneficiário identificar os dados da cobrança que deu origem ao boleto de pagamento.';
+COMMENT ON COLUMN carteira_pesca.titulo.nosso_numero IS 'Código de controle que permite ao Banco e ao beneficiário identificar os dados da cobrança que deu origem ao boleto de pagamento.';
 COMMENT ON COLUMN carteira_pesca.titulo.dt_geracao_remessa IS 'Data de vencimento.';
-
-
 
 INSERT INTO carteira_pesca.banco (id, codigo, nome) VALUES (1, '237', 'Banco Bradesco S.A.');
 
@@ -266,6 +254,6 @@ INSERT INTO carteira_pesca.tipo_arquivo (id, codigo, descricao) VALUES (3, 'RETO
 
 ALTER TABLE carteira_pesca.licenca ADD COLUMN id_titulo INTEGER NULL;
 
-ALTER TABLE carteira_pesca.licenca ADD CONSTRAINT fk_titulo FOREIGN KEY (id_titulo)
-      REFERENCES carteira_pesca.titulo (id) MATCH SIMPLE
-      ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE carteira_pesca.licenca ADD CONSTRAINT fk_l_titulo FOREIGN KEY (id_titulo)
+  REFERENCES carteira_pesca.titulo (id) MATCH SIMPLE
+  ON UPDATE RESTRICT ON DELETE RESTRICT;
