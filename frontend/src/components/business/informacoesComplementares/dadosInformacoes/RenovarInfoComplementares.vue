@@ -224,7 +224,7 @@ export default {
     #cadastro-info-complementares
 
         .label-notes
-            margin: -25px 0 10px 0px
+            margin: -15px 0px 10px 0 !important
             padding: 0
             height: 20px
             color: $--cor-texto-secundario
