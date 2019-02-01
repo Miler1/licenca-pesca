@@ -195,15 +195,6 @@ public class AcessoController {
 
 		return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 
-
-//		HttpHeaders respHeaders = new HttpHeaders();
-//		respHeaders.setContentType(MediaType.TEXT_PLAIN);
-//		respHeaders.setContentLength(12345678);
-//		respHeaders.setContentDispositionFormData("attachment", "CB310101.REM");
-//
-//		InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(pathArquivoRemessa)));
-//		return new ResponseEntity<>(isr, respHeaders, HttpStatus.OK);
-
 	}
 
 }

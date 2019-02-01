@@ -15,6 +15,7 @@ public class Arquivo implements Entity<Arquivo, Integer> {
 	@Id
 	@SuppressWarnings("unused")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	@Column(name = "caminho_arquivo")
 	private String caminhoArquivo;

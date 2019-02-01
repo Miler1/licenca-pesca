@@ -14,6 +14,7 @@ public class TipoArquivo implements Entity<TipoArquivo, Integer> {
 	@Id
 	@SuppressWarnings("unused")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	private String codigo;
 
