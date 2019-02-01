@@ -6,7 +6,7 @@
       el-row.section(:gutter="20")
 
         el-col(:span="6")
-          el-checkbox(v-model="pessoa.estrangeiro", :disabled="estrangeiroDisabled") {{ $t(`${cadastrar_prefix}labels.estrangeiro`) }}
+          el-checkbox(v-model="pessoa.estrangeiro", disabled) {{ $t(`${cadastrar_prefix}labels.estrangeiro`) }}
 
       el-row.section(:gutter="20")
 

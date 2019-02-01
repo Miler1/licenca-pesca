@@ -95,7 +95,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @return {@code true} se alguma licença estiver ativa
 	 */
 	public boolean pussuiLicencaAtiva(Modalidade modalidade) {
-		return licenca
+		return this.licenca
 			.stream()
 			.anyMatch(licencaProcurada -> ((licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
 				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id))
@@ -103,11 +103,12 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	}
 
 	public boolean pussuiLicencaMesmaModalidade(Modalidade modalidade) {
-		return licenca
+		return this.licenca
 			.stream()
-			.anyMatch(licencaProcurada -> ((licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
-				licencaProcurada.getStatus().getId().equals(licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id))
-				&& licencaProcurada.modalidade().getNomePT().equals(modalidade.getNomePT())));
+			.anyMatch(licencaProcurada -> ((
+				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id)
+				&& licencaProcurada.modalidade().getId().equals(modalidade.getId()))));
+
 	}
 
 	/**
