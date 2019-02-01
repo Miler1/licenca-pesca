@@ -82,7 +82,13 @@ export default {
       }]
     };
   },
-
+  created() {
+    this.$store.subscribe((mutation, state) => {
+      if(mutation.type === "CLEAN_PESQUISA"){
+        this.resource = "";
+      }
+    });
+  },
   computed: {
     ...mapGetters(["solicitante", "cadastroCanActive", "existeSolicitante", "dadosSolicitanteAConfirmar", "errorTelaInicial", "buscaMaes", "buscaMunicipios"])
   },
