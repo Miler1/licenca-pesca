@@ -7,7 +7,7 @@ export const CONSULTAR_GERAL_MESSAGES_PREFIX = "interface.registrar.consultar.";
 const GERAL = {
   geral: {
     titulo: ["Registrar Licença de Pesca Amadora (Esportiva ou Recreativa)", "Register Fishing License"],
-    tituloRenovar: ["Registrar Licença de Pesca Amadora (Esportiva ou Recreativa)", "Register Fishing License"],
+    tituloRenovar: ["Renovar Licença de Pesca Amadora (Esportiva ou Recreativa)", "Renew Fishing License"],
     steps: {
       indices: {
         identificacao: ["Identificação", "Identification"],
@@ -74,6 +74,11 @@ const GERAL = {
         "Deseja realmente cancelar o cadastro? Ao selecionar a opção 'Confirmar', todos os dados até o momento serão perdidos.",
         "Do you really want to cancel the registration? By selecting the 'Confirm' option, all data so far will be lost.",
         "Desea realmente cancelar el registro? Al seleccionar la opción 'Confirmar', todos los datos hasta el momento se perderán."
+      ],
+      mensagemRenovar: [
+        "Deseja realmente cancelar a renovação da Licença de Pesca?",
+        "Do you really want to cancel your Fishing License?",
+        "¿Desea realmente cancelar la renovación de la licencia de pesca?"
       ],
       botoes: {
         confirm: ["Confirmar", "Confirm", "Confirmar"],
