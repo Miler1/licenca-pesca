@@ -144,7 +144,7 @@ export const actions = {
     commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
     commit(CLEAN_SOLICITANTE);
     commit(CLEAN_REGISTRO);
-    commit(CLEAN_PESQUISA);
+    commit(SET_ERROR_TELA_BUSCA, "");
   }
 };
 
@@ -168,7 +168,7 @@ export const mutations = {
     }
   },
 
-  [CLEAN_PESQUISA]: (state) => { state.errorTelaInicial = ""}, 
+  [CLEAN_PESQUISA]: (state) => { state.errorTelaInicial = ''}, 
 
   [SET_BUSCA_MAES]: (state, maes) => {
     if (maes !== null) {
