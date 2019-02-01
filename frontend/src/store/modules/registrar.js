@@ -255,6 +255,10 @@ export const mutations = {
 
   [SET_REGISTRO_SOLICITANTE]: (state, solicitante) => {
 
+    if(solicitante.enderecoEstrangeiro) {
+      solicitante.enderecoEstrangeiro.nacionalidadeNome = solicitante.enderecoEstrangeiro.nacionalidade.nome;
+      solicitante.enderecoEstrangeiro.paisNome = solicitante.enderecoEstrangeiro.pais.nome;
+    }
     state.registroResource.solicitante = solicitante;
   },
 

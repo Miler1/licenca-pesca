@@ -169,9 +169,11 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 		if(!dadosValidos) {
 
+
 			solicitante.atualizaNumeroTentativas();
 
 			solicitanteRopository.save(solicitante);
+
 
 			return dadosValidos;
 

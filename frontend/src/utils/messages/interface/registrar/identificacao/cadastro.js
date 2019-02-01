@@ -29,7 +29,7 @@ const CADASTRO = {
       nacionalidade: ["Nacionalidade:", "Nationality:"],
       descricaoEndereco: ["Descrição do endereço:", "Adress description:"],
       cidade: ["Cidade:", "City:"],
-      estado: ["Estado/Provincia:", "State/Province:"],
+      estado: ["Estado/Província:", "State/Province:"],
       pais: ["País:", "Country:"]
     },
     dados: {
