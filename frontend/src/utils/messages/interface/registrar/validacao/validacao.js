@@ -9,16 +9,17 @@ const VALIDACAO = {
     format: {
       data: ["dd/MM/yyyy", "yyyy-MM-dd"]
     },
-    botoes: {
-      validar: ["Validar dados", " "],
-      cancelar: ["Cancelar", " "]
-    },
+   
     titulo: {
-      tituloInicial: ["Confirmação de dados", "Fishing License"],
-      subtitulo: ["Para sua segurança, antes de acessar as licenças é necessário confirmar algumas informações. Por favor responda as questões abaixo: ", ""],
-      nomeMae: ["Nome da mãe", ""],
-      dataNascimento: ["Data de Nascimento", ""],
-      municipio: ["Município", ""]
+      tituloInicial: ["Confirmação de dados", "Confirmation of data"],
+      subtitulo: ["Para sua segurança, antes de acessar as licenças é necessário confirmar algumas informações. Por favor responda as questões abaixo: ", "For your security, before accessing the licenses you need to confirm some information. Please answer the questions below:"],
+      nomeMae: ["Nome da mãe", "Mother's name"],
+      dataNascimento: ["Data de Nascimento", "Date of birth"],
+      municipio: ["Município", "County"]
+    },
+    botoes: {
+      validar: ["Validar dados", "Validate data "],
+      cancelar: ["Cancelar", "Cancel"]
     },
     cancelamento: {
       titulo: [
