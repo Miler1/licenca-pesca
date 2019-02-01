@@ -16,11 +16,13 @@ public class EspecieDocumento implements Entity<EspecieDocumento, Integer> {
 	@Id
 	private Integer id;
 
+	@Column(name = "codigo")
 	private String codigo;
 
 	@Column(name = "codigo_remessa")
 	private String codigoRemessa;
 
+	@Column(name = "descricao")
 	private String descricao;
 
 	@Override

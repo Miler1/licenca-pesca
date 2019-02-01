@@ -30,6 +30,7 @@ public class Titulo implements Entity<Titulo, Integer> {
 	@JoinColumn(name = "id_pagador", referencedColumnName="id")
 	private PagadorTitulo pagador;
 
+	@Column(name = "valor")
 	private BigDecimal valor;
 
 	@Column(name = "dt_emissao")
@@ -107,6 +108,10 @@ public class Titulo implements Entity<Titulo, Integer> {
 
 	private void setLocalPagamento() {
 		this.localPagamento = "Pagável em qualquer banco até o vencimento.";
+	}
+
+	public void setDataGeracaoRemessa() {
+		this.dataGeracaoRemessa = LocalDate.now();
 	}
 
 }

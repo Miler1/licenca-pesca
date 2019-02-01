@@ -16,21 +16,21 @@ public class BeneficiarioTitulo implements Entity<BeneficiarioTitulo, Integer> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Column(name = "nome")
 	private String nome;
 
+	@Column(name = "sigla")
 	private String sigla;
 
 	@Column(name = "cpf_cnpj")
 	private String cpfCnpj;
 
 	@ManyToOne
-	@JoinColumn(name = "id_banco",
-		referencedColumnName="id")
+	@JoinColumn(name = "id_banco", referencedColumnName="id")
 	private Banco banco;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_endereco",
-		referencedColumnName="id")
+	@JoinColumn(name = "id_endereco", referencedColumnName="id")
 	private Endereco endereco;
 
 	@Column(name = "codigo_beneficiario")

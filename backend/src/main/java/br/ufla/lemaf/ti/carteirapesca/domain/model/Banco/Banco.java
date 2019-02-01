@@ -16,8 +16,10 @@ public class Banco implements Entity<Banco, Integer> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Column(name = "codigo")
 	private String codigo;
 
+	@Column(name = "nome")
 	private String nome;
 
 	@Override

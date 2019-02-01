@@ -182,11 +182,9 @@ public class AcessoController {
 
 	@CrossOrigin("*")
 	@GetMapping("/remessa")
-	public ResponseEntity<InputStreamResource> testeGeraRemessa() throws IOException {
+	public ResponseEntity<InputStreamResource> geraRemessa() throws IOException {
 
-		List<Titulo> titulos = tituloRepository.findAll();
-
-		String pathArquivoRemessa = remessaBuilder.geraRemessa(titulos);
+		String pathArquivoRemessa = remessaBuilder.geraRemessa();
 
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.TEXT_PLAIN);

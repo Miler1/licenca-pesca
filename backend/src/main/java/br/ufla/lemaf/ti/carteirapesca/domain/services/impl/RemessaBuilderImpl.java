@@ -6,6 +6,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RemessaRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.Remessa400Builder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.jrimum.texgit.FlatFile;
 import org.jrimum.texgit.Record;
 import org.jrimum.texgit.Texgit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -35,26 +37,42 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 	@Autowired
 	TipoArquivoRepository tipoArquivoRepository;
 
-	private static final String PATH_TEMPLATE_REMESSA = "/home/hiagosouza/git/amazonas/carteira-de-pesca/backend/src/main/resources/templates/banco/remessa/bradesco_remessa_cnab400.txg.xml";
+	@Autowired
+	TituloRepository tituloRepository;
+
+	private static final String PATH_TEMPLATE_REMESSA = "templates/banco/remessa/bradesco_remessa_cnab400.txg.xml";
 	private static final DateTimeFormatter FORMATO_DATA_REMESSA = DateTimeFormatter.ofPattern("ddMMYY");
 	private static final DateTimeFormatter FORMATO_DATA_NOME_ARQUIVO_REMESSA = DateTimeFormatter.ofPattern("ddMM");
 
 	@Override
-	public String geraRemessa(List<Titulo> titulos) throws IOException {
+	public String geraRemessa() throws IOException {
+
+		List<Titulo> titulos = tituloRepository.findByDataGeracaoRemessaIsNull();
 
 		Remessa ultimaRemessaEnviada = remessaRepository.buscaUltimaRemessaGerada();
-		Remessa remessa;
+		Remessa novaRemessa;
 
 		if(ultimaRemessaEnviada != null) {
-			remessa = new Remessa(ultimaRemessaEnviada.getSequencia() + 1);
+			novaRemessa = new Remessa(ultimaRemessaEnviada.getSequencia() + 1);
 		} else {
-			remessa = new Remessa(1);
+			novaRemessa = new Remessa(1);
 		}
 
-		File file = new File(PATH_TEMPLATE_REMESSA);
+		atualizaTitulos(titulos);
+
+		FlatFile<Record> ff = construirInformacoesRemessa(titulos, novaRemessa);
+
+		return geraArquivo(ff, novaRemessa);
+
+	}
+
+	public FlatFile<Record> construirInformacoesRemessa(List<Titulo> titulos, Remessa novaRemessa) {
+
+		ClassPathResource resource = new ClassPathResource(PATH_TEMPLATE_REMESSA);
+		File file = new File(resource.getPath());
 		FlatFile<Record> ff = Texgit.createFlatFile(file);
 
-		ff.addRecord(geraCabecalho(ff, titulos.get(0), remessa));
+		ff.addRecord(geraCabecalho(ff, titulos.get(0), novaRemessa));
 
 		Integer index = 2;
 		for (Titulo titulo : titulos) {
@@ -64,7 +82,16 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 
 		ff.addRecord(geraTrailler(ff, index));
 
-		return geraArquivo(ff, remessa);
+		return ff;
+
+	}
+
+	private void atualizaTitulos(List<Titulo> titulos) {
+
+		titulos.forEach(t -> {
+			t.setDataGeracaoRemessa();
+			tituloRepository.save(t);
+		});
 
 	}
 

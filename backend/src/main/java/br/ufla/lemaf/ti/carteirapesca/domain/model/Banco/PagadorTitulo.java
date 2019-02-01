@@ -16,6 +16,7 @@ public class PagadorTitulo implements Entity<BeneficiarioTitulo, Integer> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Column(name = "nome")
 	private String nome;
 
 	@Column(name = "cpf_passaporte")

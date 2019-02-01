@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface TituloRepository extends JpaRepository<Titulo, Integer> {
 
-	List<Titulo> findAllByEnviadoBanco(Boolean enviadoBanco);
+	List<Titulo> findByDataGeracaoRemessaIsNull();
 
 }
