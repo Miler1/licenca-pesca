@@ -100,7 +100,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 			protocolo = solicitante.adicionarLicenca(licenca, false);
 
-		}else if(!solicitante.pussuiLicencaMesmaModalidade(modalidade)){
+		}else if(solicitante.pussuiLicencaMesmaModalidade(modalidade)){
 
 			throw new SolicitanteException("solicitante.licenca.mesma.modalidade");
 
