@@ -9,7 +9,6 @@
 		.no-data(v-if="licenca === null")
 			h2 {{ $t(`${consultar_prefix}data.semLicenca`) }}
 
-
 </template>
 
 <script>

@@ -22,6 +22,7 @@
 
     <!--Repositórios-->
     <repositories>
+
         <repository>
             <id>maven.oracle.com</id>
             <name>oracle-maven-repo</name>
@@ -32,10 +33,20 @@
                 <updatePolicy>always</updatePolicy>
             </releases>
         </repository>
+
         <repository>
             <id>br.ufla.lemaf</id>
             <url>http://repo.ti.lemaf.ufla.br/repository/public</url>
         </repository>
+
+        <repository>
+            <id>jrimum.org</id>
+            <url>http://jrimum.org/maven/content/groups/public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
     </repositories>
 
     <!--Dependencias-->
@@ -204,6 +215,13 @@
             <groupId>br.com.caelum.stella</groupId>
             <artifactId>caelum-stella-boleto</artifactId>
             <version>2.1.2</version>
+        </dependency>
+
+        <!-- texgit -->
+        <dependency>
+            <groupId>org.jrimum</groupId>
+            <artifactId>jrimum-texgit</artifactId>
+            <version>0.2.3-DEV-SNAPSHOT</version>
         </dependency>
 
         <dependency>

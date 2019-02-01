@@ -99,7 +99,8 @@ export const actions = {
     AcessoService.buscarLicencas(acessoResource)
       .then(({ data }) => {
         commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
-        if(data.pessoa.enderecoEstrangeiro){
+        debugger;
+        if(data.pessoa && data.pessoa.enderecoEstrangeiro){
 
           data.pessoa.enderecoEstrangeiro.nacionalidadeNome = data.pessoa.enderecoEstrangeiro.nacionalidade.nome;
           data.pessoa.enderecoEstrangeiro.paisNome = data.pessoa.enderecoEstrangeiro.pais.nome;

@@ -34,7 +34,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -159,8 +159,8 @@ public class ConsultaController {
 
 			String caminhoBoleto;
 
-			if(licenca.getDataVencimentoBoleto().compareTo(new Date()) != -1) {
-				caminhoBoleto = licenca.getCaminhoBoleto();
+			if(licenca.getTitulo().getDataVencimento().compareTo(LocalDate.now()) != -1) {
+				caminhoBoleto = licenca.getTitulo().getArquivoBoleto().getCaminhoArquivo();
 			} else {
 				caminhoBoleto = registroApplication.regerarBoleto(licenca);
 			}
@@ -175,9 +175,7 @@ public class ConsultaController {
 			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 
 		} catch (IOException | NullPointerException e) {
-
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-
 		}
 
 	}
@@ -247,7 +245,6 @@ public class ConsultaController {
 		return new ResponseEntity<>(licencaPesca, HttpStatus.OK);
 	}
 
-
 	@CrossOrigin("*")
 	@GetMapping("/fetch-paises")
 	public ResponseEntity<List<Pais>> fetchPaises(){
@@ -256,6 +253,5 @@ public class ConsultaController {
 
 		return new ResponseEntity<>(listPaises, HttpStatus.OK);
 	}
-
 
 }

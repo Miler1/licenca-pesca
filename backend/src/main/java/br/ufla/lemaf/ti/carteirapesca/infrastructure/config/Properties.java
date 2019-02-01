@@ -74,19 +74,15 @@ public final class Properties {
 		return environment.getProperty("spring.carteira-pesca.base-path");
 	}
 
-	/**
-	 * @return O caminho dos dados gerados para nome da Mae
-	 */
-	public static String pathArquivos() {
-		return environment.getProperty("spring.arquivos.base-path-arquivos-dados");
+	public static String pathArquivoRemessa() {
+		return environment.getProperty("spring.carteira-pesca.path-arquivo-remessa");
 	}
-
 
 	/**
 	 * @return O caminho da do boleto da licença de pesca
 	 */
 	public static String pathBoletoPagamentoCarteiraPesca() {
-		return environment.getProperty("spring.carteira-pesca.path-boleto");
+		return environment.getProperty("spring.carteira-pesca.path-arquivo-boleto");
 	}
 
 

@@ -64,7 +64,7 @@ public class ConsultaAplicationImpl implements ConsultaApplication {
 
 		if (licenca == null) return null;
 
-		return licenca.getCaminhoBoleto();
+		return licenca.getTitulo().getArquivoBoleto().getCaminhoArquivo();
 
 	}
 
@@ -79,7 +79,7 @@ public class ConsultaAplicationImpl implements ConsultaApplication {
 	@Override
 	public String buscarCaminhoCarteira(Protocolo protocolo) {
 
-		var licenca = licencaRepository.findByProtocoloCodigoFormatado(protocolo.getCodigoFormatado());
+		Licenca licenca = licencaRepository.findByProtocoloCodigoFormatado(protocolo.getCodigoFormatado());
 
 		if (licenca == null) return null;
 

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<txg:Texgit xmlns:txg="http://jrimum.org/texgit"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://jrimum.org/texgit http://jrimum.org/texgit/chrome/site/TexgitSchema.xsd"
+            version="1.0-academic">
+
+    <FlatFile>
+        <layout>
+            <name>Arquivo-Remessa_BradescoCNAB400</name>
+            <version>Version 03, Published: 2007/04/25</version>
+            <description>
+                Layout para Cobrança com Registro e sem Registro com
+                Emissão de Papeleta pelo Banco e pela Empresa.
+
+                Arquivo texto - padrão CNAB
+                Meio de Registro Transmissão de Dados
+                Descrição de Registro - Tamanho 400 Bytes
+                Organização Seqüencial
+
+                Arquivo Formato CNAB Remessa, Registros:
+
+                0 - Header Label
+                1 - Cobrança - Transação
+                2 - Mensagem (opcional)
+                3 - Rateio de Crédito (opcional)
+                9 - Trailler
+
+                Sistema Micro a Micro: O Arquivo Remessa deverá ter
+                a seguinte formatação:
+
+                CBDDMM??.REM
+
+                CB – Cobrança Bradesco
+                DD – O Dia geração do arquivo
+                MM – O Mês da geração do Arquivo
+                ?? - variáveis alfanuméricas/Númericas Ex.: 01, AB, A1 etc.
+                .Rem – Extensão do arquivo
+
+                Exemplo:
+
+                CB010501.REM ou CB0105AB.REM ou CB0105A1.REM
+
+                Nota: Quando se tratar de arquivo remessa para teste,
+                a extensão deverá ser TST.
+
+                Exemplo: CB010501.TST, o retorno será disponibilizado
+                como CB010501.RST.
+
+                Nota: No mesmo dia, não poderão ser transmitidos
+                Arquivos-Remessa diferentes com nomes iguais. A variável
+                no nome do arquivo serve para diferenciar um do outro.
+            </description>
+        </layout>
+        <GroupOfRecords>
+            <Record name="Header" description="Protocolo de comunicação" >
+                <GroupOfFields>
+                    <IdType name="IdentificacaoRegistro" value="0" length="1" position="1" />
+                    <Field name="IdentificacaoRemessa" value="1" length="1" />
+                    <Field name="LiteralRemessa" value="REMESSA" length="7" />
+                    <Field name="CodigoDeServico" value="01" length="2" />
+                    <Field name="LiteralServico" value="COBRANCA" length="15" />
+                    <Field name="CodigoDaEmpresa" length="20" type="INTEGER" padding="ZERO_LEFT" />
+                    <Field name="NomeEmpresa" length="30" />
+                    <Field name="CodigoCompensacao" value="237" length="3" />
+                    <Field name="NomeBanco" value="BRADESCO" length="15" />
+                    <Field name="DataGravacaoArquivo" length="6" type="DATE" format="DATE_DDMMYY" />
+                    <Field name="EspacoBranco" length="8" />
+                    <Field name="IdentificacaoSistema" value="MX" length="2" />
+                    <Field name="NumeroSequencialRemessa" length="7" type="INTEGER" padding="ZERO_LEFT" />
+                    <Field name="Filler2" length="277" />
+                    <Field name="sequencia" length="6" padding="ZERO_LEFT"/>
+                </GroupOfFields>
+            </Record>
+            <Record name="TransacaoTitulo" repeatable="true">
+                <GroupOfFields>
+                    <IdType name="IdentificacaoRegistro" value="1" length="1" position="1" />
+                    <Field name="OpcionalAgenciaDebito" length="5" padding="ZERO_LEFT"/>
+                    <Field name="OpcionalDigitoAgenciaDebito" length="1" />
+                    <Field name="OpcionalRazaoContaCorrente" length="5" padding="ZERO_LEFT"/>
+                    <Field name="OpcionalContaCorrente" length="7" padding="ZERO_LEFT"/>
+                    <Field name="OpcionalDigitoContaCorrente" length="1" padding="ZERO_LEFT"/>
+                    <Field name="IdentificacaoEmpresaCarteira" length="4" padding="ZERO_LEFT"/>
+                    <Field name="IdentificacaoEmpresaAgenciaSemDigito" length="5" />
+                    <Field name="IdentificacaoEmpresaContaCorrente" length="7" />
+                    <Field name="IdentificacaoEmpresaDigitoContaCorrente" length="1" />
+                    <Field name="NumeroControleParticipante" length="25" />
+                    <Field name="CodigoBanco" length="3" />
+                    <Field name="PossuiCobrancaMulta" length="1" />
+                    <Field name="PercentualMulta" length="4" />
+                    <Field name="IdentificacaoTituloBanco" length="11" />
+                    <Field name="DigitoIdentificacaoTituloBanco" length="1" />
+                    <Field name="DescontoBonificacaoPorDia" length="10" />
+                    <Field name="CondicaoEmissaoPapeletaCobranca" length="1" />
+                    <Field name="BoletoParaDebitoAutomatico" length="1" />
+                    <Field name="IdentificacaoOperacaoBanco" length="10" />
+                    <Field name="OpcinalIdentificadoRateioCredito" length="1" />
+                    <Field name="OpcinalEnderecamentoAvisoDebitoAutomatico" length="1" />
+                    <Field name="QtdPossivelPagamento" length="2" />
+                    <Field name="identificacaoOcorrencia" length="2" />
+                    <Field name="NumeroDocumento" length="10" />
+                    <Field name="DataVencimentoTitulo" length="6" type="DATE" format="DATE_DDMMYY"/>
+                    <Field name="ValorTitulo" length="13" />
+                    <Field name="BancoEncarregadoCobranca" length="3" />
+                    <Field name="AgenciaDepositaria" length="5" />
+                    <Field name="EspecieTitulo" length="2" />
+                    <Field name="Identificacao" value="N" length="1" />
+                    <Field name="DataEmissaoTitulo" length="6" type="DATE" format="DATE_DDMMYY"/>
+                    <Field name="PrimeiraInstrucao" length="2"/>
+                    <Field name="SegundaInstrucao" length="2"/>
+                    <Field name="ValorCobradoDiasAtraso" length="13"/>
+                    <Field name="DataLimiteConcessaoDesconto" length="6" type="DATE" format="DATE_DDMMYY"/>
+                    <Field name="ValorDesconto" length="13"/>
+                    <Field name="ValorIOF" length="13"/>
+                    <Field name="ValorAbatimentoASerConcedidoOuCancelado" length="13"/>
+                    <Field name="IdentificacaoTipoInscricaoPagador" length="2"/>
+                    <Field name="NumeroInscricaoPagador" length="14"/>
+                    <Field name="NomePagador" length="40"/>
+                    <Field name="EnderecoPagador" length="40"/>
+                    <Field name="PrimeiraMensagem" length="12"/>
+                    <Field name="CepPagador" length="5"/>
+                    <Field name="SufixoCepPagador" length="3"/>
+                    <Field name="SegundaMensagem" length="60"/>
+                    <Field name="sequencia" length="6" padding="ZERO_LEFT"/>
+                    <!--<Field name="NumeroSequencialRegistro" length="6"/>-->
+
+                    <!--<SequencialNumber name="sequencia" type="INTEGER" length="6" position="48" padding="ZERO_LEFT" />-->
+                </GroupOfFields>
+            </Record>
+            <Record name="Trailler">
+                <GroupOfFields>
+                    <IdType name="IdentificacaoRegistro" value="9" length="1" position="1" />
+                    <Field name="EspacoBranco" length="393" />
+                    <Field name="sequencia" length="6" padding="ZERO_LEFT"/>
+                    <!--<SequencialNumber name="sequencia" type="INTEGER" length="6" position="3" padding="ZERO_LEFT" />-->
+                </GroupOfFields>
+            </Record>
+        </GroupOfRecords>
+    </FlatFile>
+</txg:Texgit>

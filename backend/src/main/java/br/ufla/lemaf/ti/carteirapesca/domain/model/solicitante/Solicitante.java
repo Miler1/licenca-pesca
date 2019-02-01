@@ -1,6 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.*;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.EnderecoEstrangeiro;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
@@ -51,7 +54,7 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Licenca> licenca = new ArrayList<>();
 
-	@Column(name = "numero_tentativas")
+	@Column(name = "numero_tentativas", insertable = false)
 	private Integer numeroTentativas;
 
 	@Column(name = "data_ultima_tentativa")
@@ -64,7 +67,6 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_endereco_estrangeiro")
 	private EnderecoEstrangeiro enderecoEstrangeiro;
-
 
 	/**
 	 * Construtor de solicitante.
@@ -174,8 +176,6 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		}
 
 	}
-
-
 
 	public void limpaDadosDesbloqueioSolicitante() throws Exception {
 

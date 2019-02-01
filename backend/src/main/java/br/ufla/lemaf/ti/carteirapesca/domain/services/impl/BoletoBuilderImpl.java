@@ -1,10 +1,24 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
-import br.com.caelum.stella.boleto.*;
+import br.com.caelum.stella.boleto.Beneficiario;
+import br.com.caelum.stella.boleto.Boleto;
+import br.com.caelum.stella.boleto.Datas;
+import br.com.caelum.stella.boleto.Pagador;
 import br.com.caelum.stella.boleto.bancos.Bradesco;
 import br.com.caelum.stella.boleto.transformer.GeradorDeBoleto;
+import br.com.caelum.stella.format.CNPJFormatter;
+import br.ufla.lemaf.ti.carteirapesca.domain.enuns.EspecieDocumentoEnum;
+import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoArquivoEnum;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.EspecieDocumentoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.PagadorTituloRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
@@ -15,13 +29,13 @@ import lombok.val;
 import lombok.var;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 
 /**
  * Buider do Boleto.
@@ -37,25 +51,31 @@ import java.time.LocalDate;
 @Service
 public class BoletoBuilderImpl implements BoletoBuilder {
 
-	/**
-	 * Cria o boleto da carteira de pesca.
-	 *
-	 * @param protocolo  O Protocolo
-	 * @param modalidade A modalidade
-	 * @param pessoa     A PEssoa solicitante
-	 * @return O caminho do arquivo do boleto
-	 */
+	@Autowired
+	private BeneficiarioRepository beneficiarioRepository;
+
+	@Autowired
+	private EspecieDocumentoRepository especieDocumentoRepository;
+
+	@Autowired
+	private PagadorTituloRepository pagadorTituloRepository;
+
+	@Autowired
+	private TituloRepository tituloRepository;
+
+	@Autowired
+	private TipoArquivoRepository tipoArquivoRepository;
+
 	@Override
-	public String gerarBoleto(final Protocolo protocolo,
+	public Titulo gerarBoleto(final Protocolo protocolo,
 	                          final Modalidade modalidade,
 	                          final Pessoa pessoa) {
 
 		try {
 
-			var geradorDeBoleto = new GeradorDeBoleto(
-				montarBoleto(pessoa, protocolo, modalidade)
-			);
+			Titulo titulo = gerarTituloBradesco(pessoa, modalidade);
 
+			var geradorDeBoleto = new GeradorDeBoleto(montarBoleto(titulo));
 
 			var formatterNovo = new ProtocoloFormatter("$1-$2/$3-$4", ProtocoloValidator.FORMATED_RENOVADO, "$1$2$3$4", ProtocoloValidator.UNFORMATED_RENOVADO);
 
@@ -67,22 +87,28 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 				codigoProtocolo = protocolo.getProtocoloNaoFormatado();
 			}
 
+			String nomeBoleto = codigoProtocolo + "-banco-bradesco.pdf";
+
 			var caminhoBoleto = Paths.get(
 				Properties.pathBoletoPagamentoCarteiraPesca()
 					+ codigoProtocolo
 					+ "/"
-					+ codigoProtocolo
-					+ "-banco-santander.pdf"
+					+ nomeBoleto
 			);
 
 			var boleto = caminhoBoleto.toFile();
 
-			if (!boleto.exists())
+			if (!boleto.exists()) {
 				Files.createDirectories(caminhoBoleto.getParent());
+			}
 
 			geradorDeBoleto.geraPDF(caminhoBoleto.toString());
 
-			return caminhoBoleto.toString();
+			TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.BOLETO.getCodigo());
+
+			titulo.setArquivoBoleto(new Arquivo(caminhoBoleto.toString(), nomeBoleto, tipoArquivo));
+
+			return titulo;
 
 		} catch (IOException | NullPointerException e) {
 
@@ -94,135 +120,92 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 	}
 
-	/**
-	 * Monta os campos do boleto.
-	 *
-	 * @param pessoa A pessoa solicitante
-	 * @param protocolo O protocolo da licença
-	 * @param modalidade A modalidade da licença
-	 * @return O boleto
-	 */
-	private static Boleto montarBoleto(final Pessoa pessoa,
-	                                   final Protocolo protocolo,
-	                                   final Modalidade modalidade) {
+	private Titulo gerarTituloBradesco(Pessoa pessoa, Modalidade modalidade) {
+
+		val bradesco = new Bradesco();
+
+		BeneficiarioTitulo beneficiarioTitulo = beneficiarioRepository.findByBancoCodigo(bradesco.getNumeroFormatado());
+
+		EspecieDocumento especieDocumento = especieDocumentoRepository.findByCodigo(EspecieDocumentoEnum.OUTROS.getCodigo());
+
+		PagadorTitulo pagadorTitulo = getPagadorTitulo(pessoa);
+
+		Titulo titulo = new Titulo(beneficiarioTitulo, especieDocumento, pagadorTitulo, getValorTitulo(modalidade));
+
+		titulo.setNossoNumero(tituloRepository.count());
+
+		return titulo;
+
+	}
+
+	private PagadorTitulo getPagadorTitulo(Pessoa pessoa) {
+
+		String cpfPassaporte = (pessoa.cpf == null ? pessoa.passaporte.toString() : pessoa.cpf);
+
+		PagadorTitulo pagadorTitulo = pagadorTituloRepository.findByCpfPassaporte(cpfPassaporte);
+
+		if(pagadorTitulo == null) {
+			pagadorTitulo = new PagadorTitulo(pessoa.nome, cpfPassaporte);
+
+			main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco = endereco(pessoa);
+
+			Endereco enderecoPagador = new Endereco(endereco.logradouro,
+				(endereco.numero == null ? null : endereco.numero.toString()),
+				endereco.complemento,
+				endereco.bairro,
+				endereco.cep,
+				endereco.municipio.nome,
+				endereco.municipio.estado.sigla);
+
+			pagadorTitulo.setEndereco(enderecoPagador);
+
+			pagadorTituloRepository.save(pagadorTitulo);
+
+		}
+
+		return pagadorTitulo;
+
+	}
+
+	private Boleto montarBoleto(Titulo titulo) {
+
 		val bradesco = new Bradesco();
 
 		return Boleto.novoBoleto()
 			.comBanco(bradesco)
-			.comDatas(montarDatas())
-			.comBeneficiario(montarBeneficiario())
-			.comPagador(montarPagador(pessoa))
-			.comValorBoleto(montarValorBoleto(modalidade))
-			.comNumeroDoDocumento(protocolo.getCodigoFormatado())
-			.comEspecieDocumento("OU")
-			.comInstrucoes(
-				modalidade.getNomePT()
-			)
-			.comLocaisDePagamento(
-				"Pagável em qualquer banco até o vencimento."
-			);
+			.comDatas(montarDatas(titulo))
+			.comBeneficiario(montarBeneficiario(titulo))
+			.comPagador(montarPagador(titulo))
+			.comValorBoleto(titulo.getValor().setScale(2, BigDecimal.ROUND_HALF_EVEN))
+			.comNumeroDoDocumento(titulo.getNossoNumero())
+			.comEspecieDocumento(titulo.getEspecieDocumento().getCodigo())
+			.comInstrucoes(titulo.getInstrucoes())
+			.comLocaisDePagamento(titulo.getLocalPagamento());
 
 	}
 
-	/**
-	 * Monta os dados de endereço do solicitante.
-	 *
-	 * @param pessoa A Pessoa
-	 * @return O Endereço para o boleto
-	 */
-	private static Endereco montarEnderecoPessoa(Pessoa pessoa) {
-
-		String logradouro = endereco(pessoa).logradouro
-			+ ", Nº " + endereco(pessoa).numero + " "
-			+ (endereco(pessoa).complemento != null
-				? endereco(pessoa).complemento
-				: "");
-
-		return Endereco.novoEndereco()
-			.comLogradouro(logradouro)
-			.comBairro(endereco(pessoa).bairro)
-			.comCep(endereco(pessoa).cep)
-			.comCidade(endereco(pessoa).municipio.nome)
-			.comUf(endereco(pessoa).municipio.estado.sigla);
-
-	}
-
-	private static Emissor montarEmissor() {
-		Emissor emissor = Emissor.novoEmissor()
-			.comCedente("Instituto de Proteção Ambiental do Amazonas")
-			.comAgencia(3739)
-			.comDigitoAgencia('7')
-			.comContaCorrente(16065)
-			.comNumeroConvenio(4928031)
-			.comDigitoContaCorrente('2')
-			.comCarteira("09")
-			.comNossoNumero("00000001798")
-			.comDigitoNossoNumero("4");
-		return emissor;
-	}
-
-	/**
-	 * Monta os dados de data do boleto.
-	 *
-	 * @return Objeto com as datas para o boleto
-	 */
-	private static Datas montarDatas() {
-
-		// TODO - Montar estrutura para cálculo de datas a partir do processamento do banco
-		LocalDate date = LocalDate.now();
-
-		var day = date.getDayOfMonth();
-		var month = date.getMonthValue();
-		var year = date.getYear();
+	private Datas montarDatas(Titulo titulo) {
 
 		return Datas.novasDatas()
-			.comDocumento(day, month, year)
-			.comProcessamento(day, month, year)
-			.comVencimento(day, month + 1, year);
+			.comDocumento(titulo.getDataEmissao().getDayOfMonth(), titulo.getDataEmissao().getMonthValue(), titulo.getDataEmissao().getYear())
+			.comProcessamento(titulo.getDataProcessamento().getDayOfMonth(), titulo.getDataProcessamento().getMonthValue(), titulo.getDataProcessamento().getYear())
+			.comVencimento(titulo.getDataVencimento().getDayOfMonth(), titulo.getDataVencimento().getMonthValue(), titulo.getDataVencimento().getYear());
 	}
 
-	/**
-	 * Monta o Pagador.
-	 *
-	 * @param pessoa A pessoa solicitante
-	 * @return O Pagador do boleto
-	 */
-	private static Pagador montarPagador(Pessoa pessoa) {
-
-		return Pagador.novoPagador()
-			.comNome(pessoa.nome)
-			.comDocumento(pessoa.cpf == null ? pessoa.passaporte.toString() : pessoa.cpf)
-			.comEndereco(montarEnderecoPessoa(pessoa));
-	}
-
-	/**
-	 * Constroi o campo valor carteira.
-	 * <p>
-	 *
-	 * @param modalidade A modalidade da carteira
-	 * @return O campo de valor da carteira
-	 */
-	private static String montarValorBoleto(Modalidade modalidade) {
+	private BigDecimal getValorTitulo(Modalidade modalidade) {
 
 		if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_ESPORTIVA.id)) {
 
-			return "41.21";
+			return new BigDecimal(41.21);
 		} else if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_REACREATIVA.id)) {
 
-			return "57.21";
+			return new BigDecimal(57.21);
 		} else {
-			return "";
+			return new BigDecimal(0);
 		}
 	}
 
-	/**
-	 * Busca o endereço do solicitante
-	 * da carteira.
-	 *
-	 * @param pessoa A Pessoa solicitante
-	 * @return O endereço
-	 */
-	private static main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco(Pessoa pessoa) {
+	private main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco(Pessoa pessoa) {
 		return pessoa.enderecos
 			.stream()
 			.filter(endereco ->
@@ -231,35 +214,49 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			.orElseThrow(ResourceNotFoundException::new);
 	}
 
-	/**
-	 * Monta o beneficiario.
-	 * <p>
-	 * Dado fantasia por falta de definições.
-	 *
-	 * @return O Beneficiario
-	 * @implNote Reimplementar com dados reais
-	 */
-	private static Beneficiario montarBeneficiario() {
-		// TODO - colocar dado real
-		val enderecoBeneficiario = Endereco.novoEndereco()
-			.comLogradouro("Av Mário Ypiranga, 3280")
-			.comBairro("Parque Dez de Novembro")
-			.comCep("69050-030")
-			.comCidade("Manaus")
-			.comUf("AM");
+	private Beneficiario montarBeneficiario(Titulo titulo) {
 
-		return Beneficiario.novoBeneficiario()
-			.comNomeBeneficiario("Instituto de Proteção Ambiental do Amazonas")
-			.comAgencia("3739")
-			.comDigitoAgencia("7")
-			.comNumeroConvenio("4928031")
-			.comCarteira("09")
-			.comCodigoBeneficiario("16065")
-			.comDigitoCodigoBeneficiario("2")
-			.comNossoNumero("00000001798")
-			.comDocumento("04.624.888/0001-94")
-			.comDigitoNossoNumero("4")
-			.comEndereco(enderecoBeneficiario);
+		BeneficiarioTitulo beneficiarioTitulo = titulo.getBeneficiario();
+
+		Beneficiario beneficiario = Beneficiario.novoBeneficiario()
+			.comNomeBeneficiario(beneficiarioTitulo.getNome())
+			.comAgencia(beneficiarioTitulo.getAgencia())
+			.comDigitoAgencia(beneficiarioTitulo.getDigitoAgencia())
+			.comNumeroConvenio(beneficiarioTitulo.getConvenio())
+			.comCarteira(beneficiarioTitulo.getCarteira())
+			.comCodigoBeneficiario(beneficiarioTitulo.getCodigoBeneficiario())
+			.comDigitoCodigoBeneficiario(beneficiarioTitulo.getDigitoCodigoBeneficiario())
+			.comNossoNumero(titulo.getNossoNumero())
+			.comDocumento(new CNPJFormatter().format(beneficiarioTitulo.getCpfCnpj()))
+//			.comDigitoNossoNumero(titulo.getDigitoNossoNumero())
+			.comEndereco(montarEndereco(beneficiarioTitulo.getEndereco()));
+
+		return beneficiario;
+
+	}
+
+	private Pagador montarPagador(Titulo titulo) {
+
+		PagadorTitulo pagador = titulo.getPagador();
+
+		return Pagador.novoPagador()
+			.comNome(pagador.getNome())
+			.comDocumento(pagador.getCpfPassaporte())
+			.comEndereco(montarEndereco(pagador.getEndereco()));
+	}
+
+	private br.com.caelum.stella.boleto.Endereco montarEndereco(Endereco endereco) {
+
+		String descricaoEndereco = endereco.getLogradouro() +
+			(endereco.getNumero() == null ? "" : " Nº " + endereco.getNumero()) +
+			(endereco.getComplemento() == null ? "" : ", " + endereco.getComplemento());
+
+		return br.com.caelum.stella.boleto.Endereco.novoEndereco()
+			.comLogradouro(descricaoEndereco)
+			.comBairro(endereco.getBairro())
+			.comCep(endereco.getCep())
+			.comCidade(endereco.getMunicipio())
+			.comUf(endereco.getEstado());
 
 	}
 }

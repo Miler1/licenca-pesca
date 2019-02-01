@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
@@ -8,13 +9,12 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.var;
 import org.apache.commons.lang3.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -40,6 +40,11 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private static final Integer MES_ANTES_DE_VENCER = -1;
 	private static final Integer QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO = 1;
 
+	@Id
+	@SuppressWarnings("unused")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
 	@Embedded
 	@AttributeOverride(name = "codigoFormatado", column = @Column(name = "tx_protocolo"))
 	private Protocolo protocolo;
@@ -60,9 +65,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataAtivacao;
 
-	@Column(name = "tx_caminho_boleto")
-	private String caminhoBoleto;
-
 	@Column(name = "tx_caminho_carteira")
 	private String caminhoCarteira;
 
@@ -82,34 +84,27 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JoinColumn(name="id_informacao_complementar")
 	private InformacaoComplementar informacaoComplementar;
 
+	@Setter
+	@Getter
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name="id_titulo")
+	private Titulo titulo;
 
-	/**
-	 * Construtor da Licenca de pesca.
-	 * <p>
-	 * O protocolo, o solicitante, e a modalidade não podem ser nulos,
-	 * e o representante da modalidade de protocolo deve ser da mesma
-	 * modalidade da licença.
-	 *
-	 * @param protocolo  O número do protocolo
-	 * @param modalidade A modalidade da Licença
-	 * @param caminhoBoleto O caminho do arquivo de boleto
-	 */
 	public Licenca(final Protocolo protocolo,
-	               final Modalidade modalidade,
-	               final String caminhoBoleto,
+				   final Modalidade modalidade,
 				   final InformacaoComplementar informacaoComplementar,
-				   final Status status) {
+				   final Status status,
+				   final Titulo titulo) {
 		try {
 			Validate.notNull(protocolo);
 			Validate.notNull(modalidade);
-			Validate.notBlank(caminhoBoleto);
 
 			this.protocolo = protocolo;
 			this.modalidade = modalidade;
 			this.dataCriacao = new Date();
 			this.status = status;
-			this.caminhoBoleto = caminhoBoleto;
 			this.informacaoComplementar = informacaoComplementar;
+			this.titulo = titulo;
 			this.setDataVencimentoBoleto();
 
 		} catch (IllegalArgumentException | NullPointerException ex) {
@@ -140,7 +135,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		}
 		status = statusRepository.findById(Status.StatusEnum.INVALIDADO.id).get();
 	}
-	
+
 	/**
 	 * Data vencimento date.
 	 *
@@ -149,11 +144,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	public Date getDataVencimento() {
 
 		return dataVencimento;
-	}
-
-	public Date getDataVencimentoBoleto() {
-
-		return dataVencimentoBoleto;
 	}
 
 	public InformacaoComplementar getInformacaoComplementar() {
@@ -215,15 +205,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	}
 
 	/**
-	 * Gets caminho boleto.
-	 *
-	 * @return the caminho boleto
-	 */
-	public String getCaminhoBoleto() {
-		return caminhoBoleto;
-	}
-
-	/**
 	 * Gets caminho carteira.
 	 *
 	 * @return the caminho carteira
@@ -271,14 +252,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		return protocolo;
 	}
 
-	// --- Calculos internos
-
-	// Surrugate key para o Hibernate
-	@Id
-	@SuppressWarnings("unused")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
 	public Protocolo getProtocolo() {
 		return protocolo;
 	}
@@ -317,14 +290,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 
 	public void setDataAtivacao(Date dataAtivacao) {
 		this.dataAtivacao = dataAtivacao;
-	}
-
-	public void setCaminhoBoleto(String caminhoBoleto) {
-		this.caminhoBoleto = caminhoBoleto;
-	}
-
-	public void setCaminhoCarteira(String caminhoCarteira) {
-		this.caminhoCarteira = caminhoCarteira;
 	}
 
 	public void setSolicitante(Solicitante solicitante) {
