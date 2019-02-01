@@ -65,7 +65,18 @@ export default {
     computed: {
         ...mapGetters(["solicitante", "buscaMaes", "errorTelaInicial", "validacaoDados", "buscaMunicipios"])
     },
-    
+
+    created() {
+        this.$store.subscribe((mutation, state) => {
+        if(mutation.type === "CLEAN_PESQUISA"){
+            this.pessoa = {
+                dataNascimento: null,
+                cpf: null,
+                nomeMae: null
+            };
+        }
+        });
+    },
     methods: {
 
         instantiate() {
