@@ -7,7 +7,7 @@ logging:
   level:
     br.ufla.lemaf.ti: DEBUG
     org.hibernate: DEBUG
-  file: /var/log/application/carteira_pesca.log
+  file: /dados/var/spring/carteira-pesca/logs/carteira_pesca.log
 
 spring:
 
@@ -47,12 +47,12 @@ spring:
 
   security:
     entradaUnica:
-      client-id: 039fe0a516e31a97f6f2c690d98b3b6a3324cf057d60be170f4777f518240f40459c3fdf7dcfa4f2afb6a1a7c08f54630f4bdc412daabbb2b9486487a7c4817f
-      client-secret: ffc787cec6a87111f4aa5bbde635988da4dc50ff0a24a231767935b8a9d55164944564c5b191b558eab04fa126280cc8fc4d80878774b4f2736bda5d6273f52f
+      client-id: ebedfe0542593eb5425336eecf2e302bc131c0106a1d5d85e0ffd6ea81c8d96c368008ea9cce972cbc757df6972b3c047550eecd40c5655c038fed28f6ff8931
+      client-secret: 2bce259d3ad1a1290b32914985aad6f5a8cec5e341c8694bf69e23ab747739415a11db2b3cef837c6d53e2263319e1e037ecad85e4f699dab5b5bce73a97eeee
       portal-seguranca:
-        url: http://homologacao.ipaam.lemaf.com.br/homolog/portalSeguranca
+        url: http://homologacao.ipaam.lemaf.com.br/portal-seguranca
       cadastro-unificado:
-        url: http://homologacao.ipaam.lemaf.com.br/homolog/cadastroUnificado
+        url: http://homologacao.ipaam.lemaf.com.br/cadastro-unificado
 
   carteira-pesca:
     base-path: /dados/var/arquivos/carteira-pesca/carteira/

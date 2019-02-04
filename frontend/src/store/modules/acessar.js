@@ -144,6 +144,7 @@ export const actions = {
     commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
     commit(CLEAN_SOLICITANTE);
     commit(CLEAN_REGISTRO);
+    commit(CLEAN_PESQUISA);
     commit(SET_ERROR_TELA_BUSCA, "");
   }
 };
