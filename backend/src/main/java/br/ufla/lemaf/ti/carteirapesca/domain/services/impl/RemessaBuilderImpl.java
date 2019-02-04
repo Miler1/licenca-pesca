@@ -7,7 +7,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RemessaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.Remessa400Builder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.RemessaBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.jrimum.texgit.FlatFile;
@@ -29,7 +29,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class RemessaBuilderImpl implements Remessa400Builder {
+public class RemessaBuilderImpl implements RemessaBuilder {
 
 	@Autowired
 	RemessaRepository remessaRepository;
@@ -49,20 +49,26 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 
 		List<Titulo> titulos = tituloRepository.findByDataGeracaoRemessaIsNull();
 
-		Remessa ultimaRemessaEnviada = remessaRepository.buscaUltimaRemessaGerada();
-		Remessa novaRemessa;
+		if(titulos.size() > 0) {
 
-		if(ultimaRemessaEnviada != null) {
-			novaRemessa = new Remessa(ultimaRemessaEnviada.getSequencia() + 1);
+			Remessa ultimaRemessaEnviada = remessaRepository.buscaUltimaRemessaGerada();
+			Remessa novaRemessa;
+
+			if (ultimaRemessaEnviada != null) {
+				novaRemessa = new Remessa(ultimaRemessaEnviada.getSequencia() + 1);
+			} else {
+				novaRemessa = new Remessa(1);
+			}
+
+			atualizaTitulos(titulos);
+
+			FlatFile<Record> ff = construirInformacoesRemessa(titulos, novaRemessa);
+
+			return geraArquivo(ff, novaRemessa);
+
 		} else {
-			novaRemessa = new Remessa(1);
+			return null;
 		}
-
-		atualizaTitulos(titulos);
-
-		FlatFile<Record> ff = construirInformacoesRemessa(titulos, novaRemessa);
-
-		return geraArquivo(ff, novaRemessa);
 
 	}
 
@@ -100,7 +106,7 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 		Record header = flatFile.createRecord("Header");
 
 		header.setValue("CodigoDaEmpresa", completaStringComZerosEsquerda(20, beneficiario.getConvenio()));
-		header.setValue("NomeEmpresa", completaStringComEspacosEsquerda(30, beneficiario.getSigla()));
+		header.setValue("NomeEmpresa", completaStringComEspaçosDireita(30, beneficiario.getSigla()));
 		header.setValue("DataGravacaoArquivo", LocalDate.now().format(FORMATO_DATA_REMESSA));
 		header.setValue("EspacoBranco", completaStringComEspacosEsquerda(8, ""));
 		header.setValue("NumeroSequencialRemessa", remessa.getSequencia());
@@ -185,14 +191,14 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 		//TODO verificar problema quando for pessoa estrangeira pois aceita apenas CPF ou CNPJ
 		PagadorTitulo pagador = titulo.getPagador();
 		transacao.setValue("NumeroInscricaoPagador", completaStringComZerosEsquerda(14, pagador.getCpfPassaporte()));
-		transacao.setValue("NomePagador", completaStringComEspacosEsquerda(40, validaStringMaiorPermitidoCampo(40, pagador.getNome())));
-		transacao.setValue("EnderecoPagador", completaStringComEspacosEsquerda(40, getEnderecoCompleto(40, pagador.getEndereco())));
+		transacao.setValue("NomePagador", completaStringComEspaçosDireita(40, validaStringMaiorPermitidoCampo(40, pagador.getNome())));
+		transacao.setValue("EnderecoPagador", completaStringComEspaçosDireita(40, getEnderecoCompleto(40, pagador.getEndereco())));
 		transacao.setValue("PrimeiraMensagem", completaStringComEspacosEsquerda(12, ""));
 
 		String cep = pagador.getEndereco().getCep();
 		transacao.setValue("CepPagador", cep.replaceAll("-", "").substring(0, 5));
 		transacao.setValue("SufixoCepPagador", cep.replaceAll("-", "").substring(5, 8));
-		transacao.setValue("SegundaMensagem", completaStringComEspacosEsquerda(60, ""));
+		transacao.setValue("SegundaMensagem", completaStringComEspaçosDireita(60, "PAGAVEL EM QUALQUER AGENCIA ATE O VENCIMENTO"));
 		transacao.setValue("sequencia", index);
 
 		return transacao;
@@ -279,6 +285,21 @@ public class RemessaBuilderImpl implements Remessa400Builder {
 
 	private String completaStringComEspacosEsquerda(Integer tamanhoCampo, String valor) {
 		return String.format("%1$" + tamanhoCampo + "s", valor);
+	}
+
+	private String completaStringComEspaçosDireita(Integer tamanhoCampo, String valor) {
+
+		Integer tamanhoString = valor.length();
+
+		if(tamanhoCampo == tamanhoString) {
+			return valor;
+		} else if(tamanhoCampo > tamanhoString) {
+			return valor + String.format("%1$" + (tamanhoCampo - tamanhoString) + "s", "");
+		} else {
+			return valor.substring(0, tamanhoCampo - 1);
+		}
+
+
 	}
 
 	private String formataValorPadraoRemessa(BigDecimal valor) {

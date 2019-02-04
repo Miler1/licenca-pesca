@@ -191,12 +191,18 @@ public class AcessoController {
 
 		String pathArquivoRemessa = remessaBuilder.geraRemessa();
 
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.TEXT_PLAIN);
+		if(pathArquivoRemessa != null) {
 
-		InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(pathArquivoRemessa)));
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaType.TEXT_PLAIN);
 
-		return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
+			InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(pathArquivoRemessa)));
+
+			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
+		}
 
 	}
 
