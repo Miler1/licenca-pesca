@@ -6,6 +6,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
@@ -73,6 +74,8 @@ public class AcessoController {
 	@PostMapping("/acessar")
 	public ResponseEntity<PessoaDTO> acessar(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
+		WebServiceUtils.validarWebService();
+
 		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true){
 
 			var pessoa = acessoServiceFacade.acessar(validacaoDTO.getAcessoResource());
@@ -91,6 +94,8 @@ public class AcessoController {
 	@CrossOrigin("*")
 	@PostMapping(value="/buscarLicencas")
 	public ResponseEntity<ListaLicencaDTO> buscarLicencas(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
+
+		WebServiceUtils.validarWebService();
 
 		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true){
 
@@ -112,6 +117,8 @@ public class AcessoController {
 	@CrossOrigin("*")
 	@PostMapping("/buscarDados")
 	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) throws Exception {
+
+		WebServiceUtils.validarWebService();
 
 		PessoaDTO pessoa = acessoServiceFacade.acessar(acessoResource);
 

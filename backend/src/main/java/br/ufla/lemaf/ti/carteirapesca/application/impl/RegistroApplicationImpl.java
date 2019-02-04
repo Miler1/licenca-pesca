@@ -92,6 +92,8 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	@Override
 	public Protocolo registrar(final RegistroResource resource) {
 
+		WebServiceUtils.validarWebService();
+
 		var solicitante = getSolicitante(resource);
 
 		Protocolo protocolo;
