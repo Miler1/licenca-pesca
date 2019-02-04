@@ -26,6 +26,10 @@ const AUTENTICIDADE = {
         cep: ["CEP ", "Zip code"],
         pais: ["País ", "Country"]
       },
+      modalidades: {
+        esportiva: ["Esportiva (pesca e solta o peixe)", "Sporty (fishing and loosening fish)"],
+        recreativa: ["Recreativa (leva o peixe)", "Recreational (takes the fish)"]
+      },
       pais: ["Brasil", "Brazil"]
     }
   }

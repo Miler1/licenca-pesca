@@ -125,9 +125,13 @@ export default {
         },
         modalidade(){
             if(this.licencaPesca.licenca.modalidade === "RECREATIVA"){
-                return "Recreativa (leva o peixe)"
+                return translate(
+                    `${this.autenticidadeQr_prefix}titulo.modalidades.recreativa`
+                );
             }else {
-                return "Esportiva (pesca e solta o peixe)"
+                return translate(
+                    `${this.autenticidadeQr_prefix}titulo.modalidades.esportiva`
+                );
             }
         }
 

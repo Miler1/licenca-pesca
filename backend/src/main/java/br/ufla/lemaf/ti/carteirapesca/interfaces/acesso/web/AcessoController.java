@@ -1,7 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
@@ -28,7 +27,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
