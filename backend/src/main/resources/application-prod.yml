@@ -19,6 +19,12 @@ spring:
       enabled: true
       max-file-size: 10MB
 
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://192.168.100.29:5432/carteira_pesca
+    username: carteira_pesca
+    password: carteira_pesca
+
   jpa:
     properties:
 
@@ -50,3 +56,6 @@ spring:
     base-path: /dados/carteira-pesca/carteira/
     path-arquivo-boleto: /dados/carteira-pesca/boleto/
     path-arquivo-remessa: /dados/carteira-pesca/remessa/
+
+
+
