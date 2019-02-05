@@ -121,6 +121,7 @@ export const actions = {
       );
       return data.numero;
     }).catch(error => {
+      commit(SET_ERROR, error);
     });
   },
 

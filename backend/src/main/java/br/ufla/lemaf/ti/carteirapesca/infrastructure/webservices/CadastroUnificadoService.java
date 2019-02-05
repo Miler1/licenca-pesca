@@ -217,6 +217,8 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 
 	public static Pessoa buscarPessoaComFiltro(FiltroPessoa filtro) {
 
+		WebServiceUtils.validarWebService();
+
 		PessoaFiltroResult pessoas = WebServiceUtils
 			.webServiceEU()
 			.buscarPessoasComFiltroAll(filtro);
