@@ -28,7 +28,7 @@ public class Remessa implements Entity<Remessa, Integer> {
 	private Integer sequencia;
 
 	@Column(name = "sequencia_nome_arquivo")
-	private String sequencialNomeArquivo;
+	private Integer sequencialNomeArquivo;
 
 	@Column(name = "dt_cadastro", insertable = false, updatable = false)
 	private Date dataCadastro;
@@ -37,7 +37,12 @@ public class Remessa implements Entity<Remessa, Integer> {
 
 	public Remessa(Integer sequencia) {
 		this.sequencia = sequencia;
-		this.sequencialNomeArquivo = String.format("%02d", sequencia);
+		this.sequencialNomeArquivo = sequencia;
+	}
+
+	public Remessa(Integer sequencia, Integer sequenciaNomeArquivo) {
+		this.sequencia = sequencia;
+		this.sequencialNomeArquivo = sequenciaNomeArquivo;
 	}
 
 	@Override

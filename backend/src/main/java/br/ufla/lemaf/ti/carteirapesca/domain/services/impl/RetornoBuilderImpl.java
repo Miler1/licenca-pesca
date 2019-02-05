@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoBuilder;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.Banco.CabecalhoRetornoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.CabecalhoRetornoDTO;
 
 import java.io.IOException;
 import java.nio.file.Files;

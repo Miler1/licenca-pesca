@@ -17,12 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -47,18 +47,11 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 	@Override
 	public Remessa geraRemessa() throws IOException {
 
-		List<Titulo> titulos = tituloRepository.findByRemessaIsNull();
+		List<Titulo> titulos = tituloRepository.findAll();
 
 		if(titulos.size() > 0) {
 
-			Remessa ultimaRemessaEnviada = remessaRepository.buscaUltimaRemessaGerada();
-			Remessa novaRemessa;
-
-			if (ultimaRemessaEnviada != null) {
-				novaRemessa = new Remessa(ultimaRemessaEnviada.getSequencia() + 1);
-			} else {
-				novaRemessa = new Remessa(1);
-			}
+			Remessa novaRemessa = inicializaNovaRemessa();
 
 			FlatFile<Record> ff = construirInformacoesRemessa(titulos, novaRemessa);
 
@@ -71,6 +64,27 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		} else {
 			return null;
 		}
+
+	}
+
+	public Remessa inicializaNovaRemessa() {
+
+		Remessa ultimaRemessaEnviada = remessaRepository.buscaUltimaRemessaGerada();
+
+		if(ultimaRemessaEnviada == null) {
+			return new Remessa(1);
+		}
+
+		Remessa ultimaRemessaEnviadaDia = remessaRepository.buscaUltimaRemessaGeradaNoDia();
+		Remessa novaRemessa;
+
+		if(ultimaRemessaEnviadaDia != null) {
+			novaRemessa = new Remessa(ultimaRemessaEnviada.getSequencia() + 1, ultimaRemessaEnviadaDia.getSequencialNomeArquivo() + 1);
+		} else {
+			novaRemessa = new Remessa(ultimaRemessaEnviada.getSequencia() + 1, 1);
+		}
+
+		return novaRemessa;
 
 	}
 
@@ -96,7 +110,6 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 	private void atualizaTitulos(List<Titulo> titulos, Remessa remessa) {
 
 		titulos.forEach(t -> {
-			t.setDataGeracaoRemessa();
 			t.setRemessa(remessa);
 			tituloRepository.save(t);
 		});
@@ -260,8 +273,10 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 	private Remessa geraArquivo(FlatFile<Record> ff, Remessa remessa) throws IOException {
 
-		//TODO Implementar solução de nome permanete para a remessa com as variáveis alfanumericas
-		String nomeArquivoRemessa = "CB" + LocalDate.now().format(FORMATO_DATA_NOME_ARQUIVO_REMESSA) + remessa.getSequencialNomeArquivo() + ".REM";
+		//TODO Implementar solução para o nome do arquivo de remessa tenha caracteres alfanuméricos nos últimos 2 digítos
+		String nomeArquivoRemessa = "CB" + LocalDate.now().format(FORMATO_DATA_NOME_ARQUIVO_REMESSA) +
+			completaStringComZerosEsquerda(2, remessa.getSequencialNomeArquivo().toString())  + ".REM";
+
 		String diretorioDiaGeracaoRemessa = LocalDate.now().format(FORMATO_DATA_REMESSA);
 
 		Path pathRemessa = Paths.get(Properties.pathArquivoRemessa() + "/" + diretorioDiaGeracaoRemessa + "/" + nomeArquivoRemessa);
@@ -270,6 +285,15 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		if(!arquivoRemessa.exists()) {
 			Files.createDirectories(pathRemessa.getParent());
 		}
+
+		Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(arquivoRemessa), "UTF8"));
+
+		for(String linhaArquivo : ff.write()) {
+			out.append(linhaArquivo).append("\r\n");
+		}
+
+		out.flush();
+		out.close();
 
 		TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.REMESSA.getCodigo());
 		remessa.setArquivo(new Arquivo(pathRemessa.toString(), nomeArquivoRemessa, tipoArquivo));
@@ -288,6 +312,8 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 	private String completaStringComEspaçosDireita(Integer tamanhoCampo, String valor) {
 
+		valor = removeCaracteresEspeciais(valor.toUpperCase());
+
 		Integer tamanhoString = valor.length();
 
 		if(tamanhoCampo == tamanhoString) {
@@ -298,6 +324,13 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 			return valor.substring(0, tamanhoCampo - 1);
 		}
 
+	}
+
+	private String removeCaracteresEspeciais(String valor) {
+
+		return Normalizer.normalize(valor, Normalizer.Form.NFD)
+			.replaceAll("[^\\p{ASCII}]", "")
+			.replaceAll("[&\\/\\\\#,ºª+()$~%.'\":*?<>{}]", "");
 
 	}
 

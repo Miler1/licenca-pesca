@@ -58,9 +58,6 @@ public class Titulo implements Entity<Titulo, Integer> {
 	@Column(name = "nosso_numero")
 	private String nossoNumero;
 
-	@Column(name = "dt_geracao_remessa")
-	private LocalDate dataGeracaoRemessa;
-
 	@Setter
 	@Column(name = "dt_pagamento")
 	private LocalDate dataPagamento;
@@ -122,10 +119,6 @@ public class Titulo implements Entity<Titulo, Integer> {
 
 	private void setLocalPagamento() {
 		this.localPagamento = "Pagável em qualquer banco até o vencimento.";
-	}
-
-	public void setDataGeracaoRemessa() {
-		this.dataGeracaoRemessa = LocalDate.now();
 	}
 
 }

@@ -13,6 +13,9 @@ public interface RemessaRepository extends JpaRepository<Remessa, Integer> {
 		"WHERE to_char(dt_cadastro, 'dd/MM/YYYY') = to_char(now(), 'dd/MM/YYYY') " +
 		"ORDER BY id DESC " +
 		"LIMIT 1;", nativeQuery = true)
+	Remessa buscaUltimaRemessaGeradaNoDia();
+
+	@Query(value = "SELECT * FROM carteira_pesca.remessa ORDER BY id DESC LIMIT 1", nativeQuery = true)
 	Remessa buscaUltimaRemessaGerada();
 
 }

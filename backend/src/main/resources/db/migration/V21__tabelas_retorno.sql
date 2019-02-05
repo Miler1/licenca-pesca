@@ -30,15 +30,18 @@ COMMENT ON COLUMN carteira_pesca.titulo.valor_pago IS 'Valor que foi pago pelo t
 
 ALTER TABLE carteira_pesca.titulo ADD COLUMN id_remessa INTEGER NULL;
 ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_remessa_titulo FOREIGN KEY (id_remessa)
-  REFERENCES carteira_pesca.titulo (id) MATCH SIMPLE
+  REFERENCES carteira_pesca.remessa (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT;
 
-COMMENT ON COLUMN carteira_pesca.titulo.id_retorno IS 'Remessa gerada para o título.';
+COMMENT ON COLUMN carteira_pesca.titulo.id_remessa IS 'Remessa gerada para o título.';
 
 ALTER TABLE carteira_pesca.titulo ADD COLUMN id_retorno INTEGER NULL;
 ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_retorno_titulo FOREIGN KEY (id_retorno)
-  REFERENCES carteira_pesca.titulo (id) MATCH SIMPLE
+  REFERENCES carteira_pesca.retorno (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 COMMENT ON COLUMN carteira_pesca.titulo.id_retorno IS 'Retorno que o titulo foi processado.';
+
+ALTER TABLE carteira_pesca.remessa DROP COLUMN sequencia_nome_arquivo;
+ALTER TABLE carteira_pesca.remessa ADD COLUMN sequencia_nome_arquivo INTEGER NULL;
 
