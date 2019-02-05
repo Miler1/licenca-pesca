@@ -45,9 +45,9 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 	private static final DateTimeFormatter FORMATO_DATA_NOME_ARQUIVO_REMESSA = DateTimeFormatter.ofPattern("ddMM");
 
 	@Override
-	public String geraRemessa() throws IOException {
+	public Remessa geraRemessa() throws IOException {
 
-		List<Titulo> titulos = tituloRepository.findByDataGeracaoRemessaIsNull();
+		List<Titulo> titulos = tituloRepository.findByRemessaIsNull();
 
 		if(titulos.size() > 0) {
 
@@ -60,11 +60,13 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 				novaRemessa = new Remessa(1);
 			}
 
-			atualizaTitulos(titulos);
-
 			FlatFile<Record> ff = construirInformacoesRemessa(titulos, novaRemessa);
 
-			return geraArquivo(ff, novaRemessa);
+			Remessa remessa = geraArquivo(ff, novaRemessa);
+
+			atualizaTitulos(titulos, remessa);
+
+			return remessa;
 
 		} else {
 			return null;
@@ -91,10 +93,11 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 	}
 
-	private void atualizaTitulos(List<Titulo> titulos) {
+	private void atualizaTitulos(List<Titulo> titulos, Remessa remessa) {
 
 		titulos.forEach(t -> {
 			t.setDataGeracaoRemessa();
+			t.setRemessa(remessa);
 			tituloRepository.save(t);
 		});
 
@@ -255,7 +258,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 	}
 
-	private String geraArquivo(FlatFile<Record> ff, Remessa remessa) throws IOException {
+	private Remessa geraArquivo(FlatFile<Record> ff, Remessa remessa) throws IOException {
 
 		//TODO Implementar solução de nome permanete para a remessa com as variáveis alfanumericas
 		String nomeArquivoRemessa = "CB" + LocalDate.now().format(FORMATO_DATA_NOME_ARQUIVO_REMESSA) + remessa.getSequencialNomeArquivo() + ".REM";
@@ -271,11 +274,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.REMESSA.getCodigo());
 		remessa.setArquivo(new Arquivo(pathRemessa.toString(), nomeArquivoRemessa, tipoArquivo));
 
-		remessaRepository.save(remessa);
-
-		Files.write(pathRemessa, ff.write());
-
-		return pathRemessa.toString();
+		return remessaRepository.save(remessa);
 
 	}
 

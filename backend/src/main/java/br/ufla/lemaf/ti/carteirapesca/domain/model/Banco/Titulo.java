@@ -61,13 +61,27 @@ public class Titulo implements Entity<Titulo, Integer> {
 	@Column(name = "dt_geracao_remessa")
 	private LocalDate dataGeracaoRemessa;
 
+	@Setter
 	@Column(name = "dt_pagamento")
 	private LocalDate dataPagamento;
+
+	@Column(name = "valor_pago")
+	private BigDecimal valorPago;
 
 	@Setter
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_arquivo", referencedColumnName="id")
 	private Arquivo arquivoBoleto;
+
+	@Setter
+	@ManyToOne
+	@JoinColumn(name = "id_remessa", referencedColumnName="id")
+	private Remessa remessa;
+
+	@Setter
+	@ManyToOne
+	@JoinColumn(name = "id_retorno", referencedColumnName="id")
+	private Retorno retorno;
 
 	@Override
 	public boolean sameIdentityAs(Titulo other) {

@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
@@ -189,14 +190,14 @@ public class AcessoController {
 	@GetMapping("/remessa")
 	public ResponseEntity<InputStreamResource> geraRemessa() throws IOException {
 
-		String pathArquivoRemessa = remessaBuilder.geraRemessa();
+		Remessa remessa = remessaBuilder.geraRemessa();
 
-		if(pathArquivoRemessa != null) {
+		if(remessa != null) {
 
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setContentType(MediaType.TEXT_PLAIN);
 
-			InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(pathArquivoRemessa)));
+			InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(remessa.getArquivo().getCaminhoArquivo())));
 
 			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 

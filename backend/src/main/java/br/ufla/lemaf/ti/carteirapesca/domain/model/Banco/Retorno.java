@@ -7,12 +7,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @javax.persistence.Entity
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "remessa")
-public class Remessa implements Entity<Remessa, Integer> {
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "retorno")
+public class Retorno implements Entity<Retorno, Integer> {
 
 	@Id
 	@SuppressWarnings("unused")
@@ -24,24 +24,14 @@ public class Remessa implements Entity<Remessa, Integer> {
 	@JoinColumn(name = "id_arquivo", referencedColumnName="id")
 	private Arquivo arquivo;
 
-	@Column(name = "numero_sequencial")
-	private Integer sequencia;
+	@Column(name = "dt_gravacao_banco")
+	private LocalDate dataGravacaoBanco;
 
-	@Column(name = "sequencia_nome_arquivo")
-	private String sequencialNomeArquivo;
-
-	@Column(name = "dt_cadastro", insertable = false, updatable = false)
-	private Date dataCadastro;
-
-	public Remessa() {}
-
-	public Remessa(Integer sequencia) {
-		this.sequencia = sequencia;
-		this.sequencialNomeArquivo = String.format("%02d", sequencia);
-	}
+	@Column(name = "dt_processamento")
+	private LocalDate dataProcessamento;
 
 	@Override
-	public boolean sameIdentityAs(Remessa other) {
+	public boolean sameIdentityAs(Retorno other) {
 		return false;
 	}
 
