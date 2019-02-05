@@ -4,6 +4,7 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.EntradaUnicaException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
@@ -219,23 +221,29 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 
 		WebServiceUtils.validarWebService();
 
-		PessoaFiltroResult pessoas = WebServiceUtils
-			.webServiceEU()
-			.buscarPessoasComFiltroAll(filtro);
+		try {
+			PessoaFiltroResult pessoas = WebServiceUtils
+				.webServiceEU()
+				.buscarPessoasComFiltroAll(filtro);
 
-		Pessoa pessoa;
+			Pessoa pessoa;
 
-		if(pessoas.pageItems == null || pessoas.pageItems.size() == 0) {
+			if(pessoas.pageItems == null || pessoas.pageItems.size() == 0) {
 
-			pessoa = new Pessoa();
-			pessoa.cpf = filtro.login;
-			pessoa.passaporte = filtro.passaporte;
+				pessoa = new Pessoa();
+				pessoa.cpf = filtro.login;
+				pessoa.passaporte = filtro.passaporte;
 
-		} else {
-			pessoa = pessoas.pageItems.get(0);
+			} else {
+				pessoa = pessoas.pageItems.get(0);
+			}
+
+			return pessoa;
+
+		} catch (NullPointerException e) {
+
+			throw new BaseException("entradaUnica.servicoIndisponivel");
 		}
-
-		return pessoa;
 
 	}
 
