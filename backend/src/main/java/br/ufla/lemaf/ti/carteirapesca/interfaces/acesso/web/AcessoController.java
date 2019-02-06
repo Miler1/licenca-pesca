@@ -11,6 +11,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFaca
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -129,7 +130,7 @@ public class AcessoController {
 
 		if(acessoServiceFacade.solicitanteBloqueado(acessoResource)) {
 
-			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
+			throw new ValidationException("acesso.resourceInvalid.cpfAndPassaporteBloqueado");
 
 		} else {
 

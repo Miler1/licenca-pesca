@@ -121,6 +121,7 @@ export const actions = {
         if(!data.maes){
           commit(SET_SOLICITANTE, data);
           commit(ACTIVE_CADASTRO, data);
+          commit(SET_ERROR_TELA_BUSCA, "");
           commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
           commit(SET_CPF_PESQUISA, data.cpf);
           commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
@@ -207,6 +208,7 @@ export const mutations = {
 
   [SET_DADOS_SOLICITANTE_CONFIRMAR]: (state, dadosSolicitanteAConfirmar) => {
     state.dadosSolicitanteAConfirmar = dadosSolicitanteAConfirmar;
+
   }
 };
 
