@@ -136,6 +136,8 @@ export const actions = {
         if (error.response) {
           commit(SET_ERROR_TELA_BUSCA, error.response.data.message);
           commit(CLEAN_SOLICITANTE);
+        }else {
+          commit(SET_ERROR_TELA_BUSCA, "Não foi possível conectar ao servidor.")
         }
       });
   },

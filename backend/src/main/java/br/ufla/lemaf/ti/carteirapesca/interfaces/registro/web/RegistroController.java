@@ -82,7 +82,9 @@ public class RegistroController {
 
 			throw new BaseException("entradaUnica.servicoIndisponivel");
 		}
+
 	}
+
 
 	@CrossOrigin("*")
 	@PostMapping("/renovar")

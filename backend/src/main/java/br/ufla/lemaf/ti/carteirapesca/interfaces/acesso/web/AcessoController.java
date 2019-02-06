@@ -111,6 +111,7 @@ public class AcessoController {
 			return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
 		} else {
+
 			throw new Exception("Dados não conferem. Após 3 tentativas erradas, o Cpf/passaporte será bloqueado por 2 horas.");
 		}
 	}
