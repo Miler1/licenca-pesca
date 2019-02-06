@@ -1,5 +1,8 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto;
 
+import lombok.Getter;
+
+@Getter
 public class TransacaoRetornoDTO {
 
 	private Integer identificacaoRegistro;

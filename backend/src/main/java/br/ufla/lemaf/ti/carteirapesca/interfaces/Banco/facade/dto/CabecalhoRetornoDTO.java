@@ -6,7 +6,7 @@ import lombok.Getter;
 public class CabecalhoRetornoDTO {
 
 	private Integer identificacaoRegistro;
-	private Integer identificacaoArquivo;
+	private Integer identificacaoArquivoRetorno;
 	private String literalRetorno;
 	private String codigoServico;
 	private String literalServico;
@@ -23,7 +23,7 @@ public class CabecalhoRetornoDTO {
 	public CabecalhoRetornoDTO(String cabecalho) {
 
 		this.identificacaoRegistro = Integer.valueOf(cabecalho.substring(1, 2));
-		this.identificacaoArquivo = Integer.valueOf(cabecalho.substring(2, 3));
+		this.identificacaoArquivoRetorno = Integer.valueOf(cabecalho.substring(2, 3));
 		this.literalRetorno = cabecalho.substring(3, 10);
 		this.codigoServico = cabecalho.substring(10, 12);
 		this.literalServico = cabecalho.substring(12, 27);

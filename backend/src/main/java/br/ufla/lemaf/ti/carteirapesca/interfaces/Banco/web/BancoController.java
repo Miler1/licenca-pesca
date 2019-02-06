@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.web;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -22,7 +23,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Controller
@@ -30,8 +32,13 @@ import java.util.Objects;
 @RequestMapping("/banco")
 public class BancoController {
 
+	private static final DateTimeFormatter FORMATO_DATA_MES_ANO = DateTimeFormatter.ofPattern("MM-YYYY");
+
 	@Autowired
 	private RemessaBuilderImpl remessaBuilder;
+
+	@Autowired
+	private RetornoBuilderImpl retornoBuilder;
 
 	@CrossOrigin("*")
 	@GetMapping("/download-remessa")
@@ -57,16 +64,19 @@ public class BancoController {
 	@PostMapping("/upload-retorno")
 	public ResponseEntity<String> uploadArquivoRetorno(@RequestParam("file") MultipartFile multipartFile) throws IOException {
 
-		File arquivoTemporario = new File(Objects.requireNonNull(System.getProperty("java.io.tmpdir") + "/" + multipartFile.getOriginalFilename()));
+		Path pathArquivoRetorno = Paths.get(Properties.pathArquivoRetorno() +
+			File.pathSeparator + LocalDate.now().format(FORMATO_DATA_MES_ANO) +
+			File.pathSeparator + multipartFile.getOriginalFilename());
 
-		Path pathArquivoRetorno = Paths.get(Properties.pathArquivoRetorno() + multipartFile.getOriginalFilename());
 		File arquivoRetorno = pathArquivoRetorno.toFile();
 
 		if(!arquivoRetorno.exists()) {
 			Files.createDirectories(pathArquivoRetorno.getParent());
 		}
 
-		FileUtils.copyFile(arquivoTemporario, arquivoRetorno, true);
+		FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), arquivoRetorno);
+
+		retornoBuilder.salvaArquivo(arquivoRetorno);
 
 		return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
 

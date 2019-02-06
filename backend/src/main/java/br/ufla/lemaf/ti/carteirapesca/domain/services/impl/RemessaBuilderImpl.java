@@ -47,7 +47,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 	@Override
 	public Remessa geraRemessa() throws IOException {
 
-		List<Titulo> titulos = tituloRepository.findAll();
+		List<Titulo> titulos = tituloRepository.buscaTitulosSemRemessaGerada();
 
 		if(titulos.size() > 0) {
 
@@ -279,7 +279,10 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 		String diretorioDiaGeracaoRemessa = LocalDate.now().format(FORMATO_DATA_REMESSA);
 
-		Path pathRemessa = Paths.get(Properties.pathArquivoRemessa() + "/" + diretorioDiaGeracaoRemessa + "/" + nomeArquivoRemessa);
+		Path pathRemessa = Paths.get(Properties.pathArquivoRemessa() +
+			File.pathSeparator + diretorioDiaGeracaoRemessa +
+			File.pathSeparator + nomeArquivoRemessa);
+
 		File arquivoRemessa = pathRemessa.toFile();
 
 		if(!arquivoRemessa.exists()) {
