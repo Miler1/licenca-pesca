@@ -121,9 +121,6 @@ export const actions = {
       );
       return data.numero;
     }).catch(error => {
-      Vue.prototype.$message.error(
-        `Não foi possível conectar ao servidor.`
-      );
     });
   },
 
