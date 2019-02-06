@@ -41,6 +41,7 @@ import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { InformacoesComplementaresDTO } from "../../model/InformacoesComplementaresDTO";
 import RegistroService from "../../services/RegistroService";
 import { stat } from "fs";
+import { Exception } from "../../services/shared/handling/Exception";
 
 const INITIAL_STATE = {
   municipios: [],
@@ -121,9 +122,7 @@ export const actions = {
       );
       return data.numero;
     }).catch(error => {
-      Vue.prototype.$message.error(
-        `Não foi possível conectar ao servidor.`
-      );
+      Exception({ message: "Não foi possível conectar-se ao servidor. Por favor, verifique sua conexão com a internet e tente novamente.", show: true });
     });
   },
 
