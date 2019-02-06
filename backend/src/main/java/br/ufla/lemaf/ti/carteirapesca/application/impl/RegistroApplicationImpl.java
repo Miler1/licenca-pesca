@@ -107,11 +107,11 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		}else if(solicitante.pussuiLicencaMesmaModalidade(modalidade)){
 
-			throw new ValidationException("solicitante.licenca.mesma.modalidade");
+			throw new SolicitanteException("solicitante.licenca.mesma.modalidade");
 
 		}else {
 
-			throw new ValidationException("solicitante.licenca.ativa");
+			throw new SolicitanteException("solicitante.licenca.ativa");
 		}
 
 			if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
