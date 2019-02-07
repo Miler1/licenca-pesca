@@ -5,9 +5,9 @@ import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 import lombok.Setter;
-import org.checkerframework.checker.guieffect.qual.SafeEffect;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -32,6 +32,60 @@ public class Retorno implements Entity<Retorno, Integer> {
 	@Setter
 	@Column(name = "dt_processamento")
 	private LocalDate dataProcessamento;
+
+	@Column(name = "qtd_titulo_cobranca")
+	private Integer qtdTitulosCobraca;
+
+	@Column(name = "valor_titulo_cobranca")
+	private BigDecimal vlrTitulosCobraca;
+
+	@Column(name = "qtd_confirmacao_entrada")
+	private Integer qtdConfirmacaoEntrada;
+
+	@Column(name = "valor_confirmacao_entrada")
+	private BigDecimal vlrConfirmacaoEntrada;
+
+	@Column(name = "qtd_liquidacao")
+	private Integer qtdLiquidacao;
+
+	@Column(name = "valor_liquidacao")
+	private BigDecimal vlrLiquidacao;
+
+	@Column(name = "qtd_baixados")
+	private Integer qtdBaixados;
+
+	@Column(name = "valor_baixados")
+	private BigDecimal vlrBaixados;
+
+	@Column(name = "qtd_abatimento_cancelamento")
+	private Integer qtdAbatimentoCancelamento;
+
+	@Column(name = "valor_abatimento_cancelamento")
+	private BigDecimal vlrAbatimentoCancelamento;
+
+	@Column(name = "qtd_vencimento_alterado")
+	private Integer qtdVencimentoAlterado;
+
+	@Column(name = "valor_vencimento_alterado")
+	private BigDecimal vlrVencimentoAlterado;
+
+	@Column(name = "qtd_abatimento_concedido")
+	private Integer qtdAbatimentoConcedido;
+
+	@Column(name = "valor_abatimento_concedido")
+	private BigDecimal vlrAbatimentoConcedido;
+
+	@Column(name = "qtd_confirmacao_instrucao_protesto")
+	private Integer qtdConfirmacaoInstrucaoProtesto;
+
+	@Column(name = "valor_confirmacao_instrucao_protesto")
+	private BigDecimal vlrConfirmacaoInstrucaoProtesto;
+
+	@Column(name = "qtd_total_rateio_efetuado")
+	private Integer qtdTotalRateioEfetuado;
+
+	@Column(name = "valor_total_rateio_efetuado")
+	private BigDecimal vlrTotalRateioEfetuado;
 
 	public Retorno(Arquivo arquivo) {
 		this.arquivo = arquivo;

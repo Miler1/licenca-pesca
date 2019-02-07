@@ -84,7 +84,7 @@
                     <Field name="IdentificacaoEmpresaContaCorrente" length="7" />
                     <Field name="IdentificacaoEmpresaDigitoContaCorrente" length="1" />
                     <Field name="NumeroControleParticipante" length="25" />
-                    <Field name="CodigoBanco" length="3" />
+                    <Field name="CodigoBancoParaDebitoAutomatico" length="3" />
                     <Field name="PossuiCobrancaMulta" length="1" />
                     <Field name="PercentualMulta" length="4" />
                     <Field name="IdentificacaoTituloBanco" length="11" />

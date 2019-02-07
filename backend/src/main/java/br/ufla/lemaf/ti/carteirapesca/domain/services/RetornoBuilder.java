@@ -1,12 +1,14 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
+
 import java.io.File;
 import java.io.IOException;
 
 public interface RetornoBuilder {
 
-	void salvaArquivo(File arquivoRetorno);
+	Retorno salvaArquivo(File arquivoRetorno);
 
-	void processarRetorno() throws IOException;
+	void processarRetorno(Retorno retorno) throws IOException;
 
 }

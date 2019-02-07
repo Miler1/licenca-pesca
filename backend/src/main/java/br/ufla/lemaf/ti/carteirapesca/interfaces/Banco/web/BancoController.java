@@ -65,8 +65,8 @@ public class BancoController {
 	public ResponseEntity<String> uploadArquivoRetorno(@RequestParam("file") MultipartFile multipartFile) throws IOException {
 
 		Path pathArquivoRetorno = Paths.get(Properties.pathArquivoRetorno() +
-			File.pathSeparator + LocalDate.now().format(FORMATO_DATA_MES_ANO) +
-			File.pathSeparator + multipartFile.getOriginalFilename());
+			File.separator + LocalDate.now().format(FORMATO_DATA_MES_ANO) +
+			File.separator + multipartFile.getOriginalFilename());
 
 		File arquivoRetorno = pathArquivoRetorno.toFile();
 

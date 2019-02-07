@@ -149,7 +149,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		transacao.setValue("IdentificacaoEmpresaDigitoContaCorrente", beneficiario.getDigitoContaCorrente());
 
 		transacao.setValue("NumeroControleParticipante", completaStringComZerosEsquerda(25, titulo.getId().toString()));
-		transacao.setValue("CodigoBanco", beneficiario.getBanco().getCodigo());
+		transacao.setValue("CodigoBancoParaDebitoAutomatico", completaStringComZerosEsquerda(3, ""));
 
 		/** Possui cobranca multa (0 - sem multa; 2 - Considerar cobranca)*/
 		transacao.setValue("PossuiCobrancaMulta", completaStringComZerosEsquerda(1, ""));
@@ -280,8 +280,8 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		String diretorioDiaGeracaoRemessa = LocalDate.now().format(FORMATO_DATA_REMESSA);
 
 		Path pathRemessa = Paths.get(Properties.pathArquivoRemessa() +
-			File.pathSeparator + diretorioDiaGeracaoRemessa +
-			File.pathSeparator + nomeArquivoRemessa);
+			File.separator + diretorioDiaGeracaoRemessa +
+			File.separator + nomeArquivoRemessa);
 
 		File arquivoRemessa = pathRemessa.toFile();
 

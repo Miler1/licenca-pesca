@@ -126,7 +126,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 		BeneficiarioTitulo beneficiarioTitulo = beneficiarioRepository.findByBancoCodigo(bradesco.getNumeroFormatado());
 
-		EspecieDocumento especieDocumento = especieDocumentoRepository.findByCodigo(EspecieDocumentoEnum.OUTROS.getCodigo());
+		EspecieDocumento especieDocumento = especieDocumentoRepository.findByCodigo(EspecieDocumentoEnum.DUPLICATA_MERCANTIL.getCodigo());
 
 		PagadorTitulo pagadorTitulo = getPagadorTitulo(pessoa);
 
