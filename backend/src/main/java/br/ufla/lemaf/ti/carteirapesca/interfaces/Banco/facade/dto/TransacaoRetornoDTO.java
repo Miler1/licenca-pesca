@@ -12,6 +12,7 @@ public class TransacaoRetornoDTO {
 	private String numeroControleParticipante;
 	private String nossoNumero;
 	private String identificacaoRateioCredito;
+	private String pagamentoParcial;
 	private String carteira;
 	private String identificacaoOcorrencia;
 	private String dataOcorrencia;
@@ -38,39 +39,43 @@ public class TransacaoRetornoDTO {
 	private String numeroProtocolo;
 	private String numeroSequecialRegistro;
 
+
+	//TODO mapear campos "Despesas de cobranca"
 	public TransacaoRetornoDTO(String transacao) {
 
-		this.identificacaoRegistro = Integer.valueOf(transacao.substring(1, 2));
-		this.tipoInscricaoEmpresa = transacao.substring(2, 4);
-		this.numeroInscricaoEmpresa = transacao.substring(4, 18);
-		this.identificacaoEmpresaBeneficiario = transacao.substring(21, 38);
-		this.numeroControleParticipante = transacao.substring(38, 63);
-		this.nossoNumero = transacao.substring(71, 83);
-		this.identificacaoRateioCredito = transacao.substring(105, 106);
-		this.carteira = transacao.substring(108, 109);
-		this.identificacaoOcorrencia = transacao.substring(109, 111);
-		this.dataOcorrencia = transacao.substring(111, 117);
-		this.numeroDocumento = transacao.substring(117, 127);
-		this.dataVencimentoTitulo = transacao.substring(147, 153);
-		this.valorTitulo = transacao.substring(147, 153);
-		this.codigoBancoCobrador = transacao.substring(166, 169);
-		this.agenciaCobradora = transacao.substring(169, 174);
-		this.despesasCodigoOcorrencia = transacao.substring(176, 189);
-		this.outrasDespesasCustasProtesto = transacao.substring(189, 202);
-		this.jurosAtraso = transacao.substring(202, 215);
-		this.iofDevido = transacao.substring(215, 228);
-		this.abatimentoConcedido = transacao.substring(228, 241);
-		this.descontoConcedido = transacao.substring(241, 254);
-		this.valorPago = transacao.substring(254, 267);
-		this.jurosMora = transacao.substring(267, 280);
-		this.outrosCreditos = transacao.substring(280, 293);
-		this.motivoCodigoOcorrencia = transacao.substring(295, 296);
-		this.dataCredito = transacao.substring(296, 302);
-		this.origemPagamento = transacao.substring(302, 305);
-		this.motivosRejeicao = transacao.substring(319, 329);
-		this.numeroCartorio = transacao.substring(369, 371);
-		this.numeroProtocolo = transacao.substring(371, 381);
-		this.numeroSequecialRegistro = transacao.substring(395, 401);
+		this.identificacaoRegistro = Integer.valueOf(transacao.substring(0, 1));
+		this.tipoInscricaoEmpresa = transacao.substring(1, 3);
+		this.numeroInscricaoEmpresa = transacao.substring(3, 17);
+		this.identificacaoEmpresaBeneficiario = transacao.substring(20, 37);
+		this.numeroControleParticipante = transacao.substring(37, 62);
+		this.nossoNumero = transacao.substring(70, 82);
+		this.identificacaoRateioCredito = transacao.substring(104, 105);
+		this.pagamentoParcial = transacao.substring(105, 107);
+		this.carteira = transacao.substring(107, 108);
+		this.identificacaoOcorrencia = transacao.substring(108, 110);
+		this.dataOcorrencia = transacao.substring(110, 116);
+		this.numeroDocumento = transacao.substring(116, 126);
+		this.identificacaoTituloBanco = transacao.substring(126, 146);
+		this.dataVencimentoTitulo = transacao.substring(146, 152);
+		this.valorTitulo = transacao.substring(152, 165);
+		this.codigoBancoCobrador = transacao.substring(165, 168);
+		this.agenciaCobradora = transacao.substring(168, 173);
+		this.despesasCodigoOcorrencia = transacao.substring(175, 188);
+		this.outrasDespesasCustasProtesto = transacao.substring(188, 201);
+		this.jurosAtraso = transacao.substring(201, 214);
+		this.iofDevido = transacao.substring(214, 227);
+		this.abatimentoConcedido = transacao.substring(227, 240);
+		this.descontoConcedido = transacao.substring(240, 253);
+		this.valorPago = transacao.substring(253, 266);
+		this.jurosMora = transacao.substring(266, 279);
+		this.outrosCreditos = transacao.substring(279, 292);
+		this.motivoCodigoOcorrencia = transacao.substring(294, 295);
+		this.dataCredito = transacao.substring(295, 301);
+		this.origemPagamento = transacao.substring(301, 304);
+		this.motivosRejeicao = transacao.substring(318, 328);
+		this.numeroCartorio = transacao.substring(368, 370);
+		this.numeroProtocolo = transacao.substring(370, 380);
+		this.numeroSequecialRegistro = transacao.substring(394, 400);
 
 	}
 

@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.web;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
@@ -76,7 +77,9 @@ public class BancoController {
 
 		FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), arquivoRetorno);
 
-		retornoBuilder.salvaArquivo(arquivoRetorno);
+		Retorno retorno = retornoBuilder.salvaArquivo(arquivoRetorno);
+
+		retornoBuilder.processarRetorno(retorno);
 
 		return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
 

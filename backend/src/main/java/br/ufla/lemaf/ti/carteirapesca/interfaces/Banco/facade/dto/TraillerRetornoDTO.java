@@ -43,41 +43,41 @@ public class TraillerRetornoDTO {
 
 	public TraillerRetornoDTO(String trailler) {
 
-		this.identificacaoRegistro = Integer.valueOf(trailler.substring(1, 2));
-		this.identificacaoArquivoRetorno = Integer.valueOf(trailler.substring(2, 3));
-		this.indentificacaoTipoRegistro = trailler.substring(3, 5);
-		this.codigoBanco = trailler.substring(5, 8);
-		this.qtdTitulosCobranca = trailler.substring(18, 26);
-		this.valorTotalCobranca = trailler.substring(26, 39);
-		this.numeroAvisoBancario = trailler.substring(40, 48);
+		this.identificacaoRegistro = Integer.valueOf(trailler.substring(0, 1));
+		this.identificacaoArquivoRetorno = Integer.valueOf(trailler.substring(1, 2));
+		this.indentificacaoTipoRegistro = trailler.substring(2, 4);
+		this.codigoBanco = trailler.substring(4, 7);
+		this.qtdTitulosCobranca = trailler.substring(17, 25);
+		this.valorTotalCobranca = trailler.substring(25, 38);
+		this.numeroAvisoBancario = trailler.substring(39, 47);
 
-		this.qtdConfirmacaoEntrada = trailler.substring(58, 63);
-		this.valorConfirmacaoEntrada = trailler.substring(63, 75);
+		this.qtdConfirmacaoEntrada = trailler.substring(57, 62);
+		this.valorConfirmacaoEntrada = trailler.substring(62, 74);
 
-		this.valorLiquidacao = trailler.substring(75, 87);
-		this.qtdLiquidacao = trailler.substring(87, 92);
+		this.valorLiquidacao = trailler.substring(74, 86);
+		this.qtdLiquidacao = trailler.substring(86, 91);
 
-		this.valorRegistroOcorrencia = trailler.substring(92, 104);
+		this.valorRegistroOcorrencia = trailler.substring(91, 103);
 
-		this.qtdTitulosBaixado = trailler.substring(104, 109);
-		this.valorTitulosBaixado = trailler.substring(109, 121);
+		this.qtdTitulosBaixado = trailler.substring(103, 108);
+		this.valorTitulosBaixado = trailler.substring(108, 120);
 
-		this.qtdAbatimentoCancelamento = trailler.substring(121, 126);
-		this.valorAbatimentoCancelamento = trailler.substring(126, 138);
+		this.qtdAbatimentoCancelamento = trailler.substring(120, 125);
+		this.valorAbatimentoCancelamento = trailler.substring(125, 137);
 
-		this.qtdVencimentoAlterado = trailler.substring(138, 143);
-		this.valorVencimentoAlterado = trailler.substring(143, 155);
+		this.qtdVencimentoAlterado = trailler.substring(137, 142);
+		this.valorVencimentoAlterado = trailler.substring(142, 154);
 
-		this.qtdAbatimentoConcedido = trailler.substring(155, 160);
-		this.valorAbatimentoConcedido = trailler.substring(160, 172);
+		this.qtdAbatimentoConcedido = trailler.substring(154, 159);
+		this.valorAbatimentoConcedido = trailler.substring(159, 171);
 
-		this.qtdConfirmacaoInstrucaoProtesto = trailler.substring(172, 177);
-		this.valorConfirmacaoInstrucaoProtesto = trailler.substring(177, 189);
+		this.qtdConfirmacaoInstrucaoProtesto = trailler.substring(171, 176);
+		this.valorConfirmacaoInstrucaoProtesto = trailler.substring(176, 188);
 
-		this.valorTotalRateiosEfetuados = trailler.substring(363, 378);
-		this.qtdTotalRateiosEfetuados = trailler.substring(378, 386);
+		this.valorTotalRateiosEfetuados = trailler.substring(362, 377);
+		this.qtdTotalRateiosEfetuados = trailler.substring(377, 385);
 
-		this.numeroSequencialRegistro = trailler.substring(395, 400);
+		this.numeroSequencialRegistro = trailler.substring(394, 400);
 	}
 
 }

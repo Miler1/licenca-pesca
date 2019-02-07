@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -36,7 +38,7 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 
 		TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.RETORNO.getCodigo());
 
-		Arquivo arquivo = new Arquivo(arquivoRetorno.getPath(), arquivoRetorno.getPath(), tipoArquivo);
+		Arquivo arquivo = new Arquivo(arquivoRetorno.getPath(), arquivoRetorno.getName(), tipoArquivo);
 		Retorno retorno = new Retorno(arquivo);
 
 		return retornoRepository.save(retorno);
@@ -48,16 +50,26 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 
 		Path caminho = Paths.get(retorno.getArquivo().getCaminhoArquivo());
 
-		Stream<String> linhas = Files.lines(caminho);
+		List<String> linhasArquivoRetorno = Files.lines(caminho).collect(Collectors.toList());
 
-		CabecalhoRetornoDTO cabecalho = new CabecalhoRetornoDTO(linhas.findFirst().toString());
-		TraillerRetornoDTO trailler = new TraillerRetornoDTO(linhas.skip(linhas.count() - 1).findFirst().toString());
+		CabecalhoRetornoDTO cabecalho = new CabecalhoRetornoDTO(linhasArquivoRetorno.get(0));
+		List<TransacaoRetornoDTO> transacoes = getTransacoes(linhasArquivoRetorno);
+		TraillerRetornoDTO trailler  = new TraillerRetornoDTO(linhasArquivoRetorno.get(linhasArquivoRetorno.size() - 1));
 
-		linhas.skip(1).forEach(l -> {
+	}
 
-			TransacaoRetornoDTO transacao = new TransacaoRetornoDTO(l);
+	private List<TransacaoRetornoDTO> getTransacoes(List<String> linhasArquivoRetorno) {
 
+		linhasArquivoRetorno.remove(0);
+		linhasArquivoRetorno.remove(linhasArquivoRetorno.size() - 1);
+
+		List<TransacaoRetornoDTO> transacoes = new ArrayList<>();
+
+		linhasArquivoRetorno.forEach(l -> {
+			transacoes.add(new TransacaoRetornoDTO(l));
 		});
+
+		return transacoes;
 
 	}
 
