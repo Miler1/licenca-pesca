@@ -1,7 +1,9 @@
 <template lang="pug">
-#lista-licenca
-    h3.title.withDivisor(v-if="listaLicencas && listaLicencas.length > 0") {{ $t(`${consultar_prefix}listaLicenca.titulo`) }}
-    .licencas(v-if="listaLicencas && listaLicencas.length > 0" v-for="lista in listaLicencas")
+  #licencas-remessas-relatorios
+    //- lista-licencas
+
+    h3.title.withDivisor(v-if="listaTodasLicencas && listaTodasLicencas.length > 0") {{ $t(`${consultar_prefix}listaLicenca.titulo`) }}
+    .licencas(v-if="listaTodasLicencas && listaTodasLicencas.length > 0" v-for="lista in listaTodasLicencas")
         .protocolo {{ lista.protocolo.codigoFormatado }}
         .withDivisor.listMargin
             .flex
@@ -36,34 +38,33 @@
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
                                 el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                         span(v-if="lista.status.codigo === 'INVALIDADO' || lista.status.codigo === 'RENOVADO'") -
-    .sem-licenca.withDivisor(v-if="!listaLicencas || listaLicencas.length <= 0")
+    .sem-licenca.withDivisor(v-if="!listaTodasLicencas || listaTodasLicencas.length <= 0")
         | {{ $t(`${consultar_prefix}listaLicenca.semLicenca`) }}
 </template>
 
 <script>
 
 import { mapGetters } from "vuex";
-import StatusCard from "../../../layouts/StatusCard";
-import Properties from "../../../../properties";
-import { translate } from "../../../../utils/helpers/internationalization";
-import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/geral";
-import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registrar/informacoes/informacoes";
+import StatusCard from "../../layouts/StatusCard";
+import Properties from "../../../properties";
+import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../../utils/messages/interface/registrar/geral";
+import { translate } from "../../../utils/helpers/internationalization";
 
 export default {
-  name: "ListaLicencas",
+  name: "EnviarRetornarRemessa",
 
   components: {
     StatusCard
   },
 
   computed: {
-    ...mapGetters(["listaLicencas"])
+    ...mapGetters(["listaTodasLicencas"])
   },
 
   data() {
     return {
       consultar_prefix: REGISTRAR_GERAL_MESSAGES_PREFIX,
-      cadastrar_info_prefix: INFORMACOES_PREFIX
+      
     };
   },
 
@@ -133,8 +134,6 @@ export default {
 
 .el-dropdown-menu
     // margin-left: -100px !important
-
-
 
 #lista-licenca
 

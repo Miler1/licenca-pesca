@@ -126,6 +126,13 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		return solicitante.buscarTodasLicencas();
 	}
 
+	public List<Licenca> buscarLicencas(PessoaDTO pessoaDTO) {
+
+		Licenca licenca = (Licenca) buscarLicencas(pessoaDTO);
+
+		return buscarLicencas(pessoaDTO);
+	}
+
 
 	private Solicitante buscarSolicitante(PessoaDTO pessoaDTO) {
 
