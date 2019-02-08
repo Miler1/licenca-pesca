@@ -6,22 +6,23 @@ CREATE TABLE carteira_pesca.retorno
   dt_processamento TIMESTAMP NULL,
   qtd_titulo_cobranca INTEGER NULL,
   valor_titulo_cobranca DOUBLE PRECISION NULL,
-  qtd_confirmacao_entrada INTEGER PRECISION NULL,
+  qtd_confirmacao_entrada INTEGER NULL,
   valor_confirmacao_entrada DOUBLE PRECISION NULL,
-  qtd_liquidacao INTEGER PRECISION NULL,
+  qtd_liquidacao INTEGER NULL,
   valor_liquidacao DOUBLE PRECISION NULL,
-  qtd_baixados INTEGER PRECISION NULL,
+  qtd_baixados INTEGER NULL,
   valor_baixados DOUBLE PRECISION NULL,
-  qtd_abatimento_cancelamento INTEGER PRECISION NULL,
+  qtd_abatimento_cancelamento INTEGER NULL,
   valor_abatimento_cancelamento DOUBLE PRECISION NULL,
-  qtd_vencimento_alterado INTEGER PRECISION NULL,
+  qtd_vencimento_alterado INTEGER NULL,
   valor_vencimento_alterado DOUBLE PRECISION NULL,
-  qtd_abatimento_concedido INTEGER PRECISION NULL,
+  qtd_abatimento_concedido INTEGER NULL,
   valor_abatimento_concedido DOUBLE PRECISION NULL,
-  qtd_confirmacao_instrucao_protesto INTEGER PRECISION NULL,
+  qtd_confirmacao_instrucao_protesto INTEGER NULL,
   valor_confirmacao_instrucao_protesto DOUBLE PRECISION NULL,
-  qtd_total_rateio_efetuado INTEGER PRECISION NULL,
+  qtd_total_rateio_efetuado INTEGER NULL,
   valor_total_rateio_efetuado DOUBLE PRECISION NULL,
+  numero_aviso_bancario INTEGER NULL,
 
   CONSTRAINT pk_retorno PRIMARY KEY(id),
 
@@ -59,6 +60,7 @@ COMMENT ON COLUMN carteira_pesca.retorno.qtd_confirmacao_instrucao_protesto IS '
 COMMENT ON COLUMN carteira_pesca.retorno.valor_confirmacao_instrucao_protesto IS 'Valor dos títulos que tiveram confirmação de instrução de protesto.';
 COMMENT ON COLUMN carteira_pesca.retorno.qtd_total_rateio_efetuado IS 'Quantidade de títulos que tiveram rateio efetuado.';
 COMMENT ON COLUMN carteira_pesca.retorno.valor_total_rateio_efetuado IS 'Valor dos títulos que tiveram rateio efetuado.';
+COMMENT ON COLUMN carteira_pesca.retorno.valor_total_rateio_efetuado IS 'Número do aviso registrado pelo banco.';
 
 ALTER TABLE carteira_pesca.titulo DROP COLUMN dt_geracao_remessa;
 

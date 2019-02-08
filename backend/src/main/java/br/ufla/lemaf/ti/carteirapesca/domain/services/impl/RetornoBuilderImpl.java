@@ -53,12 +53,12 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 		List<String> linhasArquivoRetorno = Files.lines(caminho).collect(Collectors.toList());
 
 		CabecalhoRetornoDTO cabecalho = new CabecalhoRetornoDTO(linhasArquivoRetorno.get(0));
-		List<TransacaoRetornoDTO> transacoes = getTransacoes(linhasArquivoRetorno);
 		TraillerRetornoDTO trailler  = new TraillerRetornoDTO(linhasArquivoRetorno.get(linhasArquivoRetorno.size() - 1));
+		List<TransacaoRetornoDTO> transacoes = getTransacoes(linhasArquivoRetorno);
 
 	}
 
-	private List<TransacaoRetornoDTO> getTransacoes(List<String> linhasArquivoRetorno) {
+	private List<TransacaoRetornoDTO> getTransacoes(final List<String> linhasArquivoRetorno) {
 
 		linhasArquivoRetorno.remove(0);
 		linhasArquivoRetorno.remove(linhasArquivoRetorno.size() - 1);

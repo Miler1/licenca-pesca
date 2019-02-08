@@ -27,6 +27,7 @@ public class Remessa implements Entity<Remessa, Integer> {
 	@Column(name = "numero_sequencial")
 	private Integer sequencia;
 
+	@Getter
 	@Column(name = "sequencia_nome_arquivo")
 	private Integer sequencialNomeArquivo;
 

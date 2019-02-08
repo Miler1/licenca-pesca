@@ -2,6 +2,8 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto;
 
 import lombok.Getter;
 
+import java.math.BigDecimal;
+
 @Getter
 public class TraillerRetornoDTO {
 
@@ -9,35 +11,35 @@ public class TraillerRetornoDTO {
 	private Integer identificacaoArquivoRetorno;
 	private String indentificacaoTipoRegistro;
 	private String codigoBanco;
-	private String qtdTitulosCobranca;
-	private String valorTotalCobranca;
-	private String numeroAvisoBancario;
+	private Integer qtdTitulosCobranca;
+	private BigDecimal valorTotalCobranca;
+	private Integer numeroAvisoBancario;
 
-	private String qtdConfirmacaoEntrada;
-	private String valorConfirmacaoEntrada;
+	private Integer qtdConfirmacaoEntrada;
+	private BigDecimal valorConfirmacaoEntrada;
 
-	private String valorLiquidacao;
-	private String qtdLiquidacao;
+	private BigDecimal valorLiquidacao;
+	private Integer qtdLiquidacao;
 
-	private String valorRegistroOcorrencia;
+	private BigDecimal valorRegistroOcorrencia;
 
-	private String qtdTitulosBaixado;
-	private String valorTitulosBaixado;
+	private Integer qtdTitulosBaixado;
+	private BigDecimal valorTitulosBaixado;
 
-	private String qtdAbatimentoCancelamento;
-	private String valorAbatimentoCancelamento;
+	private Integer qtdAbatimentoCancelamento;
+	private BigDecimal valorAbatimentoCancelamento;
 
-	private String qtdVencimentoAlterado;
-	private String valorVencimentoAlterado;
+	private Integer qtdVencimentoAlterado;
+	private BigDecimal valorVencimentoAlterado;
 
-	private String qtdAbatimentoConcedido;
-	private String valorAbatimentoConcedido;
+	private Integer qtdAbatimentoConcedido;
+	private BigDecimal valorAbatimentoConcedido;
 
-	private String qtdConfirmacaoInstrucaoProtesto;
-	private String valorConfirmacaoInstrucaoProtesto;
+	private Integer qtdConfirmacaoInstrucaoProtesto;
+	private BigDecimal valorConfirmacaoInstrucaoProtesto;
 
-	private String valorTotalRateiosEfetuados;
-	private String qtdTotalRateiosEfetuados;
+	private BigDecimal valorTotalRateioEfetuado;
+	private Integer qtdTotalRateioEfetuado;
 
 	private String numeroSequencialRegistro;
 
@@ -47,35 +49,35 @@ public class TraillerRetornoDTO {
 		this.identificacaoArquivoRetorno = Integer.valueOf(trailler.substring(1, 2));
 		this.indentificacaoTipoRegistro = trailler.substring(2, 4);
 		this.codigoBanco = trailler.substring(4, 7);
-		this.qtdTitulosCobranca = trailler.substring(17, 25);
-		this.valorTotalCobranca = trailler.substring(25, 38);
-		this.numeroAvisoBancario = trailler.substring(39, 47);
+		this.qtdTitulosCobranca = Integer.valueOf(trailler.substring(17, 25));
+		this.valorTotalCobranca = new BigDecimal(Double.valueOf(trailler.substring(25, 38)) /100);
+		this.numeroAvisoBancario = Integer.valueOf(trailler.substring(39, 47));
 
-		this.qtdConfirmacaoEntrada = trailler.substring(57, 62);
-		this.valorConfirmacaoEntrada = trailler.substring(62, 74);
+		this.qtdConfirmacaoEntrada = Integer.valueOf(trailler.substring(57, 62));
+		this.valorConfirmacaoEntrada = new BigDecimal(Double.valueOf(trailler.substring(62, 74)) /100);
 
-		this.valorLiquidacao = trailler.substring(74, 86);
-		this.qtdLiquidacao = trailler.substring(86, 91);
+		this.valorLiquidacao = new BigDecimal(Double.valueOf(trailler.substring(74, 86)) /100);
+		this.qtdLiquidacao = Integer.valueOf(trailler.substring(86, 91));
 
-		this.valorRegistroOcorrencia = trailler.substring(91, 103);
+		this.valorRegistroOcorrencia = new BigDecimal(Double.valueOf(trailler.substring(91, 103)) /100);
 
-		this.qtdTitulosBaixado = trailler.substring(103, 108);
-		this.valorTitulosBaixado = trailler.substring(108, 120);
+		this.qtdTitulosBaixado = Integer.valueOf(trailler.substring(103, 108));
+		this.valorTitulosBaixado = new BigDecimal(Double.valueOf(trailler.substring(108, 120)) /100);
 
-		this.qtdAbatimentoCancelamento = trailler.substring(120, 125);
-		this.valorAbatimentoCancelamento = trailler.substring(125, 137);
+		this.qtdAbatimentoCancelamento = Integer.valueOf(trailler.substring(120, 125));
+		this.valorAbatimentoCancelamento = new BigDecimal(Double.valueOf(trailler.substring(125, 137)) /100);
 
-		this.qtdVencimentoAlterado = trailler.substring(137, 142);
-		this.valorVencimentoAlterado = trailler.substring(142, 154);
+		this.qtdVencimentoAlterado = Integer.valueOf(trailler.substring(137, 142));
+		this.valorVencimentoAlterado = new BigDecimal(Double.valueOf(trailler.substring(142, 154)) /100);
 
-		this.qtdAbatimentoConcedido = trailler.substring(154, 159);
-		this.valorAbatimentoConcedido = trailler.substring(159, 171);
+		this.qtdAbatimentoConcedido = Integer.valueOf(trailler.substring(154, 159));
+		this.valorAbatimentoConcedido = new BigDecimal(Double.valueOf(trailler.substring(159, 171)) /100);
 
-		this.qtdConfirmacaoInstrucaoProtesto = trailler.substring(171, 176);
-		this.valorConfirmacaoInstrucaoProtesto = trailler.substring(176, 188);
+		this.qtdConfirmacaoInstrucaoProtesto = Integer.valueOf(trailler.substring(171, 176));
+		this.valorConfirmacaoInstrucaoProtesto = new BigDecimal(Double.valueOf(trailler.substring(176, 188)) /100);
 
-		this.valorTotalRateiosEfetuados = trailler.substring(362, 377);
-		this.qtdTotalRateiosEfetuados = trailler.substring(377, 385);
+		this.valorTotalRateioEfetuado = new BigDecimal(Double.valueOf(trailler.substring(362, 377)) /100);
+		this.qtdTotalRateioEfetuado = Integer.valueOf(trailler.substring(377, 385));
 
 		this.numeroSequencialRegistro = trailler.substring(394, 400);
 	}

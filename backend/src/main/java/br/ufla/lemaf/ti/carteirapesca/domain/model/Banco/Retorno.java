@@ -3,6 +3,8 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.CabecalhoRetornoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TraillerRetornoDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,58 +36,61 @@ public class Retorno implements Entity<Retorno, Integer> {
 	private LocalDate dataProcessamento;
 
 	@Column(name = "qtd_titulo_cobranca")
-	private Integer qtdTitulosCobraca;
+	private Integer qtdTitulosCobranca;
 
 	@Column(name = "valor_titulo_cobranca")
-	private BigDecimal vlrTitulosCobraca;
+	private BigDecimal valorTitulosCobranca;
 
 	@Column(name = "qtd_confirmacao_entrada")
 	private Integer qtdConfirmacaoEntrada;
 
 	@Column(name = "valor_confirmacao_entrada")
-	private BigDecimal vlrConfirmacaoEntrada;
+	private BigDecimal valorConfirmacaoEntrada;
 
 	@Column(name = "qtd_liquidacao")
 	private Integer qtdLiquidacao;
 
 	@Column(name = "valor_liquidacao")
-	private BigDecimal vlrLiquidacao;
+	private BigDecimal valorLiquidacao;
 
 	@Column(name = "qtd_baixados")
 	private Integer qtdBaixados;
 
 	@Column(name = "valor_baixados")
-	private BigDecimal vlrBaixados;
+	private BigDecimal valorBaixados;
 
 	@Column(name = "qtd_abatimento_cancelamento")
 	private Integer qtdAbatimentoCancelamento;
 
 	@Column(name = "valor_abatimento_cancelamento")
-	private BigDecimal vlrAbatimentoCancelamento;
+	private BigDecimal valorAbatimentoCancelamento;
 
 	@Column(name = "qtd_vencimento_alterado")
 	private Integer qtdVencimentoAlterado;
 
 	@Column(name = "valor_vencimento_alterado")
-	private BigDecimal vlrVencimentoAlterado;
+	private BigDecimal valorVencimentoAlterado;
 
 	@Column(name = "qtd_abatimento_concedido")
 	private Integer qtdAbatimentoConcedido;
 
 	@Column(name = "valor_abatimento_concedido")
-	private BigDecimal vlrAbatimentoConcedido;
+	private BigDecimal valorAbatimentoConcedido;
 
 	@Column(name = "qtd_confirmacao_instrucao_protesto")
 	private Integer qtdConfirmacaoInstrucaoProtesto;
 
 	@Column(name = "valor_confirmacao_instrucao_protesto")
-	private BigDecimal vlrConfirmacaoInstrucaoProtesto;
+	private BigDecimal valorConfirmacaoInstrucaoProtesto;
 
 	@Column(name = "qtd_total_rateio_efetuado")
 	private Integer qtdTotalRateioEfetuado;
 
 	@Column(name = "valor_total_rateio_efetuado")
-	private BigDecimal vlrTotalRateioEfetuado;
+	private BigDecimal valorTotalRateioEfetuado;
+
+	@Column(name = "numero_aviso_bancario")
+	private Integer numeroAvisoBancario;
 
 	public Retorno(Arquivo arquivo) {
 		this.arquivo = arquivo;
@@ -100,4 +105,31 @@ public class Retorno implements Entity<Retorno, Integer> {
 	public Integer identity() {
 		return null;
 	}
+
+	public void atualizaRetorno(TraillerRetornoDTO trailler, CabecalhoRetornoDTO cabecalho) {
+
+		this.dataGravacaoBanco = cabecalho.getDataGravacaoArquivo();
+
+		this.qtdTitulosCobranca = trailler.getQtdTitulosCobranca();
+		this.valorTitulosCobranca = trailler.getValorTotalCobranca();
+		this.qtdConfirmacaoEntrada = trailler.getQtdConfirmacaoEntrada();
+		this.valorConfirmacaoEntrada = trailler.getValorConfirmacaoEntrada();
+		this.qtdLiquidacao = trailler.getQtdLiquidacao();
+		this.valorLiquidacao = trailler.getValorLiquidacao();
+		this.qtdBaixados = trailler.getQtdTitulosBaixado();
+		this.valorBaixados = trailler.getValorTitulosBaixado();
+		this.qtdAbatimentoCancelamento = trailler.getQtdAbatimentoCancelamento();
+		this.valorAbatimentoCancelamento = trailler.getValorAbatimentoCancelamento();
+		this.qtdVencimentoAlterado = trailler.getQtdVencimentoAlterado();
+		this.valorVencimentoAlterado = trailler.getValorVencimentoAlterado();
+		this.qtdAbatimentoConcedido = trailler.getQtdAbatimentoConcedido();
+		this.valorAbatimentoConcedido = trailler.getValorAbatimentoConcedido();
+		this.qtdConfirmacaoInstrucaoProtesto = trailler.getQtdConfirmacaoInstrucaoProtesto();
+		this.valorConfirmacaoInstrucaoProtesto = trailler.getValorConfirmacaoInstrucaoProtesto();
+		this.qtdTotalRateioEfetuado = trailler.getQtdTotalRateioEfetuado();
+		this.valorTotalRateioEfetuado = trailler.getValorTotalRateioEfetuado();
+		this.numeroAvisoBancario = trailler.getNumeroAvisoBancario();
+
+	}
+
 }

@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.web;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
@@ -9,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,23 +47,38 @@ public class BancoController {
 	private RetornoBuilderImpl retornoBuilder;
 
 	@CrossOrigin("*")
-	@GetMapping("/download-remessa")
+	@GetMapping("/gera-remessa")
 	public ResponseEntity<InputStreamResource> geraRemessa() throws IOException {
 
 		Remessa remessa = remessaBuilder.geraRemessa();
 
-		if(remessa != null) {
-
-			HttpHeaders httpHeaders = new HttpHeaders();
-			httpHeaders.setContentType(MediaType.TEXT_PLAIN);
-
-			InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(remessa.getArquivo().getCaminhoArquivo())));
-
-			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
-
+		if (remessa != null) {
+			return preparaArquivoDownload(remessa.getArquivo());
 		} else {
 			return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
 		}
+
+	}
+
+	@CrossOrigin("*")
+	@GetMapping("/download-remessa/{idRemessa}")
+	public ResponseEntity<InputStreamResource> downloadArquivoRemessa(@PathVariable("idRemessa") Integer idRemessa) throws FileNotFoundException {
+
+		Arquivo arquivoRemessa = remessaBuilder.getArquivoRemessa(idRemessa);
+
+		return preparaArquivoDownload(arquivoRemessa);
+
+	}
+
+	private ResponseEntity<InputStreamResource> preparaArquivoDownload(Arquivo arquivo) throws FileNotFoundException {
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.parseMediaType("application/octet-stream"));
+		httpHeaders.setContentDispositionFormData("attachment", arquivo.getNome());
+
+		InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(arquivo.getCaminhoArquivo())));
+
+		return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 
 	}
 
@@ -71,7 +91,7 @@ public class BancoController {
 
 		File arquivoRetorno = pathArquivoRetorno.toFile();
 
-		if(!arquivoRetorno.exists()) {
+		if (!arquivoRetorno.exists()) {
 			Files.createDirectories(pathArquivoRetorno.getParent());
 		}
 
@@ -82,6 +102,15 @@ public class BancoController {
 		retornoBuilder.processarRetorno(retorno);
 
 		return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
+
+	}
+
+	@GetMapping("/lista-remessa")
+	public ResponseEntity<Page<Remessa>> listaRemessasPaginado(@PageableDefault(size = 10, page = 0) Pageable pageable) {
+
+		Page<Remessa> remessas = remessaBuilder.listaRemessas(pageable);
+
+		return new ResponseEntity<>(remessas, HttpStatus.OK);
 
 	}
 

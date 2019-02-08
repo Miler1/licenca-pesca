@@ -2,8 +2,13 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto;
 
 import lombok.Getter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 public class CabecalhoRetornoDTO {
+
+	private static final DateTimeFormatter MASCARA_DATA_RETORNO = DateTimeFormatter.ofPattern("ddMMyy");
 
 	private Integer identificacaoRegistro;
 	private Integer identificacaoArquivoRetorno;
@@ -14,10 +19,10 @@ public class CabecalhoRetornoDTO {
 	private String nomeEmpresa;
 	private String numeroBanco;
 	private String nomeBanco;
-	private String dataGravacaoArquivo;
+	private LocalDate dataGravacaoArquivo;
 	private String densidadeGravacao;
 	private String numeroAvisoBancario;
-	private String dataCredito;
+	private LocalDate dataCredito;
 	private String numeroSequencialRegistro;
 
 	public CabecalhoRetornoDTO(String cabecalho) {
@@ -31,10 +36,10 @@ public class CabecalhoRetornoDTO {
 		this.nomeEmpresa = cabecalho.substring(46, 76);
 		this.numeroBanco = cabecalho.substring(76, 79);
 		this.nomeBanco = cabecalho.substring(79, 94);
-		this.dataGravacaoArquivo = cabecalho.substring(94, 100);
+		this.dataGravacaoArquivo = LocalDate.parse(cabecalho.substring(94, 100), MASCARA_DATA_RETORNO);
 		this.densidadeGravacao = cabecalho.substring(100, 108);
 		this.numeroAvisoBancario = cabecalho.substring(108, 113);
-		this.dataCredito = cabecalho.substring(379, 385);
+		this.dataCredito = LocalDate.parse(cabecalho.substring(379, 385), MASCARA_DATA_RETORNO);
 		this.numeroSequencialRegistro = cabecalho.substring(394, 400);
 
 	}

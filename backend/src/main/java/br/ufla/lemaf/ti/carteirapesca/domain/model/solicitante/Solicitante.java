@@ -5,7 +5,6 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
@@ -14,7 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -33,14 +31,6 @@ import java.util.List;
 @javax.persistence.Entity
 @Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "solicitante")
 public class Solicitante implements Entity<Solicitante, SolicitanteId> {
-
-	@Transient
-	@Autowired
-	private StatusRepository statusRepository;
-
-	private static AcessoServiceFacade acessoServiceFacade;
-
-	private static SolicitanteRopository solicitanteRopository;
 
 	@Embedded
 	@AttributeOverrides({

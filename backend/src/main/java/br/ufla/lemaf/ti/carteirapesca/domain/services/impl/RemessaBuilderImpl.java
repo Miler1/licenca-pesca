@@ -15,6 +15,8 @@ import org.jrimum.texgit.Record;
 import org.jrimum.texgit.Texgit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -64,6 +66,22 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		} else {
 			return null;
 		}
+
+	}
+
+	@Override
+	public Arquivo getArquivoRemessa(Integer idRemessa) {
+
+		Remessa remessa = remessaRepository.findById(idRemessa).get();
+
+		return remessa.getArquivo();
+
+	}
+
+	@Override
+	public Page<Remessa> listaRemessas(Pageable pageable) {
+
+		return remessaRepository.findAll(pageable);
 
 	}
 

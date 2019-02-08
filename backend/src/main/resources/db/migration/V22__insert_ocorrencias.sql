@@ -30,8 +30,8 @@ INSERT INTO carteira_pesca.ocorrencia (id, codigo, descricao) VALUES (29, '40', 
 INSERT INTO carteira_pesca.ocorrencia (id, codigo, descricao) VALUES (30, '55', 'Sustado judicial');
 INSERT INTO carteira_pesca.ocorrencia (id, codigo, descricao) VALUES (31, '68', 'Acerto dos dados do rateio de Crédito (verificar motivo posição de status do registro tipo 3)');
 INSERT INTO carteira_pesca.ocorrencia (id, codigo, descricao) VALUES (32, '69', 'Cancelamento dos dados do rateio (verificar motivo posição de status do registro tipo 3)');
-INSERT INTO carteira_pesca.ocorrencia (id, codigo, descricao) VALUES (33, '073', 'Confirmação Receb. Pedido de Negativação');
-INSERT INTO carteira_pesca.ocorrencia (id, codigo, descricao) VALUES (34, '074', 'Confir Pedido de Excl de Negat (com ou sem baixa)');
+INSERT INTO carteira_pesca.ocorrencia (id, codigo, descricao) VALUES (33, '73', 'Confirmação Receb. Pedido de Negativação');
+INSERT INTO carteira_pesca.ocorrencia (id, codigo, descricao) VALUES (34, '74', 'Confir Pedido de Excl de Negat (com ou sem baixa)');
 
 INSERT INTO carteira_pesca.motivo_ocorrencia (id, codigo, descricao) values (1, '00', 'Ocorrência aceita');
 INSERT INTO carteira_pesca.motivo_ocorrencia (id, codigo, descricao) values (2, '00', 'Título pago com dinheiro');
