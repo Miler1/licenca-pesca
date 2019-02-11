@@ -62,6 +62,7 @@ public class Titulo implements Entity<Titulo, Integer> {
 	@Column(name = "dt_pagamento")
 	private LocalDate dataPagamento;
 
+	@Setter
 	@Column(name = "valor_pago")
 	private BigDecimal valorPago;
 
