@@ -9,32 +9,56 @@
 							| IPAAM
 						.completo
 							| Instituto de Proteção Ambiental do Amazonas
+				menu-item(v-if='acoesMenuRemessa()' titulo="Licenças"  @click="acessarLicencas" :active="acessarLicencas")
+				menu-item(v-if='acoesMenuRemessa()' titulo="Arquivos"  @click="acessarArquivos" :active="acessarArquivos")
+				menu-item(v-if='acoesMenuRemessa()' titulo="Relatórios"  @click="acessarRelatorios" :active="!acessarRelatorios" )
 			.right
 				.locale
 					i.mdi.mdi-translate
 					el-select(v-model="$i18n.locale" @change="handleLocale")
 						el-option(v-for="(lang, i) in langs" :key="i" :value="lang") {{ lang }}
 
-
 </template>
 
 <script>
 import { localizeValidation } from "../../configs/validator";
+import  MenuItem  from "./MenuItem" ;
 import { CANCELAR } from "../../store/actions.type";
 
 export default {
   name: "MenuHeader",
+  components: { MenuItem },
   mixins: [],
   data() {
-	return { langs: ["PT-BR", "EN"] };
+	return { 
+		langs: ["PT-BR", "EN"],
+		activeName: 'first' 
+	};
   },
   methods: {
+	handleClick(tab, event) {
+    	console.log(tab, event);
+    },
 	handleLocale() {
 	  localizeValidation();
 	},
 	goHome() {
 		this.$store.dispatch(CANCELAR).then(p => {
 			this.$router.push({name: 'home'});
+		});
+	},
+	acoesMenuRemessa(){
+		//mudar nome de acordo com o da rota
+		return this.$router.history.current.name == 'envioRetornoRemessa'	
+	},
+	acessarArquivos(){
+		this.$router.push({
+			name: 'envioRetornoRemessa'
+		});
+	},
+	acessarRelatorios(){
+		this.$router.push({
+			// name: 'relatorios'
 		});
 	}
   }

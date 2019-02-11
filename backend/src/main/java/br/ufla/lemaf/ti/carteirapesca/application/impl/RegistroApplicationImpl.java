@@ -18,6 +18,7 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.InformacaoComplementarService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -92,6 +93,8 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	@Override
 	public Protocolo registrar(final RegistroResource resource) {
 
+		WebServiceUtils.validarWebService();
+
 		var solicitante = getSolicitante(resource);
 
 		Protocolo protocolo;
@@ -104,11 +107,11 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		}else if(solicitante.pussuiLicencaMesmaModalidade(modalidade)){
 
-			throw new SolicitanteException("solicitante.licenca.mesma.modalidade");
+			throw new ValidationException("solicitante.licenca.mesma.modalidade");
 
 		}else {
 
-			throw new SolicitanteException("solicitante.licenca.ativa");
+			throw new ValidationException("solicitante.licenca.ativa");
 		}
 
 			if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){

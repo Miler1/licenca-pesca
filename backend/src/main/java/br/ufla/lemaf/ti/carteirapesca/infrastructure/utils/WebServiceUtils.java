@@ -4,7 +4,6 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices.CadastroUnifica
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Validate;
 
 /**
  * Utils para o Web Service do Entrada Única.
@@ -22,12 +21,7 @@ public class WebServiceUtils {
 	 */
 	public void validarWebService() {
 
-		try {
-			Validate.notNull(
-				CadastroUnificadoService.webService(),
-				Message.get("entradaUnica.servicoIndisponivel")
-			);
-		} catch (NullPointerException ex) {
+		if(CadastroUnificadoService.webService() == null) {
 
 			throw new BaseException("entradaUnica.servicoIndisponivel");
 

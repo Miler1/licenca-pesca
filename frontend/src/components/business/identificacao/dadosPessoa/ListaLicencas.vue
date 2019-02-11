@@ -12,7 +12,6 @@
                     span.item-content(v-if="lista.modalidade.id === 0")
                         | {{ $t(`${consultar_prefix}listaLicenca.modalidade.esportiva`) }}
 
-
                 .flex-item
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.cadastro`) }}
                     span.item-content {{formatData(lista.dataCriacao)}}

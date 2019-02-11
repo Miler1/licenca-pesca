@@ -1,6 +1,6 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO } from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, BUSCAR_TODAS_LICENCAS } from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA } from "../mutations.type";
+import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA, SET_LISTA_TODAS_LICENCAS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import Vue from "vue";
 
@@ -65,7 +65,9 @@ export const getters = {
    */
   showStepsController: state => state.showStepsController,
 
-  listaLicencas: state => state.listaLicencas
+  listaLicencas: state => state.listaLicencas,
+
+  listaTodasLicencas: state => state.listaTodasLicencas
 };
 
 /**
@@ -115,12 +117,26 @@ export const actions = {
       });
   },
 
+  // [BUSCAR_TODAS_LICENCAS]: ({ commit }, acessoResource) => {
+  // AcessoService.buscarTodasLicencas(acessoResource)
+  //   .then(({ data }) => {
+  //     commit(SET_LISTA_TODAS_LICENCAS, data.licencas);
+  //   })
+  //   .catch(error => {
+  //     if(error.response) {
+  //       commit(SET_ERROR_TELA_BUSCA, error.response.data);
+  //       commit(CLEAN_SOLICITANTE);
+  //     }
+  //   });
+  // }, 
+
   [BUSCA_DADOS_VALIDACAO]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
         if(!data.maes){
           commit(SET_SOLICITANTE, data);
           commit(ACTIVE_CADASTRO, data);
+          commit(SET_ERROR_TELA_BUSCA, "");
           commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
           commit(SET_CPF_PESQUISA, data.cpf);
           commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
@@ -135,6 +151,8 @@ export const actions = {
         if (error.response) {
           commit(SET_ERROR_TELA_BUSCA, error.response.data.message);
           commit(CLEAN_SOLICITANTE);
+        }else {
+          commit(SET_ERROR_TELA_BUSCA, "Não foi possível conectar ao servidor.")
         }
       });
   },
@@ -194,6 +212,10 @@ export const mutations = {
   [SET_LISTA_LICENCAS]: (state, listaLicencas) => {
     Vue.set(state, 'listaLicencas', [...listaLicencas]);
   },
+
+  // [SET_LISTA_TODAS_LICENCAS]: (state, listaTodasLicencas) => {
+  //   Vue.set(state, 'listaTodasLicencas', [...listaTodasLicencas]);
+  // },
   /**
    * Verifica se será necessário cadastrar o usuário.
    *
@@ -207,6 +229,7 @@ export const mutations = {
 
   [SET_DADOS_SOLICITANTE_CONFIRMAR]: (state, dadosSolicitanteAConfirmar) => {
     state.dadosSolicitanteAConfirmar = dadosSolicitanteAConfirmar;
+
   }
 };
 

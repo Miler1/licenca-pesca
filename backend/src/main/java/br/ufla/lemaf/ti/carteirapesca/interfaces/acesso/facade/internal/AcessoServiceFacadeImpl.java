@@ -2,6 +2,8 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.internal;
 
 import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.CPF;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Passaporte;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
@@ -124,7 +126,6 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		return solicitante.buscarTodasLicencas();
 	}
 
-
 	private Solicitante buscarSolicitante(PessoaDTO pessoaDTO) {
 
 		Solicitante solicitante = null;
@@ -163,6 +164,18 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 			throw new Exception("Cpf / passaporte bloqueado, tente novamente após 2 horas");
 
+		} else if(solicitante == null) {
+
+			CPF cpf = null;
+			Passaporte passaporte = null;
+
+			if(validacaoDTO.getAcessoResource().getPassaporte() == null) {
+				cpf = new CPF(validacaoDTO.getAcessoResource().getCpf());
+			} else {
+				passaporte = new Passaporte(validacaoDTO.getAcessoResource().getPassaporte());
+			}
+
+			solicitante = new Solicitante(cpf, passaporte);
 		}
 
 		Boolean dadosValidos = dadosAcessoValidos(validacaoDTO);
@@ -225,8 +238,6 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
 
 	private Boolean dadosAcessoValidos(ValidacaoDTO validacaoDTO) {
-
-		WebServiceUtils.validarWebService();
 
 		FiltroPessoa filtroPessoa = new FiltroPessoa();
 		filtroPessoa.isUsuario = false;

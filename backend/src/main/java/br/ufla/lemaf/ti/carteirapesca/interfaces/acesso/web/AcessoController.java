@@ -6,10 +6,12 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -73,6 +75,8 @@ public class AcessoController {
 	@PostMapping("/acessar")
 	public ResponseEntity<PessoaDTO> acessar(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
+		WebServiceUtils.validarWebService();
+
 		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true){
 
 			var pessoa = acessoServiceFacade.acessar(validacaoDTO.getAcessoResource());
@@ -92,6 +96,8 @@ public class AcessoController {
 	@PostMapping(value="/buscarLicencas")
 	public ResponseEntity<ListaLicencaDTO> buscarLicencas(@RequestBody final ValidacaoDTO validacaoDTO) throws Exception {
 
+		WebServiceUtils.validarWebService();
+
 		if(acessoServiceFacade.validaDadosAcessoLicencas(validacaoDTO) == true){
 
 			ListaLicencaDTO listaLicencaDTO = new ListaLicencaDTO();
@@ -105,6 +111,7 @@ public class AcessoController {
 			return new ResponseEntity<>(listaLicencaDTO, HttpStatus.ACCEPTED);
 
 		} else {
+
 			throw new Exception("Dados não conferem. Após 3 tentativas erradas, o Cpf/passaporte será bloqueado por 2 horas.");
 		}
 	}
@@ -112,6 +119,8 @@ public class AcessoController {
 	@CrossOrigin("*")
 	@PostMapping("/buscarDados")
 	public ResponseEntity buscarDados(@RequestBody final AcessoResource acessoResource) throws Exception {
+
+		WebServiceUtils.validarWebService();
 
 		PessoaDTO pessoa = acessoServiceFacade.acessar(acessoResource);
 
@@ -122,7 +131,7 @@ public class AcessoController {
 
 		if(acessoServiceFacade.solicitanteBloqueado(acessoResource)) {
 
-			throw new Exception("CPF / passaporte bloqueado, tente novamente mais tarde");
+			throw new ValidationException("acesso.resourceInvalid.cpfAndPassaporteBloqueado");
 
 		} else {
 
