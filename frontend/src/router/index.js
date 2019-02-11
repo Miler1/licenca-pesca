@@ -1,6 +1,5 @@
 import RegistrarLicenca from "../components/views/RegistrarLicenca";
 import BuscarLicenca from "../components/views/BuscarLicenca";
-import ListagemLicencasRelatorios from "../components/business/remessa/ListagemLicencasRelatorios";
 import EnvioRetornoRemessa from "../components/business/remessa/EnvioRetornoRemessa";
 
 export const routes = [

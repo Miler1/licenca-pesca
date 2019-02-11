@@ -18,7 +18,7 @@
             .flex-item
               span.item-title {{ $t(`${remessa_prefix}acao`) }}
               span.item-content-acoes
-                el-button.download-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa" type="default") {{ $t(`${remessa_prefix}botaoAcao`) }}
+                el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa" type="primary") {{ $t(`${remessa_prefix}botaoAcao`) }}
             
     h2.title-principal {{ $t(`${remessa_prefix}tituloRetorno`) }}
     card

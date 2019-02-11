@@ -11,7 +11,7 @@ const ArquivoService = {
    * Serviço para download da remessa
   */
   buscarRemessa: protocolo =>
-    ApiService.query(`${Properties.BASE_URL}/api/buscaRemessa`, { protocolo })
+    ApiService.query(`${Properties.BASE_URL}/api/buscarRemessa`, { protocolo })
 };
 
 export default ArquivoService;
