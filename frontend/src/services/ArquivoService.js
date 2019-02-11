@@ -4,15 +4,14 @@ import ApiService from "./shared/ApiService";
 const ArquivoService = {
   /**
    * Serviço de upload para arquivos.
-   */
-//     buscarLicencas: validacaoDTO => {
-//     return ApiService.postWithBlock(`${Properties.BASE_URL}/api/buscarLicencas`, validacaoDTO, false);
-//     },
-
-  upload: arquivo => {
-   
-   return ApiService.postWithBlock( '${Properties.BASE_URL}/arquivo/upload', arquivo);
-  }
+  */
+  upload: arquivo =>
+    ApiService.postWithBlock( '${Properties.BASE_URL}/arquivo/upload', arquivo),
+  /**
+   * Serviço para download da remessa
+  */
+  buscarRemessa: protocolo =>
+    ApiService.query(`${Properties.BASE_URL}/api/buscaRemessa`, { protocolo })
 };
 
 export default ArquivoService;

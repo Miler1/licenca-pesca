@@ -102,6 +102,7 @@ const GERAL = {
     acao: ["Ação", ""],
     botaoAcao: ["Download arquivo", ""],
     uploadArquivo: ["Arraste e solte o(s) arquivo(s) nesta área ou clique no botão acima", ""],
+    gerarRemssa: ["Gerar remessa",""],
     licenca: {
       tituloLicenca: ["Licenças", ""],
       listagemLicenca: ["Listagem das licenças", ""]

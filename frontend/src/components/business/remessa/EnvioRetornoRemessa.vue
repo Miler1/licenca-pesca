@@ -1,9 +1,11 @@
 <template lang="pug">
   #enviar-retornar-remessa
-
-    h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRemessa`) }}
+    div.buscar
+      h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRemessa`) }}
+      .right
+        el-button(slot="append" icon="el-icon-refresh" @click="downloadArquivoRemessa" type="primary") {{ $t(`${remessa_prefix}gerarRemssa`) }}
     card
-      .licencas(v-if="listaRemessas && listaRemessas.length > 0" v-for="remessa in listaRemessas")
+      //- .licencas(v-if="listaRemessas && listaRemessas.length > 0" v-for="remessa in listaRemessas")
       h2.titulo-remessa {{ $t(`${remessa_prefix}listagemRemessa`) }}
       .withDivisor.listMargin
         .flex
@@ -23,10 +25,10 @@
       .flex
         .flex-item
           el-row
-            el-col(:span='24' :class="{ '': desativar, 'enabled': !desativar }")
+            el-col(:span='24' :class="{'enabled': !desativar }")
               el-upload(:action='url' :on-preview='handlePreview' :on-remove='handleRemove' :on-success='success'
                         accept=" .jpg, .jpeg, .pdf" :file-list='fileList' drag multiple)
-                el-tooltip(placement="top" content="Selecione um tipo de documento para de anexar arquivos!" :class='{ disabled: desativar }' :disabled='!desativar')
+                el-tooltip(placement="top" content="Selecione um tipo de documento para de anexar arquivos!")
                   span.wrapper.el-button
                     el-button.btn.lnr.lnr-upload
                 .texto-interno {{ $t(`${remessa_prefix}uploadArquivo`) }}
@@ -64,7 +66,7 @@ export default {
 
   methods: {
 
-     handlePreview (file) {
+    handlePreview (file) {
       this.baixarArquivo(file.response, file.name)
     },
 
@@ -72,8 +74,18 @@ export default {
       this.excluirAnexoDaSelecao(file, fileList)
     },
 
-    downloadArquivoRemessa(){
+    downloadArquivoRemessa(protocolo){
 
+      if(protocolo.codigoFormatado) {
+        protocolo = protocolo.codigoFormatado;
+      }
+
+      let protocoloDesformatado = protocolo.replace("/", "").replace("-", "").replace("-","");
+
+      const href =
+        `${Properties.BASE_URL}/api/buscaRemessa?protocolo=` + protocoloDesformatado;
+
+      window.open(href, "_blank");
     },
 
     padronizarRetorno (keys) {
@@ -135,6 +147,9 @@ export default {
       margin-top: 15px
       border-top: 1px solid #ddd
       padding-top: 20px
+    
+    .buscar
+      display: flex
 
     .texto-interno
       font-family: 'Open Sans', sans-serif
@@ -150,12 +165,15 @@ export default {
 
     .titulo-remessa
       font-size: 16px
+    
+    .right
+      text-align: right
 
     .title-principal-remessa
         font-weight: 500
         font-size: 23px
+        flex: 1
        
-
     .title-principal-licencas
         font-weight: 500
         font-size: 25px
@@ -209,5 +227,5 @@ export default {
         height: 189px !important
         &:hover
           border-color: $--cor-borda
-      
+
 </style>
