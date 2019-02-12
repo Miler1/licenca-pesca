@@ -4,8 +4,10 @@ import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoArquivoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.CabecalhoRetornoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TraillerRetornoDTO;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,6 +35,9 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 
 	@Autowired
 	RetornoRepository retornoRepository;
+
+	@Autowired
+	TituloRepository tituloRepository;
 
 	@Override
 	public Retorno salvaArquivo(File arquivoRetorno) {
@@ -54,7 +60,11 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 
 		CabecalhoRetornoDTO cabecalho = new CabecalhoRetornoDTO(linhasArquivoRetorno.get(0));
 		TraillerRetornoDTO trailler  = new TraillerRetornoDTO(linhasArquivoRetorno.get(linhasArquivoRetorno.size() - 1));
-		List<TransacaoRetornoDTO> transacoes = getTransacoes(linhasArquivoRetorno);
+
+		processaTitulos(linhasArquivoRetorno);
+
+		retorno.atualizaRetorno(cabecalho, trailler);
+		retornoRepository.save(retorno);
 
 	}
 
@@ -70,6 +80,35 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 		});
 
 		return transacoes;
+
+	}
+
+	private void processaTitulos(List<String> linhasArquivoRetorno) {
+
+		List<TransacaoRetornoDTO> transacoes = getTransacoes(linhasArquivoRetorno);
+
+		transacoes.forEach(t -> {
+
+			Titulo titulo = tituloRepository.findByNossoNumero(t.getNumeroDocumento());
+
+			if(titulo != null && t.getValorPago().compareTo(new BigDecimal(0)) == 1) {
+
+				titulo.setValorPago(t.getValorPago());
+				titulo.setDataPagamento(t.getDataCredito());
+
+				tituloRepository.save(titulo);
+
+			}
+
+			processaOcorrencia(titulo, t);
+
+		});
+
+	}
+
+	private void processaOcorrencia(Titulo titulo, TransacaoRetornoDTO transacao) {
+
+
 
 	}
 

@@ -106,7 +106,7 @@ public class Retorno implements Entity<Retorno, Integer> {
 		return null;
 	}
 
-	public void atualizaRetorno(TraillerRetornoDTO trailler, CabecalhoRetornoDTO cabecalho) {
+	public void atualizaRetorno(CabecalhoRetornoDTO cabecalho, TraillerRetornoDTO trailler) {
 
 		this.dataGravacaoBanco = cabecalho.getDataGravacaoArquivo();
 
