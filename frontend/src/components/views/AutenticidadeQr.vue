@@ -34,9 +34,13 @@
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
                 h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}hifem`)) }}
 
-            el-col(:span="10")
+            el-col(:span="7")
                 h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.situacao`) }}
                 status-card(:situacao="licencaPesca.licenca.status")
+
+            el-col(:span="6")
+                h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.validadeProvisoria`) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimentoProvisoria)}") {{ licencaPesca.licenca.dataVencimentoProvisoria | placeholder($t(`${autenticidadeQr_prefix}hifem`)) }}
 
     card.dadosEndereco
         
