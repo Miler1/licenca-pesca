@@ -59,7 +59,7 @@ export default {
   data() {
     return {
      remessa_prefix: ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX,
-     url: `http://${process.env.NODE_ENV}/arquivo/upload`,
+     url: `http://${process.env.NODE_ENV}/upload-retorno'`,
      fileList: [],
     };
   },
@@ -76,14 +76,14 @@ export default {
 
     downloadArquivoRemessa(protocolo){
 
-      if(protocolo.codigoFormatado) {
-        protocolo = protocolo.codigoFormatado;
-      }
+      // if(protocolo.codigoFormatado) {
+      //   protocolo = protocolo.codigoFormatado;
+      // }
 
-      let protocoloDesformatado = protocolo.replace("/", "").replace("-", "").replace("-","");
+      // let protocoloDesformatado = protocolo.replace("/", "").replace("-", "").replace("-","");
 
       const href =
-        `${Properties.BASE_URL}/api/buscaRemessa?protocolo=` + protocoloDesformatado;
+        `${Properties.BASE_URL}/api/download-remessa?idRemessa`;
 
       window.open(href, "_blank");
     },
@@ -134,7 +134,7 @@ export default {
       margin-bottom: 10px
     
     .item-content
-      font-size: 13px
+      font-size: 15px
 
     .download-button
       color: #409EFF

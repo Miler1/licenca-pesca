@@ -9,7 +9,7 @@
 							| IPAAM
 						.completo
 							| Instituto de Proteção Ambiental do Amazonas
-				menu-item(v-if='acoesMenuRemessa()' titulo="Licenças"  @click="acessarLicencas" :active="acessarLicencas")
+				menu-item(v-if='acoesMenuRemessa()' titulo="Licenças"  @click="acessarLicencas" :active="!acessarLicencas")
 				menu-item(v-if='acoesMenuRemessa()' titulo="Arquivos"  @click="acessarArquivos" :active="acessarArquivos")
 				menu-item(v-if='acoesMenuRemessa()' titulo="Relatórios"  @click="acessarRelatorios" :active="!acessarRelatorios" )
 			.right
@@ -49,11 +49,16 @@ export default {
 	},
 	acoesMenuRemessa(){
 		//mudar nome de acordo com o da rota
-		return this.$router.history.current.name == 'envioRetornoRemessa'	
+		return this.$router.history.current.name == 'envioRetornoRemessa'
 	},
 	acessarArquivos(){
 		this.$router.push({
 			name: 'envioRetornoRemessa'
+		});
+	},
+	acessarLicencas(){
+		this.$router.push({
+			// name: 'envioRetornoRemessa'
 		});
 	},
 	acessarRelatorios(){

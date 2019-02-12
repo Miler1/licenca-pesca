@@ -6,12 +6,15 @@ const ArquivoService = {
    * Serviço de upload para arquivos.
   */
   upload: arquivo =>
-    ApiService.postWithBlock( '${Properties.BASE_URL}/arquivo/upload', arquivo),
+    ApiService.postWithBlock( '${Properties.BASE_URL}/upload-retorno', arquivo),
+
+  download: idRemessa =>
+    ApiService.download( '${Properties.BASE_URL}/download-remessa', idRemessa),
   /**
-   * Serviço para download da remessa
+   * Serviço para listar da remessa
   */
-  buscarRemessa: protocolo =>
-    ApiService.query(`${Properties.BASE_URL}/api/buscarRemessa`, { protocolo })
+  listarRemessa: protocolo =>
+    ApiService.query(`${Properties.BASE_URL}/api/lista-remessa`, { protocolo })
 };
 
 export default ArquivoService;
