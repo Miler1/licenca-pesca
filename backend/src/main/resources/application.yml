@@ -47,7 +47,7 @@ spring:
 
   security:
     fakeAuthentication: false
-    successRedirectUrl: http://localhost:8080/login
+    successRedirectUrl: http://localhost:8080/envio-retorno-remessa
     ipsAllowed: 127.0.0.1,::1
 
     entradaUnica:
