@@ -45,6 +45,10 @@ spring:
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 
   security:
+
+    fakeAuthentication: false
+    successRedirectUrl: /
+
     entradaUnica:
       # Módulo - JAVA3-5
       #client-id: c8671b62b00f2c32015f78fac719a7e7e6da4f423366dd6b43f02e1536ac26cdc91b9c8c38a7b5ce1747495cf32bbf915e58281063dac35449d6a9542b215ea3
