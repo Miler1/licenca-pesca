@@ -94,18 +94,18 @@ const GERAL = {
     }
   },
   remessa: {
-    tituloRetorno: ["Arquivos de retorno", ""],
-    tituloRemessa: ["Arquivos de remessa", ""],
-    nomeArquivoRemessa: ["Nome do arquivo", ""],
-    listagemRemessa: ["Listagem dos arquivos de remessa", ""],
-    dataArquivoRemessa: ["Data de criação", ""],
-    acao: ["Ação", ""],
-    botaoAcao: ["Download arquivo", ""],
-    uploadArquivo: ["Arraste e solte o(s) arquivo(s) nesta área ou clique no botão acima", ""],
-    gerarRemssa: ["Gerar remessa",""],
+    tituloRetorno: ["Arquivos de retorno", "Return files"],
+    tituloRemessa: ["Arquivos de remessa", "Shipping files"],
+    nomeArquivoRemessa: ["Nome do arquivo", "File name"],
+    listagemRemessa: ["Listagem dos arquivos de remessa", "Listing of shipping files"],
+    dataArquivoRemessa: ["Data de criação", "Creation date"],
+    acao: ["Ação", "Action"],
+    botaoAcao: ["Download arquivo", "Download file"],
+    uploadArquivo: ["Arraste e solte o(s) arquivo(s) nesta área ou clique no botão acima", "Drag and drop the file (s) to this area or click the button above"],
+    gerarRemssa: ["Gerar remessa", "Generate Shipping"],
     licenca: {
-      tituloLicenca: ["Licenças", ""],
-      listagemLicenca: ["Listagem das licenças", ""]
+      tituloLicenca: ["Licenças", "License"],
+      listagemLicenca: ["Listagem das licenças", "List of licenses"]
     }
   }
 };
