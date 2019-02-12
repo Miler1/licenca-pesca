@@ -173,6 +173,7 @@ export default {
         font-weight: 500
         font-size: 23px
         flex: 1
+        margin-top: 6px
        
     .title-principal-licencas
         font-weight: 500
