@@ -76,6 +76,10 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimento;
 
+//	@Column(name = "dt_vencimento_provisoria")
+//	@JsonFormat(pattern = "dd/MM/yyyy")
+//	private Date dataVencimentoProvisoria;
+
 	@Column(name = "dt_vencimento_boleto")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimentoBoleto;
