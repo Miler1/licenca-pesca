@@ -1,4 +1,4 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, BUSCAR_TODAS_LICENCAS } from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO} from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA, SET_LISTA_TODAS_LICENCAS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
@@ -116,20 +116,7 @@ export const actions = {
         }
       });
   },
-
-  // [BUSCAR_TODAS_LICENCAS]: ({ commit }, acessoResource) => {
-  // AcessoService.buscarTodasLicencas(acessoResource)
-  //   .then(({ data }) => {
-  //     commit(SET_LISTA_TODAS_LICENCAS, data.licencas);
-  //   })
-  //   .catch(error => {
-  //     if(error.response) {
-  //       commit(SET_ERROR_TELA_BUSCA, error.response.data);
-  //       commit(CLEAN_SOLICITANTE);
-  //     }
-  //   });
-  // }, 
-
+  
   [BUSCA_DADOS_VALIDACAO]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {

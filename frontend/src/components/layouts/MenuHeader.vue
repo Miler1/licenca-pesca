@@ -137,5 +137,4 @@ export default {
 
 					.el-select
 						width: 90px
-
 </style>

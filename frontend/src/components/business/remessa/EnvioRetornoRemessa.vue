@@ -5,16 +5,16 @@
       .right
         el-button(slot="append" icon="el-icon-refresh" @click="downloadArquivoRemessa" type="primary") {{ $t(`${remessa_prefix}gerarRemssa`) }}
     card
-      //- .licencas(v-if="listaRemessas && listaRemessas.length > 0" v-for="remessa in listaRemessas")
+      //- .remessas(v-if="listaRemessas && listaRemessas.length > 0" v-for="remessa in listaRemessas")
       h2.titulo-remessa {{ $t(`${remessa_prefix}listagemRemessa`) }}
       .withDivisor.listMargin
         .flex
             .flex-item
               span.item-title {{ $t(`${remessa_prefix}nomeArquivoRemessa`) }}
-              span.item-content {{}}
+              //- span.item-content {{remessa.nome}}
             .flex-item
               span.item-title {{ $t(`${remessa_prefix}dataArquivoRemessa`) }}
-              span.item-content {{}}
+              //- span.item-content {{remessa.dataCadastro}}
             .flex-item
               span.item-title {{ $t(`${remessa_prefix}acao`) }}
               span.item-content-acoes
@@ -44,7 +44,7 @@ import { ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX } from '../../../utils/messages/
 export default {
   name: "EnviarRetornarRemessa",
 
-  props: ['desativar', 'baixarArquivo', 'files', 'excluirAnexoDaSelecao'],
+  props: ['desativar', 'baixarArquivo', 'files',  'excluirAnexoDaSelecao'],
 
   watch: {
     files () {
