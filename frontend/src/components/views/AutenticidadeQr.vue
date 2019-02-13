@@ -32,16 +32,11 @@
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}hifem`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ setDataVencimento() }}
 
             el-col(:span="7")
                 h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.situacao`) }}
-                status-card(:situacao="licencaPesca.licenca.status")
-
-            el-col(:span="6")
-                h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.validadeProvisoria`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimentoProvisoria)}") {{ licencaPesca.licenca.dataVencimentoProvisoria | placeholder($t(`${autenticidadeQr_prefix}hifem`)) }}
-
+                status-card(:situacao="licencaPesca.licenca.status.codigo")
     card.dadosEndereco
         
         h3.title {{ $t(`${autenticidadeQr_prefix}titulo.enderecoPrincipal`) }}
@@ -137,8 +132,17 @@ export default {
                     `${this.autenticidadeQr_prefix}titulo.modalidades.esportiva`
                 );
             }
+        },
+        setDataVencimento(){
+            debugger
+            if(this.licencaPesca.licenca.dataVencimento == null && this.licencaPesca.licenca.dataVencimentoProvisoria == null){
+                return "-";
+            } if(this.licencaPesca.licenca.dataVencimento == null && this.licencaPesca.licenca.dataVencimentoProvisoria != null){
+                return this.licencaPesca.licenca.dataVencimentoProvisoria;
+            }else {
+                return this.licencaPesca.licenca.dataVencimento;
+            }  
         }
-
      },
 
     created() {

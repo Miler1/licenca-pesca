@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-    span.status-card.aguardando-pagamento(v-if="situacao === 'AGUARDANDO_PAGAMENTO_BOLETO'")
+    span.status-card.aguardando-pagamento(v-if="situacao === 'AGUARDANDO_PAGAMENTO'")
         | {{ $t(`${consultar_prefix}listaLicenca.situacao.aguardandoBoleto`) }}
     span.status-card.ativo(v-if="situacao === 'ATIVO'")
         | {{ $t(`${consultar_prefix}listaLicenca.situacao.ativo`) }}
