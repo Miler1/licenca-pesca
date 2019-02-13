@@ -35,6 +35,8 @@
                                 i.el-icon-arrow-down.el-icon--right
                             el-dropdown-menu(slot="dropdown")
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarBoleto`) }}
+                                el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}                                
+                                el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarBoleto`) }}
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
                                 el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                         span(v-if="lista.status.codigo === 'INVALIDADO' || lista.status.codigo === 'RENOVADO'") -

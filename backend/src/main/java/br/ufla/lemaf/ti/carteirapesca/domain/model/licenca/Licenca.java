@@ -201,6 +201,17 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		return false;
 	}
 
+	public String mensagensDeAviso() {
+
+		var vencimento = this.getDataVencimento();
+
+		if(vencimento == null){
+			return "VÁLIDO EM TODO O ESTADO DO AMAZONAS, MEDIANTE APRESENTAÇÃO DE DOCUMENTO DE IDENTIDADE E COMPROVANTE DE PAGAMENTO, RESPEITANDO AS REGRAS DE PESCA DO LOCAL";
+		} else{
+			return "VÁLIDO EM TODO O ESTADO DO AMAZONAS, MEDIANTE APRESENTAÇÃO DE DOCUMENTO DE IDENTIDADE, RESPEITANDO AS REGRAS DE PESCA DO LOCAL";
+		}
+	}
+
 	/**
 	 * Protocolo protocolo.
 	 *

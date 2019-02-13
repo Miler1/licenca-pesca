@@ -200,7 +200,10 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Titulo titulo = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
 
-		Status status = statusRepository.findById(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id).get();
+		Status status = statusRepository.findById(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id).get();
+
+//		criar metodo que quando passado o tempo de provisorio e nao pago voltar para AGUARDANDO_PAGAMENTO
+//		Status status = statusRepository.findById(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id).get();
 
 		InformacaoComplementar informacaoComplementar = informacaoComplementarService.toInformacaoComplementar(resource.getInformacaoComplementar());
 
