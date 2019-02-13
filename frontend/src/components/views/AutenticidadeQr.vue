@@ -134,7 +134,6 @@ export default {
             }
         },
         setDataVencimento(){
-            debugger
             if(this.licencaPesca.licenca.dataVencimento == null && this.licencaPesca.licenca.dataVencimentoProvisoria == null){
                 return "-";
             } if(this.licencaPesca.licenca.dataVencimento == null && this.licencaPesca.licenca.dataVencimentoProvisoria != null){

@@ -26,7 +26,7 @@
                 .flex-item  
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.situacao.titulo`) }}
                     span.item-content 
-                        status-card(:situacao="lista.status.codigo")
+                        status-card(:situacao="lista.status.codigo") 
                 .flex-item
                     span.item-title-acoes {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                     span.item-content-acoes
