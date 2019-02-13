@@ -228,7 +228,7 @@ COMMENT ON COLUMN carteira_pesca.titulo.dt_vencimento IS 'Data de vencimento.';
 COMMENT ON COLUMN carteira_pesca.titulo.instrucoes IS 'Instruções de pagamento.';
 COMMENT ON COLUMN carteira_pesca.titulo.local_pagamento IS 'Locais onde o pagamento poderá ser realizado.';
 COMMENT ON COLUMN carteira_pesca.titulo.nosso_numero IS 'Código de controle que permite ao Banco e ao beneficiário identificar os dados da cobrança que deu origem ao boleto de pagamento.';
-COMMENT ON COLUMN carteira_pesca.titulo.dt_geracao_remessa IS 'Data de vencimento.';
+COMMENT ON COLUMN carteira_pesca.titulo.dt_geracao_remessa IS 'Data de geração da remessa.';
 
 INSERT INTO carteira_pesca.banco (id, codigo, nome) VALUES (1, '237', 'Banco Bradesco S.A.');
 
