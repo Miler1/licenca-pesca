@@ -34,9 +34,9 @@ public final class Constants {
 
 	public static final Integer NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE = 3;
 
-	public static final Integer HORAS_BLOQUEIO_SOLICITANTE = 2;
+	public static final String INTERVALO_ATUALIZACAO_AUTOMATICA = " 0 0 0 1/1 * ?";
 
-	public static final Integer ZERAR_NUMERO_TENTATIVAS_POR_DIA = 24;
+	public static final Integer HORAS_BLOQUEIO_SOLICITANTE = 2;
 
 	/**
 	 * Para evitar instanciação.

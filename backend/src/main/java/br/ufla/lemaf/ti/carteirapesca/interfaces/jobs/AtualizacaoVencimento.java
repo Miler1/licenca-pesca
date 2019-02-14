@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.jobs;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.RegistroServiceFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,7 @@ public class AtualizacaoVencimento {
 
 	private static final Logger log = LoggerFactory.getLogger(AtualizacaoVencimento.class);
 
-	@Scheduled(cron = " 0 0 0 1/1 * ?")
+	@Scheduled(cron = Constants.INTERVALO_ATUALIZACAO_AUTOMATICA)
 	public void atualizacaoAutomatica() {
 		log.info("Atualização automática");
 
@@ -24,5 +25,9 @@ public class AtualizacaoVencimento {
 
 		// Verifica invalido
 		registroServiceFacade.atualizarCondicaoInvalido();
+
+		// Verifica a data provisoria
+		registroServiceFacade.atualizarCondicaoLicencaProvisoria();
+
 	}
 }

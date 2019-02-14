@@ -202,9 +202,6 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Status status = statusRepository.findById(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id).get();
 
-//		criar metodo que quando passado o tempo de provisorio e nao pago voltar para AGUARDANDO_PAGAMENTO
-//		Status status = statusRepository.findById(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id).get();
-
 		InformacaoComplementar informacaoComplementar = informacaoComplementarService.toInformacaoComplementar(resource.getInformacaoComplementar());
 
 		return new Licenca(protocolo, modalidade, informacaoComplementar, status, titulo);
