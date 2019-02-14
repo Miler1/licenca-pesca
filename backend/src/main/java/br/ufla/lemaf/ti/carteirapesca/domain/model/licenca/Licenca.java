@@ -153,8 +153,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	}
 
 	/**
-	 * Data vencimento date.
-	 *
 	 * @return Data de vencimento da Licença provisoria
 	 */
 	public Date getDataVencimentoProvisoria() {
