@@ -36,9 +36,10 @@ const GERAL = {
       },
       situacao: {
         titulo: ["Situação", "Situation"],
-        aguardandoBoleto: ["Aguardando pagamento do boleto", "Waiting for payment of the bank slip"],
+        aguardandoBoleto: ["Aguardando pagamento", "Awaiting payment"],
         invalido: ["Inválido", "Invalid"],
         ativo: ["Ativo", "Active"],
+        ativoAguardandoPagamento: ["Ativo, aguardando pagamento", "Active, awaiting payment"],
         vencido: ["Vencido", "Expired"],
         renovado: ["Renovado", "Renewed"]
       },

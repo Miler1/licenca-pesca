@@ -40,4 +40,5 @@ public interface RegistroServiceFacade {
 
 	void atualizarCondicaoInvalido();
 
+	void atualizarCondicaoLicencaProvisoria();
 }

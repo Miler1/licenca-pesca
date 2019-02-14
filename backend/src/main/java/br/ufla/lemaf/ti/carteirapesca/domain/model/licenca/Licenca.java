@@ -39,6 +39,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private static final Integer ANOS_VENCIMENTO_LICENCA = 1;
 	private static final Integer MES_ANTES_DE_VENCER = -1;
 	private static final Integer QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO = 1;
+	private static final Integer MES_VENCER_CARTEIRA_PROVISORIA = 1;
 
 	@Id
 	@SuppressWarnings("unused")
@@ -73,8 +74,11 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private Solicitante solicitante;
 
 	@Column(name = "dt_vencimento")
-	@JsonFormat(pattern = "dd/MM/yyyy")
+//	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimento;
+
+	@Column(name = "dt_vencimento_provisoria")
+	private Date dataVencimentoProvisoria;
 
 	@Column(name = "dt_vencimento_boleto")
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -105,6 +109,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.status = status;
 			this.informacaoComplementar = informacaoComplementar;
 			this.titulo = titulo;
+			this.setDataVencimentoProvisoria();
 			this.setDataVencimentoBoleto();
 
 		} catch (IllegalArgumentException | NullPointerException ex) {
@@ -119,7 +124,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	 * Mas se o Status for ATIVO ou INVALIDADO a operação será anulada.
 	 */
 	public void ativar() {
-		if (!status.getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id)) {
+		if (!status.getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id)) {
 			throw new LicencaException("licenca.statusInvalido.ativar", status.getDescricao());
 		}
 		status = statusRepository.findById(Status.StatusEnum.ATIVO.id).get();
@@ -146,6 +151,13 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		return dataVencimento;
 	}
 
+	/**
+	 * @return Data de vencimento da Licença provisoria
+	 */
+	public Date getDataVencimentoProvisoria() {
+		return dataVencimentoProvisoria;
+	}
+
 	public InformacaoComplementar getInformacaoComplementar() {
 		return informacaoComplementar;
 	}
@@ -158,6 +170,15 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 
 		this.dataVencimentoBoleto = calendar.getTime();
 
+	}
+
+	public void setDataVencimentoProvisoria() {
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.MONTH, MES_VENCER_CARTEIRA_PROVISORIA);
+
+		this.dataVencimentoProvisoria = calendar.getTime();
 	}
 
 	public Boolean getPodeRenovar() {
@@ -175,6 +196,17 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		}
 
 		return false;
+	}
+
+	public String mensagensDeAviso() {
+
+		var vencimento = this.getDataVencimento();
+
+		if(vencimento == null){
+			return "VÁLIDO EM TODO O ESTADO DO AMAZONAS, MEDIANTE APRESENTAÇÃO DE DOCUMENTO DE IDENTIDADE E COMPROVANTE DE PAGAMENTO, RESPEITANDO AS REGRAS DE PESCA DO LOCAL";
+		} else{
+			return "VÁLIDO EM TODO O ESTADO DO AMAZONAS, MEDIANTE APRESENTAÇÃO DE DOCUMENTO DE IDENTIDADE, RESPEITANDO AS REGRAS DE PESCA DO LOCAL";
+		}
 	}
 
 	/**

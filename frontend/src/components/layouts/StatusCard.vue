@@ -1,9 +1,11 @@
 <template lang="pug">
 div
-    span.status-card.aguardando-pagamento(v-if="situacao === 'AGUARDANDO_PAGAMENTO_BOLETO'")
+    span.status-card.aguardando-pagamento(v-if="situacao === 'AGUARDANDO_PAGAMENTO'")
         | {{ $t(`${consultar_prefix}listaLicenca.situacao.aguardandoBoleto`) }}
     span.status-card.ativo(v-if="situacao === 'ATIVO'")
         | {{ $t(`${consultar_prefix}listaLicenca.situacao.ativo`) }}
+    span.status-card.ativo_aguardando_pagamento(v-if="situacao === 'ATIVO_AGUARDANDO_PAGAMENTO'")
+        | {{ $t(`${consultar_prefix}listaLicenca.situacao.ativoAguardandoPagamento`) }}
     span.status-card.invalidado(v-if="situacao === 'INVALIDADO'")
         | {{ $t(`${consultar_prefix}listaLicenca.situacao.invalido`) }}
     span.status-card.vencido(v-if="situacao === 'VENCIDO'")
@@ -66,6 +68,9 @@ export default {
     background-color: #00b33c
     color: white
     font-size: 13px
+
+.ativo_aguardando_pagamento
+    background-color: #C5E1A5
 
 .renovado
     background-color: #3f51b5
