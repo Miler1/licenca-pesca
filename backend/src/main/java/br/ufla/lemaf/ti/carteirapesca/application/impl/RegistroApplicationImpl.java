@@ -129,7 +129,6 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		var solicitante = getSolicitante(resource);
 
-
 		String protocoloNovo = this.calcularNovoProtocolo(codigoProtocolo);
 
 		var licenca = criarLicenca(resource, protocoloNovo);
@@ -147,6 +146,12 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		solicitanteRopository.save(solicitante);
 
 		return protocolo;
+
+//		else {
+//
+//			throw new SolicitanteException("solicitante.licenca.ativa");
+//		}
+
 	}
 
 
