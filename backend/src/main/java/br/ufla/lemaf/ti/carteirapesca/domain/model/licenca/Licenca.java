@@ -74,11 +74,10 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private Solicitante solicitante;
 
 	@Column(name = "dt_vencimento")
-	@JsonFormat(pattern = "dd/MM/yyyy")
+//	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimento;
 
 	@Column(name = "dt_vencimento_provisoria")
-	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimentoProvisoria;
 
 	@Column(name = "dt_vencimento_boleto")

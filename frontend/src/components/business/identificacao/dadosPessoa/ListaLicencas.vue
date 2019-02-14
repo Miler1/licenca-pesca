@@ -20,8 +20,8 @@
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.ativacao`) }}
                     span.item-content {{(lista.dataAtivacao) ? formatData(lista.dataAtivacao) : '-'}}
                 .flex-item
-                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.vencimento`) }}
-                    span.item-content {{setDataVencimento(lista)}}
+                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.vencimento`)}}
+                    span.item-content {{setDataVencimento(lista) | moment('DD/MM/YYYY') }}
 
                 .flex-item  
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.situacao.titulo`) }}
@@ -52,6 +52,7 @@ import Properties from "../../../../properties";
 import { translate } from "../../../../utils/helpers/internationalization";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/geral";
 import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registrar/informacoes/informacoes";
+import moment from "moment";
 
 export default {
   name: "ListaLicencas",
@@ -123,13 +124,15 @@ export default {
         return lista.status.codigo === 'VENCIDO' || lista.podeRenovar;
     },
     setDataVencimento(lista){
-        if(lista.dataVencimento == null && lista.dataVencimentoProvisoria == null){
-            return "-";
-        } if(lista.dataVencimento == null && lista.dataVencimentoProvisoria != null){
-            return lista.dataVencimentoProvisoria;
+        if(lista.status.codigo !== 'AGUARDANDO_PAGAMENTO'){
+            if(lista.dataVencimento == null && lista.dataVencimentoProvisoria != null){
+                return lista.dataVencimentoProvisoria;
+            }else {
+                return lista.dataVencimento;
+            }          
         }else {
-            return lista.dataVencimento;
-        }  
+            return "-";
+        }
     }
   }
 };
