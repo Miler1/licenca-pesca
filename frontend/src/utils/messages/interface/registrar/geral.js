@@ -29,7 +29,7 @@ const GERAL = {
       ativacao: ["Ativação", "Activate date"],
       cadastro: ["Cadastro", "Register date"],
       vencimento: ["Vencimento", "Expire date"],
-      vencimentoProvisoria: ["Vencimento Provisória",""],
+      vencimentoProvisoria: ["Vencimento Provisória","Provisional maturity"],
       acoes: ["Ações", "Actions"],
       modalidade: {
         esportiva: ["Esportiva", "Sportive"],
@@ -37,7 +37,7 @@ const GERAL = {
       },
       situacao: {
         titulo: ["Situação", "Situation"],
-        aguardandoBoleto: ["Aguardando pagamento", "Waiting for payment of the bank slip"],
+        aguardandoBoleto: ["Aguardando pagamento", "Awaiting payment"],
         invalido: ["Inválido", "Invalid"],
         ativo: ["Ativo", "Active"],
         ativoAguardandoPagamento: ["Ativo, aguardando pagamento", "Active, awaiting payment"],
