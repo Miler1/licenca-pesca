@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.internal;
 
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.CarteiraBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.*;
@@ -163,14 +164,19 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		data.put("limiteCaptura", CarteiraBuilderImpl.campoLimiteCaptura(licenca.modalidade()));
 
 		data.put("mensagensDeAviso", licenca.mensagensDeAviso());
+		data.put("descricaoCarteiraDefinitivaEProvisoria", licenca.descricaoCarteiraDefinitivaEProvisoria());
 
 		Date validade = licenca.getDataVencimento();
 
 		Date validadeProvisoria = licenca.getDataVencimentoProvisoria();
 
-		if(licenca.dataAtivacao() == null){
-
+		if(licenca.dataCriacao() == null && licenca.dataAtivacao() == null) {
 			data.put("emissao", "-");
+
+		}if(licenca.getStatus().getId().equals(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id)){
+
+			data.put("emissao", DateUtils.formatDate(licenca.dataCriacao(), Constants.DATE_FORMAT));
+
 		} else {
 
 			data.put("emissao", DateUtils.formatDate(licenca.dataAtivacao(), Constants.DATE_FORMAT));
