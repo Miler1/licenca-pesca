@@ -24,7 +24,7 @@ CREATE TABLE carteira_pesca.retorno
   valor_total_rateio_efetuado DOUBLE PRECISION,
   numero_aviso_bancario INTEGER,
   CONSTRAINT pk_retorno PRIMARY KEY(id),
-  CONSTRAINT fk_retorno_arquivo FOREIGN KEY (id_arquivo)
+  CONSTRAINT fk_r_arquivo FOREIGN KEY (id_arquivo)
     REFERENCES carteira_pesca.arquivo (id) MATCH SIMPLE
     ON UPDATE RESTRICT ON DELETE RESTRICT
 ) WITH (
@@ -57,7 +57,7 @@ COMMENT ON COLUMN carteira_pesca.retorno.qtd_confirmacao_instrucao_protesto IS '
 COMMENT ON COLUMN carteira_pesca.retorno.valor_confirmacao_instrucao_protesto IS 'Valor dos títulos que tiveram confirmação de instrução de protesto.';
 COMMENT ON COLUMN carteira_pesca.retorno.qtd_total_rateio_efetuado IS 'Quantidade de títulos que tiveram rateio efetuado.';
 COMMENT ON COLUMN carteira_pesca.retorno.valor_total_rateio_efetuado IS 'Valor dos títulos que tiveram rateio efetuado.';
-COMMENT ON COLUMN carteira_pesca.retorno.valor_total_rateio_efetuado IS 'Número do aviso registrado pelo banco.';
+COMMENT ON COLUMN carteira_pesca.retorno.numero_aviso_bancario IS 'Número do aviso registrado pelo banco.';
 
 ALTER TABLE carteira_pesca.titulo DROP COLUMN dt_geracao_remessa;
 
@@ -65,14 +65,14 @@ ALTER TABLE carteira_pesca.titulo ADD COLUMN valor_pago DOUBLE PRECISION;
 COMMENT ON COLUMN carteira_pesca.titulo.valor_pago IS 'Valor que foi pago pelo titulo título.';
 
 ALTER TABLE carteira_pesca.titulo ADD COLUMN id_remessa INTEGER;
-ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_remessa_titulo FOREIGN KEY (id_remessa)
+ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_r_titulo FOREIGN KEY (id_remessa)
   REFERENCES carteira_pesca.remessa (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 COMMENT ON COLUMN carteira_pesca.titulo.id_remessa IS 'Remessa gerada para o título.';
 
 ALTER TABLE carteira_pesca.titulo ADD COLUMN id_retorno INTEGER NULL;
-ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_retorno_titulo FOREIGN KEY (id_retorno)
+ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_r_titulo FOREIGN KEY (id_retorno)
   REFERENCES carteira_pesca.retorno (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT;
 
