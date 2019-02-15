@@ -40,7 +40,7 @@
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
                                 el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                         span(v-if="lista.status.codigo === 'INVALIDADO' || lista.status.codigo === 'RENOVADO'") -
-                        span(v-if="lista.status.codigo === 'VENCIDO' && !lista.podeRenovar") -
+                        span(v-if="!verificaCondicoesParaBotaoDeAcoes(lista)") -
 
     .sem-licenca.withDivisor(v-if="!listaLicencas || listaLicencas.length <= 0")
         | {{ $t(`${consultar_prefix}listaLicenca.semLicenca`) }}
