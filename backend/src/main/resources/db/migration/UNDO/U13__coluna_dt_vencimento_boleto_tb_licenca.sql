@@ -1,0 +1,1 @@
+ALTER TABLE carteira_pesca.licenca DROP COLUMN dt_vencimento_boleto;

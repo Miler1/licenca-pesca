@@ -18,6 +18,7 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.InformacaoComplementarService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;

@@ -1,0 +1,3 @@
+ALTER TABLE carteira_pesca.informacao_complementar DROP CONSTRAINT fk_ic_peixe_mais_pescado;
+ALTER TABLE carteira_pesca.informacao_complementar DROP COLUMN id_peixe_mais_pescado;
+DROP TABLE carteira_pesca.peixe_mais_pescado;

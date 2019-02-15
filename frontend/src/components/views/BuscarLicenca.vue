@@ -33,7 +33,7 @@
         .block
           .error-pagina-inicial
             | {{errorTelaInicial}}     
-
+            
       validacao-perguntas(v-show="dadosSolicitanteAConfirmar" ref="validacaoPerguntas")
       visualizar-dados-pessoa(:pessoa="solicitante" v-if="existeSolicitante" ref="visualizarDadosPessoa")
       lista-licencas(v-if="existeSolicitante")
@@ -117,7 +117,7 @@ export default {
       }
       return { cpf, passaporte };
     },
-
+   
     fecharSolicitante(){
       this.$store.dispatch(CANCELAR);
     }
