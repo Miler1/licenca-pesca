@@ -6,6 +6,8 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Pais;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.PdfGeneratorUtil;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
@@ -35,7 +37,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -68,6 +72,9 @@ public class ConsultaController {
 
 	@Autowired
 	private RegistroApplication registroApplication;
+
+	@Autowired
+	PdfGeneratorUtil pdfGenaratorUtil;
 
 	/**
 	 * Injetando dependências.
@@ -214,6 +221,31 @@ public class ConsultaController {
 			httpHeaders.setContentType(MediaType.APPLICATION_PDF);
 
 			var isr = new InputStreamResource(new FileInputStream(carteira));
+
+			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
+
+		} catch (Exception e) {
+
+			return new ResponseEntity<>((InputStreamResource) null, HttpStatus.NOT_FOUND);
+
+		}
+
+	}
+
+	@CrossOrigin("*")
+	@GetMapping("/teste")
+	public ResponseEntity<InputStreamResource> downloadCarteira() {
+
+		try {
+
+
+			Map<String,String> data = new HashMap<String,String>();
+			data.put("baseUrl", Properties.baseUrl());
+
+			var httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+
+			var isr = new InputStreamResource(new FileInputStream(pdfGenaratorUtil.createPdf("cobranca",data)));
 
 			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 

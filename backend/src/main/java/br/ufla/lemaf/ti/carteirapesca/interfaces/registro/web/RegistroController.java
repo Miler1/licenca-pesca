@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web;
 
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.PdfGeneratorUtil;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.RegistroServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
 import lombok.extern.slf4j.Slf4j;
