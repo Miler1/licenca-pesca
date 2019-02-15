@@ -29,7 +29,6 @@ const GERAL = {
       ativacao: ["Ativação", "Activate date"],
       cadastro: ["Cadastro", "Register date"],
       vencimento: ["Vencimento", "Expire date"],
-      vencimentoProvisoria: ["Vencimento Provisória","Provisional maturity"],
       acoes: ["Ações", "Actions"],
       modalidade: {
         esportiva: ["Esportiva", "Sportive"],

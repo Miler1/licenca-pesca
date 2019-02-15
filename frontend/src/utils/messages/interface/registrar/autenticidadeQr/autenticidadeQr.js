@@ -20,7 +20,7 @@ const AUTENTICIDADE = {
         modalidade: ["Modalidade ", "Modality"],
         emissao: ["Emissão ", "Emission"],
         validade: ["Validade ", "Validity"],
-        validadeProvisoria: ["Validade (carteira provisória)", "Validity (provisional portfolio)"],
+        validadeProvisoria: ["Validade (carteira provisória)", "Validity (provisional license)"],
         situacao: ["Situação", "Situation"],
         endereco: ["Endereço ", "Address"],
         municipio: ["Município/UF ", "City / UF"],

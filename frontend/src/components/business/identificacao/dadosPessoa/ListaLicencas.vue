@@ -11,6 +11,8 @@
                         | {{ $t(`${consultar_prefix}listaLicenca.modalidade.recreativa`) }}
                     span.item-content(v-if="lista.modalidade.id === 0")
                         | {{ $t(`${consultar_prefix}listaLicenca.modalidade.esportiva`) }}
+
+
                 .flex-item
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.cadastro`) }}
                     span.item-content {{formatData(lista.dataCriacao)}}
@@ -18,8 +20,8 @@
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.ativacao`) }}
                     span.item-content {{(lista.dataAtivacao) ? formatData(lista.dataAtivacao) : '-'}}
                 .flex-item
-                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.vencimento`) }}
-                    span.item-content {{setDataVencimento(lista)}}
+                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.vencimento`)}}
+                    span.item-content {{setDataVencimento(lista) | moment('DD/MM/YYYY') }}
 
                 .flex-item  
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.situacao.titulo`) }}
@@ -35,8 +37,8 @@
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarBoleto`) }}
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}                                
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarBoleto`) }}
-                                el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)" @click.native="renovar(lista)" ) {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
+                                el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                         span(v-if="lista.status.codigo === 'INVALIDADO' || lista.status.codigo === 'RENOVADO'") -
                         span(v-if="lista.status.codigo === 'VENCIDO' && !lista.podeRenovar") -
 
@@ -123,13 +125,15 @@ export default {
         return lista.status.codigo === 'VENCIDO' && lista.podeRenovar;
     },
     setDataVencimento(lista){
-        if(lista.dataVencimento == null && lista.dataVencimentoProvisoria == null){
-            return "-";
-        } if(lista.dataVencimento == null && lista.dataVencimentoProvisoria != null){
-            return lista.dataVencimentoProvisoria;
+        if(lista.status.codigo !== 'AGUARDANDO_PAGAMENTO'){
+            if(lista.dataVencimento == null && lista.dataVencimentoProvisoria != null){
+                return lista.dataVencimentoProvisoria;
+            }else {
+                return lista.dataVencimento;
+            }          
         }else {
-            return lista.dataVencimento;
-        }  
+            return "-";
+        }
     },
     verificaCondicoesParaBotaoDeAcoes(lista){
         if(lista.status.codigo === 'VENCIDO'){
