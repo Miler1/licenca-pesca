@@ -98,17 +98,9 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		return this.licenca
 			.stream()
 			.anyMatch(licencaProcurada -> ((licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
-				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id))
+				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id) ||
+				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id))
 				&& licencaProcurada.modalidade().getId().equals(modalidade.getId()));
-	}
-
-	public boolean pussuiLicencaMesmaModalidade(Modalidade modalidade) {
-		return this.licenca
-			.stream()
-			.anyMatch(licencaProcurada -> ((
-				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id)
-				&& licencaProcurada.modalidade().getId().equals(modalidade.getId()))));
-
 	}
 
 	/**

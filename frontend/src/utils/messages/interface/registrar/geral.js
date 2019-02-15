@@ -44,9 +44,10 @@ const GERAL = {
         renovado: ["Renovado", "Renewed"]
       },
       acoesOpcoes:{
-        gerarBoleto: ["Gerar boleto", "Generate bank slip"],
+        gerarDocumentoPagamento: ["Gerar documento de pagamento", "Generate payment document"],
         renovarLicenca: ["Renovar licença", "Renew license"],
-        baixarCarteira: ["Baixar Carteira de Pesca", "Download fishing license"]
+        baixarCarteira: ["Baixar Carteira de Pesca", "Download fishing license"],
+        baixarCarteiraProvisoria: ["Baixar Carteira de Pesca Provisória", "Download Provisional Fishing Portfolio"]
       }
     },
     confirm: {
