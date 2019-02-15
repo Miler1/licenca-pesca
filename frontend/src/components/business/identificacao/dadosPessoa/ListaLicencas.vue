@@ -30,7 +30,7 @@
                 .flex-item
                     span.item-title-acoes {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                     span.item-content-acoes
-                        el-dropdown(trigger="click", v-if="lista.status.codigo !== 'INVALIDADO' && lista.status.codigo !== 'RENOVADO'")
+                        el-dropdown(trigger="click", v-if="verificaCondicoesParaBotaoDeAcoes(lista)")
                             span.el-dropdown-link.el-button.el-button--primary {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                                 i.el-icon-arrow-down.el-icon--right
                             el-dropdown-menu(slot="dropdown")
@@ -40,6 +40,8 @@
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
                                 el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                         span(v-if="lista.status.codigo === 'INVALIDADO' || lista.status.codigo === 'RENOVADO'") -
+                        span(v-if="!verificaCondicoesParaBotaoDeAcoes(lista)") -
+
     .sem-licenca.withDivisor(v-if="!listaLicencas || listaLicencas.length <= 0")
         | {{ $t(`${consultar_prefix}listaLicenca.semLicenca`) }}
 </template>
@@ -52,7 +54,6 @@ import Properties from "../../../../properties";
 import { translate } from "../../../../utils/helpers/internationalization";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/geral";
 import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registrar/informacoes/informacoes";
-import moment from "moment";
 
 export default {
   name: "ListaLicencas",
@@ -121,7 +122,7 @@ export default {
         this.$router.push({ name: 'renovar', params: { protocolo: protocoloDesformatado }})
     },
     verificarRenovacao(lista) {
-        return lista.status.codigo === 'VENCIDO' || lista.podeRenovar;
+        return lista.status.codigo === 'VENCIDO' && lista.podeRenovar;
     },
     setDataVencimento(lista){
         if(lista.status.codigo !== 'AGUARDANDO_PAGAMENTO'){
@@ -133,6 +134,12 @@ export default {
         }else {
             return "-";
         }
+    },
+    verificaCondicoesParaBotaoDeAcoes(lista){
+        if(lista.status.codigo === 'VENCIDO'){
+            return lista.podeRenovar;
+        }
+        return (lista.status.codigo !== 'INVALIDADO' && lista.status.codigo !== 'RENOVADO')
     }
   }
 };

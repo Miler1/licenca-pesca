@@ -49,6 +49,7 @@ public class AcessoController {
 
 	@Autowired
 	private AcessoServiceFacade acessoServiceFacade;
+
 	private SolicitanteRopository solicitanteRopository;
 
 	@Autowired
