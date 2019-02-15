@@ -54,6 +54,7 @@ import Properties from "../../../../properties";
 import { translate } from "../../../../utils/helpers/internationalization";
 import { REGISTRAR_GERAL_MESSAGES_PREFIX } from "../../../../utils/messages/interface/registrar/geral";
 import { INFORMACOES_PREFIX } from "../../../../utils/messages/interface/registrar/informacoes/informacoes";
+import moment from "moment";
 
 export default {
   name: "ListaLicencas",

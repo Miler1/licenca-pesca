@@ -32,7 +32,7 @@
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ setDataVencimento() }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ setDataVencimento() | moment('DD/MM/YYYY') }}
 
             el-col(:span="7")
                 h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.situacao`) }}
@@ -72,6 +72,7 @@ import StatusCard from "../layouts/StatusCard";
 import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
 import { numero } from '../../utils/validations/pessoa/pessoa_validations';
 import { numericLiteral, nullLiteral, thisExpression } from 'babel-types';
+import moment from "moment";
 
 export default {
   name: "buscar",
