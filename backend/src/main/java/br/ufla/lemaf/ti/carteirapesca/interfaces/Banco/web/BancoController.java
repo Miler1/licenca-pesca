@@ -6,7 +6,16 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.BarcodeInter25;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfWriter;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -21,11 +30,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -111,6 +120,58 @@ public class BancoController {
 		Page<Remessa> remessas = remessaBuilder.listaRemessas(pageable);
 
 		return new ResponseEntity<>(remessas, HttpStatus.OK);
+
+	}
+
+	@CrossOrigin("*")
+	@GetMapping("/teste")
+	public ResponseEntity<InputStreamResource> teste() throws IOException, DocumentException {
+
+		Document document = new Document();
+
+		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("codebars_teste_123.pdf"));
+		document.open();
+		PdfContentByte cb = writer.getDirectContent();
+
+		document.add(new Paragraph("Barcode Interleaved 2 of 5 - Com START"));
+		BarcodeInter25 code25StartStop = new BarcodeInter25();
+		code25StartStop.setGenerateChecksum(false);
+		code25StartStop.setCode("83620000000-5 72950138000-4 26497378133-1 08070582559-6");
+		code25StartStop.setSize(9);
+		code25StartStop.setBarHeight(35);
+		code25StartStop.setBaseline(12);
+		code25StartStop.setTextAlignment(3);
+		code25StartStop.setStartStopText(true);
+		code25StartStop.setChecksumText(true);
+
+		BaseFont baseFontStartStop = BaseFont.createFont();
+		code25StartStop.setFont(baseFontStartStop);
+
+		java.awt.Image imagemAwt = code25StartStop.createAwtImage(Color.BLACK, Color.WHITE);
+
+		BufferedImage bimage = new BufferedImage(imagemAwt.getWidth(null), imagemAwt.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+		Graphics2D bGr = bimage.createGraphics();
+		bGr.drawImage(imagemAwt, 0, 0, null);
+		bGr.dispose();
+
+		File file  = new File("codigo_barras.png");
+		ImageIO.write(bimage, "png", file);
+
+		Image imageStartStop = code25StartStop.createImageWithBarcode(cb, Color.BLUE, Color.RED);
+
+
+		document.add(imageStartStop);
+
+		document.close();
+
+
+		var httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+
+		var isr = new InputStreamResource(new FileInputStream(file.getAbsoluteFile()));
+
+		return new ResponseEntity<>(null, httpHeaders, HttpStatus.OK);
 
 	}
 
