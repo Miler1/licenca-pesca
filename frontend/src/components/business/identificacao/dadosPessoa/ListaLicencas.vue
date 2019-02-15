@@ -11,8 +11,6 @@
                         | {{ $t(`${consultar_prefix}listaLicenca.modalidade.recreativa`) }}
                     span.item-content(v-if="lista.modalidade.id === 0")
                         | {{ $t(`${consultar_prefix}listaLicenca.modalidade.esportiva`) }}
-
-
                 .flex-item
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.cadastro`) }}
                     span.item-content {{formatData(lista.dataCriacao)}}
@@ -24,22 +22,24 @@
                     span.item-content {{setDataVencimento(lista)}}
 
                 .flex-item  
-                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.situacao.titulo`) }}
+                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.situacao.titulo`) }} {{lista.podeRenovar}}
                     span.item-content 
                         status-card(:situacao="lista.status.codigo") 
                 .flex-item
                     span.item-title-acoes {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                     span.item-content-acoes
-                        el-dropdown(trigger="click", v-if="lista.status.codigo !== 'INVALIDADO' && lista.status.codigo !== 'RENOVADO'")
+                        el-dropdown(trigger="click", v-if="verificaCondicoesParaBotaoDeAcoes(lista)")
                             span.el-dropdown-link.el-button.el-button--primary {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                                 i.el-icon-arrow-down.el-icon--right
                             el-dropdown-menu(slot="dropdown")
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarBoleto`) }}
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}                                
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarBoleto`) }}
+                                el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)" @click.native="renovar(lista)" ) {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
-                                el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
                         span(v-if="lista.status.codigo === 'INVALIDADO' || lista.status.codigo === 'RENOVADO'") -
+                        span(v-if="lista.status.codigo === 'VENCIDO' && !lista.podeRenovar") -
+
     .sem-licenca.withDivisor(v-if="!listaLicencas || listaLicencas.length <= 0")
         | {{ $t(`${consultar_prefix}listaLicenca.semLicenca`) }}
 </template>
@@ -120,7 +120,7 @@ export default {
         this.$router.push({ name: 'renovar', params: { protocolo: protocoloDesformatado }})
     },
     verificarRenovacao(lista) {
-        return lista.status.codigo === 'VENCIDO' || lista.podeRenovar;
+        return lista.status.codigo === 'VENCIDO' && lista.podeRenovar;
     },
     setDataVencimento(lista){
         if(lista.dataVencimento == null && lista.dataVencimentoProvisoria == null){
@@ -130,6 +130,12 @@ export default {
         }else {
             return lista.dataVencimento;
         }  
+    },
+    verificaCondicoesParaBotaoDeAcoes(lista){
+        if(lista.status.codigo === 'VENCIDO'){
+            return lista.podeRenovar;
+        }
+        return (lista.status.codigo !== 'INVALIDADO' && lista.status.codigo !== 'RENOVADO')
     }
   }
 };
