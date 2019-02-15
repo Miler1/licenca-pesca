@@ -8,13 +8,9 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.RegistroServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ListaLicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +50,6 @@ public class AcessoController {
 	@Autowired
 	private AcessoServiceFacade acessoServiceFacade;
 
-	private RegistroServiceFacade registroServiceFacade;
 	private SolicitanteRopository solicitanteRopository;
 
 	@Autowired

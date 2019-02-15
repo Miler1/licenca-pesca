@@ -22,7 +22,7 @@
                     span.item-content {{setDataVencimento(lista)}}
 
                 .flex-item  
-                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.situacao.titulo`) }} {{lista.podeRenovar}}
+                    span.item-title {{ $t(`${consultar_prefix}listaLicenca.situacao.titulo`) }}
                     span.item-content 
                         status-card(:situacao="lista.status.codigo") 
                 .flex-item
