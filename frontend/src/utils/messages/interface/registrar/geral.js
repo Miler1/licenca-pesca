@@ -36,16 +36,18 @@ const GERAL = {
       },
       situacao: {
         titulo: ["Situação", "Situation"],
-        aguardandoBoleto: ["Aguardando pagamento do boleto", "Waiting for payment of the bank slip"],
+        aguardandoBoleto: ["Aguardando pagamento", "Awaiting payment"],
         invalido: ["Inválido", "Invalid"],
         ativo: ["Ativo", "Active"],
+        ativoAguardandoPagamento: ["Ativo, aguardando pagamento", "Active, awaiting payment"],
         vencido: ["Vencido", "Expired"],
         renovado: ["Renovado", "Renewed"]
       },
       acoesOpcoes:{
-        gerarBoleto: ["Gerar boleto", "Generate bank slip"],
+        gerarDocumentoPagamento: ["Gerar documento de pagamento", "Generate payment document"],
         renovarLicenca: ["Renovar licença", "Renew license"],
-        baixarCarteira: ["Baixar Carteira de Pesca", "Download fishing license"]
+        baixarCarteira: ["Baixar Carteira de Pesca", "Download fishing license"],
+        baixarCarteiraProvisoria: ["Baixar Carteira de Pesca Provisória", "Download Provisional Fishing Portfolio"]
       }
     },
     confirm: {

@@ -75,6 +75,12 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	}
 
 	@Override
+	public void atualizarCondicaoLicencaProvisoria(){
+		licencaRepository.alterarAtivoAguardandoPagamento(new Date());
+		return ;
+	}
+
+	@Override
 	public ProtocoloDTO renovarLicenca(RegistroResource resource) {
 		val assembler = new ProtocoloDTOAssembler();
 
