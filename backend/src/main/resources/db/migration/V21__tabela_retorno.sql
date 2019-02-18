@@ -65,14 +65,14 @@ ALTER TABLE carteira_pesca.titulo ADD COLUMN valor_pago DOUBLE PRECISION;
 COMMENT ON COLUMN carteira_pesca.titulo.valor_pago IS 'Valor que foi pago pelo titulo título.';
 
 ALTER TABLE carteira_pesca.titulo ADD COLUMN id_remessa INTEGER;
-ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_r_titulo FOREIGN KEY (id_remessa)
+ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_remessa_titulo FOREIGN KEY (id_remessa)
   REFERENCES carteira_pesca.remessa (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 COMMENT ON COLUMN carteira_pesca.titulo.id_remessa IS 'Remessa gerada para o título.';
 
 ALTER TABLE carteira_pesca.titulo ADD COLUMN id_retorno INTEGER NULL;
-ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_r_titulo FOREIGN KEY (id_retorno)
+ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_retorno_titulo FOREIGN KEY (id_retorno)
   REFERENCES carteira_pesca.retorno (id) MATCH SIMPLE
   ON UPDATE RESTRICT ON DELETE RESTRICT;
 
