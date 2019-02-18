@@ -13,6 +13,6 @@ public interface TituloRepository extends JpaRepository<Titulo, Integer> {
 	@Query(value = "SELECT * FROM carteira_pesca.titulo WHERE id_remessa IS NULL", nativeQuery = true)
 	List<Titulo> buscaTitulosSemRemessaGerada();
 
-	Titulo findByNossoNumero(Integer nossoNumero);
+	Titulo findByNossoNumero(String nossoNumero);
 
 }

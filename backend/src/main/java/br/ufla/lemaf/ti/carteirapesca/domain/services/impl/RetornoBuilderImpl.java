@@ -11,6 +11,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.MotivoOcorrenciaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRetornoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.CabecalhoRetornoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TraillerRetornoDTO;
@@ -20,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -46,6 +48,9 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 
 	@Autowired
 	MotivoOcorrenciaRepository motivoOcorrenciaRepository;
+
+	@Autowired
+	TituloRetornoRepository tituloRetornoRepository;
 
 	@Override
 	public Retorno salvaArquivo(File arquivoRetorno) {
@@ -97,17 +102,18 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 
 		transacoes.forEach(t -> {
 
-			Titulo titulo = tituloRepository.findByNossoNumero(t.getNumeroDocumento());
+			Titulo titulo = tituloRepository.findByNossoNumero(t.getNumeroDocumento().toString());
 
 			if(titulo != null && t.getValorPago().compareTo(new BigDecimal(0)) == 1) {
 
 				titulo.setValorPago(t.getValorPago());
 				titulo.setDataPagamento(t.getDataCredito());
-				titulo = processaOcorrencia(titulo, retorno, t);
-
-				tituloRepository.save(titulo);
 
 			}
+
+			titulo = processaOcorrencia(titulo, retorno, t);
+
+			tituloRepository.save(titulo);
 
 		});
 
@@ -118,14 +124,25 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 		List<TituloRetorno> retornos = new ArrayList<>();
 
 		Integer codigoOcorrencia = Integer.valueOf(transacao.getIdentificacaoOcorrencia());
-		AtomicReference<MotivoOcorrencia> motivoOcorrencia = null;
+		AtomicReference<Integer> codigoMotivoOcorrencia = new AtomicReference<>();
 
 		Splitter.fixedLength(2)
 			.split(transacao.getMotivosRejeicao())
 			.forEach(codigo -> {
 
-				motivoOcorrencia.set(motivoOcorrenciaRepository.buscaPorOcorrenciaEMotivo(codigoOcorrencia, Integer.valueOf(codigo)));
-				retornos.add(new TituloRetorno(titulo, retorno, motivoOcorrencia.get()));
+				Integer codMotivoOcorrencia = Integer.valueOf(codigo);
+
+				if(codigoMotivoOcorrencia.get() == null || (codigoMotivoOcorrencia.get() > 0 &&  codMotivoOcorrencia != 0)) {
+
+					MotivoOcorrencia motivoOcorrencia = motivoOcorrenciaRepository.buscaPorOcorrenciaEMotivo(codigoOcorrencia, codMotivoOcorrencia);
+
+					TituloRetorno tituloRetorno = new TituloRetorno(titulo, retorno, motivoOcorrencia);
+
+					retornos.add(tituloRetorno);
+
+				}
+
+				codigoMotivoOcorrencia.set(Integer.valueOf(codigo));
 
 			});
 

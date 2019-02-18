@@ -16,20 +16,16 @@ public class MotivoOcorrencia implements Entity<MotivoOcorrencia, Integer> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne
-	@Column(name = "id_motivo")
+	@OneToOne
+	@JoinColumn(name = "id_motivo")
 	private Motivo motivo;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="id_ocorrencia")
 	private Ocorrencia ocorrencia;
 
-	@ManyToOne
-	@Column(name = "num_codigo_motivo")
-	private Integer numCodigoMotivo;
-
-	@Column(name = "fl_sucesso")
-	private Boolean sucesso;
+	@Column(name = "codigo_motivo")
+	private Integer codigoMotivo;
 
 	@Override
 	public boolean sameIdentityAs(MotivoOcorrencia other) {

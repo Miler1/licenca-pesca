@@ -13,7 +13,7 @@ public interface MotivoOcorrenciaRepository extends JpaRepository<MotivoOcorrenc
 		"  INNER JOIN carteira_pesca.ocorrencia o " +
 		"    ON mc.id_ocorrencia = o.id " +
 		"WHERE o.codigo = :codigoOcorrencia " +
-		"  AND mc.num_codigo_motivo = :codigoMotivo", nativeQuery = true)
+		"  AND mc.codigo_motivo = :codigoMotivo", nativeQuery = true)
 	MotivoOcorrencia buscaPorOcorrenciaEMotivo(Integer codigoOcorrencia, Integer codigoMotivo);
 
 }

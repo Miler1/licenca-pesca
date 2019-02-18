@@ -16,17 +16,19 @@ public class TituloRetorno implements Entity<Banco, Integer> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="id_titulo")
 	private Titulo titulo;
 
-	@ManyToMany
-	@Column(name = "id_retorno")
+	@OneToOne
+	@JoinColumn(name = "id_retorno")
 	private Retorno retorno;
 
-	@ManyToMany
-	@Column(name = "id_motivo_ocorrencia")
+	@OneToOne
+	@JoinColumn(name = "id_motivo_ocorrencia")
 	private MotivoOcorrencia motivoOcorrencia;
+
+	public TituloRetorno() {}
 
 	public TituloRetorno(Titulo titulo, Retorno retorno, MotivoOcorrencia motivoOcorrencia) {
 

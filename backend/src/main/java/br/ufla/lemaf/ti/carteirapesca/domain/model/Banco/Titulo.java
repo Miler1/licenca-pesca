@@ -81,8 +81,8 @@ public class Titulo implements Entity<Titulo, Integer> {
 	private List<Remessa> remessas;
 
 	@Setter
-	@JoinColumn(name = "id_titulo")
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "id_titulo", updatable = false)
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = TituloRetorno.class)
 	private List<TituloRetorno> retornos;
 
 	@Override

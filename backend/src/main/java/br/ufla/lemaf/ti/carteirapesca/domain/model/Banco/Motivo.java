@@ -19,6 +19,9 @@ public class Motivo implements Entity<Motivo, Integer> {
 	@Column(name = "descricao")
 	private String descricao;
 
+	@Column(name = "sucesso")
+	private String sucesso;
+
 	@Override
 	public boolean sameIdentityAs(Motivo other) {
 		return false;
