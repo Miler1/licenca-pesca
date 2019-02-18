@@ -1,0 +1,1 @@
+DROP TABLE carteira_pesca.remessa;

@@ -35,7 +35,7 @@ ALTER TABLE carteira_pesca.licenca ADD
       ON UPDATE NO ACTION ON DELETE NO ACTION;
       
 INSERT INTO carteira_pesca.status VALUES
-(0, 'Aguardando pagamento do boleto', 'AGUARDANDO_PAGAMENTO_BOLETO'),
+(0, 'Aguardando pagamento do boleto', 'AGUARDANDO_PAGAMENTO'),
 (1, 'Ativo', 'ATIVO'),
 (2, 'Invalidado', 'INVALIDADO'),
 (3, 'Vencido', 'VENCIDO'),

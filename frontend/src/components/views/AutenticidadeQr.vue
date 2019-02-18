@@ -32,12 +32,11 @@
 
             el-col(:span="10")
                 h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.validade`) }}
-                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ licencaPesca.licenca.dataVencimento | placeholder($t(`${autenticidadeQr_prefix}hifem`)) }}
+                h4.informacoes(:class="{'not-informed': exist(licencaPesca.licenca.dataVencimento)}") {{ setDataVencimento() | moment('DD/MM/YYYY') }}
 
-            el-col(:span="10")
+            el-col(:span="7")
                 h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.situacao`) }}
-                status-card(:situacao="licencaPesca.licenca.status")
-
+                status-card(:situacao="licencaPesca.licenca.status.codigo")
     card.dadosEndereco
         
         h3.title {{ $t(`${autenticidadeQr_prefix}titulo.enderecoPrincipal`) }}
@@ -73,6 +72,7 @@ import StatusCard from "../layouts/StatusCard";
 import { LicencaPesca, licencaPesca } from "../../model/LicencaPesca";
 import { numero } from '../../utils/validations/pessoa/pessoa_validations';
 import { numericLiteral, nullLiteral, thisExpression } from 'babel-types';
+import moment from "moment";
 
 export default {
   name: "buscar",
@@ -133,8 +133,16 @@ export default {
                     `${this.autenticidadeQr_prefix}titulo.modalidades.esportiva`
                 );
             }
+        },
+        setDataVencimento(){
+            if(this.licencaPesca.licenca.dataVencimento == null && this.licencaPesca.licenca.dataVencimentoProvisoria == null){
+                return "-";
+            } if(this.licencaPesca.licenca.dataVencimento == null && this.licencaPesca.licenca.dataVencimentoProvisoria != null){
+                return this.licencaPesca.licenca.dataVencimentoProvisoria;
+            }else {
+                return this.licencaPesca.licenca.dataVencimento;
+            }  
         }
-
      },
 
     created() {

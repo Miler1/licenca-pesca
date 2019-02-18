@@ -9,6 +9,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @javax.persistence.Entity
@@ -72,14 +74,16 @@ public class Titulo implements Entity<Titulo, Integer> {
 	private Arquivo arquivoBoleto;
 
 	@Setter
-	@ManyToOne
-	@JoinColumn(name = "id_remessa", referencedColumnName="id")
-	private Remessa remessa;
+	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinTable(name="titulo_remessa",
+		joinColumns = @JoinColumn(name = "id_titulo", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "id_remessa", referencedColumnName = "id"))
+	private List<Remessa> remessas;
 
 	@Setter
-	@ManyToOne
-	@JoinColumn(name = "id_retorno", referencedColumnName="id")
-	private Retorno retorno;
+	@JoinColumn(name = "id_titulo")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<TituloRetorno> retornos;
 
 	@Override
 	public boolean sameIdentityAs(Titulo other) {
@@ -120,6 +124,16 @@ public class Titulo implements Entity<Titulo, Integer> {
 
 	private void setLocalPagamento() {
 		this.localPagamento = "Pagável em qualquer banco até o vencimento.";
+	}
+
+	public void setRemessa(Remessa remessa) {
+
+		if(this.getRemessas() == null) {
+			this.setRemessas(new ArrayList<>());
+		}
+
+		this.remessas.add(remessa);
+
 	}
 
 }

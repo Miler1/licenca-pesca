@@ -32,7 +32,7 @@
 		#titulo-carteira{
 			width: 192px;
 			font-size: 11px;
-			top: 17.5px;
+			top: 10.5px;
 			left: 115px;
 			position: fixed;
 			text-align: center;
@@ -199,7 +199,7 @@
 </div>
 <div class="content">
 	<img id="brasao-ipaam" th:src="${baseUrl + '/images/brasao-ipaam.png'}" />
-	<h2 id="titulo-carteira">LICENÇA PARA PESCA AMADORA ESTADO DO AMAZONAS</h2>
+	<h2 id="titulo-carteira" th:text="${descricaoCarteiraDefinitivaEProvisoria}"></h2>
 	<img class="imagem-background" th:src="${baseUrl + '/images/carteira-pesca.png'}"/>
 
 
@@ -251,7 +251,6 @@
 	<div class="texto-rodape field-sexta-linha field-primeira-coluna">CARTEIRA DE PESCA</div>
 
 	<div class="texto-rodape field-sexta-linha field-segunda-coluna-rodape">CARTEIRA DE PESCA</div>
-
 	<!--Verso-->
 	<div class="verso">
 
@@ -297,8 +296,9 @@
 		</div>
 
 		<div class="aviso field-quinta-linha">
-			VÁLIDO EM TODO O ESTADO DO AMAZONAS, MEDIANTE APRESENTAÇÃO DE DOCUMENTO DE IDENTIDADE, RESPEITANDO AS REGRAS DE PESCA DO LOCAL
+			<div th:text="${mensagensDeAviso}" ></div>
 		</div>
+
 	</div>
 </div>
 

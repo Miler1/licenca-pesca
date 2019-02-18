@@ -104,16 +104,16 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 			protocolo = solicitante.adicionarLicenca(licenca, false);
 
-		}else if(solicitante.pussuiLicencaMesmaModalidade(modalidade)){
-
-			throw new SolicitanteException("solicitante.licenca.mesma.modalidade");
-
-		}else {
+		}else if(!solicitante.pussuiLicencaAtiva(modalidade)) {
 
 			throw new SolicitanteException("solicitante.licenca.ativa");
+
+		}else{
+
+			throw new SolicitanteException("solicitante.licenca.mesma.modalidade");
 		}
 
-			if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
+		if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
 
 			solicitante.setEnderecoEstrangeiro(resource.getPessoa().getEnderecoEstrangeiro());
 		} else {
@@ -128,25 +128,33 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	public Protocolo renovarLicenca(RegistroResource resource, String codigoProtocolo) {
 
 		var solicitante = getSolicitante(resource);
+		Modalidade modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
+
+		if (!solicitante.pussuiLicencaAtiva(modalidade)) {
+
+			String protocoloNovo = this.calcularNovoProtocolo(codigoProtocolo);
+
+			var licenca = criarLicenca(resource, protocoloNovo);
 
 
-		String protocoloNovo = this.calcularNovoProtocolo(codigoProtocolo);
+			Protocolo protocolo = solicitante.adicionarLicenca(licenca, true);
 
-		var licenca = criarLicenca(resource, protocoloNovo);
-
-
-		Protocolo protocolo = solicitante.adicionarLicenca(licenca, true);
-
-		for(Licenca licenca1: solicitante.getLicenca()){
-			String protocoloSemFormatacao = licenca1.getProtocolo().getCodigoFormatado().replace("-", "").replace("/", "");
-			if(protocoloSemFormatacao.equals(codigoProtocolo)){
-				licenca1.setStatus(statusRepository.findById(Status.StatusEnum.RENOVADO.id).get());
+			for(Licenca licenca1: solicitante.getLicenca()){
+				String protocoloSemFormatacao = licenca1.getProtocolo().getCodigoFormatado().replace("-", "").replace("/", "");
+				if(protocoloSemFormatacao.equals(codigoProtocolo)){
+					licenca1.setStatus(statusRepository.findById(Status.StatusEnum.RENOVADO.id).get());
+				}
 			}
+
+			solicitanteRopository.save(solicitante);
+
+			return protocolo;
+
+		} else {
+
+			throw new SolicitanteException("solicitante.licenca.ativa");
 		}
 
-		solicitanteRopository.save(solicitante);
-
-		return protocolo;
 	}
 
 
@@ -200,7 +208,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Titulo titulo = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
 
-		Status status = statusRepository.findById(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id).get();
+		Status status = statusRepository.findById(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id).get();
 
 		InformacaoComplementar informacaoComplementar = informacaoComplementarService.toInformacaoComplementar(resource.getInformacaoComplementar());
 

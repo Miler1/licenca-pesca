@@ -3,15 +3,19 @@ package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoArquivoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.MotivoOcorrencia;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.TituloRetorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.MotivoOcorrenciaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.CabecalhoRetornoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TraillerRetornoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TransacaoRetornoDTO;
+import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -38,6 +43,9 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 
 	@Autowired
 	TituloRepository tituloRepository;
+
+	@Autowired
+	MotivoOcorrenciaRepository motivoOcorrenciaRepository;
 
 	@Override
 	public Retorno salvaArquivo(File arquivoRetorno) {
@@ -61,9 +69,9 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 		CabecalhoRetornoDTO cabecalho = new CabecalhoRetornoDTO(linhasArquivoRetorno.get(0));
 		TraillerRetornoDTO trailler  = new TraillerRetornoDTO(linhasArquivoRetorno.get(linhasArquivoRetorno.size() - 1));
 
-		processaTitulos(linhasArquivoRetorno);
-
 		retorno.atualizaRetorno(cabecalho, trailler);
+		processaTitulos(linhasArquivoRetorno, retorno);
+
 		retornoRepository.save(retorno);
 
 	}
@@ -83,7 +91,7 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 
 	}
 
-	private void processaTitulos(List<String> linhasArquivoRetorno) {
+	private void processaTitulos(List<String> linhasArquivoRetorno, Retorno retorno) {
 
 		List<TransacaoRetornoDTO> transacoes = getTransacoes(linhasArquivoRetorno);
 
@@ -95,20 +103,35 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 
 				titulo.setValorPago(t.getValorPago());
 				titulo.setDataPagamento(t.getDataCredito());
+				titulo = processaOcorrencia(titulo, retorno, t);
 
 				tituloRepository.save(titulo);
 
 			}
 
-			processaOcorrencia(titulo, t);
-
 		});
 
 	}
 
-	private void processaOcorrencia(Titulo titulo, TransacaoRetornoDTO transacao) {
+	private Titulo processaOcorrencia(Titulo titulo,  Retorno retorno, TransacaoRetornoDTO transacao) {
 
+		List<TituloRetorno> retornos = new ArrayList<>();
 
+		Integer codigoOcorrencia = Integer.valueOf(transacao.getIdentificacaoOcorrencia());
+		AtomicReference<MotivoOcorrencia> motivoOcorrencia = null;
+
+		Splitter.fixedLength(2)
+			.split(transacao.getMotivosRejeicao())
+			.forEach(codigo -> {
+
+				motivoOcorrencia.set(motivoOcorrenciaRepository.buscaPorOcorrenciaEMotivo(codigoOcorrencia, Integer.valueOf(codigo)));
+				retornos.add(new TituloRetorno(titulo, retorno, motivoOcorrencia.get()));
+
+			});
+
+		titulo.setRetornos(retornos);
+
+		return titulo;
 
 	}
 

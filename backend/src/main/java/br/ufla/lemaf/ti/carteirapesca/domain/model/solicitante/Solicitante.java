@@ -8,7 +8,6 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.DateUtils;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -88,17 +87,9 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 		return this.licenca
 			.stream()
 			.anyMatch(licencaProcurada -> ((licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO.id)) ||
-				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id))
+				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id) ||
+				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id))
 				&& licencaProcurada.modalidade().getId().equals(modalidade.getId()));
-	}
-
-	public boolean pussuiLicencaMesmaModalidade(Modalidade modalidade) {
-		return this.licenca
-			.stream()
-			.anyMatch(licencaProcurada -> ((
-				licencaProcurada.getStatus().getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO_BOLETO.id)
-				&& licencaProcurada.modalidade().getId().equals(modalidade.getId()))));
-
 	}
 
 	/**
