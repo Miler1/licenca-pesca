@@ -1,0 +1,2 @@
+ALTER TABLE carteira_pesca.informacao_complementar ADD COLUMN id_faixa_etaria INTEGER NOT NULL;
+COMMENT ON COLUMN carteira_pesca.informacao_complementar.id_faixa_etaria IS 'Identificador único da entidade faixa_etaria que realizará o relacionamento entre faixa_etaria e informacao_complementar.';
