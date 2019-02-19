@@ -5,7 +5,6 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoBuilderImpl;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
@@ -16,7 +15,6 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -35,19 +33,12 @@ import javax.transaction.Transactional;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Controller
 @Transactional
 @RequestMapping("/banco")
 public class BancoController {
-
-	private static final DateTimeFormatter FORMATO_DATA_MES_ANO = DateTimeFormatter.ofPattern("MM-YYYY");
 
 	@Autowired
 	private RemessaBuilderImpl remessaBuilder;
@@ -92,21 +83,9 @@ public class BancoController {
 	}
 
 	@PostMapping("/upload-retorno")
-	public ResponseEntity<String> uploadArquivoRetorno(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+	public ResponseEntity<String> uploadArquivoRetorno(@RequestParam("file") MultipartFile multipartFile) throws Exception {
 
-		Path pathArquivoRetorno = Paths.get(Properties.pathArquivoRetorno() +
-			File.separator + LocalDate.now().format(FORMATO_DATA_MES_ANO) +
-			File.separator + multipartFile.getOriginalFilename());
-
-		File arquivoRetorno = pathArquivoRetorno.toFile();
-
-		if (!arquivoRetorno.exists()) {
-			Files.createDirectories(pathArquivoRetorno.getParent());
-		}
-
-		FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), arquivoRetorno);
-
-		Retorno retorno = retornoBuilder.salvaArquivo(arquivoRetorno);
+		Retorno retorno = retornoBuilder.salvaArquivo(multipartFile);
 
 		retornoBuilder.processarRetorno(retorno);
 
@@ -172,6 +151,17 @@ public class BancoController {
 		var isr = new InputStreamResource(new FileInputStream(file.getAbsoluteFile()));
 
 		return new ResponseEntity<>(null, httpHeaders, HttpStatus.OK);
+
+	}
+
+	private void gerarCodigoBarras() {
+
+		String idProduto;
+		String idSegmento;
+		String idValorReferencia;
+
+
+
 
 	}
 

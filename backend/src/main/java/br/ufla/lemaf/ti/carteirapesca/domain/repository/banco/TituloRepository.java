@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface TituloRepository extends JpaRepository<Titulo, Integer> {
 
-	@Query(value = "SELECT * FROM carteira_pesca.titulo WHERE id_remessa IS NULL", nativeQuery = true)
+	@Query(value = "SELECT * FROM carteira_pesca.titulo WHERE fl_gerar_remessa = TRUE", nativeQuery = true)
 	List<Titulo> buscaTitulosSemRemessaGerada();
 
 	Titulo findByNossoNumero(String nossoNumero);

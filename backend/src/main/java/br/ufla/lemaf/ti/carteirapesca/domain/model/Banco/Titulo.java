@@ -85,6 +85,10 @@ public class Titulo implements Entity<Titulo, Integer> {
 	@OneToMany(cascade = CascadeType.ALL, targetEntity = TituloRetorno.class)
 	private List<TituloRetorno> retornos;
 
+	@Setter
+	@Column(name = "fl_gerar_remessa", insertable = false)
+	private Boolean necessitaGerarRemessa;
+
 	@Override
 	public boolean sameIdentityAs(Titulo other) {
 		return false;

@@ -7,35 +7,42 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.MotivoOcorrencia;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.TituloRetorno;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoReposotory;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.MotivoOcorrenciaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRetornoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoBuilder;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.CabecalhoRetornoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TraillerRetornoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TransacaoRetornoDTO;
 import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class RetornoBuilderImpl implements RetornoBuilder {
+
+	private static final String EXTENSAO_ARQUIVO_RETORNO = ".RET";
 
 	@Autowired
 	TipoArquivoRepository tipoArquivoRepository;
@@ -50,14 +57,16 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 	MotivoOcorrenciaRepository motivoOcorrenciaRepository;
 
 	@Autowired
-	TituloRetornoRepository tituloRetornoRepository;
+	ArquivoReposotory arquivoReposotory;
 
 	@Override
-	public Retorno salvaArquivo(File arquivoRetorno) {
+	public Retorno salvaArquivo(MultipartFile multipartFile) throws Exception {
+
+		File arquivoRetorno = salvaArquivoDiretorio(multipartFile);
 
 		TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.RETORNO.getCodigo());
 
-		Arquivo arquivo = new Arquivo(arquivoRetorno.getPath(), arquivoRetorno.getName(), tipoArquivo);
+		Arquivo arquivo = new Arquivo(arquivoRetorno.getPath(), multipartFile.getOriginalFilename(), tipoArquivo);
 		Retorno retorno = new Retorno(arquivo);
 
 		return retornoRepository.save(retorno);
@@ -78,6 +87,42 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 		processaTitulos(linhasArquivoRetorno, retorno);
 
 		retornoRepository.save(retorno);
+
+	}
+
+	private File salvaArquivoDiretorio(MultipartFile multipartFile) throws Exception {
+
+		validaArquivo(multipartFile);
+
+		final DateTimeFormatter FORMATO_DATA_MES_ANO = DateTimeFormatter.ofPattern("MM-YYYY");
+
+		UUID nomeArquivo = UUID.randomUUID();
+
+		Path pathArquivoRetorno = Paths.get(Properties.pathArquivoRetorno() +
+			File.separator + LocalDate.now().format(FORMATO_DATA_MES_ANO) +
+			File.separator + nomeArquivo + EXTENSAO_ARQUIVO_RETORNO);
+
+		File arquivoRetorno = pathArquivoRetorno.toFile();
+
+		if (!arquivoRetorno.exists()) {
+			Files.createDirectories(pathArquivoRetorno.getParent());
+		}
+
+		FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), arquivoRetorno);
+
+		return arquivoRetorno;
+
+	}
+
+	private void validaArquivo(MultipartFile multipartFile) throws Exception {
+
+		if(!multipartFile.getOriginalFilename().endsWith(EXTENSAO_ARQUIVO_RETORNO)) {
+			throw new Exception("A extensão do arquivo informado deve ser " + EXTENSAO_ARQUIVO_RETORNO);
+		}
+
+		if(arquivoReposotory.findByNome(multipartFile.getOriginalFilename()) != null) {
+			throw new Exception("O arquivo retorno selecionado já foi processado");
+		}
 
 	}
 
@@ -126,7 +171,9 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 		Integer codigoOcorrencia = Integer.valueOf(transacao.getIdentificacaoOcorrencia());
 		AtomicReference<Integer> codigoMotivoOcorrencia = new AtomicReference<>();
 
-		Splitter.fixedLength(2)
+		final Integer N_POSICOES_REPRESENTAM_CODIGO = 2;
+
+		Splitter.fixedLength(N_POSICOES_REPRESENTAM_CODIGO)
 			.split(transacao.getMotivosRejeicao())
 			.forEach(codigo -> {
 
@@ -145,6 +192,12 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 				codigoMotivoOcorrencia.set(Integer.valueOf(codigo));
 
 			});
+
+		final Integer OCORRENCIA_ENTRADA_REJEITADA = 3;
+
+		if(codigoOcorrencia == OCORRENCIA_ENTRADA_REJEITADA) {
+			titulo.setNecessitaGerarRemessa(true);
+		}
 
 		titulo.setRetornos(retornos);
 
