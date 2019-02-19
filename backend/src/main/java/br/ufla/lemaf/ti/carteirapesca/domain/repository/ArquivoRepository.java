@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ArquivoReposotory extends JpaRepository<Arquivo, Integer> {
+public interface ArquivoRepository extends JpaRepository<Arquivo, Integer> {
 
 	Arquivo findByNome(String nomeArquivo);
 

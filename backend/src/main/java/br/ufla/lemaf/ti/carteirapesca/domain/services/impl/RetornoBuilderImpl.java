@@ -7,7 +7,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.MotivoOcorrencia;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.TituloRetorno;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoReposotory;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.MotivoOcorrenciaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
@@ -57,7 +57,7 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 	MotivoOcorrenciaRepository motivoOcorrenciaRepository;
 
 	@Autowired
-	ArquivoReposotory arquivoReposotory;
+	ArquivoRepository arquivoRepository;
 
 	@Override
 	public Retorno salvaArquivo(MultipartFile multipartFile) throws Exception {
@@ -120,8 +120,8 @@ public class RetornoBuilderImpl implements RetornoBuilder {
 			throw new Exception("A extensão do arquivo informado deve ser " + EXTENSAO_ARQUIVO_RETORNO);
 		}
 
-		if(arquivoReposotory.findByNome(multipartFile.getOriginalFilename()) != null) {
-			throw new Exception("O arquivo retorno selecionado já foi processado");
+		if(arquivoRepository.findByNome(multipartFile.getOriginalFilename()) != null) {
+			throw new Exception("O arquivo de retorno selecionado já foi processado");
 		}
 
 	}

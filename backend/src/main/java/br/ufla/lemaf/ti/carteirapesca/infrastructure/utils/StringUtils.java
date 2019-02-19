@@ -12,7 +12,7 @@ public class StringUtils {
 		return String.format("%1$" + tamanhoCampo + "s", valor);
 	}
 
-	public static String completaStringComEspaçosDireita(Integer tamanhoCampo, String valor) {
+	public static String completaStringComEspacosDireita(Integer tamanhoCampo, String valor) {
 
 		valor = removeCaracteresEspeciais(valor.toUpperCase());
 

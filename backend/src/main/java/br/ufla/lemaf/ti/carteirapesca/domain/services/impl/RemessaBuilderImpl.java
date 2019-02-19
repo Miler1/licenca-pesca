@@ -143,7 +143,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		Record header = flatFile.createRecord("Header");
 
 		header.setValue("CodigoDaEmpresa", StringUtils.completaStringComZerosEsquerda(20, beneficiario.getConvenio()));
-		header.setValue("NomeEmpresa", StringUtils.completaStringComEspaçosDireita(30, beneficiario.getSigla()));
+		header.setValue("NomeEmpresa", StringUtils.completaStringComEspacosDireita(30, beneficiario.getSigla()));
 		header.setValue("DataGravacaoArquivo", LocalDate.now().format(FORMATO_DATA_REMESSA));
 		header.setValue("EspacoBranco", StringUtils.completaStringComEspacosEsquerda(8, ""));
 		header.setValue("NumeroSequencialRemessa", remessa.getSequencia());
@@ -224,14 +224,14 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		//TODO verificar problema quando for pessoa estrangeira pois aceita apenas CPF ou CNPJ
 		PagadorTitulo pagador = titulo.getPagador();
 		transacao.setValue("NumeroInscricaoPagador", StringUtils.completaStringComZerosEsquerda(14, pagador.getCpfPassaporte()));
-		transacao.setValue("NomePagador", StringUtils.completaStringComEspaçosDireita(40, validaStringMaiorPermitidoCampo(40, pagador.getNome())));
-		transacao.setValue("EnderecoPagador", StringUtils.completaStringComEspaçosDireita(40, getEnderecoCompleto(40, pagador.getEndereco())));
+		transacao.setValue("NomePagador", StringUtils.completaStringComEspacosDireita(40, validaStringMaiorPermitidoCampo(40, pagador.getNome())));
+		transacao.setValue("EnderecoPagador", StringUtils.completaStringComEspacosDireita(40, getEnderecoCompleto(40, pagador.getEndereco())));
 		transacao.setValue("PrimeiraMensagem", StringUtils.completaStringComEspacosEsquerda(12, ""));
 
 		String cep = pagador.getEndereco().getCep();
 		transacao.setValue("CepPagador", cep.replaceAll("-", "").substring(0, 5));
 		transacao.setValue("SufixoCepPagador", cep.replaceAll("-", "").substring(5, 8));
-		transacao.setValue("SegundaMensagem", StringUtils.completaStringComEspaçosDireita(60, "PAGAVEL EM QUALQUER AGENCIA ATE O VENCIMENTO"));
+		transacao.setValue("SegundaMensagem", StringUtils.completaStringComEspacosDireita(60, "PAGAVEL EM QUALQUER AGENCIA ATE O VENCIMENTO"));
 		transacao.setValue("sequencia", index);
 
 		return transacao;

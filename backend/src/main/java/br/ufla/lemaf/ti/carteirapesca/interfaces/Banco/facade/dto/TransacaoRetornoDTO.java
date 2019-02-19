@@ -46,8 +46,6 @@ public class TransacaoRetornoDTO {
 	private String numeroProtocolo;
 	private String numeroSequecialRegistro;
 
-
-	//TODO mapear campos "Despesas de cobranca"
 	public TransacaoRetornoDTO(String transacao) {
 
 		this.identificacaoRegistro = Integer.valueOf(transacao.substring(0, 1));
