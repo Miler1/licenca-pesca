@@ -4,8 +4,6 @@ CREATE TABLE carteira_pesca.titulo_remessa (
   id_titulo  INTEGER NOT NULL,
   id_remessa INTEGER NOT NULL,
   CONSTRAINT pk_titulo_remessa PRIMARY KEY (id_titulo, id_remessa)
-) WITH (
-  OIDS=FALSE
 );
 
 GRANT SELECT, UPDATE, DELETE ON TABLE carteira_pesca.titulo_remessa to carteira_pesca;
