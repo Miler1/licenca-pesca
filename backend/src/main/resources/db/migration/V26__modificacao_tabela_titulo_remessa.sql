@@ -3,7 +3,11 @@ DROP TABLE carteira_pesca.titulo_remessa;
 CREATE TABLE carteira_pesca.titulo_remessa (
   id_titulo  INTEGER NOT NULL,
   id_remessa INTEGER NOT NULL,
-  CONSTRAINT pk_titulo_remessa PRIMARY KEY (id_titulo, id_remessa)
+  CONSTRAINT pk_titulo_remessa PRIMARY KEY (id_titulo, id_remessa),
+  CONSTRAINT fk_trem_titulo
+    FOREIGN KEY (id_titulo) REFERENCES carteira_pesca.titulo (id),
+  CONSTRAINT fk_trem_remessa
+    FOREIGN KEY (id_remessa) REFERENCES carteira_pesca.remessa (id)
 );
 
 GRANT SELECT, UPDATE, DELETE ON TABLE carteira_pesca.titulo_remessa to carteira_pesca;

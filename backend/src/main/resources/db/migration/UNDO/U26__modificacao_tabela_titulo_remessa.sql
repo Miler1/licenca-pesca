@@ -1,3 +1,5 @@
+drop table carteira_pesca.titulo_remessa;
+
 create table carteira_pesca.titulo_remessa
 (
   id         serial not null,
@@ -21,14 +23,14 @@ comment on column carteira_pesca.titulo_remessa.id_remessa is 'Referência para 
 
 ALTER TABLE carteira_pesca.titulo ADD COLUMN id_remessa INTEGER;
 ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_remessa_titulo FOREIGN KEY (id_remessa)
-  REFERENCES carteira_pesca.remessa (id) MATCH SIMPLE
-  ON UPDATE RESTRICT ON DELETE RESTRICT;
+  REFERENCES carteira_pesca.remessa (id);
 
 COMMENT ON COLUMN carteira_pesca.titulo.id_remessa IS 'Remessa gerada para o título.';
 
 ALTER TABLE carteira_pesca.titulo ADD COLUMN id_retorno INTEGER NULL;
 ALTER TABLE carteira_pesca.titulo ADD CONSTRAINT fk_retorno_titulo FOREIGN KEY (id_retorno)
-  REFERENCES carteira_pesca.retorno (id) MATCH SIMPLE
-  ON UPDATE RESTRICT ON DELETE RESTRICT;
+  REFERENCES carteira_pesca.retorno (id);
 
 COMMENT ON COLUMN carteira_pesca.titulo.id_retorno IS 'Retorno que o titulo foi processado.';
+
+ALTER TABLE carteira_pesca.titulo DROP COLUMN fl_gerar_remessa;
