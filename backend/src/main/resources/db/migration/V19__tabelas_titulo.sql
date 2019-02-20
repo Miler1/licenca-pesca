@@ -78,6 +78,7 @@ GRANT ALL ON TABLE carteira_pesca.beneficiario_titulo TO postgres;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE carteira_pesca.beneficiario_titulo TO carteira_pesca;
 
 COMMENT ON TABLE carteira_pesca.beneficiario_titulo IS 'Entidade responsável por armazenar os dados do beneficiario do título.';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id IS 'Identificador único da entidade.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.nome IS 'Nome do beneficiário.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.sigla IS 'sigla do nome beneficiário.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.cpf_cnpj IS 'CPF/CNPJ do beneficário (sem mascara).';
@@ -89,7 +90,6 @@ COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.agencia IS 'Número agencia
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.digito_agencia IS 'Digíto número agência.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.convenio IS 'Número do convênio.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.carteira IS 'Número da carteira.';
-
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.fl_ativo IS 'Indica se a conta do beneficiário está ativa.';
 
 CREATE TABLE carteira_pesca.especie_documento
