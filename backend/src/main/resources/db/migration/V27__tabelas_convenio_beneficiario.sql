@@ -93,5 +93,7 @@ ALTER TABLE carteira_pesca.beneficiario_titulo DROP COLUMN id_endereco;
 ALTER TABLE carteira_pesca.beneficiario_titulo ADD COLUMN id_beneficiario INTEGER NULL;
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_beneficiario IS 'Identificador único da entidade beneficiario que faz o relacionamento entre beneficiario e beneficiario_titulo.';
 
+UPDATE carteira_pesca.beneficiario_titulo SET id_beneficiario = (SELECT b.id FROM carteira_pesca.beneficiario b, carteira_pesca.beneficiario_titulo bt WHERE b.id = bt.id);
+
 ALTER TABLE carteira_pesca.beneficiario_titulo ADD CONSTRAINT fk_bt_beneficiario FOREIGN KEY (id_beneficiario) 
   REFERENCES carteira_pesca.endereco (id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT;
