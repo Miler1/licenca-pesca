@@ -68,8 +68,8 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 	@Override
 	public Titulo gerarBoleto(final Protocolo protocolo,
-	                          final Modalidade modalidade,
-	                          final Pessoa pessoa) {
+							  final Modalidade modalidade,
+							  final Pessoa pessoa) {
 
 		try {
 

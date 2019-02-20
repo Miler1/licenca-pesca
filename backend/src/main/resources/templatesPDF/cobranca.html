@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+	<style>
+
+		body{
+			margin-top: 12.5mm;
+			margin-left: 12.5mm;
+			margin-bottom: 0;
+			position: absolute;
+		}
+
+		.content{
+			height: 242mm;
+			width: 180mm;
+			padding: 2.5mm;
+		}
+		#brasao-ipaam{
+			height: 12.5mm;
+		}
+		#ipaam{
+			height: 12.5mm;
+			padding-left: 5mm;
+			border-left: 1px solid #999;
+		}
+		.logo-informacoes-ipaam{
+			height: 20mm;
+			width: 100%;
+			border: 1px solid black;
+			margin-bottom: 5mm;
+		}
+		.dados-pagamento{
+			border: 1px solid black;
+			font-size: 13px;
+			padding: 2mm;
+			margin-bottom: 5mm;
+		}
+		.dados-pessoais{
+			margin-bottom: 5mm;
+			width: 100%;
+			border: 1px solid black;
+			font-size: 13px;
+		}
+		.separator{
+			border-top: 1px dashed black;
+			margin-bottom: 20px;
+		}
+		.dados-carteira{
+			margin-bottom: 5mm;
+			width: 100%;
+			border: 1px solid black;
+			font-size: 13px;
+		}
+		.informacoes{
+			margin-bottom: 5mm;
+			font-size: 13px;
+			width: calc(100% - 2mm);
+			border: 1px solid black;
+			padding-left: 2mm;
+			padding-top: 2mm;
+			padding-bottom: 2mm;
+		}
+		.informacoes > div{
+			margin-bottom: 2mm;
+		}
+		.codigo-barras{
+			height: 20mm;
+			width: 70%;
+			border: 1px solid black;
+		}
+		.images-logo{
+			margin-top: 4mm;
+			margin-left: 4mm;
+		}
+		.titulo{
+			text-align:right;
+			margin-top: -15mm;
+			margin-right: 4mm;
+			font-size: 11px;
+		}
+		.bold{
+			font-weight: bold;
+			font-size: 12px;
+			letter-spacing: 0.2mm;
+		}
+		.w40{
+			width: 40%;
+		}
+		.w19{
+			width: 19%;
+		}
+		.w100{
+			width: 100%;
+		}
+		.w33{
+			width: 33%;
+		}
+		.w31{
+			width: 31%;
+		}
+		.w60{
+			width: 60%;
+		}
+		.autenticacao-mecanica{
+			padding: 5px;
+			border: 1px solid black;
+			border-radius: 5px;
+			width: 37.5%;
+			height: 25mm;
+			position: absolute;
+			margin-top: 12mm;
+			right:2mm;
+		}
+		.dados-pagamento-ul{
+			width: 100%;
+			margin-top: 3mm;
+		}
+		.nome-dados-pessoais{
+			width: 50%;
+			padding-left: 2mm;
+		}
+		.municipio{
+			width: 23%;
+		}
+		.cep{
+			width: 23%;
+		}
+		.pl2mm{
+			padding-left: 2mm;
+		}
+		#codigo-de-barras{
+			height: 10mm;
+		}
+		.h20mm{
+			height: 20mm;
+		}
+		ul{
+			padding-left: 0mm;
+			/*display: inline-block;*/
+		}
+		li{
+			display: inline-block;
+			list-style: none;
+		}
+		@page {
+			margin: 0;
+		}
+		.autenticacao-mecanica-label{
+			font-size: 13px;
+		}
+
+		@media print
+		{
+			body{
+				font-family: 'Roboto';
+			}
+			#footer {
+			}
+
+		}
+	</style>
+</head>
+<body>
+<div class="content">
+	<div class="logo-informacoes-ipaam">
+		<div class="images-logo">
+
+			<img id="brasao-ipaam" th:src="${baseUrl + '/images/logo-Governo-2018.png'}" />
+
+			<img id="ipaam" th:src="${baseUrl + '/images/IPAAM.png'}" />
+		</div>
+		<div class="titulo">
+
+			<div>Instituto de Proteção Ambiental do Amazonas</div>
+			<div>CNPJ: 04.624.888/0001-94</div>
+			<div>Av Mário Ypiranga Nº 3280, Parque Dez de Novembro</div>
+			<div>69050-030 - Manaus - AM</div>
+		</div>
+	</div>
+
+	<span>Dados do pagamento</span>
+	<div class="dados-pagamento">
+		<ul class="w100">
+			<li class="w40">Pagável apenas através do banco Bradesco</li>
+			<li class="w19">
+				<div class="bold">Emissão:</div>
+				<div>10/02/2019</div>
+			</li>
+			<li class="w19">
+				<div class="bold">Vencimento:</div>
+				<div>31/12/2019</div>
+			</li>
+			<li class="w19">
+				<div class="bold">Valor:</div>
+				<div>R$ 57,21</div>
+			</li>
+		</ul>
+	</div>
+
+	<span>Dados pessoais</span>
+	<div class="dados-pessoais">
+		<div>
+
+			<ul class="dados-pagamento-ul">
+				<li class="nome-dados-pessoais">
+					<div class="bold">Nome:</div>
+					<div>Jari Celulose</div>
+				</li>
+				<li class="cpf-passaporte">
+					<div class="bold">CPF/Passaporte:</div>
+					<div>230.467.182-92</div>
+				</li>
+			</ul>
+		</div>
+		<div>
+
+			<ul class="dados-pagamento-ul">
+				<li class="nome-dados-pessoais">
+					<div class="bold">Endereço:</div>
+					<div>Rua Maracanã, n° 98 - Bairro: Maracanã</div>
+				</li>
+				<li class="municipio">
+					<div class="bold">Município/UF:</div>
+					<div>Oriximiná/PA</div>
+				</li>
+				<li class="cep">
+					<div class="bold">CEP:</div>
+					<div>68.035-170</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	Dados da Carteira de Pesca
+	<div class="dados-carteira">
+		<div>
+			<ul class="w100">
+				<li class="w33 pl2mm">
+					<div class="bold">Número:</div>
+					<div>LPE-0017/19</div>
+				</li>
+				<li class="w33">
+					<div class="bold">Modalidade:</div>
+					<div>Esportiva</div>
+				</li>
+				<li class="w31">
+					<div class="bold">Limite de captura:</div>
+					<div>0(zero)</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<span>Informações</span>
+	<div class="informacoes">
+		<div>
+			Você poderá obter sua Licença de Pesca provisória no momento do cadastro. Quando solicitada, a Licença de Pesca precisa estar acompanhada do comprovante de pagamento deste documento.
+		</div>
+		<div>
+			Em até 3 dias utéis após o pagamento deste documento, o sistema de emissão de Carteira de Pesca irá disponibilizar a Licença definitiva, a qual não necessita do comprovante de pagamento.
+		</div>
+		<div>
+			Para acompanhar o status da sua Carteira de Pesca, acessa: www.sistemas.ipaam.am.gov.br/carteira-pesca
+		</div>
+	</div>
+	<div class="separator"></div>
+	Dados do pagamento
+	<div class="dados-pagamento">
+		<div>
+
+			<ul class="dados-pagamento-ul">
+				<li class="nome-dados-pessoais">
+					<div class="bold">Nome:</div>
+					<div>Jari Celulose</div>
+				</li>
+				<li class="cpf-passaporte">
+					<div class="bold">CPF/Passaporte:</div>
+					<div>230.467.182-92</div>
+				</li>
+			</ul>
+		</div>
+		<div>
+
+			<ul class="dados-pagamento-ul">
+				<li class="nome-dados-pessoais">
+					<div class="bold">Emissão:</div>
+					<div>10/02/2019</div>
+				</li>
+				<li class="municipio">
+					<div class="bold">Vencimento:</div>
+					<div>31/12/2019</div>
+				</li>
+				<li class="cep">
+					<div class="bold">Valor:</div>
+					<div>R$ 57,21</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<ul class="w100">
+
+		<li class="w60">
+			<img id="codigo-de-barras" th:src="${baseUrl + '/images/codigo-de-barras.png'}" />
+			<div style="font-size: 13px;">
+				83620000000-5 72950138000-4 26497378133-1 08070582559-6
+			</div>
+		</li>
+		<li class="autenticacao-mecanica"><div class="autenticacao-mecanica-label">Autenticação mecânica</div></li>
+	</ul>
+</div>
+
+</body>
+</html>
