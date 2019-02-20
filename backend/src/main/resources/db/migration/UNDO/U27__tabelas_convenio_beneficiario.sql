@@ -12,16 +12,20 @@ COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.cpf_cnpj IS 'CPF/CNPJ do be
 ALTER TABLE carteira_pesca.beneficiario_titulo ADD COLUMN id_endereco INTEGER NULL;
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_endereco IS 'Identifica a qual o endereço do beneficiário.';
 
-UPDATE carteira_pesca.beneficiario_titulo SET bt.nome =  bt.sigla, bt.cpf_cnpj, bt.id_endereco = (SELECT b.nome, b.sigla, b.cpf_cnpj, b.id_endereco FROM carteira_pesca.beneficiario b, carteira_pesca.beneficiario_titulo bt WHERE b.id = bt.id);
-
-INSERT INTO carteira_pesca.beneficiario_titulo (nome, sigla, cpf_cnpj, id_endereco) (SELECT nome, sigla, cpf_cnpj, id_endereco FROM carteira_pesca.beneficiario b AND b.id = id);
-
-DELETE FROM carteira_pesca.tipo_segmento;
-
-DELETE FROM carteira_pesca.tipo_valor_efetivo;
-
-DROP TABLE carteira_pesca.carteira_pesca.convenio;
+UPDATE carteira_pesca.beneficiario_titulo SET nome = (SELECT b.nome FROM carteira_pesca.beneficiario b, carteira_pesca.beneficiario_titulo bt WHERE bt.id_beneficiario = b.id);
+UPDATE carteira_pesca.beneficiario_titulo SET sigla = (SELECT b.sigla FROM carteira_pesca.beneficiario b, carteira_pesca.beneficiario_titulo bt WHERE bt.id_beneficiario = b.id);
+UPDATE carteira_pesca.beneficiario_titulo SET cpf_cnpj = (SELECT b.cpf_cnpj FROM carteira_pesca.beneficiario b, carteira_pesca.beneficiario_titulo bt WHERE bt.id_beneficiario = b.id);
+UPDATE carteira_pesca.beneficiario_titulo SET id_endereco = (SELECT b.id_endereco FROM carteira_pesca.beneficiario b, carteira_pesca.beneficiario_titulo bt WHERE bt.id_beneficiario = b.id);
+ALTER TABLE carteira_pesca.beneficiario_titulo ALTER COLUMN nome SET NOT NULL;
+ALTER TABLE carteira_pesca.beneficiario_titulo ALTER COLUMN sigla SET NOT NULL;
+ALTER TABLE carteira_pesca.beneficiario_titulo ALTER COLUMN cpf_cnpj SET NOT NULL;
+ALTER TABLE carteira_pesca.beneficiario_titulo ALTER COLUMN id_endereco SET NOT NULL;
 
 ALTER TABLE carteira_pesca.beneficiario_titulo DROP COLUMN id_beneficiario;
+ALTER TABLE carteira_pesca.convenio DROP COLUMN id_beneficiario;
 
+DELETE FROM carteira_pesca.tipo_valor_efetivo;
+DELETE FROM carteira_pesca.tipo_segmento;
+
+DROP TABLE carteira_pesca.convenio;
 DROP TABLE carteira_pesca.beneficiario;
