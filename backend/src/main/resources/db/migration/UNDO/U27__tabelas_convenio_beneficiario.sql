@@ -1,15 +1,5 @@
 ALTER TABLE carteira_pesca.pagador RENAME TO pagador_titulo;
 
-DELETE FROM carteira_pesca.tipo_segmento;
-
-DELETE FROM carteira_pesca.tipo_valor_efetivo;
-
-DROP TABLE carteira_pesca.carteira_pesca.convenio;
-
-ALTER TABLE carteira_pesca.beneficiario_titulo DROP COLUMN id_beneficiario;
-
-DROP TABLE carteira_pesca.beneficiario;
-
 ALTER TABLE carteira_pesca.beneficiario_titulo ADD COLUMN nome CHARACTER VARYING(200) NULL;
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.nome IS 'Nome do beneficiário.';
 
@@ -21,3 +11,15 @@ COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.cpf_cnpj IS 'CPF/CNPJ do be
 
 ALTER TABLE carteira_pesca.beneficiario_titulo ADD COLUMN id_endereco INTEGER NULL;
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_endereco IS 'Identifica a qual o endereço do beneficiário.';
+
+INSERT INTO carteira_pesca.beneficiario_titulo (nome, sigla, cpf_cnpj, id_endereco) SELECT nome, sigla, cpf_cnpj, id_endereco FROM carteira_pesca.beneficiario b WHERE b.id = id ;
+
+DELETE FROM carteira_pesca.tipo_segmento;
+
+DELETE FROM carteira_pesca.tipo_valor_efetivo;
+
+DROP TABLE carteira_pesca.carteira_pesca.convenio;
+
+ALTER TABLE carteira_pesca.beneficiario_titulo DROP COLUMN id_beneficiario;
+
+DROP TABLE carteira_pesca.beneficiario;
