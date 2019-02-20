@@ -1,8 +1,10 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO } from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS} from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA } from "../mutations.type";
+import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA, SET_LISTA_TODAS_LICENCAS, SET_LISTA_REMESSAS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import Vue from "vue";
+import RegistroService from "../../services/RegistroService";
+import ConsultaService from "../../services/ConsultaService";
 
 const INITIAL_STATE = {
   solicitante: Solicitante,
@@ -65,7 +67,11 @@ export const getters = {
    */
   showStepsController: state => state.showStepsController,
 
-  listaLicencas: state => state.listaLicencas
+  listaLicencas: state => state.listaLicencas,
+
+  listaTodasLicencas: state => state.listaTodasLicencas,
+
+  listaRemessas: state => state.listaRemessas
 };
 
 /**
@@ -95,6 +101,17 @@ export const actions = {
       });
   },
 
+  [GERAR_REMESSAS]: () => {
+    RegistroService.geraRemessa();
+  },
+
+  [LISTAR_REMESSAS]:  ({commit}) => {
+    ConsultaService.buscarRemessas();
+    // .then(({ data }) => {
+    //   commit(SET_LISTA_REMESSAS, data.listaRemessas);
+    // })
+  },
+
   [BUSCAR_LICENCAS]: ({ commit }, acessoResource) => {
     AcessoService.buscarLicencas(acessoResource)
       .then(({ data }) => {
@@ -114,7 +131,7 @@ export const actions = {
         }
       });
   },
-
+  
   [BUSCA_DADOS_VALIDACAO]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
       .then(({ data }) => {
@@ -196,6 +213,10 @@ export const mutations = {
 
   [SET_LISTA_LICENCAS]: (state, listaLicencas) => {
     Vue.set(state, 'listaLicencas', [...listaLicencas]);
+  },
+
+  [SET_LISTA_REMESSAS]: (state, listaRemessas) => {
+    Vue.set(state, 'listaRemessas', [...listaRemessas]);
   },
   /**
    * Verifica se será necessário cadastrar o usuário.

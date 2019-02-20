@@ -3,6 +3,7 @@ import { handleMessage } from "../../utils";
 
 export const REGISTRAR_GERAL_MESSAGES_PREFIX = "interface.registrar.geral.";
 export const CONSULTAR_GERAL_MESSAGES_PREFIX = "interface.registrar.consultar.";
+export const ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX = "interface.registrar.remessa.";
 
 const GERAL = {
   geral: {
@@ -92,6 +93,22 @@ const GERAL = {
     titulo: ["Buscar Licença de Pesca Amadora (Esportiva ou Recreativa)", "Search Amadora Fishing License (Sportive or Recreational)"],
     botoes: {
       cadastrar: ["Cadastrar licença", "Register license"]
+    }
+  },
+  remessa: {
+    tituloRetorno: ["Arquivos de retorno", "Return files"],
+    tituloRemessa: ["Arquivos de remessa", "Shipping files"],
+    nomeArquivoRemessa: ["Nome do arquivo", "File name"],
+    listagemRemessa: ["Listagem dos arquivos de remessa", "Listing of shipping files"],
+    dataArquivoRemessa: ["Data de criação", "Creation date"],
+    semRemessa: ["Sem remessas registradas", ""],
+    acao: ["Ação", "Action"],
+    botaoAcao: ["Download arquivo", "Download file"],
+    uploadArquivo: ["Arraste e solte o(s) arquivo(s) nesta área ou clique no botão acima", "Drag and drop the file (s) to this area or click the button above"],
+    gerarRemssa: ["Gerar remessa", "Generate Shipping"],
+    licenca: {
+      tituloLicenca: ["Licenças", "License"],
+      listagemLicenca: ["Listagem das licenças", "List of licenses"]
     }
   }
 };

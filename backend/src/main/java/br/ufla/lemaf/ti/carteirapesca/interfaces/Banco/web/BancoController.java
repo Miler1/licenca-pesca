@@ -93,6 +93,7 @@ public class BancoController {
 
 	}
 
+	@CrossOrigin("*")
 	@GetMapping("/lista-remessa")
 	public ResponseEntity<Page<Remessa>> listaRemessasPaginado(@PageableDefault(size = 10, page = 0) Pageable pageable) {
 

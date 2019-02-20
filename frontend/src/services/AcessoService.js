@@ -19,7 +19,7 @@ const AcessoService = {
   },
 
   buscarDados: acessoResource => {
-    return ApiService.post(`${Properties.BASE_URL}/api/buscarDados`, acessoResource, false);
+    return ApiService.postWithBlock(`${Properties.BASE_URL}/api/buscarDados`, acessoResource, false);
   },
 
   /**

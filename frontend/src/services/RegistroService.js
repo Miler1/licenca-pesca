@@ -14,6 +14,10 @@ const RegistroService = {
     return ApiService.postWithBlock(`${Properties.BASE_URL}/api/registrar`, registroResource);
   },
   
+  geraRemessa: () => {
+    return ApiService.getWithBlock(`${Properties.BASE_URL}/api/gera-remessa`);
+  },
+
   renovar: registroResource => {
     return ApiService.postWithBlock(`${Properties.BASE_URL}/api/renovar`, registroResource);
   }

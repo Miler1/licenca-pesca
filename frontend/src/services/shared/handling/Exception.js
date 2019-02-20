@@ -21,6 +21,8 @@ export function Exception(options = null) {
   const MENSAGEM_PADRAO =
     "Erro não identificado. Contate o administrador do sistema.";
   const TITULO_PADRAO = "Erro do sistema";
+  
+  const MENSAGEM_FALHA_CONEXAO = "Não foi possível conectar-se ao servidor. Por favor, verifique sua conexão com a internet e tente novamente."
 
   /*
   * Caso exista no argumento de opções

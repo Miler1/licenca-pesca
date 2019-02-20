@@ -101,6 +101,21 @@ const ApiService = {
     });
   },
 
+    /**
+   * Aciona o HTTP request GET para download
+   *
+   * @param resource
+   * @param slug
+   * @return {Promise<*>}
+   */
+  async download (resource, slug = '') {
+    try {
+      return await Vue.axios.get(`${resource}/${slug}`, { responseType: 'blob' })
+    } catch (error) {
+      return Promise.reject(new HttpException(error))
+    }
+  },
+
   /**
    * Aciona o HTTP request UPDATE.
    *

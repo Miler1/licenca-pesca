@@ -15,6 +15,7 @@ import main.java.br.ufla.lemaf.beans.PessoaFiltroResult;
 import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import main.java.br.ufla.lemaf.beans.pessoa.Usuario;
 import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
 
 import java.io.IOException;
@@ -245,6 +246,10 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 			throw new BaseException("entradaUnica.servicoIndisponivel");
 		}
 
+	}
+
+	public Usuario getUsuarioPelaSessao(String sessionKey) {
+		return this.searchBySessionKey(sessionKey);
 	}
 
 }

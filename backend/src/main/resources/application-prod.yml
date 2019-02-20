@@ -44,6 +44,9 @@ spring:
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 
   security:
+    fakeAuthentication: false
+    successRedirectUrl: /
+
     entradaUnica:
       client-id: 7212ad07d6da519b0d95fd94d2e2b62a2443f1aae07b95a8aa3b1b5b3a84bc5dc981305a2a905474f2eaa5e7c6b84a924f08b28476ffddaba8db4eefccebdbe3
       client-secret: 0a940507425458e7714c3c7c6abbaf1b149ddcd1245f6620de0e658b40183beb3d10316e8bb5e9c383ec299fa95e2cbf3ef62d7d192a4bdcd34e1ceb2cda2bf3
