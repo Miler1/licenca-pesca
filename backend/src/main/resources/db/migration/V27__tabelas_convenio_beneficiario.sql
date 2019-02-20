@@ -1,4 +1,5 @@
 ALTER TABLE carteira_pesca.pagador_titulo RENAME TO pagador;
+ALTER TABLE carteira_pesca.beneficiario_titulo RENAME CONSTRAINT pk_beneficiario TO pk_beneficiario_titulo;
 
 INSERT INTO carteira_pesca.tipo_segmento (id, codigo, descricao) VALUES
 (1, 1, 'Prefeituras'),
@@ -24,6 +25,7 @@ CREATE TABLE carteira_pesca.carteira_pesca.convenio (
   valor DOUBLE PRECISION NOT NULL, 
   data_emissao DATE NOT NULL, 
   data_vencimento DATE NOT NULL,
+  codigo_barra CHARACTER VARYING(75) NOT NULL,
   nosso_numero INTEGER NOT NULL,
   CONSTRAINT pk_convenio PRIMARY KEY (id),
   CONSTRAINT fk_c_tipo_segmento FOREIGN KEY (id_tipo_segmento)
@@ -52,8 +54,8 @@ COMMENT ON COLUMN carteira_pesca.convenio.id_pagador IS 'Identificador único da
 COMMENT ON COLUMN carteira_pesca.convenio.valor IS 'Valor do convẽnio.';
 COMMENT ON COLUMN carteira_pesca.convenio.data_emissao IS 'Data de emissão da nota.';
 COMMENT ON COLUMN carteira_pesca.convenio.data_vencimento IS 'Data de vencimento da nota.';
+COMMENT ON COLUMN carteira_pesca.convenio.codigo_barra IS 'Código de barra do boleto.';
 COMMENT ON COLUMN carteira_pesca.convenio.nosso_numero IS 'Número de controle interno.';
-
 
 CREATE TABLE carteira_pesca.beneficiario (
   id SERIAL NOT NULL, 
@@ -80,6 +82,8 @@ COMMENT ON COLUMN carteira_pesca.beneficiario.nome IS 'Nome do beneficiário.';
 COMMENT ON COLUMN carteira_pesca.beneficiario.sigla IS 'Sigla do nome beneficiário.';
 COMMENT ON COLUMN carteira_pesca.beneficiario.cpf_cnpj IS 'CPF/CNPJ do beneficiário (sem máscara).';
 COMMENT ON COLUMN carteira_pesca.beneficiario.id_endereco IS 'Identificador único da entidade endereço que faz o relacionamento entre endereço e beneficiario.';
+
+INSERT INTO carteira_pesca.beneficiario (nome, sigla, cpf_cnpj, id_endereco) SELECT nome, sigla, cpf_cnpj, id_endereco FROM carteira_pesca.beneficiario_titulo;
 
 ALTER TABLE carteira_pesca.beneficiario_titulo DROP COLUMN nome;
 ALTER TABLE carteira_pesca.beneficiario_titulo DROP COLUMN sigla;
