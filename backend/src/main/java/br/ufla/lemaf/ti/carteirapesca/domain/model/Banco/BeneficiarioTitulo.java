@@ -16,22 +16,13 @@ public class BeneficiarioTitulo implements Entity<BeneficiarioTitulo, Integer> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "nome")
-	private String nome;
-
-	@Column(name = "sigla")
-	private String sigla;
-
-	@Column(name = "cpf_cnpj")
-	private String cpfCnpj;
-
 	@ManyToOne
 	@JoinColumn(name = "id_banco", referencedColumnName="id")
 	private Banco banco;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_endereco", referencedColumnName="id")
-	private Endereco endereco;
+	@ManyToOne
+	@JoinColumn(name = "id_beneficiario", referencedColumnName="id")
+	private Beneficiario beneficiario;
 
 	@Column(name = "codigo_beneficiario")
 	private String codigoBeneficiario;
@@ -39,6 +30,7 @@ public class BeneficiarioTitulo implements Entity<BeneficiarioTitulo, Integer> {
 	@Column(name = "digito_codigo_beneficiario")
 	private String digitoCodigoBeneficiario;
 
+	@Column(name = "agencia")
 	private String agencia;
 
 	@Column(name = "digito_agencia")
@@ -50,8 +42,10 @@ public class BeneficiarioTitulo implements Entity<BeneficiarioTitulo, Integer> {
 	@Column(name = "digito_conta_corrente")
 	private String digitoContaCorrente;
 
+	@Column(name = "convenio")
 	private String convenio;
 
+	@Column(name = "carteira")
 	private String carteira;
 
 	@Column(name = "fl_ativo")

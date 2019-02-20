@@ -12,10 +12,10 @@ INSERT INTO carteira_pesca.tipo_segmento (id, codigo, descricao) VALUES
 (8, 9, 'Uso exclusivo do banco');
 
 INSERT INTO carteira_pesca.tipo_valor_efetivo (id, codigo, descricao) VALUES
-(1, 6, 'Valor a ser cobrado efetivamente em reais'),
-(2, 7, 'Quantidade de moeda'),
-(3, 8, 'Valor a ser cobrado efetivamente em reais'),
-(4, 9, 'Quantidade de moeda');
+(1, 6, 'Valor a ser cobrado efetivamente em reais calculado pelo módulo 10'),
+(2, 7, 'Quantidade de moeda calculado pelo módulo 10'),
+(3, 8, 'Valor a ser cobrado efetivamente em reais calculado pelo módulo 11'),
+(4, 9, 'Quantidade de moeda calculado pelo módulo 11');
 
 CREATE TABLE carteira_pesca.beneficiario (
   id SERIAL NOT NULL, 

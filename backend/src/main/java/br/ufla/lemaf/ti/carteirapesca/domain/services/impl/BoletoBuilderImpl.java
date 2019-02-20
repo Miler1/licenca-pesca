@@ -219,7 +219,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 		BeneficiarioTitulo beneficiarioTitulo = titulo.getBeneficiario();
 
 		Beneficiario beneficiario = Beneficiario.novoBeneficiario()
-			.comNomeBeneficiario(beneficiarioTitulo.getNome())
+			.comNomeBeneficiario(beneficiarioTitulo.getBeneficiario().getNome())
 			.comAgencia(beneficiarioTitulo.getAgencia())
 			.comDigitoAgencia(beneficiarioTitulo.getDigitoAgencia())
 			.comNumeroConvenio(beneficiarioTitulo.getConvenio())
@@ -227,9 +227,8 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			.comCodigoBeneficiario(beneficiarioTitulo.getCodigoBeneficiario())
 			.comDigitoCodigoBeneficiario(beneficiarioTitulo.getDigitoCodigoBeneficiario())
 			.comNossoNumero(titulo.getNossoNumero())
-			.comDocumento(new CNPJFormatter().format(beneficiarioTitulo.getCpfCnpj()))
-//			.comDigitoNossoNumero(titulo.getDigitoNossoNumero())
-			.comEndereco(montarEndereco(beneficiarioTitulo.getEndereco()));
+			.comDocumento(new CNPJFormatter().format(beneficiarioTitulo.getBeneficiario().getCpfCnpj()))
+			.comEndereco(montarEndereco(beneficiarioTitulo.getBeneficiario().getEndereco()));
 
 		return beneficiario;
 

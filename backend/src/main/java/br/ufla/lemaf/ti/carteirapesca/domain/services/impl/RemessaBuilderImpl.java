@@ -143,7 +143,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		Record header = flatFile.createRecord("Header");
 
 		header.setValue("CodigoDaEmpresa", StringUtils.completaStringComZerosEsquerda(20, beneficiario.getConvenio()));
-		header.setValue("NomeEmpresa", StringUtils.completaStringComEspacosDireita(30, beneficiario.getSigla()));
+		header.setValue("NomeEmpresa", StringUtils.completaStringComEspacosDireita(30, beneficiario.getBeneficiario().getSigla()));
 		header.setValue("DataGravacaoArquivo", LocalDate.now().format(FORMATO_DATA_REMESSA));
 		header.setValue("EspacoBranco", StringUtils.completaStringComEspacosEsquerda(8, ""));
 		header.setValue("NumeroSequencialRemessa", remessa.getSequencia());
