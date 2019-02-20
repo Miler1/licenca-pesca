@@ -81,7 +81,7 @@ COMMENT ON TABLE carteira_pesca.beneficiario_titulo IS 'Entidade responsável po
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id IS 'Identificador único da entidade.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.nome IS 'Nome do beneficiário.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.sigla IS 'sigla do nome beneficiário.';
-COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.cpf_cnpj IS 'CPF/CNPJ do beneficário (sem mascara).';
+COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.cpf_cnpj IS 'CPF/CNPJ do beneficiário (sem mascara).';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_banco IS 'Identifica a qual banco está vinculado a conta.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_endereco IS 'Identifica a qual o endereço do beneficiário.';
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.codigo_beneficiario IS 'Código do beneficiário.';
