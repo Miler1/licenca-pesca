@@ -111,9 +111,7 @@ public class ConsultaController {
 
 		var licenca = facade.consultar(protocolo);
 
-
 		carteiraDTO.setLicenca(licenca);
-
 
 		var  cpf = "";
 		var passaporte = "";

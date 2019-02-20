@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -28,8 +27,9 @@ public class Remessa implements Entity<Remessa, Integer> {
 	@Column(name = "numero_sequencial")
 	private Integer sequencia;
 
+	@Getter
 	@Column(name = "sequencia_nome_arquivo")
-	private String sequencialNomeArquivo;
+	private Integer sequencialNomeArquivo;
 
 	@Column(name = "dt_cadastro", insertable = false, updatable = false)
 	private Date dataCadastro;
@@ -38,7 +38,12 @@ public class Remessa implements Entity<Remessa, Integer> {
 
 	public Remessa(Integer sequencia) {
 		this.sequencia = sequencia;
-		this.sequencialNomeArquivo = String.format("%02d", sequencia);
+		this.sequencialNomeArquivo = sequencia;
+	}
+
+	public Remessa(Integer sequencia, Integer sequenciaNomeArquivo) {
+		this.sequencia = sequencia;
+		this.sequencialNomeArquivo = sequenciaNomeArquivo;
 	}
 
 	@Override

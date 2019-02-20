@@ -71,6 +71,7 @@ spring:
     base-path: arquivos/carteira/
     path-arquivo-boleto: arquivos/boleto/
     path-arquivo-remessa: arquivos/remessa/
+    path-arquivo-retorno: arquivos/retorno/
 
 
   arquivos:

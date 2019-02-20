@@ -10,3 +10,4 @@ public interface BeneficiarioRepository extends JpaRepository<BeneficiarioTitulo
 	BeneficiarioTitulo findByBancoCodigo(String codigo);
 
 }
+

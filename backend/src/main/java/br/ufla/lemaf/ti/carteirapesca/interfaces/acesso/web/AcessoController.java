@@ -1,9 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web;
 
-import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.SolicitanteRopository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CarteiraUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Gerador;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
@@ -16,17 +12,15 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,17 +43,6 @@ public class AcessoController {
 
 	@Autowired
 	private AcessoServiceFacade acessoServiceFacade;
-
-	private SolicitanteRopository solicitanteRopository;
-
-	@Autowired
-	private TituloRepository tituloRepository;
-
-	@Autowired
-	private RemessaBuilderImpl remessaBuilder;
-
-	@Autowired
-	private AcessoApplication acessoApplication;
 
 	/**
 	 * Controller para o acesso público. Recebe como parâmetro
@@ -184,22 +167,6 @@ public class AcessoController {
 
 		maes[posicao++] = CarteiraUtils.capitalize(pessoa.getNomeMae());
 		listasVerificacao.put("maes", maes);
-
-	}
-
-
-	@CrossOrigin("*")
-	@GetMapping("/remessa")
-	public ResponseEntity<InputStreamResource> geraRemessa() throws IOException {
-
-		String pathArquivoRemessa = remessaBuilder.geraRemessa();
-
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.TEXT_PLAIN);
-
-		InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(pathArquivoRemessa)));
-
-		return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 
 	}
 

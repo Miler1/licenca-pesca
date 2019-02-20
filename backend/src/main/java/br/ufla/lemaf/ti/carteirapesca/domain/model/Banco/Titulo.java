@@ -9,6 +9,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @javax.persistence.Entity
@@ -58,16 +60,34 @@ public class Titulo implements Entity<Titulo, Integer> {
 	@Column(name = "nosso_numero")
 	private String nossoNumero;
 
-	@Column(name = "dt_geracao_remessa")
-	private LocalDate dataGeracaoRemessa;
-
+	@Setter
 	@Column(name = "dt_pagamento")
 	private LocalDate dataPagamento;
+
+	@Setter
+	@Column(name = "valor_pago")
+	private BigDecimal valorPago;
 
 	@Setter
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_arquivo", referencedColumnName="id")
 	private Arquivo arquivoBoleto;
+
+	@Setter
+	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinTable(name="titulo_remessa",
+		joinColumns = @JoinColumn(name = "id_titulo", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "id_remessa", referencedColumnName = "id"))
+	private List<Remessa> remessas;
+
+	@Setter
+	@JoinColumn(name = "id_titulo", updatable = false)
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = TituloRetorno.class)
+	private List<TituloRetorno> retornos;
+
+	@Setter
+	@Column(name = "fl_gerar_remessa", insertable = false)
+	private Boolean necessitaGerarRemessa;
 
 	@Override
 	public boolean sameIdentityAs(Titulo other) {
@@ -110,8 +130,14 @@ public class Titulo implements Entity<Titulo, Integer> {
 		this.localPagamento = "Pagável em qualquer banco até o vencimento.";
 	}
 
-	public void setDataGeracaoRemessa() {
-		this.dataGeracaoRemessa = LocalDate.now();
+	public void setRemessa(Remessa remessa) {
+
+		if(this.getRemessas() == null) {
+			this.setRemessas(new ArrayList<>());
+		}
+
+		this.remessas.add(remessa);
+
 	}
 
 }

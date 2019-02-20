@@ -78,6 +78,10 @@ public final class Properties {
 		return environment.getProperty("spring.carteira-pesca.path-arquivo-remessa");
 	}
 
+	public static String pathArquivoRetorno() {
+		return environment.getProperty("spring.carteira-pesca.path-arquivo-retorno");
+	}
+
 	/**
 	 * @return O caminho da do boleto da licença de pesca
 	 */
