@@ -32,7 +32,7 @@ public class Convenio implements Entity<Convenio, Integer> {
 
 	@ManyToOne
 	@JoinColumn(name = "id_beneficiario", referencedColumnName="id")
-	private BeneficiarioTitulo beneficiario;
+	private Beneficiario beneficiario;
 
 	@Column(name = "valor")
 	private BigDecimal valor;

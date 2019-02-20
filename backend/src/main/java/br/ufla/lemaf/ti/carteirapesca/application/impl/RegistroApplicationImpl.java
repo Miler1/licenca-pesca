@@ -9,7 +9,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.*;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.TituloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
@@ -57,7 +57,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 	private ProtocoloBuilder protocoloBuilder;
 	private CarteiraBuilder carteiraBuilder;
-	private BoletoBuilder boletoBuilder;
+	private TituloBuilder tituloBuilder;
 	private LicencaRepository licencaRepository;
 	private  InformacaoComplementarService informacaoComplementarService;
 
@@ -68,19 +68,19 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 *
 	 * @param protocoloBuilder O Builder de protocolo
 	 * @param carteiraBuilder O Builder do arquivo da carteira de pesca
-	 * @param boletoBuilder O Builder do boleto
+	 * @param tituloBuilder O Builder do boleto
 	 * @param solicitanteRopository O repositório do solicitante
 	 */
 	@Autowired
 	public RegistroApplicationImpl(final ProtocoloBuilder protocoloBuilder,
 								   final CarteiraBuilder carteiraBuilder,
-								   final BoletoBuilder boletoBuilder,
+								   final TituloBuilder tituloBuilder,
 								   final SolicitanteRopository solicitanteRopository,
 								   final LicencaRepository licencaRepository,
 								   final InformacaoComplementarService informacaoComplementarService) {
 		this.protocoloBuilder = protocoloBuilder;
 		this.carteiraBuilder = carteiraBuilder;
-		this.boletoBuilder = boletoBuilder;
+		this.tituloBuilder = tituloBuilder;
 		this.solicitanteRopository = solicitanteRopository;
 		this.licencaRepository = licencaRepository;
 		this.informacaoComplementarService = informacaoComplementarService;
@@ -206,7 +206,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		var pessoa = buscarDadosSolicitante(getSolicitante(resource));
 
-		Titulo titulo = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
+		Titulo titulo = tituloBuilder.gerarDocumentoPagamento(protocolo, modalidade, pessoa);
 
 		Status status = statusRepository.findById(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id).get();
 
@@ -312,7 +312,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Pessoa pessoa = buscarDadosSolicitante(licenca.solicitante());
 
-		Titulo titulo = boletoBuilder.gerarBoleto(licenca.getProtocolo(), licenca.modalidade(), pessoa);
+		Titulo titulo = tituloBuilder.gerarDocumentoPagamento(licenca.getProtocolo(), licenca.modalidade(), pessoa);
 
 		licenca.setDataVencimentoBoleto();
 		licenca.setTitulo(titulo);

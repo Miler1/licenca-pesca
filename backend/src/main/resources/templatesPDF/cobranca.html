@@ -173,10 +173,10 @@
 		</div>
 		<div class="titulo">
 
-			<div>Instituto de Proteção Ambiental do Amazonas</div>
-			<div>CNPJ: 04.624.888/0001-94</div>
-			<div>Av Mário Ypiranga Nº 3280, Parque Dez de Novembro</div>
-			<div>69050-030 - Manaus - AM</div>
+			<div th:text="${nomeBeneficiario}"></div>
+			<div th:text="${cnpjBeneficario}"></div>
+			<div th:text="${enderecoBeneficiario}"></div>
+			<div th:text="${cepBeneficiario} - ${municipioBeneficiario} - ${ufBeneficiario}"></div>
 		</div>
 	</div>
 
@@ -186,15 +186,15 @@
 			<li class="w40">Pagável apenas através do banco Bradesco</li>
 			<li class="w19">
 				<div class="bold">Emissão:</div>
-				<div>10/02/2019</div>
+				<div th:text="${dataEmissao}"></div>
 			</li>
 			<li class="w19">
 				<div class="bold">Vencimento:</div>
-				<div>31/12/2019</div>
+				<div th:text="${dataVencimento}"></div>
 			</li>
 			<li class="w19">
 				<div class="bold">Valor:</div>
-				<div>R$ 57,21</div>
+				<div th:text="${valor}"></div>
 			</li>
 		</ul>
 	</div>
@@ -206,11 +206,11 @@
 			<ul class="dados-pagamento-ul">
 				<li class="nome-dados-pessoais">
 					<div class="bold">Nome:</div>
-					<div>Jari Celulose</div>
+					<div th:text="${nomePagador}"></div>
 				</li>
 				<li class="cpf-passaporte">
 					<div class="bold">CPF/Passaporte:</div>
-					<div>230.467.182-92</div>
+					<div th:text="${cpfPassaportePagador}"></div>
 				</li>
 			</ul>
 		</div>
@@ -219,15 +219,15 @@
 			<ul class="dados-pagamento-ul">
 				<li class="nome-dados-pessoais">
 					<div class="bold">Endereço:</div>
-					<div>Rua Maracanã, n° 98 - Bairro: Maracanã</div>
+					<div th:text="${enderecoPagador}"></div>
 				</li>
 				<li class="municipio">
 					<div class="bold">Município/UF:</div>
-					<div>Oriximiná/PA</div>
+					<div th:text="${municipioPagador}/${ufPagador}"></div>
 				</li>
 				<li class="cep">
 					<div class="bold">CEP:</div>
-					<div>68.035-170</div>
+					<div th:text="${cepPagador}"></div>
 				</li>
 			</ul>
 		</div>
@@ -238,15 +238,15 @@
 			<ul class="w100">
 				<li class="w33 pl2mm">
 					<div class="bold">Número:</div>
-					<div>LPE-0017/19</div>
+					<div th:text="${codigoLicenca}"></div>
 				</li>
 				<li class="w33">
 					<div class="bold">Modalidade:</div>
-					<div>Esportiva</div>
+					<div th:text="${modalidaLicenca}"></div>
 				</li>
 				<li class="w31">
 					<div class="bold">Limite de captura:</div>
-					<div>0(zero)</div>
+					<div th:text="${limiteCapturaLicenca}"></div>
 				</li>
 			</ul>
 		</div>
@@ -272,11 +272,11 @@
 			<ul class="dados-pagamento-ul">
 				<li class="nome-dados-pessoais">
 					<div class="bold">Nome:</div>
-					<div>Jari Celulose</div>
+					<div th:text="${nomePagador}"></div>
 				</li>
 				<li class="cpf-passaporte">
 					<div class="bold">CPF/Passaporte:</div>
-					<div>230.467.182-92</div>
+					<div th:text="${cpfPassaportePagador}"></div>
 				</li>
 			</ul>
 		</div>
@@ -285,15 +285,15 @@
 			<ul class="dados-pagamento-ul">
 				<li class="nome-dados-pessoais">
 					<div class="bold">Emissão:</div>
-					<div>10/02/2019</div>
+					<div th:text="${dataEmissao}"></div>
 				</li>
 				<li class="municipio">
 					<div class="bold">Vencimento:</div>
-					<div>31/12/2019</div>
+					<div th:text="${dataVencimento}"></div>
 				</li>
 				<li class="cep">
 					<div class="bold">Valor:</div>
-					<div>R$ 57,21</div>
+					<div th:text="${valor}"></div>
 				</li>
 			</ul>
 		</div>
@@ -301,10 +301,8 @@
 	<ul class="w100">
 
 		<li class="w60">
-			<img id="codigo-de-barras" th:src="${baseUrl + '/images/codigo-de-barras.png'}" />
-			<div style="font-size: 13px;">
-				83620000000-5 72950138000-4 26497378133-1 08070582559-6
-			</div>
+			<img id="codigo-de-barras" th:src="${pathImagemCodigoBarras}" />
+			<div style="font-size: 13px;" th:text="${linhaDigitavel}"></div>
 		</li>
 		<li class="autenticacao-mecanica"><div class="autenticacao-mecanica-label">Autenticação mecânica</div></li>
 	</ul>

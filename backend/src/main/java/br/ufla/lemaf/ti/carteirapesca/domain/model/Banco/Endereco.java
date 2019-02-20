@@ -67,4 +67,13 @@ public class Endereco implements Entity<Endereco, Integer> {
 
 	}
 
+	public String getDescricaoEndereco() {
+
+		return this.getLogradouro() +
+			(this.getNumero() == null ? "" : " Nº " + this.getNumero()) +
+			(this.getComplemento() == null ? "" : ", " + this.getComplemento());
+
+	}
+
+
 }

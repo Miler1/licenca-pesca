@@ -33,6 +33,10 @@ import java.util.List;
 @Service
 public class RemessaBuilderImpl implements RemessaBuilder {
 
+	private static final String PATH_TEMPLATE_REMESSA = "templates/banco/remessa/bradesco_remessa_cnab400.txg.xml";
+	private static final DateTimeFormatter FORMATO_DATA_REMESSA = DateTimeFormatter.ofPattern("ddMMYY");
+	private static final DateTimeFormatter FORMATO_DATA_NOME_ARQUIVO_REMESSA = DateTimeFormatter.ofPattern("ddMM");
+
 	@Autowired
 	RemessaRepository remessaRepository;
 
@@ -41,10 +45,6 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 	@Autowired
 	TituloRepository tituloRepository;
-
-	private static final String PATH_TEMPLATE_REMESSA = "templates/banco/remessa/bradesco_remessa_cnab400.txg.xml";
-	private static final DateTimeFormatter FORMATO_DATA_REMESSA = DateTimeFormatter.ofPattern("ddMMYY");
-	private static final DateTimeFormatter FORMATO_DATA_NOME_ARQUIVO_REMESSA = DateTimeFormatter.ofPattern("ddMM");
 
 	@Override
 	public Remessa geraRemessa() throws IOException {

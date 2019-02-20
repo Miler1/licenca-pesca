@@ -106,49 +106,49 @@ public class BancoController {
 	@GetMapping("/teste")
 	public ResponseEntity<InputStreamResource> teste() throws IOException, DocumentException {
 
-		Document document = new Document();
-
-		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("codebars_teste_123.pdf"));
-		document.open();
-		PdfContentByte cb = writer.getDirectContent();
-
-		document.add(new Paragraph("Barcode Interleaved 2 of 5 - Com START"));
-		BarcodeInter25 code25StartStop = new BarcodeInter25();
-		code25StartStop.setGenerateChecksum(false);
-		code25StartStop.setCode("83620000000-5 72950138000-4 26497378133-1 08070582559-6");
-		code25StartStop.setSize(9);
-		code25StartStop.setBarHeight(35);
-		code25StartStop.setBaseline(12);
-		code25StartStop.setTextAlignment(3);
-		code25StartStop.setStartStopText(true);
-		code25StartStop.setChecksumText(true);
-
-		BaseFont baseFontStartStop = BaseFont.createFont();
-		code25StartStop.setFont(baseFontStartStop);
-
-		java.awt.Image imagemAwt = code25StartStop.createAwtImage(Color.BLACK, Color.WHITE);
-
-		BufferedImage bimage = new BufferedImage(imagemAwt.getWidth(null), imagemAwt.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-		Graphics2D bGr = bimage.createGraphics();
-		bGr.drawImage(imagemAwt, 0, 0, null);
-		bGr.dispose();
-
-		File file  = new File("codigo_barras.png");
-		ImageIO.write(bimage, "png", file);
-
-		Image imageStartStop = code25StartStop.createImageWithBarcode(cb, Color.BLUE, Color.RED);
-
-
-		document.add(imageStartStop);
-
-		document.close();
+//		Document document = new Document();
+//
+//		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("codebars_teste_123.pdf"));
+//		document.open();
+//		PdfContentByte cb = writer.getDirectContent();
+//
+//		document.add(new Paragraph("Barcode Interleaved 2 of 5 - Com START"));
+//		BarcodeInter25 code25StartStop = new BarcodeInter25();
+//		code25StartStop.setGenerateChecksum(false);
+//		code25StartStop.setCode("83620000000-5 72950138000-4 26497378133-1 08070582559-6");
+//		code25StartStop.setSize(9);
+//		code25StartStop.setBarHeight(35);
+//		code25StartStop.setBaseline(12);
+//		code25StartStop.setTextAlignment(3);
+//		code25StartStop.setStartStopText(true);
+//		code25StartStop.setChecksumText(true);
+//
+//		BaseFont baseFontStartStop = BaseFont.createFont();
+//		code25StartStop.setFont(baseFontStartStop);
+//
+//		java.awt.Image imagemAwt = code25StartStop.createAwtImage(Color.BLACK, Color.WHITE);
+//
+//		BufferedImage bimage = new BufferedImage(imagemAwt.getWidth(null), imagemAwt.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+//
+//		Graphics2D bGr = bimage.createGraphics();
+//		bGr.drawImage(imagemAwt, 0, 0, null);
+//		bGr.dispose();
+//
+//		File file  = new File("codigo_barras.png");
+//		ImageIO.write(bimage, "png", file);
+//
+//		Image imageStartStop = code25StartStop.createImageWithBarcode(cb, Color.BLUE, Color.RED);
+//
+//
+//		document.add(imageStartStop);
+//
+//		document.close();
 
 
 		var httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_PDF);
 
-		var isr = new InputStreamResource(new FileInputStream(file.getAbsoluteFile()));
+//		var isr = new InputStreamResource(new FileInputStream(file.getAbsoluteFile()));
 
 		return new ResponseEntity<>(null, httpHeaders, HttpStatus.OK);
 

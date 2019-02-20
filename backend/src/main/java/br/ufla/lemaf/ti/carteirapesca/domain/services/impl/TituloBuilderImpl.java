@@ -19,7 +19,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioReposi
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.EspecieDocumentoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.PagadorTituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.TituloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
@@ -49,7 +49,7 @@ import java.nio.file.Paths;
  */
 @Slf4j
 @Service
-public class BoletoBuilderImpl implements BoletoBuilder {
+public class TituloBuilderImpl implements TituloBuilder {
 
 	@Autowired
 	private BeneficiarioRepository beneficiarioRepository;
@@ -67,7 +67,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 	private TipoArquivoRepository tipoArquivoRepository;
 
 	@Override
-	public Titulo gerarBoleto(final Protocolo protocolo,
+	public Titulo gerarDocumentoPagamento(final Protocolo protocolo,
 							  final Modalidade modalidade,
 							  final Pessoa pessoa) {
 
@@ -145,6 +145,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 		PagadorTitulo pagadorTitulo = pagadorTituloRepository.findByCpfPassaporte(cpfPassaporte);
 
 		if(pagadorTitulo == null) {
+
 			pagadorTitulo = new PagadorTitulo(pessoa.nome, cpfPassaporte);
 
 			main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco = endereco(pessoa);
@@ -246,16 +247,13 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 	private br.com.caelum.stella.boleto.Endereco montarEndereco(Endereco endereco) {
 
-		String descricaoEndereco = endereco.getLogradouro() +
-			(endereco.getNumero() == null ? "" : " Nº " + endereco.getNumero()) +
-			(endereco.getComplemento() == null ? "" : ", " + endereco.getComplemento());
-
 		return br.com.caelum.stella.boleto.Endereco.novoEndereco()
-			.comLogradouro(descricaoEndereco)
+			.comLogradouro(endereco.getDescricaoEndereco())
 			.comBairro(endereco.getBairro())
 			.comCep(endereco.getCep())
 			.comCidade(endereco.getMunicipio())
 			.comUf(endereco.getEstado());
 
 	}
+
 }
