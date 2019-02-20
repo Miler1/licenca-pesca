@@ -12,7 +12,9 @@ COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.cpf_cnpj IS 'CPF/CNPJ do be
 ALTER TABLE carteira_pesca.beneficiario_titulo ADD COLUMN id_endereco INTEGER NULL;
 COMMENT ON COLUMN carteira_pesca.beneficiario_titulo.id_endereco IS 'Identifica a qual o endereço do beneficiário.';
 
-INSERT INTO carteira_pesca.beneficiario_titulo (nome, sigla, cpf_cnpj, id_endereco) SELECT nome, sigla, cpf_cnpj, id_endereco FROM carteira_pesca.beneficiario b WHERE b.id = id ;
+UPDATE carteira_pesca.beneficiario_titulo SET bt.nome =  bt.sigla, bt.cpf_cnpj, bt.id_endereco = (SELECT b.nome, b.sigla, b.cpf_cnpj, b.id_endereco FROM carteira_pesca.beneficiario b, carteira_pesca.beneficiario_titulo bt WHERE b.id = bt.id);
+
+INSERT INTO carteira_pesca.beneficiario_titulo (nome, sigla, cpf_cnpj, id_endereco) (SELECT nome, sigla, cpf_cnpj, id_endereco FROM carteira_pesca.beneficiario b AND b.id = id);
 
 DELETE FROM carteira_pesca.tipo_segmento;
 
