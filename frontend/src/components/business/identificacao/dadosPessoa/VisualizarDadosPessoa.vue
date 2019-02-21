@@ -180,7 +180,7 @@
             .align
               h4.label {{ $t(`${visualizar_prefix}label.pais`) }}
               h4(v-if="pessoa.enderecoEstrangeiro.pais.nome" :class="{'not-informed': exist(pessoa.enderecoEstrangeiro.pais.nome)}") {{ pessoa.enderecoEstrangeiro.pais.nome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
-              h4(v-else :class="{'not-informed': exist(pessoa.enderecoEstrangeiro.paisNome)}") {{ pessoa.enderecoEstrangeiro.municipioNome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
+              h4(v-else :class="{'not-informed': exist(pessoa.enderecoEstrangeiro.paisNome)}") {{ pessoa.enderecoEstrangeiro.paisNome | placeholder($t(`${visualizar_prefix}naoInformado`)) }}
 
 </template>
 
