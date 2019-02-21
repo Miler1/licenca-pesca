@@ -15,7 +15,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioTituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.EspecieDocumentoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.PagadorTituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
@@ -52,7 +52,7 @@ import java.nio.file.Paths;
 public class TituloBuilderImpl implements TituloBuilder {
 
 	@Autowired
-	private BeneficiarioRepository beneficiarioRepository;
+	private BeneficiarioTituloRepository beneficiarioTituloRepository;
 
 	@Autowired
 	private EspecieDocumentoRepository especieDocumentoRepository;
@@ -124,7 +124,7 @@ public class TituloBuilderImpl implements TituloBuilder {
 
 		val bradesco = new Bradesco();
 
-		BeneficiarioTitulo beneficiarioTitulo = beneficiarioRepository.findByBancoCodigo(bradesco.getNumeroFormatado());
+		BeneficiarioTitulo beneficiarioTitulo = beneficiarioTituloRepository.findByBancoCodigo(bradesco.getNumeroFormatado());
 
 		EspecieDocumento especieDocumento = especieDocumentoRepository.findByCodigo(EspecieDocumentoEnum.DUPLICATA_MERCANTIL.getCodigo());
 
@@ -146,8 +146,6 @@ public class TituloBuilderImpl implements TituloBuilder {
 
 		if(pagadorTitulo == null) {
 
-			pagadorTitulo = new PagadorTitulo(pessoa.nome, cpfPassaporte);
-
 			main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco = endereco(pessoa);
 
 			Endereco enderecoPagador = new Endereco(endereco.logradouro,
@@ -158,7 +156,7 @@ public class TituloBuilderImpl implements TituloBuilder {
 				endereco.municipio.nome,
 				endereco.municipio.estado.sigla);
 
-			pagadorTitulo.setEndereco(enderecoPagador);
+			pagadorTitulo = new PagadorTitulo(pessoa.nome, cpfPassaporte, enderecoPagador);
 
 			pagadorTituloRepository.save(pagadorTitulo);
 
@@ -207,6 +205,7 @@ public class TituloBuilderImpl implements TituloBuilder {
 	}
 
 	private main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco(Pessoa pessoa) {
+
 		return pessoa.enderecos
 			.stream()
 			.filter(endereco ->

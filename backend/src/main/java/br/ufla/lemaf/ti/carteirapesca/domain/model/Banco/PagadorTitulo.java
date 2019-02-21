@@ -39,14 +39,12 @@ public class PagadorTitulo implements Entity<BeneficiarioTitulo, Integer> {
 
 	public PagadorTitulo() {}
 
-	public PagadorTitulo(String nome, String cpfPassaporte) {
+	public PagadorTitulo(String nome, String cpfPassaporte, Endereco endereco) {
 
 		this.nome = nome;
 		this.cpfPassaporte = cpfPassaporte;
-
-	}
-
-	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+
 	}
+
 }

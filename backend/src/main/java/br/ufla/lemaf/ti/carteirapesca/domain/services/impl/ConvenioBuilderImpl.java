@@ -1,13 +1,14 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Beneficiario;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Convenio;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.PagadorTitulo;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
+import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoSegmentoEnum;
+import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoValorEfetivoEnum;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoSegmentoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoValorEfetivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ConvenioBuilder;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.PdfGeneratorUtil;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.BarcodeInter25;
@@ -33,6 +34,15 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 	@Autowired
 	PdfGeneratorUtil pdfGenaratorUtil;
 
+	@Autowired
+	TipoSegmentoRepository tipoSegmentoRepository;
+
+	@Autowired
+	TipoValorEfetivoRepository tipoValorEfetivoRepository;
+
+	@Autowired
+	BeneficiarioRepository beneficiarioRepository;
+
 	@Override
 	public Titulo gerarDocumentoArrecadacao(Protocolo protocolo, Modalidade modalidade, Pessoa pessoa) throws IOException, DocumentException {
 
@@ -42,6 +52,60 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 	}
 
 	private Convenio gerarConvenio(Modalidade modalidade, Pessoa pessoa) {
+
+		TipoSegmento tipoSegmento = tipoSegmentoRepository.findByCodigo(TipoSegmentoEnum.ORGAO_GOVERNAMENTAL.getCodigo());
+		TipoValorEfetivo tipoValorEfetivo = tipoValorEfetivoRepository.findByCodigo(TipoValorEfetivoEnum.VALOR_REAIS_MODULO_10.getCodigo());
+
+		Beneficiario beneficiario = beneficiarioRepository.findBySigla("IPAAM");
+
+
+		Convenio convenio = new Convenio(tipoSegmento, tipoValorEfetivo, , beneficiario)
+
+	}
+
+	/** O dígito auto-conferência é calculado aplicando base 2 e módulo de 10
+	 *  Para o calculo deve ser informado o bloco ao qual o digito será calculado */
+	private Integer calculaDigititoAutoConferenciaModuloDez(String blocoCodigoBarras) {
+
+		Integer base = 2;
+		Integer numeroPosicao, resultadoMultiplicacao, resultadoSoma = 0;
+		Integer indexInicio, indexFinal;
+
+		for(int i = 0; i < blocoCodigoBarras.length(); i++) {
+
+			if(base < 1) {
+				base = 2;
+			}
+
+			indexInicio = (blocoCodigoBarras.length() - 1 - i);
+			indexFinal = blocoCodigoBarras.length() - i;
+
+			numeroPosicao = Integer.valueOf(blocoCodigoBarras.substring(indexInicio, indexFinal));
+
+			resultadoMultiplicacao = numeroPosicao * base;
+
+			/**Quando o resultado maior que 9 os digitos deverão ser somados de forma individual
+			 * ex: resultado = 18 -> a soma deverá ser 1 + 8 -> resultando em 9*/
+			if(resultadoMultiplicacao > 9) {
+
+				Integer primeiroDigito = Integer.valueOf(resultadoMultiplicacao.toString().substring(0, 1));
+				Integer segundoDigito = Integer.valueOf(resultadoMultiplicacao.toString().substring(1, 2));
+
+				resultadoSoma = resultadoSoma + primeiroDigito + segundoDigito;
+
+			} else {
+				resultadoSoma = resultadoSoma + resultadoMultiplicacao;
+			}
+
+			base--;
+
+		}
+
+		Integer modulo = 10;
+		Integer restoDivisao = resultadoSoma % modulo;
+
+		/**Se o resto da divisão for igual a 0 (zero) o dígito de auto-conferência será 0 (zero)*/
+		return (restoDivisao > 0 ? modulo - restoDivisao : restoDivisao);
 
 	}
 

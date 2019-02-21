@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -46,8 +47,25 @@ public class Convenio implements Entity<Convenio, Integer> {
 	@Column(name = "nosso_numero")
 	private Integer nossoNumero;
 
+	@Setter
 	@Column(name = "codigo_barra")
 	private String codigoBarras;
+
+	public Convenio(TipoSegmento tipoSegmento,
+					TipoValorEfetivo tipoValorEfetivo,
+					PagadorTitulo pagador,
+					Beneficiario beneficiario,
+					BigDecimal valor) {
+
+		this.tipoSegmento = tipoSegmento;
+		this.tipoValorEfetivo = tipoValorEfetivo;
+		this.pagador = pagador;
+		this.beneficiario = beneficiario;
+		this.valor = valor;
+		this.dataEmissao = LocalDate.now();
+		this.dataVencimento = LocalDate.of(this.dataEmissao.getYear(), 12, 31);
+
+	}
 
 	@Override
 	public boolean sameIdentityAs(Convenio other) {
