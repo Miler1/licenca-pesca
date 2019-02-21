@@ -27,7 +27,7 @@ const ConsultaService = {
     ApiService.query(`${Properties.BASE_URL}/api/carteira`, { protocolo }),
 
   buscarRemessas: () => {
-    ApiService.getWithBlock(`${Properties.BASE_URL}/banco/lista-remessa`);
+    return ApiService.getWithBlock(`${Properties.BASE_URL}/api/lista-remessa`);
   },
   /**
    * Serviço para buscar dados da carteira

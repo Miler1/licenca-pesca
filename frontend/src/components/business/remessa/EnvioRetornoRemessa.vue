@@ -1,26 +1,26 @@
 <template lang="pug">
 #enviar-retornar-remessa
     div.buscar
-      h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRemessa`) }}
+      h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRemessa`) }} 
       .right
         el-button(slot="append" icon="el-icon-refresh" @click="gerarArquivoRemessa" type="primary") {{ $t(`${remessa_prefix}gerarRemssa`) }}
     card
-      .remessas(v-if="remessas && remessas.length > 0" v-for="listaRemessas in remessas")
-        h2.titulo-remessa {{ $t(`${remessa_prefix}listagemRemessa`) }}
+      h2.titulo-remessa {{ $t(`${remessa_prefix}listagemRemessa`) }}
+      .remessas(v-if="listaRemessas && listaRemessas.length > 0" v-for="remessas in listaRemessas")
         .withDivisor.listMargin
           .flex
               .flex-item
                 span.item-title {{ $t(`${remessa_prefix}nomeArquivoRemessa`) }}
-                span.item-content {{listaRemessas.sequencialNomeArquivo}}
+                span.item-content {{remessas.arquivo.nome}}
               .flex-item
                 span.item-title {{ $t(`${remessa_prefix}dataArquivoRemessa`) }}
-                span.item-content {{listaRemessas.dataCadastro}}
+                span.item-content {{remessas.arquivo.dataCadastro | moment('DD/MM/YYYY')}}
               .flex-item
                 span.item-title {{ $t(`${remessa_prefix}acao`) }}
                 span.item-content-acoes
-                  el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa" type="primary") {{ $t(`${remessa_prefix}botaoAcao`) }}
+                  el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary") {{ $t(`${remessa_prefix}botaoAcao`) }}
 
-      div.sem-remessa(v-if="!remessas || remessas.length <= 0")
+      div.sem-remessa(v-if="!listaRemessas || listaRemessas.length <= 0")
         | {{ $t(`${remessa_prefix}semRemessa`) }}       
 
     h2.title-principal {{ $t(`${remessa_prefix}tituloRetorno`) }}
@@ -42,9 +42,10 @@
 import { mapGetters } from "vuex";
 import Card from "../../layouts/Card";
 import Properties from "../../../properties";
+import moment from "moment";
 import { translate } from "../../../utils/helpers/internationalization";
 import { ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX } from '../../../utils/messages/interface/registrar/geral';
-import { BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS } from '../../../store/actions.type';
+import { BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS, DOWNLOAD_REMESSA } from '../../../store/actions.type';
 
 export default {
   name: "EnviarRetornarRemessa",
@@ -87,11 +88,12 @@ export default {
       this.$store.dispatch(LISTAR_REMESSAS);
     },
 
-    downloadArquivoRemessa(protocolo){
-      const href =
-        `${Properties.BASE_URL}/api/download-remessa?idRemessa`;
+    downloadArquivoRemessa(idRemessa){
 
-      window.open(href, "_blank");
+       const href =
+        `${Properties.BASE_URL}/api/download-remessa/` + idRemessa;
+
+        window.open(href, "_blank");
     },
 
     gerarArquivoRemessa(){

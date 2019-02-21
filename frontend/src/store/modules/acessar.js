@@ -1,10 +1,11 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS} from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS, DOWNLOAD_REMESSA} from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA, SET_LISTA_TODAS_LICENCAS, SET_LISTA_REMESSAS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import Vue from "vue";
 import RegistroService from "../../services/RegistroService";
 import ConsultaService from "../../services/ConsultaService";
+import ArquivoService from "../../services/ArquivoService";
 
 const INITIAL_STATE = {
   solicitante: Solicitante,
@@ -106,10 +107,13 @@ export const actions = {
   },
 
   [LISTAR_REMESSAS]:  ({commit}) => {
-    ConsultaService.buscarRemessas();
-    // .then(({ data }) => {
-    //   commit(SET_LISTA_REMESSAS, data.listaRemessas);
-    // })
+    ConsultaService.buscarRemessas()
+    .then(({ data }) => {
+      commit(SET_LISTA_REMESSAS, data.content);
+    })
+    .catch(error => {
+      commit(SET_ERROR, error);
+    });
   },
 
   [BUSCAR_LICENCAS]: ({ commit }, acessoResource) => {

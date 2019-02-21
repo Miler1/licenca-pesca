@@ -30,7 +30,7 @@ public class AutenticacaoController {
 
 		Authentication autenticacao = autenticacaoBuilder.autenticar(token);
 
-		return new RedirectView("localhost:8080/");
+		return new RedirectView("/");
 
 //		return new ResponseEntity<>(((AuthenticationToken) autenticacao).getUser(), HttpStatus.ACCEPTED);
 
