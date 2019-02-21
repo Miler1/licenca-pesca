@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.web;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoBuilderImpl;
 import com.lowagie.text.Document;
@@ -45,6 +46,9 @@ public class BancoController {
 
 	@Autowired
 	private RetornoBuilderImpl retornoBuilder;
+
+	@Autowired
+	private ConvenioBuilderImpl convenioBuilder;
 
 	@CrossOrigin("*")
 	@GetMapping("/gera-remessa")
@@ -106,6 +110,8 @@ public class BancoController {
 	@GetMapping("/teste")
 	public ResponseEntity<InputStreamResource> teste() throws IOException, DocumentException {
 
+//		convenioBuilder.geraDocumentoArrecadacao(null, null, null);
+
 //		Document document = new Document();
 //
 //		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("codebars_teste_123.pdf"));
@@ -145,7 +151,7 @@ public class BancoController {
 //		document.close();
 
 
-		var httpHeaders = new HttpHeaders();
+		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_PDF);
 
 //		var isr = new InputStreamResource(new FileInputStream(file.getAbsoluteFile()));

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 /**
  * Tipo de modalidade da Licença de pesca.
@@ -50,5 +51,17 @@ public class Modalidade {
 			this.nomeEN = nomeEN;
 			this.nomeES = nomeES;
 		}
+	}
+
+	public BigDecimal getValor() {
+
+		if(this.id == Modalidade.Modalidades.PESCA_ESPORTIVA.id) {
+			return new BigDecimal(41.21);
+		} else if(this.id == Modalidade.Modalidades.PESCA_REACREATIVA.id) {
+			return new BigDecimal(57.21);
+		} else {
+			return new BigDecimal(0);
+		}
+
 	}
 }

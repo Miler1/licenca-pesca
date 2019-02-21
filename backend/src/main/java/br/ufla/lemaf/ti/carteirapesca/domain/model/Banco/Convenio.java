@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class Convenio implements Entity<Convenio, Integer> {
 	private TipoValorEfetivo tipoValorEfetivo;
 
 	@ManyToOne
-	@JoinColumn(name = "id_beneficiario", referencedColumnName="id")
+	@JoinColumn(name = "id_pagador", referencedColumnName="id")
 	private PagadorTitulo pagador;
 
 	@ManyToOne
@@ -50,6 +51,21 @@ public class Convenio implements Entity<Convenio, Integer> {
 	@Setter
 	@Column(name = "codigo_barra")
 	private String codigoBarras;
+
+	@Setter
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_arquivo", referencedColumnName="id")
+	private Arquivo arquivoBoleto;
+
+	@Setter
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_arquivo", referencedColumnName="id")
+	private Arquivo documentoArrecadacao;
+
+	@Setter
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_pagamento", referencedColumnName="id")
+	private PagamentoConvenio pagamento;
 
 	public Convenio(TipoSegmento tipoSegmento,
 					TipoValorEfetivo tipoValorEfetivo,

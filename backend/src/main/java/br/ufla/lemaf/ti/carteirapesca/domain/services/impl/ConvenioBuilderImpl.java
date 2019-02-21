@@ -6,15 +6,19 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.ConvenioRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoSegmentoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoValorEfetivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ConvenioBuilder;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.BancoUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.PdfGeneratorUtil;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.BarcodeInter25;
 import com.lowagie.text.pdf.BaseFont;
+import lombok.extern.slf4j.Slf4j;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,14 +26,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Slf4j
+@Service
 public class ConvenioBuilderImpl implements ConvenioBuilder {
 
 	private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+	private static final DateTimeFormatter FORMATO_DATA_CODIGO_BARRAS = DateTimeFormatter.ofPattern("YYYYMMdd");
 
 	@Autowired
 	PdfGeneratorUtil pdfGenaratorUtil;
@@ -43,23 +52,36 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 	@Autowired
 	BeneficiarioRepository beneficiarioRepository;
 
-	@Override
-	public Titulo gerarDocumentoArrecadacao(Protocolo protocolo, Modalidade modalidade, Pessoa pessoa) throws IOException, DocumentException {
+	@Autowired
+	PagadorBuilderImpl pagadorBuilder;
 
-		gerarCodigoBarras("83620000000-5 72950138000-4 26497378133-1 08070582559-6");
+	@Autowired
+	ConvenioRepository convenioRepository;
+
+	@Override
+	public Convenio geraDocumentoArrecadacao(Protocolo protocolo, Modalidade modalidade, Pessoa pessoa) throws Exception {
+
+		Convenio convenio = geraConvenio(modalidade, pessoa);
+
+		File documentoArrecadação = geraDocumentoArrecadacao(convenio);
+
+
 
 		return null;
 	}
 
-	private Convenio gerarConvenio(Modalidade modalidade, Pessoa pessoa) {
+	private Convenio geraConvenio(Modalidade modalidade, Pessoa pessoa) {
 
 		TipoSegmento tipoSegmento = tipoSegmentoRepository.findByCodigo(TipoSegmentoEnum.ORGAO_GOVERNAMENTAL.getCodigo());
 		TipoValorEfetivo tipoValorEfetivo = tipoValorEfetivoRepository.findByCodigo(TipoValorEfetivoEnum.VALOR_REAIS_MODULO_10.getCodigo());
-
+		PagadorTitulo pagadorTitulo = pagadorBuilder.transformarPessoaEmPagador(pessoa);
 		Beneficiario beneficiario = beneficiarioRepository.findBySigla("IPAAM");
 
+		Convenio convenio = new Convenio(tipoSegmento, tipoValorEfetivo, pagadorTitulo, beneficiario, modalidade.getValor());
 
-		Convenio convenio = new Convenio(tipoSegmento, tipoValorEfetivo, , beneficiario)
+		convenio.setCodigoBarras(geraLinhaDigitavel(convenio));
+
+		return convenio;
 
 	}
 
@@ -109,7 +131,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 
 	}
 
-	private File gerarDocumentoPagamento(Convenio convenio) throws Exception {
+	private File geraDocumentoArrecadacao(Convenio convenio) throws Exception {
 
 		Map<String, String> dadosDocumento = new HashMap<>();
 
@@ -138,13 +160,57 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		dadosDocumento.put("limiteCapturaLicenca", "<INSERIR>");
 
 		dadosDocumento.put("linhaDigitavel", convenio.getCodigoBarras());
-		dadosDocumento.put("pathImagemCodigoBarras", gerarCodigoBarras("83620000000-5 72950138000-4 26497378133-1 08070582559-6"));
+		dadosDocumento.put("pathImagemCodigoBarras", geraCodigoBarras("83620000000-5 72950138000-4 26497378133-1 08070582559-6"));
 
 		return pdfGenaratorUtil.createPdf("cobranca", dadosDocumento);
 
 	}
 
-	private String gerarCodigoBarras(String linhaDigitavel) throws IOException, DocumentException {
+	private String geraLinhaDigitavel(Convenio convenio) {
+
+		StringBuffer linhaDigitavel = new StringBuffer();
+
+		/** Id do produto é uma contante para identificar a arrecadaçãa (convênio)*/
+		String idProduto = "8";
+		String valor = BancoUtils.removeFormatacaoValorMonetario(convenio.getValor());
+		String dataVencimento = convenio.getDataVencimento().format(FORMATO_DATA_CODIGO_BARRAS);
+		String codigoEmpresa = "9999";
+
+		Integer tamanhoMaximoCampoLivre = 25;
+
+		linhaDigitavel.append(idProduto)
+			.append(convenio.getTipoSegmento().getCodigo())
+			.append(convenio.getTipoValorEfetivo().getCodigo())
+			.append(calculaDigititoAutoConferenciaModuloDez(linhaDigitavel.toString()))
+			.append(BancoUtils.completaStringComZerosEsquerda(11, valor))
+			.append(codigoEmpresa)
+			.append(dataVencimento)
+			.append(BancoUtils.completaStringComZerosEsquerda( tamanhoMaximoCampoLivre - dataVencimento.length(),
+				convenio.getNossoNumero().toString()));
+
+		String bloco1 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(0, 11));
+		String bloco2 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(11, 22));
+		String bloco3 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(22, 33));
+		String bloco4 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(33, 44));
+
+		return bloco1 + bloco2 + bloco3 + bloco4;
+
+	}
+
+	private String formatarLinhaDigitavelPorBloco(String blocoCodigoBarras) {
+
+		StringBuffer linhaDigitavelFormatada = new StringBuffer();
+
+		linhaDigitavelFormatada.append(blocoCodigoBarras)
+			.append("-")
+			.append(calculaDigititoAutoConferenciaModuloDez(blocoCodigoBarras))
+			.append(" ");
+
+		return linhaDigitavelFormatada.toString();
+		
+	}
+	
+	private String geraCodigoBarras(String linhaDigitavel) throws IOException, DocumentException {
 
 		BarcodeInter25 codigoBarras = new BarcodeInter25();
 		codigoBarras.setGenerateChecksum(false);

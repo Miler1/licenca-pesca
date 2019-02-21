@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
+import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 
 import javax.persistence.*;
 

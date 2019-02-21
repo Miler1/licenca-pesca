@@ -19,6 +19,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioTitulo
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.EspecieDocumentoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.PagadorTituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.PagadorBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.TituloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
@@ -58,13 +59,13 @@ public class TituloBuilderImpl implements TituloBuilder {
 	private EspecieDocumentoRepository especieDocumentoRepository;
 
 	@Autowired
-	private PagadorTituloRepository pagadorTituloRepository;
-
-	@Autowired
 	private TituloRepository tituloRepository;
 
 	@Autowired
 	private TipoArquivoRepository tipoArquivoRepository;
+
+	@Autowired
+	PagadorBuilderImpl pagadorBuilder;
 
 	@Override
 	public Titulo gerarDocumentoPagamento(final Protocolo protocolo,
@@ -128,41 +129,13 @@ public class TituloBuilderImpl implements TituloBuilder {
 
 		EspecieDocumento especieDocumento = especieDocumentoRepository.findByCodigo(EspecieDocumentoEnum.DUPLICATA_MERCANTIL.getCodigo());
 
-		PagadorTitulo pagadorTitulo = getPagadorTitulo(pessoa);
+		PagadorTitulo pagadorTitulo = pagadorBuilder.transformarPessoaEmPagador(pessoa);
 
-		Titulo titulo = new Titulo(beneficiarioTitulo, especieDocumento, pagadorTitulo, getValorTitulo(modalidade));
+		Titulo titulo = new Titulo(beneficiarioTitulo, especieDocumento, pagadorTitulo, modalidade.getValor());
 
 		titulo.setNossoNumero(tituloRepository.count());
 
 		return titulo;
-
-	}
-
-	private PagadorTitulo getPagadorTitulo(Pessoa pessoa) {
-
-		String cpfPassaporte = (pessoa.cpf == null ? pessoa.passaporte.toString() : pessoa.cpf);
-
-		PagadorTitulo pagadorTitulo = pagadorTituloRepository.findByCpfPassaporte(cpfPassaporte);
-
-		if(pagadorTitulo == null) {
-
-			main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco = endereco(pessoa);
-
-			Endereco enderecoPagador = new Endereco(endereco.logradouro,
-				(endereco.numero == null ? null : endereco.numero.toString()),
-				endereco.complemento,
-				endereco.bairro,
-				endereco.cep,
-				endereco.municipio.nome,
-				endereco.municipio.estado.sigla);
-
-			pagadorTitulo = new PagadorTitulo(pessoa.nome, cpfPassaporte, enderecoPagador);
-
-			pagadorTituloRepository.save(pagadorTitulo);
-
-		}
-
-		return pagadorTitulo;
 
 	}
 
@@ -189,19 +162,6 @@ public class TituloBuilderImpl implements TituloBuilder {
 			.comDocumento(titulo.getDataEmissao().getDayOfMonth(), titulo.getDataEmissao().getMonthValue(), titulo.getDataEmissao().getYear())
 			.comProcessamento(titulo.getDataProcessamento().getDayOfMonth(), titulo.getDataProcessamento().getMonthValue(), titulo.getDataProcessamento().getYear())
 			.comVencimento(titulo.getDataVencimento().getDayOfMonth(), titulo.getDataVencimento().getMonthValue(), titulo.getDataVencimento().getYear());
-	}
-
-	private BigDecimal getValorTitulo(Modalidade modalidade) {
-
-		if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_ESPORTIVA.id)) {
-
-			return new BigDecimal(41.21);
-		} else if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_REACREATIVA.id)) {
-
-			return new BigDecimal(57.21);
-		} else {
-			return new BigDecimal(0);
-		}
 	}
 
 	private main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco(Pessoa pessoa) {

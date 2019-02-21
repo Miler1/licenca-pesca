@@ -4,7 +4,8 @@ public enum TipoArquivoEnum {
 
 	BOLETO(1, "BOLETO"),
 	REMESSA(2, "REMESSA"),
-	RETORNO(3, "RETORNO");
+	RETORNO(3, "RETORNO"),
+	DOCUMENTO_ARRECADACAO(4, "DOCUMENTO_ARRECADACAO");
 
 	private Integer id;
 	private String codigo;

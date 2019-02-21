@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Convenio;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
@@ -74,7 +75,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private Solicitante solicitante;
 
 	@Column(name = "dt_vencimento")
-//	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimento;
 
 	@Column(name = "dt_vencimento_provisoria")
@@ -93,6 +93,12 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_titulo")
 	private Titulo titulo;
+
+	@Setter
+	@Getter
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name="id_convencio")
+	private Convenio convenio;
 
 	public Licenca(final Protocolo protocolo,
 				   final Modalidade modalidade,

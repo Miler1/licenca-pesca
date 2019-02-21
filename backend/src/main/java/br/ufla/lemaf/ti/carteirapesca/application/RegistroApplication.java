@@ -26,7 +26,7 @@ public interface RegistroApplication {
 	 * @param resource Os dados de registro
 	 * @return O número do protocolo da licença
 	 */
-	Protocolo registrar(RegistroResource resource);
+	Protocolo registrar(RegistroResource resource) throws Exception;
 
 	Modalidade gerarModalidade(Integer tipo);
 
@@ -34,6 +34,6 @@ public interface RegistroApplication {
 
 	String regerarBoleto(Licenca licenca);
 
-	Protocolo renovarLicenca(RegistroResource resource, String protocolo);
+	Protocolo renovarLicenca(RegistroResource resource, String protocolo) throws Exception;
 
 }
