@@ -99,13 +99,19 @@ const GERAL = {
     tituloRetorno: ["Arquivos de retorno", "Return files"],
     tituloRemessa: ["Arquivos de remessa", "Shipping files"],
     nomeArquivoRemessa: ["Nome do arquivo", "File name"],
+    paginacao: {
+      exibir: ["Exibindo página",""],
+      de: ["de",""],
+      qtdRegistros: ["registros",""]
+    },
     listagemRemessa: ["Listagem dos arquivos de remessa", "Listing of shipping files"],
     dataArquivoRemessa: ["Data de criação", "Creation date"],
     semRemessa: ["Sem remessas registradas", ""],
     acao: ["Ação", "Action"],
-    botaoAcao: ["Download arquivo", "Download file"],
+    botaoAcao: ["Download", "Download file"],
     uploadArquivo: ["Arraste e solte o(s) arquivo(s) nesta área ou clique no botão acima", "Drag and drop the file (s) to this area or click the button above"],
     gerarRemssa: ["Gerar remessa", "Generate Shipping"],
+    enviarArquivoRetorno: ["Enviar arquivo de retorno", ""],
     licenca: {
       tituloLicenca: ["Licenças", "License"],
       listagemLicenca: ["Listagem das licenças", "List of licenses"]

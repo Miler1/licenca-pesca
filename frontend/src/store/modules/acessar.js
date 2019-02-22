@@ -1,6 +1,6 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS, DOWNLOAD_REMESSA} from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS, DOWNLOAD_REMESSA, UPLOAD_ARQUIVO_RETORNO} from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
-import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA, SET_LISTA_TODAS_LICENCAS, SET_LISTA_REMESSAS } from "../mutations.type";
+import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA, SET_LISTA_TODAS_LICENCAS, SET_LISTA_REMESSAS, SET_PAGINACAO } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
 import Vue from "vue";
 import RegistroService from "../../services/RegistroService";
@@ -16,7 +16,8 @@ const INITIAL_STATE = {
   showStepsController: true,
   buscaMaes: false,
   cpfPesquisa: null,
-  passaportePesquisa: null
+  passaportePesquisa: null,
+  listaRemessasPaginada: null
 };
 
 export const state = Object.assign({}, INITIAL_STATE);
@@ -36,11 +37,12 @@ export const getters = {
    * Retorna o cpf.
   */
   cpfPesquisa: state => state.cpfPesquisa,
-
   /**
    * Retorna o passaporte.
   */
   passaportePesquisa: state => state.passaportePesquisa,
+
+  listaRemessasPaginada: state => state.listaRemessasPaginada,
 
   /**
    * Retorna os nomes de mães gerados.
@@ -106,10 +108,15 @@ export const actions = {
     RegistroService.geraRemessa();
   },
 
-  [LISTAR_REMESSAS]:  ({commit}) => {
-    ConsultaService.buscarRemessas()
+  [UPLOAD_ARQUIVO_RETORNO]: () => {
+    ArquivoService.upload();
+  },
+
+  [LISTAR_REMESSAS]:  ({commit}, pagina) => {
+    ConsultaService.buscarRemessas(pagina)
     .then(({ data }) => {
-      commit(SET_LISTA_REMESSAS, data.content);
+      debugger
+      commit(SET_LISTA_REMESSAS, data);
     })
     .catch(error => {
       commit(SET_ERROR, error);
@@ -220,8 +227,12 @@ export const mutations = {
   },
 
   [SET_LISTA_REMESSAS]: (state, listaRemessas) => {
-    Vue.set(state, 'listaRemessas', [...listaRemessas]);
+    state.listaRemessasPaginada = listaRemessas;
   },
+
+  // [SET_PAGINACAO]: (state, paginacaoRemessa) => {
+  //   Vue.set(state, 'paginacaoRemessa', [...paginacaoRemessa]);
+  // },
   /**
    * Verifica se será necessário cadastrar o usuário.
    *
