@@ -236,7 +236,6 @@ public class ConsultaController {
 
 		try {
 
-
 			Map<String,String> data = new HashMap<String,String>();
 			data.put("baseUrl", Properties.baseUrl());
 

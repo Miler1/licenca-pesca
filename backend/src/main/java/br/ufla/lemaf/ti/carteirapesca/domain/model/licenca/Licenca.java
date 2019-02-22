@@ -104,10 +104,8 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 				   final Modalidade modalidade,
 				   final InformacaoComplementar informacaoComplementar,
 				   final Status status,
-				   final Titulo titulo) {
-		try {
-			Validate.notNull(protocolo);
-			Validate.notNull(modalidade);
+				   final Titulo titulo,
+				   final Convenio convenio) {
 
 			this.protocolo = protocolo;
 			this.modalidade = modalidade;
@@ -115,15 +113,11 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.status = status;
 			this.informacaoComplementar = informacaoComplementar;
 			this.titulo = titulo;
+			this.convenio = convenio;
 			this.setDataVencimentoProvisoria();
 			this.setDataVencimentoBoleto();
 
-		} catch (IllegalArgumentException | NullPointerException ex) {
-
-			throw new LicencaException("licenca.creation");
-		}
 	}
-
 
 	/**
 	 * Ativa Licença. Caso o Status seja AGUARDANDO será ativado.

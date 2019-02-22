@@ -185,13 +185,13 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Titulo titulo = tituloBuilder.gerarDocumentoPagamento(protocolo, modalidade, pessoa);
 
-		Convenio convenio = convenioBuilder.geraDocumentoArrecadacao(protocolo, modalidade, pessoa);
+		Convenio convenio = convenioBuilder.geraConvenio(modalidade, pessoa);
 
 		Status status = statusRepository.findById(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id).get();
 
 		InformacaoComplementar informacaoComplementar = informacaoComplementarService.toInformacaoComplementar(resource.getInformacaoComplementar());
 
-		return new Licenca(protocolo, modalidade, informacaoComplementar, status, titulo);
+		return new Licenca(protocolo, modalidade, informacaoComplementar, status, titulo, convenio);
 	}
 
 	/**

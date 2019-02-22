@@ -138,7 +138,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 
 		var qrcode = QRCodeUtils.createQRCodeImage(Properties.baseUrl() + "informacao-carteira" + "/" + protocolo.getProtocoloNaoFormatado());
 
-		String qrcode64 = encodeToString(qrcode, "png");
+		String qrcode64 = ImagemUtils.converBase64(qrcode, "png");
 		String nomeFontSize = (pessoa.nome.toUpperCase().length() > 47) ? ("7px") : ("10px");
 		String enderecoFontSize = (CarteiraBuilderImpl.campoEndereco(CarteiraBuilderImpl.endereco(pessoa)).length() > 47)?("7px") : ("10px");
 		String municipioFontSize = (CarteiraBuilderImpl.campoMunicipioUF(CarteiraBuilderImpl.endereco(pessoa)).length() > 22)?("7px") : ("10px");
@@ -195,22 +195,4 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		return pdfGenaratorUtil.createPdf("carteira",data);
 	}
 
-
-	public static String encodeToString(BufferedImage image, String type) {
-		String imageString = null;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-		try {
-			ImageIO.write(image, type, bos);
-			byte[] imageBytes = bos.toByteArray();
-
-			Base64.Encoder encoder = Base64.getEncoder();
-			imageString = encoder.encodeToString(imageBytes);
-
-			bos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return imageString;
-	}
 }
