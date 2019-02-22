@@ -3,13 +3,16 @@ package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoSegmentoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoValorEfetivoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.ConvenioRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoSegmentoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoValorEfetivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ConvenioBuilder;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.BancoUtils;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.CPFUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ImagemUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.PdfGeneratorUtil;
 import com.lowagie.text.DocumentException;
@@ -35,8 +38,8 @@ import java.util.UUID;
 @Service
 public class ConvenioBuilderImpl implements ConvenioBuilder {
 
-	private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-	private static final DateTimeFormatter FORMATO_DATA_CODIGO_BARRAS = DateTimeFormatter.ofPattern("YYYYMMdd");
+	private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private static final DateTimeFormatter FORMATO_DATA_CODIGO_BARRAS = DateTimeFormatter.ofPattern("yyyyMMdd");
 	private static final String ESTENSAO_IMAGEM = "png";
 
 	@Autowired
@@ -67,6 +70,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 
 		Convenio convenio = new Convenio(tipoSegmento, tipoValorEfetivo, pagadorTitulo, beneficiario, modalidade.getValor());
 
+		convenio.setNossoNumero(convenioRepository.count());
 		convenio.setCodigoBarras(geraLinhaDigitavel(convenio));
 
 		return convenio;
@@ -74,33 +78,37 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 	}
 
 	@Override
-	public File geraDocumentoArrecadacao(Convenio convenio) throws Exception {
+	public File geraDocumentoArrecadacao(Licenca licenca) throws Exception {
 
 		Map<String, String> dadosDocumento = new HashMap<>();
 
+		Convenio convenio = licenca.getConvenio();
+
 		Beneficiario beneficiario = convenio.getBeneficiario();
+		dadosDocumento.put("baseUrl", Properties.baseUrl());
 		dadosDocumento.put("nomeBeneficiario", beneficiario.getNome());
 		dadosDocumento.put("cnpjBeneficario", "CNPJ: " + beneficiario.getCpfCnpj());
 		dadosDocumento.put("enderecoBeneficiario", beneficiario.getEndereco().getDescricaoEndereco());
-		dadosDocumento.put("cepBeneficiario", beneficiario.getEndereco().getCep());
-		dadosDocumento.put("municipioBeneficiario", beneficiario.getEndereco().getMunicipio());
-		dadosDocumento.put("ufBeneficiario", beneficiario.getEndereco().getEstado());
 
+		String cepMunicipioUfBeneficiario = beneficiario.getEndereco().getCep() + " - " +
+			beneficiario.getEndereco().getMunicipio() + " - " +
+			beneficiario.getEndereco().getEstado();
+
+		dadosDocumento.put("cepMunicipioUfBeneficiario", cepMunicipioUfBeneficiario);
 		dadosDocumento.put("dataEmissao", convenio.getDataEmissao().format(FORMATO_DATA));
 		dadosDocumento.put("dataVencimento", convenio.getDataVencimento().format(FORMATO_DATA));
-		dadosDocumento.put("valor", "R$ " + convenio.getValor().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+		dadosDocumento.put("valor", "R$ " + convenio.getValor().setScale(2, BigDecimal.ROUND_HALF_EVEN).toString().replace(".", ","));
 
 		PagadorTitulo pagador = convenio.getPagador();
 		dadosDocumento.put("nomePagador", pagador.getNome());
-		dadosDocumento.put("cpfPassaportePagador", pagador.getCpfPassaporte());
+		dadosDocumento.put("cpfPassaportePagador", (pagador.getCpfPassaporte().length() == 11 ? CPFUtils.format(pagador.getCpfPassaporte()) : pagador.getCpfPassaporte()));
 		dadosDocumento.put("enderecoPagador", pagador.getEndereco().getDescricaoEndereco());
-		dadosDocumento.put("municipioPagador", pagador.getEndereco().getMunicipio());
-		dadosDocumento.put("ufPagador", pagador.getEndereco().getEstado());
+		dadosDocumento.put("municipioUfPagador", pagador.getEndereco().getMunicipio() + "/" + pagador.getEndereco().getEstado());
 		dadosDocumento.put("cepPagador", pagador.getEndereco().getCep());
 
-		dadosDocumento.put("codigoLicenca", "<INSERIR>");
-		dadosDocumento.put("modalidaLicenca", "<INSERIR>");
-		dadosDocumento.put("limiteCapturaLicenca", "<INSERIR>");
+		dadosDocumento.put("codigoLicenca", licenca.getProtocolo().toString());
+		dadosDocumento.put("modalidaLicenca", licenca.getModalidade().getNomePT());
+		dadosDocumento.put("limiteCapturaLicenca", licenca.getModalidade().getDescricaoQtdPeixesLimiteCaptura());
 
 		dadosDocumento.put("linhaDigitavel", convenio.getCodigoBarras());
 		dadosDocumento.put("imagemCodigoBarras", ImagemUtils.converBase64(geraImagemCodigoBarras(convenio.getCodigoBarras()), ESTENSAO_IMAGEM) );
@@ -155,8 +163,6 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 
 	}
 
-
-
 	private String geraLinhaDigitavel(Convenio convenio) {
 
 		StringBuffer linhaDigitavel = new StringBuffer();
@@ -165,14 +171,20 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		String idProduto = "8";
 		String valor = BancoUtils.removeFormatacaoValorMonetario(convenio.getValor());
 		String dataVencimento = convenio.getDataVencimento().format(FORMATO_DATA_CODIGO_BARRAS);
-		String codigoEmpresa = "9999";
+
+		//TODO Hiago - inserir codigo do convênio do IPAAM disponibilizado pelo Bradesco
+		String codigoEmpresa = "0138";
 
 		Integer tamanhoMaximoCampoLivre = 25;
 
 		linhaDigitavel.append(idProduto)
-			.append(convenio.getTipoSegmento().getCodigo())
+//			.append(convenio.getTipoSegmento().getCodigo())
+			//TODO Hiago - descomentar linha acima quando o codigo do convênio for disponibilizado e excluir abaixo
+			.append("3")
 			.append(convenio.getTipoValorEfetivo().getCodigo())
-			.append(calculaDigititoAutoConferenciaModuloDez(linhaDigitavel.toString()))
+//			.append(calculaDigititoAutoConferenciaModuloDez(linhaDigitavel.toString()))
+			//TODO Hiago - descomentar linha acima quando o codigo do convênio for disponibilizado e excluir abaixo
+			.append("3")
 			.append(BancoUtils.completaStringComZerosEsquerda(11, valor))
 			.append(codigoEmpresa)
 			.append(dataVencimento)
@@ -184,7 +196,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		String bloco3 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(22, 33));
 		String bloco4 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(33, 44));
 
-		return bloco1 + bloco2 + bloco3 + bloco4;
+		return (bloco1 + bloco2 + bloco3 + bloco4).trim();
 
 	}
 
@@ -230,10 +242,8 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		bGr.drawImage(imagemAwt, 0, 0, null);
 		bGr.dispose();
 
-		File file  = new File(UUID.randomUUID() + "." + ESTENSAO_IMAGEM);
+		File file = File.createTempFile(UUID.randomUUID().toString(), ESTENSAO_IMAGEM);
 		ImageIO.write(bimage, ESTENSAO_IMAGEM, file);
-
-		ImageIO.read(file);
 
 		return ImageIO.read(file);
 

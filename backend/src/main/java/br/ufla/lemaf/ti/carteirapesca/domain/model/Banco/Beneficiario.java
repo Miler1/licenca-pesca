@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Getter
 @javax.persistence.Entity
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "beneficiario_titulo")
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "beneficiario")
 public class Beneficiario implements Entity<Beneficiario, Integer> {
 
 	@Id

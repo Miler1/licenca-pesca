@@ -6,6 +6,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoTituloBuilderImpl;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.Controller.DefaultController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ import java.io.*;
 @Controller
 @Transactional
 @RequestMapping("/banco")
-public class BancoController {
+public class BancoController extends DefaultController {
 
 	@Autowired
 	private RemessaBuilderImpl remessaBuilder;
@@ -45,7 +45,7 @@ public class BancoController {
 		Remessa remessa = remessaBuilder.geraRemessa();
 
 		if (remessa != null) {
-			return preparaArquivoDownload(remessa.getArquivo());
+			return downloadArquivo(new File(remessa.getArquivo().getCaminhoArquivo()), remessa.getArquivo().getNome());
 		} else {
 			return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
 		}
@@ -58,19 +58,7 @@ public class BancoController {
 
 		Arquivo arquivoRemessa = remessaBuilder.getArquivoRemessa(idRemessa);
 
-		return preparaArquivoDownload(arquivoRemessa);
-
-	}
-
-	private ResponseEntity<InputStreamResource> preparaArquivoDownload(Arquivo arquivo) throws FileNotFoundException {
-
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.parseMediaType("application/octet-stream"));
-		httpHeaders.setContentDispositionFormData("attachment", arquivo.getNome());
-
-		InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(arquivo.getCaminhoArquivo())));
-
-		return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
+		return downloadArquivo(new File(arquivoRemessa.getCaminhoArquivo()), arquivoRemessa.getNome());
 
 	}
 

@@ -161,7 +161,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		data.put("cep", CarteiraBuilderImpl.campoCEP(CarteiraBuilderImpl.endereco(pessoa)));
 
 		data.put("pais", "BRASIL");
-		data.put("limiteCaptura", CarteiraBuilderImpl.campoLimiteCaptura(licenca.modalidade()));
+		data.put("limiteCaptura", licenca.modalidade().getDescricaoQtdPeixesLimiteCaptura());
 
 		data.put("mensagensDeAviso", licenca.mensagensDeAviso());
 		data.put("descricaoCarteiraDefinitivaEProvisoria", licenca.descricaoCarteiraDefinitivaEProvisoria());

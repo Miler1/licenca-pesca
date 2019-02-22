@@ -169,7 +169,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	 * @param resource Os dados de registro.
 	 * @return A Licenca
 	 */
-	private Licenca criarLicenca(final RegistroResource resource, String codigoProtocolo) throws Exception {
+	private Licenca criarLicenca(final RegistroResource resource, String codigoProtocolo) {
 
 		Modalidade modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
 

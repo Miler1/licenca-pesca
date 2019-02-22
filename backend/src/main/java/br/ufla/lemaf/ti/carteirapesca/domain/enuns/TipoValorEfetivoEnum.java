@@ -2,10 +2,10 @@ package br.ufla.lemaf.ti.carteirapesca.domain.enuns;
 
 public enum TipoValorEfetivoEnum {
 
-	VALOR_REAIS_MODULO_10(1, 1),
-	QTD_MOEDAS_MODULO_10(2, 2),
-	VALOR_REAIS_MODULO_11(3, 3),
-	QTD_MOEDAS_MODULO_11(4, 4);
+	VALOR_REAIS_MODULO_10(1, 6),
+	QTD_MOEDAS_MODULO_10(2, 7),
+	VALOR_REAIS_MODULO_11(3, 8),
+	QTD_MOEDAS_MODULO_11(4, 9);
 
 	private Integer id;
 	private Integer codigo;

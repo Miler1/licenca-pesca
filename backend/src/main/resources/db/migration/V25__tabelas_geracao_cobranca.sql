@@ -1,6 +1,6 @@
 CREATE TABLE carteira_pesca.tipo_segmento (
   id SERIAL NOT NULL, 
-  codigo CHARACTER VARYING(100), 
+  codigo INTEGER,
   descricao CHARACTER VARYING(100), 
   CONSTRAINT pk_tipo_segmento PRIMARY KEY (id)
 ) WITH (
@@ -19,7 +19,7 @@ COMMENT ON COLUMN carteira_pesca.tipo_segmento.descricao IS 'Descrição do tipo
 
 CREATE TABLE carteira_pesca.tipo_valor_efetivo (
   id SERIAL NOT NULL,
-  codigo CHARACTER VARYING(100), 
+  codigo INTEGER,
   descricao CHARACTER VARYING(100),
   CONSTRAINT pk_tipo_valor_efetivo PRIMARY KEY (id)
 ) WITH (

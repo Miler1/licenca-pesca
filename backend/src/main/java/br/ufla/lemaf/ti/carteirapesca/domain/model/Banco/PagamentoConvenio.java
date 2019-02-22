@@ -1,11 +1,16 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Getter
+@javax.persistence.Entity
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "pagamento_convenio")
 public class PagamentoConvenio implements Entity<PagamentoConvenio, Integer> {
 
 	@Id

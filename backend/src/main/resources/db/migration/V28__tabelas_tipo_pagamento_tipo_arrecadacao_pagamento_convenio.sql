@@ -2,12 +2,12 @@ ALTER TABLE carteira_pesca.tipo_arquivo ALTER COLUMN codigo SET DATA TYPE CHARAC
 INSERT INTO carteira_pesca.tipo_arquivo (id, codigo, descricao) VALUES (4, 'DOCUMENTO_ARRECADACAO', 'Arquivo .pdf do documento de arreacadação gerado');
 
 CREATE TABLE carteira_pesca.tipo_arrecadacao (
-  id SERIAL NOT NULL, 
+  id SERIAL NOT NULL,
   codigo CHARACTER VARYING(4) NOT NULL,
   descricao CHARACTER VARYING(150) NULL,
   CONSTRAINT pk_tipo_arrecadacao PRIMARY KEY (id)
 ) WITH (
-  OIDS=FALSE 
+  OIDS=FALSE
 );
 
 ALTER TABLE carteira_pesca.tipo_arrecadacao OWNER TO postgres;
@@ -37,11 +37,11 @@ INSERT INTO carteira_pesca.tipo_arrecadacao (id, codigo, descricao) VALUES
 (14, 'g', 'Casas lotéricas sem fatura/guia de arrecadação');
 
 CREATE TABLE carteira_pesca.tipo_pagamento (
-  id SERIAL NOT NULL, 
+  id SERIAL NOT NULL,
   descricao CHARACTER VARYING(150) NULL,
   CONSTRAINT pk_tipo_pagamento PRIMARY KEY (id)
 ) WITH (
-  OIDS=FALSE 
+  OIDS=FALSE
 );
 
 ALTER TABLE carteira_pesca.tipo_pagamento OWNER TO postgres;
@@ -59,10 +59,10 @@ INSERT INTO carteira_pesca.tipo_pagamento (id, descricao) VALUES
 (3, 'Não identificado/outras formas');
 
 CREATE TABLE carteira_pesca.pagamento_convenio (
-  id SERIAL NOT NULL, 
+  id SERIAL NOT NULL,
   data_pagamento DATE,
   data_credito DATE,
-  valor_recebido DOUBLE PRECISION, 
+  valor_recebido DOUBLE PRECISION,
   valor_tarifa DOUBLE PRECISION,
   id_tipo_pagamento INTEGER NOT NULL,
   id_tipo_arrecadacao INTEGER NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE carteira_pesca.pagamento_convenio (
     REFERENCES carteira_pesca.tipo_arrecadacao (id) MATCH SIMPLE
     ON UPDATE RESTRICT ON DELETE RESTRICT
 ) WITH (
-  OIDS=FALSE 
+  OIDS=FALSE
 );
 
 ALTER TABLE carteira_pesca.pagamento_convenio OWNER TO postgres;
@@ -95,26 +95,21 @@ COMMENT ON COLUMN carteira_pesca.pagamento_convenio.id_tipo_arrecadacao IS 'Iden
 
 ALTER TABLE carteira_pesca.licenca ADD COLUMN id_convenio INTEGER NULL;
 COMMENT ON COLUMN carteira_pesca.licenca.id_convenio IS 'Identificador único da entidade convenio que faz o relacionamento entre convenio e licenca - Identifica o convênio que foi gerado para a licença.';
-ALTER TABLE carteira_pesca.licenca ADD CONSTRAINT fk_l_convenio FOREIGN KEY (id_convenio) 
+ALTER TABLE carteira_pesca.licenca ADD CONSTRAINT fk_l_convenio FOREIGN KEY (id_convenio)
   REFERENCES carteira_pesca.convenio (id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-ALTER TABLE carteira_pesca.convenio ADD COLUMN id_arquivo INTEGER NULL;
-COMMENT ON COLUMN carteira_pesca.convenio.id_arquivo IS 'Identificador único da entidade arquivo que faz o relacionamento entre arquivo e convenio - Documento de arrecadação gerado para pagamento.';
-ALTER TABLE carteira_pesca.convenio ADD CONSTRAINT fk_c_arquivo FOREIGN KEY (id_arquivo) 
-  REFERENCES carteira_pesca.arquivo (id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 ALTER TABLE carteira_pesca.convenio ADD COLUMN id_pagamento INTEGER NULL;
 COMMENT ON COLUMN carteira_pesca.convenio.id_pagamento IS 'Identificador único da entidade pagamento_convenio que faz o relacionamento entre pagamento_convenio e convenio - Referencia as informações do pagamento.';
-ALTER TABLE carteira_pesca.convenio ADD CONSTRAINT fk_c_pagamento_convenio FOREIGN KEY (id_pagamento) 
+ALTER TABLE carteira_pesca.convenio ADD CONSTRAINT fk_c_pagamento_convenio FOREIGN KEY (id_pagamento)
   REFERENCES carteira_pesca.pagamento_convenio (id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT;
 
-ALTER TABLE carteira_pesca.convenio ADD COLUMN id_retorno INTEGER NULL;
-COMMENT ON COLUMN carteira_pesca.convenio.id_retorno IS 'Identificador único da entidade retorno que faz o relacionamento entre retorno e convenio - Identifica qual o retorno que foi processado.';
-ALTER TABLE carteira_pesca.convenio ADD CONSTRAINT fk_c_retorno FOREIGN KEY (id_retorno) 
+ALTER TABLE carteira_pesca.pagamento_convenio ADD COLUMN id_retorno INTEGER NOT NULL;
+COMMENT ON COLUMN carteira_pesca.pagamento_convenio.id_retorno IS 'Identificador único da entidade retorno que faz o relacionamento entre retorno e pagamento_convenio - Identifica qual o retorno que foi processado.';
+ALTER TABLE carteira_pesca.pagamento_convenio ADD CONSTRAINT fk_pc_retorno FOREIGN KEY (id_retorno)
   REFERENCES carteira_pesca.retorno (id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 ALTER TABLE carteira_pesca.retorno RENAME COLUMN qtd_titulo_cobranca TO qtd_registros;
 ALTER TABLE carteira_pesca.retorno RENAME COLUMN valor_titulo_cobranca TO valor_registros;
 
-ALTER TABLE carteira_pesca.convenio ADD COLUMN tipo_retorno CHARACTER VARYING(10) NULL;
-COMMENT ON COLUMN carteira_pesca.convenio.tipo_retorno IS 'Indica o tipo arquivo de retorno que foi processado (TITULO, CONVENIO).';
+ALTER TABLE carteira_pesca.retorno ADD COLUMN tipo_retorno CHARACTER VARYING(10) NULL;
+COMMENT ON COLUMN carteira_pesca.retorno.tipo_retorno IS 'Indica o tipo arquivo de retorno que foi processado (TITULO, CONVENIO).';

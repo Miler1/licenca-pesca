@@ -2,12 +2,10 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.web;
 
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Pais;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.PdfGeneratorUtil;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
@@ -18,6 +16,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.CarteiraDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.LicencaPescaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.Controller.DefaultController;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -54,18 +49,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Controller
 @Transactional
 @RequestMapping("/api")
-public class ConsultaController {
+public class ConsultaController extends DefaultController {
+
+	private static final String NOME_BOLETO_COM_EXTENSAO = "boleto-licenca-pesca.pdf";
 
 	private ConsultaServiceFacade facade;
 
 	@Autowired
 	private ConsultaApplication consultaApplication;
-
-	@Autowired
-	private CarteiraBuilder carteiraBuilder;
-
-	@Autowired
-	private ProtocoloBuilder protocoloBuilder;
 
 	@Autowired
 	private AcessoServiceFacade acessoServiceFacade;
@@ -74,7 +65,7 @@ public class ConsultaController {
 	private RegistroApplication registroApplication;
 
 	@Autowired
-	PdfGeneratorUtil pdfGenaratorUtil;
+	private ConvenioBuilderImpl convenioBuilder;
 
 	/**
 	 * Injetando dependências.
@@ -152,40 +143,19 @@ public class ConsultaController {
 		return new ResponseEntity<>(carteiraDTO, HttpStatus.OK);
 	}
 
-	/**
-	 * Download do boleto.
-	 *
-	 * @param protocolo O protocolo do Boleto
-	 * @return O arquivo
-	 */
 	@CrossOrigin("*")
 	@GetMapping("/boleto")
-	public ResponseEntity<InputStreamResource> downloadBoleto(@RequestParam String protocolo) {
+	public ResponseEntity<InputStreamResource> downloadBoleto(@RequestParam String protocolo) throws Exception {
 
-		try {
+		Licenca licenca = facade.consultar(protocolo);
 
-			var licenca = facade.consultar(protocolo);
-
-			String caminhoBoleto;
-
-			if(licenca.getTitulo().getDataVencimento().compareTo(LocalDate.now()) != -1) {
-				caminhoBoleto = licenca.getTitulo().getArquivoBoleto().getCaminhoArquivo();
-			} else {
-				caminhoBoleto = registroApplication.regerarBoleto(licenca);
-			}
-
-			var boleto = new File(caminhoBoleto);
-
-			var httpHeaders = new HttpHeaders();
-			httpHeaders.setContentType(MediaType.APPLICATION_PDF);
-
-			var isr = new InputStreamResource(new FileInputStream(boleto));
-
-			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
-
-		} catch (IOException | NullPointerException e) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		if(licenca == null) {
+			throw new Exception("Não foi encontrada nenhuma licença com o protocolo informado");
 		}
+
+		File documentoArrecadacao = convenioBuilder.geraDocumentoArrecadacao(licenca);
+
+		return downloadArquivo(documentoArrecadacao, NOME_BOLETO_COM_EXTENSAO);
 
 	}
 
@@ -232,25 +202,14 @@ public class ConsultaController {
 
 	@CrossOrigin("*")
 	@GetMapping("/teste")
-	public ResponseEntity<InputStreamResource> downloadCarteira() {
+	public ResponseEntity<InputStreamResource> downloadCarteira() throws Exception {
 
-		try {
+//		Licenca licenca = facade.consultar("LPE-0000/19");
+		Licenca licenca = facade.consultar("LPR-0000/19");
 
-			Map<String,String> data = new HashMap<String,String>();
-			data.put("baseUrl", Properties.baseUrl());
+		File documentoArrecadacao = convenioBuilder.geraDocumentoArrecadacao(licenca);
 
-			var httpHeaders = new HttpHeaders();
-			httpHeaders.setContentType(MediaType.APPLICATION_PDF);
-
-			var isr = new InputStreamResource(new FileInputStream(pdfGenaratorUtil.createPdf("cobranca",data)));
-
-			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
-
-		} catch (Exception e) {
-
-			return new ResponseEntity<>((InputStreamResource) null, HttpStatus.NOT_FOUND);
-
-		}
+		return downloadArquivo(documentoArrecadacao, NOME_BOLETO_COM_EXTENSAO);
 
 	}
 

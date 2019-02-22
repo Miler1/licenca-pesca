@@ -64,4 +64,17 @@ public class Modalidade {
 		}
 
 	}
+
+	public String getDescricaoQtdPeixesLimiteCaptura() {
+
+		if(this.id.equals(Modalidades.PESCA_ESPORTIVA.id)) {
+			return "0 (ZERO)";
+		} else if(this.id.equals(Modalidades.PESCA_REACREATIVA.id)) {
+			return "05 KG DE PEIXES INTEIROS";
+		} else {
+			return "";
+		}
+
+	}
+
 }

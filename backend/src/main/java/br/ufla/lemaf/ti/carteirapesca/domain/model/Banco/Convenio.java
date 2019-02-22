@@ -45,6 +45,7 @@ public class Convenio implements Entity<Convenio, Integer> {
 	@Column(name = "data_vencimento")
 	private LocalDate dataVencimento;
 
+	@Setter
 	@Column(name = "nosso_numero")
 	private Integer nossoNumero;
 
@@ -55,17 +56,14 @@ public class Convenio implements Entity<Convenio, Integer> {
 	@Setter
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_arquivo", referencedColumnName="id")
-	private Arquivo arquivoBoleto;
-
-	@Setter
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_arquivo", referencedColumnName="id")
 	private Arquivo documentoArrecadacao;
 
 	@Setter
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_pagamento", referencedColumnName="id")
 	private PagamentoConvenio pagamento;
+
+	public Convenio() {}
 
 	public Convenio(TipoSegmento tipoSegmento,
 					TipoValorEfetivo tipoValorEfetivo,
@@ -81,6 +79,10 @@ public class Convenio implements Entity<Convenio, Integer> {
 		this.dataEmissao = LocalDate.now();
 		this.dataVencimento = LocalDate.of(this.dataEmissao.getYear(), 12, 31);
 
+	}
+
+	public void setNossoNumero(Long qtdCadastrados) {
+		this.nossoNumero =  qtdCadastrados.intValue() + 1;
 	}
 
 	@Override

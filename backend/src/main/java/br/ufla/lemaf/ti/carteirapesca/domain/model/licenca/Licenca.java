@@ -97,7 +97,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@Setter
 	@Getter
 	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="id_convencio")
+	@JoinColumn(name="id_convenio")
 	private Convenio convenio;
 
 	public Licenca(final Protocolo protocolo,

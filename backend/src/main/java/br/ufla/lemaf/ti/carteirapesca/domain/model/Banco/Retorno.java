@@ -35,10 +35,10 @@ public class Retorno implements Entity<Retorno, Integer> {
 	@Column(name = "dt_processamento")
 	private LocalDate dataProcessamento;
 
-	@Column(name = "qtd_titulo_cobranca")
+	@Column(name = "qtd_registros")
 	private Integer qtdTitulosCobranca;
 
-	@Column(name = "valor_titulo_cobranca")
+	@Column(name = "valor_registros")
 	private BigDecimal valorTitulosCobranca;
 
 	@Column(name = "qtd_confirmacao_entrada")
