@@ -4,13 +4,13 @@ import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoSegmentoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoValorEfetivoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.ConvenioRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoSegmentoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoValorEfetivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ConvenioBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.BancoUtils;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ImagemUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.PdfGeneratorUtil;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.pdf.BarcodeInter25;
@@ -26,8 +26,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +37,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 
 	private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/YYYY");
 	private static final DateTimeFormatter FORMATO_DATA_CODIGO_BARRAS = DateTimeFormatter.ofPattern("YYYYMMdd");
+	private static final String ESTENSAO_IMAGEM = "png";
 
 	@Autowired
 	PdfGeneratorUtil pdfGenaratorUtil;
@@ -59,18 +58,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 	ConvenioRepository convenioRepository;
 
 	@Override
-	public Convenio geraDocumentoArrecadacao(Protocolo protocolo, Modalidade modalidade, Pessoa pessoa) throws Exception {
-
-		Convenio convenio = geraConvenio(modalidade, pessoa);
-
-		File documentoArrecadação = geraDocumentoArrecadacao(convenio);
-
-
-
-		return null;
-	}
-
-	private Convenio geraConvenio(Modalidade modalidade, Pessoa pessoa) {
+	public Convenio geraConvenio(Modalidade modalidade, Pessoa pessoa) {
 
 		TipoSegmento tipoSegmento = tipoSegmentoRepository.findByCodigo(TipoSegmentoEnum.ORGAO_GOVERNAMENTAL.getCodigo());
 		TipoValorEfetivo tipoValorEfetivo = tipoValorEfetivoRepository.findByCodigo(TipoValorEfetivoEnum.VALOR_REAIS_MODULO_10.getCodigo());
@@ -82,6 +70,42 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		convenio.setCodigoBarras(geraLinhaDigitavel(convenio));
 
 		return convenio;
+
+	}
+
+	@Override
+	public File geraDocumentoArrecadacao(Convenio convenio) throws Exception {
+
+		Map<String, String> dadosDocumento = new HashMap<>();
+
+		Beneficiario beneficiario = convenio.getBeneficiario();
+		dadosDocumento.put("nomeBeneficiario", beneficiario.getNome());
+		dadosDocumento.put("cnpjBeneficario", "CNPJ: " + beneficiario.getCpfCnpj());
+		dadosDocumento.put("enderecoBeneficiario", beneficiario.getEndereco().getDescricaoEndereco());
+		dadosDocumento.put("cepBeneficiario", beneficiario.getEndereco().getCep());
+		dadosDocumento.put("municipioBeneficiario", beneficiario.getEndereco().getMunicipio());
+		dadosDocumento.put("ufBeneficiario", beneficiario.getEndereco().getEstado());
+
+		dadosDocumento.put("dataEmissao", convenio.getDataEmissao().format(FORMATO_DATA));
+		dadosDocumento.put("dataVencimento", convenio.getDataVencimento().format(FORMATO_DATA));
+		dadosDocumento.put("valor", "R$ " + convenio.getValor().setScale(2, BigDecimal.ROUND_HALF_EVEN));
+
+		PagadorTitulo pagador = convenio.getPagador();
+		dadosDocumento.put("nomePagador", pagador.getNome());
+		dadosDocumento.put("cpfPassaportePagador", pagador.getCpfPassaporte());
+		dadosDocumento.put("enderecoPagador", pagador.getEndereco().getDescricaoEndereco());
+		dadosDocumento.put("municipioPagador", pagador.getEndereco().getMunicipio());
+		dadosDocumento.put("ufPagador", pagador.getEndereco().getEstado());
+		dadosDocumento.put("cepPagador", pagador.getEndereco().getCep());
+
+		dadosDocumento.put("codigoLicenca", "<INSERIR>");
+		dadosDocumento.put("modalidaLicenca", "<INSERIR>");
+		dadosDocumento.put("limiteCapturaLicenca", "<INSERIR>");
+
+		dadosDocumento.put("linhaDigitavel", convenio.getCodigoBarras());
+		dadosDocumento.put("imagemCodigoBarras", ImagemUtils.converBase64(geraImagemCodigoBarras(convenio.getCodigoBarras()), ESTENSAO_IMAGEM) );
+
+		return pdfGenaratorUtil.createPdf("cobranca", dadosDocumento);
 
 	}
 
@@ -131,40 +155,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 
 	}
 
-	private File geraDocumentoArrecadacao(Convenio convenio) throws Exception {
 
-		Map<String, String> dadosDocumento = new HashMap<>();
-
-		Beneficiario beneficiario = convenio.getBeneficiario();
-		dadosDocumento.put("nomeBeneficiario", beneficiario.getNome());
-		dadosDocumento.put("cnpjBeneficario", "CNPJ: " + beneficiario.getCpfCnpj());
-		dadosDocumento.put("enderecoBeneficiario", beneficiario.getEndereco().getDescricaoEndereco());
-		dadosDocumento.put("cepBeneficiario", beneficiario.getEndereco().getCep());
-		dadosDocumento.put("municipioBeneficiario", beneficiario.getEndereco().getMunicipio());
-		dadosDocumento.put("ufBeneficiario", beneficiario.getEndereco().getEstado());
-
-		dadosDocumento.put("dataEmissao", convenio.getDataEmissao().format(FORMATO_DATA));
-		dadosDocumento.put("dataVencimento", convenio.getDataVencimento().format(FORMATO_DATA));
-		dadosDocumento.put("valor", "R$ " + convenio.getValor().setScale(2, BigDecimal.ROUND_HALF_EVEN));
-
-		PagadorTitulo pagador = convenio.getPagador();
-		dadosDocumento.put("nomePagador", pagador.getNome());
-		dadosDocumento.put("cpfPassaportePagador", pagador.getCpfPassaporte());
-		dadosDocumento.put("enderecoPagador", pagador.getEndereco().getDescricaoEndereco());
-		dadosDocumento.put("municipioPagador", pagador.getEndereco().getMunicipio());
-		dadosDocumento.put("ufPagador", pagador.getEndereco().getEstado());
-		dadosDocumento.put("cepPagador", pagador.getEndereco().getCep());
-
-		dadosDocumento.put("codigoLicenca", "<INSERIR>");
-		dadosDocumento.put("modalidaLicenca", "<INSERIR>");
-		dadosDocumento.put("limiteCapturaLicenca", "<INSERIR>");
-
-		dadosDocumento.put("linhaDigitavel", convenio.getCodigoBarras());
-		dadosDocumento.put("pathImagemCodigoBarras", geraCodigoBarras("83620000000-5 72950138000-4 26497378133-1 08070582559-6"));
-
-		return pdfGenaratorUtil.createPdf("cobranca", dadosDocumento);
-
-	}
 
 	private String geraLinhaDigitavel(Convenio convenio) {
 
@@ -210,7 +201,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		
 	}
 	
-	private String geraCodigoBarras(String linhaDigitavel) throws IOException, DocumentException {
+	private BufferedImage geraImagemCodigoBarras(String linhaDigitavel) throws IOException, DocumentException {
 
 		BarcodeInter25 codigoBarras = new BarcodeInter25();
 		codigoBarras.setGenerateChecksum(false);
@@ -229,7 +220,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 
 	}
 
-	private String geraImagemCodigoBarras(BarcodeInter25 codigoBarras) throws IOException {
+	private BufferedImage geraImagemCodigoBarras(BarcodeInter25 codigoBarras) throws IOException {
 
 		java.awt.Image imagemAwt = codigoBarras.createAwtImage(Color.BLACK, Color.WHITE);
 
@@ -239,10 +230,12 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		bGr.drawImage(imagemAwt, 0, 0, null);
 		bGr.dispose();
 
-		File file  = new File(UUID.randomUUID() + ".png");
-		ImageIO.write(bimage, "png", file);
+		File file  = new File(UUID.randomUUID() + "." + ESTENSAO_IMAGEM);
+		ImageIO.write(bimage, ESTENSAO_IMAGEM, file);
 
-		return file.getAbsolutePath();
+		ImageIO.read(file);
+
+		return ImageIO.read(file);
 
 	}
 

@@ -3,8 +3,8 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.CabecalhoRetornoDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TraillerRetornoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.CabecalhoRetornoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.TraillerRetornoDTO;
 import lombok.Getter;
 import lombok.Setter;
 

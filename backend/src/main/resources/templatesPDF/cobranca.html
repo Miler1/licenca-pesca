@@ -163,150 +163,148 @@
 	</style>
 </head>
 <body>
-<div class="content">
-	<div class="logo-informacoes-ipaam">
-		<div class="images-logo">
+	<div class="content">
+		<div class="logo-informacoes-ipaam">
+			<div class="images-logo">
 
-			<img id="brasao-ipaam" th:src="${baseUrl + '/images/logo-Governo-2018.png'}" />
+				<img id="brasao-ipaam" th:src="${baseUrl + '/images/logo-Governo-2018.png'}" />
 
-			<img id="ipaam" th:src="${baseUrl + '/images/IPAAM.png'}" />
+				<img id="ipaam" th:src="${baseUrl + '/images/IPAAM.png'}" />
+			</div>
+			<div class="titulo">
+
+				<div th:text="${nomeBeneficiario}"></div>
+				<div th:text="${cnpjBeneficario}"></div>
+				<div th:text="${enderecoBeneficiario}"></div>
+				<div th:text="${cepBeneficiario} - ${municipioBeneficiario} - ${ufBeneficiario}"></div>
+			</div>
 		</div>
-		<div class="titulo">
 
-			<div th:text="${nomeBeneficiario}"></div>
-			<div th:text="${cnpjBeneficario}"></div>
-			<div th:text="${enderecoBeneficiario}"></div>
-			<div th:text="${cepBeneficiario} - ${municipioBeneficiario} - ${ufBeneficiario}"></div>
-		</div>
-	</div>
-
-	<span>Dados do pagamento</span>
-	<div class="dados-pagamento">
-		<ul class="w100">
-			<li class="w40">Pagável apenas através do banco Bradesco</li>
-			<li class="w19">
-				<div class="bold">Emissão:</div>
-				<div th:text="${dataEmissao}"></div>
-			</li>
-			<li class="w19">
-				<div class="bold">Vencimento:</div>
-				<div th:text="${dataVencimento}"></div>
-			</li>
-			<li class="w19">
-				<div class="bold">Valor:</div>
-				<div th:text="${valor}"></div>
-			</li>
-		</ul>
-	</div>
-
-	<span>Dados pessoais</span>
-	<div class="dados-pessoais">
-		<div>
-
-			<ul class="dados-pagamento-ul">
-				<li class="nome-dados-pessoais">
-					<div class="bold">Nome:</div>
-					<div th:text="${nomePagador}"></div>
-				</li>
-				<li class="cpf-passaporte">
-					<div class="bold">CPF/Passaporte:</div>
-					<div th:text="${cpfPassaportePagador}"></div>
-				</li>
-			</ul>
-		</div>
-		<div>
-
-			<ul class="dados-pagamento-ul">
-				<li class="nome-dados-pessoais">
-					<div class="bold">Endereço:</div>
-					<div th:text="${enderecoPagador}"></div>
-				</li>
-				<li class="municipio">
-					<div class="bold">Município/UF:</div>
-					<div th:text="${municipioPagador}/${ufPagador}"></div>
-				</li>
-				<li class="cep">
-					<div class="bold">CEP:</div>
-					<div th:text="${cepPagador}"></div>
-				</li>
-			</ul>
-		</div>
-	</div>
-	Dados da Carteira de Pesca
-	<div class="dados-carteira">
-		<div>
+		<span>Dados do pagamento</span>
+		<div class="dados-pagamento">
 			<ul class="w100">
-				<li class="w33 pl2mm">
-					<div class="bold">Número:</div>
-					<div th:text="${codigoLicenca}"></div>
-				</li>
-				<li class="w33">
-					<div class="bold">Modalidade:</div>
-					<div th:text="${modalidaLicenca}"></div>
-				</li>
-				<li class="w31">
-					<div class="bold">Limite de captura:</div>
-					<div th:text="${limiteCapturaLicenca}"></div>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<span>Informações</span>
-	<div class="informacoes">
-		<div>
-			Você poderá obter sua Licença de Pesca provisória no momento do cadastro. Quando solicitada, a Licença de Pesca precisa estar acompanhada do comprovante de pagamento deste documento.
-		</div>
-		<div>
-			Em até 3 dias utéis após o pagamento deste documento, o sistema de emissão de Carteira de Pesca irá disponibilizar a Licença definitiva, a qual não necessita do comprovante de pagamento.
-		</div>
-		<div>
-			Para acompanhar o status da sua Carteira de Pesca, acessa: www.sistemas.ipaam.am.gov.br/carteira-pesca
-		</div>
-	</div>
-	<div class="separator"></div>
-	Dados do pagamento
-	<div class="dados-pagamento">
-		<div>
-
-			<ul class="dados-pagamento-ul">
-				<li class="nome-dados-pessoais">
-					<div class="bold">Nome:</div>
-					<div th:text="${nomePagador}"></div>
-				</li>
-				<li class="cpf-passaporte">
-					<div class="bold">CPF/Passaporte:</div>
-					<div th:text="${cpfPassaportePagador}"></div>
-				</li>
-			</ul>
-		</div>
-		<div>
-
-			<ul class="dados-pagamento-ul">
-				<li class="nome-dados-pessoais">
+				<li class="w40">Pagável apenas através do banco Bradesco</li>
+				<li class="w19">
 					<div class="bold">Emissão:</div>
 					<div th:text="${dataEmissao}"></div>
 				</li>
-				<li class="municipio">
+				<li class="w19">
 					<div class="bold">Vencimento:</div>
 					<div th:text="${dataVencimento}"></div>
 				</li>
-				<li class="cep">
+				<li class="w19">
 					<div class="bold">Valor:</div>
 					<div th:text="${valor}"></div>
 				</li>
 			</ul>
 		</div>
-	</div>
-	<ul class="w100">
 
-		<li class="w60">
-			<img id="codigo-de-barras" th:src="${pathImagemCodigoBarras}" />
-			<div style="font-size: 13px;" th:text="${linhaDigitavel}"></div>
-		</li>
-		<li class="autenticacao-mecanica"><div class="autenticacao-mecanica-label">Autenticação mecânica</div></li>
-	</ul>
-</div>
+		<span>Dados pessoais</span>
+		<div class="dados-pessoais">
+			<div>
+				<ul class="dados-pagamento-ul">
+					<li class="nome-dados-pessoais">
+						<div class="bold">Nome:</div>
+						<div th:text="${nomePagador}"></div>
+					</li>
+					<li class="cpf-passaporte">
+						<div class="bold">CPF/Passaporte:</div>
+						<div th:text="${cpfPassaportePagador}"></div>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<ul class="dados-pagamento-ul">
+					<li class="nome-dados-pessoais">
+						<div class="bold">Endereço:</div>
+						<div th:text="${enderecoPagador}"></div>
+					</li>
+					<li class="municipio">
+						<div class="bold">Município/UF:</div>
+						<div th:text="${municipioPagador}/${ufPagador}"></div>
+					</li>
+					<li class="cep">
+						<div class="bold">CEP:</div>
+						<div th:text="${cepPagador}"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		Dados da Carteira de Pesca
+		<div class="dados-carteira">
+			<div>
+				<ul class="w100">
+					<li class="w33 pl2mm">
+						<div class="bold">Número:</div>
+						<div th:text="${codigoLicenca}"></div>
+					</li>
+					<li class="w33">
+						<div class="bold">Modalidade:</div>
+						<div th:text="${modalidaLicenca}"></div>
+					</li>
+					<li class="w31">
+						<div class="bold">Limite de captura:</div>
+						<div th:text="${limiteCapturaLicenca}"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<span>Informações</span>
+		<div class="informacoes">
+			<div>
+				Você poderá obter sua Licença de Pesca provisória no momento do cadastro. Quando solicitada, a Licença de Pesca precisa estar acompanhada do comprovante de pagamento deste documento.
+			</div>
+			<div>
+				Em até 3 dias utéis após o pagamento deste documento, o sistema de emissão de Carteira de Pesca irá disponibilizar a Licença definitiva, a qual não necessita do comprovante de pagamento.
+			</div>
+			<div>
+				Para acompanhar o status da sua Carteira de Pesca, acessa: www.sistemas.ipaam.am.gov.br/carteira-pesca
+			</div>
+		</div>
+		<div class="separator"></div>
+		Dados do pagamento
+		<div class="dados-pagamento">
+			<div>
+				<ul class="dados-pagamento-ul">
+					<li class="nome-dados-pessoais">
+						<div class="bold">Nome:</div>
+						<div th:text="${nomePagador}"></div>
+					</li>
+					<li class="cpf-passaporte">
+						<div class="bold">CPF/Passaporte:</div>
+						<div th:text="${cpfPassaportePagador}"></div>
+					</li>
+				</ul>
+			</div>
+
+			<div>
+				<ul class="dados-pagamento-ul">
+					<li class="nome-dados-pessoais">
+						<div class="bold">Emissão:</div>
+						<div th:text="${dataEmissao}"></div>
+					</li>
+					<li class="municipio">
+						<div class="bold">Vencimento:</div>
+						<div th:text="${dataVencimento}"></div>
+					</li>
+					<li class="cep">
+						<div class="bold">Valor:</div>
+						<div th:text="${valor}"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<ul class="w100">
+			<li class="w60">
+				<img id="codigo-de-barras" th:src="'data:image/png;base64,' +${imagemCodigoBarras}" />
+				<div style="font-size: 13px;" th:text="${linhaDigitavel}"></div>
+			</li>
+			<li class="autenticacao-mecanica">
+				<div class="autenticacao-mecanica-label">Autenticação mecânica</div>
+			</li>
+		</ul>
+	</div>
 
 </body>
 </html>
