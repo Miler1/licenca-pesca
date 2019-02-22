@@ -123,7 +123,7 @@ export default {
         this.$router.push({ name: 'renovar', params: { protocolo: protocoloDesformatado }})
     },
     verificarRenovacao(lista) {
-        return lista.status.codigo === 'VENCIDO' && lista.podeRenovar;
+        return lista.status.codigo === 'VENCIDO' || lista.podeRenovar;
     },
     setDataVencimento(lista){
         if(lista.status.codigo !== 'AGUARDANDO_PAGAMENTO'){

@@ -34,7 +34,7 @@ public final class Constants {
 
 	public static final Integer NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE = 3;
 
-	public static final String INTERVALO_ATUALIZACAO_AUTOMATICA = " 0 0/5 * 1/1 * ?"; // ALTERAR PÓS TESTE 5 minutos
+	public static final String INTERVALO_ATUALIZACAO_AUTOMATICA = "0 0 0 1/1 * ?";
 
 	public static final Integer HORAS_BLOQUEIO_SOLICITANTE = 2;
 

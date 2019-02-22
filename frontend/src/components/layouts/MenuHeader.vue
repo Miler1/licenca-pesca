@@ -1,19 +1,21 @@
 <template lang="pug">
 	#menu-header
 		.menu
-			.left
-				.home(v-on:click="goHome()")
-					.logo-image
-					.logo-text 
-						.sigla
-							| IPAAM
-						.completo
-							| Instituto de Proteção Ambiental do Amazonas
+			.flex-item
+				.left
+					.home(v-on:click="goHome()")
+						.logo-image
+						.logo-text 
+							.sigla
+								| IPAAM
+							.completo
+								| Instituto de Proteção Ambiental do Amazonas
 			.right
-				.locale
-					i.mdi.mdi-translate
-					el-select(v-model="$i18n.locale" @change="handleLocale")
-						el-option(v-for="(lang, i) in langs" :key="i" :value="lang") {{ lang }}
+				.flex-item
+					.locale
+						i.mdi.mdi-translate
+						el-select(v-model="$i18n.locale" @change="handleLocale")
+							el-option(v-for="(lang, i) in langs" :key="i" :value="lang") {{ lang }}
 
 
 </template>
@@ -68,6 +70,10 @@ export default {
 					text-decoration: none
 					cursor: pointer
 
+			.flex-item
+				flex: 1
+				display: grid
+
 				.logo-image
 					color: white
 					height: 100px
@@ -109,4 +115,31 @@ export default {
 					.el-select
 						width: 90px
 
+		@media screen and (max-width: 600px) 
+			.menu 
+				padding: 0 10px 0 5px	!important
+			.logo-image
+					height: 80px !important
+					width: 120px !important
+					margin-right: 0px !important
+					margin-left: 0px !important
+			.logo-text
+				.completo
+					font-size: 9px !important
+					width: 120px !important
+				.sigla
+					font-size: 19px
+			.right
+				width: 100px !important
+				.locale
+					i
+						color: $--cor-tema-primario
+						font-size: 16px !important
+						padding-right: 0
+
+					.el-input__inner
+						border: none
+
+					.el-select
+						width: 85px !important
 </style>

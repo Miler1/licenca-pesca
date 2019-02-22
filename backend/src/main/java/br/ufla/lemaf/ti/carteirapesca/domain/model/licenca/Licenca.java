@@ -185,7 +185,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		if (!status.getId().equals(Status.StatusEnum.ATIVO.id) && !status.getId().equals(Status.StatusEnum.VENCIDO.id)) {
 			return false;
 		}
-		if (solicitante.pussuiLicencaAtiva(modalidade)){
+		if (status.getId().equals(Status.StatusEnum.VENCIDO.id) && solicitante.pussuiLicencaAtiva(modalidade)){
 			return false;
 		}
 		var vencimento = this.getDataVencimento();
