@@ -55,11 +55,6 @@ public class Convenio implements Entity<Convenio, Integer> {
 
 	@Setter
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_arquivo", referencedColumnName="id")
-	private Arquivo documentoArrecadacao;
-
-	@Setter
-	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_pagamento", referencedColumnName="id")
 	private PagamentoConvenio pagamento;
 
