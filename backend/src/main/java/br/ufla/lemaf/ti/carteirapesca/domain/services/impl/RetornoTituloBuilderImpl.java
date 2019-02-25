@@ -14,9 +14,9 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.CabecalhoRetornoDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TraillerRetornoDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TransacaoRetornoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.CabecalhoRetornoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.TraillerRetornoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.TransacaoRetornoDTO;
 import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class RetornoBuilderImpl implements RetornoBuilder {
+public class RetornoTituloBuilderImpl implements RetornoBuilder {
 
 	private static final String EXTENSAO_ARQUIVO_RETORNO = ".RET";
 

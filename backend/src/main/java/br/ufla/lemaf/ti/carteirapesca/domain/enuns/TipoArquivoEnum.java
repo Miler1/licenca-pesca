@@ -2,25 +2,23 @@ package br.ufla.lemaf.ti.carteirapesca.domain.enuns;
 
 public enum TipoArquivoEnum {
 
-	BOLETO(1, "BOLETO", "Arquivo pdf do boleto que foi gerado"),
-	REMESSA(2, "REMESSA", "Arquivo com os dados dos boletos que são enviados ao banco"),
-	RETORNO(3, "RETORNO", "Arquivo com os dados dos boletos que foram processador pelo banco");
+	BOLETO(1, "BOLETO"),
+	REMESSA(2, "REMESSA"),
+	RETORNO(3, "RETORNO"),
+	DOCUMENTO_ARRECADACAO(4, "DOCUMENTO_ARRECADACAO");
 
 	private Integer id;
 	private String codigo;
-	private String descricao;
 
-	TipoArquivoEnum(Integer id, String codigo, String descricao) {
+	TipoArquivoEnum(Integer id, String codigo) {
 
 		this.id = id;
 		this.codigo = codigo;
-		this.descricao = descricao;
 
 	}
 
 	public String getCodigo() {
 		return codigo;
 	}
-
 
 }

@@ -9,7 +9,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RemessaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RemessaBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.StringUtils;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.BancoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jrimum.texgit.FlatFile;
 import org.jrimum.texgit.Record;
@@ -33,6 +33,10 @@ import java.util.List;
 @Service
 public class RemessaBuilderImpl implements RemessaBuilder {
 
+	private static final String PATH_TEMPLATE_REMESSA = "templates/banco/remessa/bradesco_remessa_cnab400.txg.xml";
+	private static final DateTimeFormatter FORMATO_DATA_REMESSA = DateTimeFormatter.ofPattern("ddMMyy");
+	private static final DateTimeFormatter FORMATO_DATA_NOME_ARQUIVO_REMESSA = DateTimeFormatter.ofPattern("ddMM");
+
 	@Autowired
 	RemessaRepository remessaRepository;
 
@@ -41,10 +45,6 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 	@Autowired
 	TituloRepository tituloRepository;
-
-	private static final String PATH_TEMPLATE_REMESSA = "templates/banco/remessa/bradesco_remessa_cnab400.txg.xml";
-	private static final DateTimeFormatter FORMATO_DATA_REMESSA = DateTimeFormatter.ofPattern("ddMMYY");
-	private static final DateTimeFormatter FORMATO_DATA_NOME_ARQUIVO_REMESSA = DateTimeFormatter.ofPattern("ddMM");
 
 	@Override
 	public Remessa geraRemessa() throws IOException {
@@ -142,10 +142,10 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 		Record header = flatFile.createRecord("Header");
 
-		header.setValue("CodigoDaEmpresa", StringUtils.completaStringComZerosEsquerda(20, beneficiario.getConvenio()));
-		header.setValue("NomeEmpresa", StringUtils.completaStringComEspacosDireita(30, beneficiario.getSigla()));
+		header.setValue("CodigoDaEmpresa", BancoUtils.completaStringComZerosEsquerda(20, beneficiario.getConvenio()));
+		header.setValue("NomeEmpresa", BancoUtils.completaStringComEspacosDireita(30, beneficiario.getBeneficiario().getSigla()));
 		header.setValue("DataGravacaoArquivo", LocalDate.now().format(FORMATO_DATA_REMESSA));
-		header.setValue("EspacoBranco", StringUtils.completaStringComEspacosEsquerda(8, ""));
+		header.setValue("EspacoBranco", BancoUtils.completaStringComEspacosEsquerda(8, ""));
 		header.setValue("NumeroSequencialRemessa", remessa.getSequencia());
 		header.setValue("sequencia", 1);
 
@@ -159,27 +159,27 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 		BeneficiarioTitulo beneficiario = titulo.getBeneficiario();
 
-		transacao.setValue("OpcionalAgenciaDebito", StringUtils.completaStringComZerosEsquerda(5, ""));
-		transacao.setValue("OpcionalDigitoAgenciaDebito", StringUtils.completaStringComZerosEsquerda(1, ""));
-		transacao.setValue("OpcionalRazaoContaCorrente", StringUtils.completaStringComZerosEsquerda(5, ""));
-		transacao.setValue("OpcionalContaCorrente", StringUtils.completaStringComZerosEsquerda(7, ""));
-		transacao.setValue("OpcionalDigitoContaCorrente", StringUtils.completaStringComZerosEsquerda(1, ""));
-		transacao.setValue("IdentificacaoEmpresaCarteira", StringUtils.completaStringComZerosEsquerda(4, beneficiario.getCarteira()));
-		transacao.setValue("IdentificacaoEmpresaAgenciaSemDigito", StringUtils.completaStringComZerosEsquerda(5, beneficiario.getAgencia()));
-		transacao.setValue("IdentificacaoEmpresaContaCorrente", StringUtils.completaStringComZerosEsquerda(7, beneficiario.getContaCorrente()));
+		transacao.setValue("OpcionalAgenciaDebito", BancoUtils.completaStringComZerosEsquerda(5, ""));
+		transacao.setValue("OpcionalDigitoAgenciaDebito", BancoUtils.completaStringComZerosEsquerda(1, ""));
+		transacao.setValue("OpcionalRazaoContaCorrente", BancoUtils.completaStringComZerosEsquerda(5, ""));
+		transacao.setValue("OpcionalContaCorrente", BancoUtils.completaStringComZerosEsquerda(7, ""));
+		transacao.setValue("OpcionalDigitoContaCorrente", BancoUtils.completaStringComZerosEsquerda(1, ""));
+		transacao.setValue("IdentificacaoEmpresaCarteira", BancoUtils.completaStringComZerosEsquerda(4, beneficiario.getCarteira()));
+		transacao.setValue("IdentificacaoEmpresaAgenciaSemDigito", BancoUtils.completaStringComZerosEsquerda(5, beneficiario.getAgencia()));
+		transacao.setValue("IdentificacaoEmpresaContaCorrente", BancoUtils.completaStringComZerosEsquerda(7, beneficiario.getContaCorrente()));
 		transacao.setValue("IdentificacaoEmpresaDigitoContaCorrente", beneficiario.getDigitoContaCorrente());
-		transacao.setValue("NumeroControleParticipante", StringUtils.completaStringComZerosEsquerda(25, titulo.getId().toString()));
-		transacao.setValue("CodigoBancoParaDebitoAutomatico", StringUtils.completaStringComZerosEsquerda(3, ""));
+		transacao.setValue("NumeroControleParticipante", BancoUtils.completaStringComZerosEsquerda(25, titulo.getId().toString()));
+		transacao.setValue("CodigoBancoParaDebitoAutomatico", BancoUtils.completaStringComZerosEsquerda(3, ""));
 
 		/** Possui cobranca multa (0 - sem multa; 2 - Considerar cobranca)*/
-		transacao.setValue("PossuiCobrancaMulta", StringUtils.completaStringComZerosEsquerda(1, ""));
-		transacao.setValue("PercentualMulta", StringUtils.completaStringComZerosEsquerda(4, ""));
+		transacao.setValue("PossuiCobrancaMulta", BancoUtils.completaStringComZerosEsquerda(1, ""));
+		transacao.setValue("PercentualMulta", BancoUtils.completaStringComZerosEsquerda(4, ""));
 
 		/**Nosso número*/
-		String nossoNumero = StringUtils.completaStringComZerosEsquerda(11, titulo.getNossoNumero());
+		String nossoNumero = BancoUtils.completaStringComZerosEsquerda(11, titulo.getNossoNumero());
 		transacao.setValue("IdentificacaoTituloBanco", nossoNumero);
 		transacao.setValue("DigitoIdentificacaoTituloBanco", calculaDigitoVerificadorNossoNumero(beneficiario.getCarteira(), nossoNumero));
-		transacao.setValue("DescontoBonificacaoPorDia", StringUtils.completaStringComZerosEsquerda(10, ""));
+		transacao.setValue("DescontoBonificacaoPorDia", BancoUtils.completaStringComZerosEsquerda(10, ""));
 
 		/**Condições emissão papeleta: (1 - Banco emite e processa o registro; 2 - Cliente emite e banco processa o registro) */
 		transacao.setValue("CondicaoEmissaoPapeletaCobranca", "2");
@@ -187,10 +187,10 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		/**Emite boleto para debito automático: (N - Não registra na cobrança; Diferente de N - registra e emite o boleto) */
 		transacao.setValue("BoletoParaDebitoAutomatico", "N");
 
-		transacao.setValue("IdentificacaoOperacaoBanco", StringUtils.completaStringComEspacosEsquerda(10, ""));
+		transacao.setValue("IdentificacaoOperacaoBanco", BancoUtils.completaStringComEspacosEsquerda(10, ""));
 
 		/**Indicadores de Rateio de Crédito: (R - se empresa contratou rateio de credito; "espaco em branco" se não foi contratado)*/
-		transacao.setValue("OpcinalIdentificadoRateioCredito", StringUtils.completaStringComEspacosEsquerda(1, ""));
+		transacao.setValue("OpcinalIdentificadoRateioCredito", BancoUtils.completaStringComEspacosEsquerda(1, ""));
 
 		/**Endereçamentos do Aviso de Débito Automático em Conta Corrente
 		 * 1 - Emite aviso e assume endereço do pagador constante na remessa
@@ -202,36 +202,36 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		transacao.setValue("identificacaoOcorrencia", "01");
 		transacao.setValue("NumeroDocumento", titulo.getNossoNumero());
 		transacao.setValue("DataVencimentoTitulo", titulo.getDataVencimento().format(FORMATO_DATA_REMESSA));
-		transacao.setValue("ValorTitulo", StringUtils.completaStringComZerosEsquerda(13, formataValorPadraoRemessa(titulo.getValor())));
-		transacao.setValue("BancoEncarregadoCobranca", StringUtils.completaStringComZerosEsquerda(3, ""));
-		transacao.setValue("AgenciaDepositaria", StringUtils.completaStringComZerosEsquerda(5, ""));
+		transacao.setValue("ValorTitulo", BancoUtils.completaStringComZerosEsquerda(13, BancoUtils.removeFormatacaoValorMonetario(titulo.getValor())));
+		transacao.setValue("BancoEncarregadoCobranca", BancoUtils.completaStringComZerosEsquerda(3, ""));
+		transacao.setValue("AgenciaDepositaria", BancoUtils.completaStringComZerosEsquerda(5, ""));
 		transacao.setValue("EspecieTitulo", titulo.getEspecieDocumento().getCodigoRemessa());
 		transacao.setValue("Identificacao", "N");
 		transacao.setValue("DataEmissaoTitulo", titulo.getDataEmissao().format(FORMATO_DATA_REMESSA));
-		transacao.setValue("PrimeiraInstrucao", StringUtils.completaStringComZerosEsquerda(2, ""));
+		transacao.setValue("PrimeiraInstrucao", BancoUtils.completaStringComZerosEsquerda(2, ""));
 
 		/** Segunda instrução: 09 - Não receber após vencimento*/
 		transacao.setValue("SegundaInstrucao", "09");
-		transacao.setValue("ValorCobradoDiasAtraso", StringUtils.completaStringComZerosEsquerda(13, ""));
+		transacao.setValue("ValorCobradoDiasAtraso", BancoUtils.completaStringComZerosEsquerda(13, ""));
 		transacao.setValue("DataLimiteConcessaoDesconto", titulo.getDataVencimento().format(FORMATO_DATA_REMESSA));
-		transacao.setValue("ValorDesconto", StringUtils.completaStringComZerosEsquerda(13, "1"));
-		transacao.setValue("ValorIOF", StringUtils.completaStringComZerosEsquerda(13, ""));
-		transacao.setValue("ValorAbatimentoASerConcedidoOuCancelado", StringUtils.completaStringComZerosEsquerda(13, ""));
+		transacao.setValue("ValorDesconto", BancoUtils.completaStringComZerosEsquerda(13, "1"));
+		transacao.setValue("ValorIOF", BancoUtils.completaStringComZerosEsquerda(13, ""));
+		transacao.setValue("ValorAbatimentoASerConcedidoOuCancelado", BancoUtils.completaStringComZerosEsquerda(13, ""));
 
 		/** Identificação do tipo inscrição pagador: (01 - CPF; 02 - CNPJ)*/
 		transacao.setValue("IdentificacaoTipoInscricaoPagador", "01");
 
 		//TODO verificar problema quando for pessoa estrangeira pois aceita apenas CPF ou CNPJ
 		PagadorTitulo pagador = titulo.getPagador();
-		transacao.setValue("NumeroInscricaoPagador", StringUtils.completaStringComZerosEsquerda(14, pagador.getCpfPassaporte()));
-		transacao.setValue("NomePagador", StringUtils.completaStringComEspacosDireita(40, validaStringMaiorPermitidoCampo(40, pagador.getNome())));
-		transacao.setValue("EnderecoPagador", StringUtils.completaStringComEspacosDireita(40, getEnderecoCompleto(40, pagador.getEndereco())));
-		transacao.setValue("PrimeiraMensagem", StringUtils.completaStringComEspacosEsquerda(12, ""));
+		transacao.setValue("NumeroInscricaoPagador", BancoUtils.completaStringComZerosEsquerda(14, pagador.getCpfPassaporte()));
+		transacao.setValue("NomePagador", BancoUtils.completaStringComEspacosDireita(40, validaStringMaiorPermitidoCampo(40, pagador.getNome())));
+		transacao.setValue("EnderecoPagador", BancoUtils.completaStringComEspacosDireita(40, getEnderecoCompleto(40, pagador.getEndereco())));
+		transacao.setValue("PrimeiraMensagem", BancoUtils.completaStringComEspacosEsquerda(12, ""));
 
 		String cep = pagador.getEndereco().getCep();
 		transacao.setValue("CepPagador", cep.replaceAll("-", "").substring(0, 5));
 		transacao.setValue("SufixoCepPagador", cep.replaceAll("-", "").substring(5, 8));
-		transacao.setValue("SegundaMensagem", StringUtils.completaStringComEspacosDireita(60, "PAGAVEL EM QUALQUER AGENCIA ATE O VENCIMENTO"));
+		transacao.setValue("SegundaMensagem", BancoUtils.completaStringComEspacosDireita(60, "PAGAVEL EM QUALQUER AGENCIA ATE O VENCIMENTO"));
 		transacao.setValue("sequencia", index);
 
 		return transacao;
@@ -242,7 +242,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 		Record trailler = flatFile.createRecord("Trailler");
 
-		trailler.setValue("EspacoBranco", StringUtils.completaStringComEspacosEsquerda(393, ""));
+		trailler.setValue("EspacoBranco", BancoUtils.completaStringComEspacosEsquerda(393, ""));
 		trailler.setValue("sequencia", index);
 
 		return trailler;
@@ -292,7 +292,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 		//TODO Implementar solução para o nome do arquivo de remessa tenha caracteres alfanuméricos nos últimos 2 digítos
 		String nomeArquivoRemessa = "CB" + LocalDate.now().format(FORMATO_DATA_NOME_ARQUIVO_REMESSA) +
-			StringUtils.completaStringComZerosEsquerda(2, remessa.getSequencialNomeArquivo().toString())  + ".REM";
+			BancoUtils.completaStringComZerosEsquerda(2, remessa.getSequencialNomeArquivo().toString())  + ".REM";
 
 		String diretorioDiaGeracaoRemessa = LocalDate.now().format(FORMATO_DATA_REMESSA);
 
@@ -319,14 +319,6 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 		remessa.setArquivo(new Arquivo(pathRemessa.toString(), nomeArquivoRemessa, tipoArquivo));
 
 		return remessaRepository.save(remessa);
-
-	}
-
-	private String formataValorPadraoRemessa(BigDecimal valor) {
-
-		return valor.setScale(2, BigDecimal.ROUND_HALF_EVEN)
-			.toString()
-			.replace(".", "");
 
 	}
 

@@ -1,8 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 
+import java.math.BigDecimal;
 import java.text.Normalizer;
 
-public class StringUtils {
+public class BancoUtils {
 
 	public static String completaStringComZerosEsquerda(Integer tamanhoCampo, String valor) {
 		return completaStringComEspacosEsquerda(tamanhoCampo, valor).replaceAll(" ", "0");
@@ -33,6 +34,14 @@ public class StringUtils {
 		return Normalizer.normalize(valor, Normalizer.Form.NFD)
 			.replaceAll("[^\\p{ASCII}]", "")
 			.replaceAll("[&\\/\\\\#,ºª+()$~%.'\":*?<>{}]", "");
+
+	}
+
+	public static String removeFormatacaoValorMonetario(BigDecimal valor) {
+
+		return valor.setScale(2, BigDecimal.ROUND_HALF_EVEN)
+			.toString()
+			.replace(".", "");
 
 	}
 

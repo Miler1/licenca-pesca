@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Convenio;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.InformacaoComplementar;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
@@ -9,9 +10,10 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.*;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.TituloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
@@ -41,56 +43,31 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegistroApplicationImpl implements RegistroApplication {
 
 	@Autowired
-	ModalidadeRepository modalidadeRepository;
+	private ModalidadeRepository modalidadeRepository;
 
 	@Autowired
-	StatusRepository statusRepository;
+	private StatusRepository statusRepository;
 
 	@Autowired
-	InformacaoComplementarRepository informacaoComplementarRepository;
-
-	@Autowired
-	EnderecoEstrangeiroRepository enderecoEstrangeiroRepository;
-
-	private static final Integer ESPORTIVA = Modalidade.Modalidades.PESCA_ESPORTIVA.id;
-	private static final Integer RECREATIVA = Modalidade.Modalidades.PESCA_REACREATIVA.id;
-
 	private ProtocoloBuilder protocoloBuilder;
-	private CarteiraBuilder carteiraBuilder;
-	private BoletoBuilder boletoBuilder;
-	private LicencaRepository licencaRepository;
-	private  InformacaoComplementarService informacaoComplementarService;
 
+	@Autowired
+	private TituloBuilder tituloBuilder;
+
+	@Autowired
+	private LicencaRepository licencaRepository;
+
+	@Autowired
+	private InformacaoComplementarService informacaoComplementarService;
+
+	@Autowired
 	private SolicitanteRopository solicitanteRopository;
 
-	/**
-	 * Injetando dependências.
-	 *
-	 * @param protocoloBuilder O Builder de protocolo
-	 * @param carteiraBuilder O Builder do arquivo da carteira de pesca
-	 * @param boletoBuilder O Builder do boleto
-	 * @param solicitanteRopository O repositório do solicitante
-	 */
 	@Autowired
-	public RegistroApplicationImpl(final ProtocoloBuilder protocoloBuilder,
-								   final CarteiraBuilder carteiraBuilder,
-								   final BoletoBuilder boletoBuilder,
-								   final SolicitanteRopository solicitanteRopository,
-								   final LicencaRepository licencaRepository,
-								   final InformacaoComplementarService informacaoComplementarService) {
-		this.protocoloBuilder = protocoloBuilder;
-		this.carteiraBuilder = carteiraBuilder;
-		this.boletoBuilder = boletoBuilder;
-		this.solicitanteRopository = solicitanteRopository;
-		this.licencaRepository = licencaRepository;
-		this.informacaoComplementarService = informacaoComplementarService;
-	}
+	private ConvenioBuilderImpl convenioBuilder;
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public Protocolo registrar(final RegistroResource resource) {
+	public Protocolo registrar(final RegistroResource resource) throws Exception {
 
 		WebServiceUtils.validarWebService();
 
@@ -98,34 +75,32 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Protocolo protocolo;
 		Modalidade modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
-		if (!solicitante.pussuiLicencaAtiva(modalidade)) {
+
+		if(!solicitante.pussuiLicencaAtiva(modalidade)) {
 
 			var licenca = criarLicenca(resource, null);
 
 			protocolo = solicitante.adicionarLicenca(licenca, false);
 
-		}else if(!solicitante.pussuiLicencaAtiva(modalidade)) {
-
+		} else if(!solicitante.pussuiLicencaAtiva(modalidade)) {
 			throw new SolicitanteException("solicitante.licenca.ativa");
-
-		}else{
-
+		} else {
 			throw new SolicitanteException("solicitante.licenca.mesma.modalidade");
 		}
 
 		if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
-
 			solicitante.setEnderecoEstrangeiro(resource.getPessoa().getEnderecoEstrangeiro());
 		} else {
 			solicitante.setEnderecoEstrangeiro(null);
 		}
+
 		solicitanteRopository.save(solicitante);
 
 		return protocolo;
 	}
 
 	@Override
-	public Protocolo renovarLicenca(RegistroResource resource, String codigoProtocolo) {
+	public Protocolo renovarLicenca(RegistroResource resource, String codigoProtocolo) throws Exception {
 
 		var solicitante = getSolicitante(resource);
 		Modalidade modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
@@ -136,14 +111,16 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 			var licenca = criarLicenca(resource, protocoloNovo);
 
-
 			Protocolo protocolo = solicitante.adicionarLicenca(licenca, true);
 
-			for(Licenca licenca1: solicitante.getLicenca()){
+			for(Licenca licenca1: solicitante.getLicenca()) {
+
 				String protocoloSemFormatacao = licenca1.getProtocolo().getCodigoFormatado().replace("-", "").replace("/", "");
-				if(protocoloSemFormatacao.equals(codigoProtocolo)){
+
+				if(protocoloSemFormatacao.equals(codigoProtocolo)) {
 					licenca1.setStatus(statusRepository.findById(Status.StatusEnum.RENOVADO.id).get());
 				}
+
 			}
 
 			solicitanteRopository.save(solicitante);
@@ -206,13 +183,15 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		var pessoa = buscarDadosSolicitante(getSolicitante(resource));
 
-		Titulo titulo = boletoBuilder.gerarBoleto(protocolo, modalidade, pessoa);
+		Titulo titulo = tituloBuilder.gerarDocumentoPagamento(protocolo, modalidade, pessoa);
+
+		Convenio convenio = convenioBuilder.geraConvenio(modalidade, pessoa);
 
 		Status status = statusRepository.findById(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id).get();
 
 		InformacaoComplementar informacaoComplementar = informacaoComplementarService.toInformacaoComplementar(resource.getInformacaoComplementar());
 
-		return new Licenca(protocolo, modalidade, informacaoComplementar, status, titulo);
+		return new Licenca(protocolo, modalidade, informacaoComplementar, status, titulo, convenio);
 	}
 
 	/**
@@ -312,7 +291,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Pessoa pessoa = buscarDadosSolicitante(licenca.solicitante());
 
-		Titulo titulo = boletoBuilder.gerarBoleto(licenca.getProtocolo(), licenca.modalidade(), pessoa);
+		Titulo titulo = tituloBuilder.gerarDocumentoPagamento(licenca.getProtocolo(), licenca.modalidade(), pessoa);
 
 		licenca.setDataVencimentoBoleto();
 		licenca.setTitulo(titulo);
@@ -320,7 +299,5 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		return titulo.getArquivoBoleto().getCaminhoArquivo();
 	}
-
-
 
 }

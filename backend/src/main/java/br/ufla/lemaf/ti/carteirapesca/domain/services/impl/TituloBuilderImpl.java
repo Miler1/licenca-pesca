@@ -15,11 +15,12 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioTituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.EspecieDocumentoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.PagadorTituloRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.BoletoBuilder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.PagadorBuilder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.TituloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
@@ -49,16 +50,13 @@ import java.nio.file.Paths;
  */
 @Slf4j
 @Service
-public class BoletoBuilderImpl implements BoletoBuilder {
+public class TituloBuilderImpl implements TituloBuilder {
 
 	@Autowired
-	private BeneficiarioRepository beneficiarioRepository;
+	private BeneficiarioTituloRepository beneficiarioTituloRepository;
 
 	@Autowired
 	private EspecieDocumentoRepository especieDocumentoRepository;
-
-	@Autowired
-	private PagadorTituloRepository pagadorTituloRepository;
 
 	@Autowired
 	private TituloRepository tituloRepository;
@@ -66,10 +64,13 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 	@Autowired
 	private TipoArquivoRepository tipoArquivoRepository;
 
+	@Autowired
+	PagadorBuilderImpl pagadorBuilder;
+
 	@Override
-	public Titulo gerarBoleto(final Protocolo protocolo,
-	                          final Modalidade modalidade,
-	                          final Pessoa pessoa) {
+	public Titulo gerarDocumentoPagamento(final Protocolo protocolo,
+							  final Modalidade modalidade,
+							  final Pessoa pessoa) {
 
 		try {
 
@@ -124,46 +125,17 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 		val bradesco = new Bradesco();
 
-		BeneficiarioTitulo beneficiarioTitulo = beneficiarioRepository.findByBancoCodigo(bradesco.getNumeroFormatado());
+		BeneficiarioTitulo beneficiarioTitulo = beneficiarioTituloRepository.findByBancoCodigo(bradesco.getNumeroFormatado());
 
 		EspecieDocumento especieDocumento = especieDocumentoRepository.findByCodigo(EspecieDocumentoEnum.DUPLICATA_MERCANTIL.getCodigo());
 
-		PagadorTitulo pagadorTitulo = getPagadorTitulo(pessoa);
+		PagadorTitulo pagadorTitulo = pagadorBuilder.transformarPessoaEmPagador(pessoa);
 
-		Titulo titulo = new Titulo(beneficiarioTitulo, especieDocumento, pagadorTitulo, getValorTitulo(modalidade));
+		Titulo titulo = new Titulo(beneficiarioTitulo, especieDocumento, pagadorTitulo, modalidade.getValor());
 
 		titulo.setNossoNumero(tituloRepository.count());
 
 		return titulo;
-
-	}
-
-	private PagadorTitulo getPagadorTitulo(Pessoa pessoa) {
-
-		String cpfPassaporte = (pessoa.cpf == null ? pessoa.passaporte.toString() : pessoa.cpf);
-
-		PagadorTitulo pagadorTitulo = pagadorTituloRepository.findByCpfPassaporte(cpfPassaporte);
-
-		if(pagadorTitulo == null) {
-			pagadorTitulo = new PagadorTitulo(pessoa.nome, cpfPassaporte);
-
-			main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco = endereco(pessoa);
-
-			Endereco enderecoPagador = new Endereco(endereco.logradouro,
-				(endereco.numero == null ? null : endereco.numero.toString()),
-				endereco.complemento,
-				endereco.bairro,
-				endereco.cep,
-				endereco.municipio.nome,
-				endereco.municipio.estado.sigla);
-
-			pagadorTitulo.setEndereco(enderecoPagador);
-
-			pagadorTituloRepository.save(pagadorTitulo);
-
-		}
-
-		return pagadorTitulo;
 
 	}
 
@@ -192,20 +164,8 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			.comVencimento(titulo.getDataVencimento().getDayOfMonth(), titulo.getDataVencimento().getMonthValue(), titulo.getDataVencimento().getYear());
 	}
 
-	private BigDecimal getValorTitulo(Modalidade modalidade) {
-
-		if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_ESPORTIVA.id)) {
-
-			return new BigDecimal(41.21);
-		} else if(modalidade.getId().equals(Modalidade.Modalidades.PESCA_REACREATIVA.id)) {
-
-			return new BigDecimal(57.21);
-		} else {
-			return new BigDecimal(0);
-		}
-	}
-
 	private main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco(Pessoa pessoa) {
+
 		return pessoa.enderecos
 			.stream()
 			.filter(endereco ->
@@ -219,7 +179,7 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 		BeneficiarioTitulo beneficiarioTitulo = titulo.getBeneficiario();
 
 		Beneficiario beneficiario = Beneficiario.novoBeneficiario()
-			.comNomeBeneficiario(beneficiarioTitulo.getNome())
+			.comNomeBeneficiario(beneficiarioTitulo.getBeneficiario().getNome())
 			.comAgencia(beneficiarioTitulo.getAgencia())
 			.comDigitoAgencia(beneficiarioTitulo.getDigitoAgencia())
 			.comNumeroConvenio(beneficiarioTitulo.getConvenio())
@@ -227,9 +187,8 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 			.comCodigoBeneficiario(beneficiarioTitulo.getCodigoBeneficiario())
 			.comDigitoCodigoBeneficiario(beneficiarioTitulo.getDigitoCodigoBeneficiario())
 			.comNossoNumero(titulo.getNossoNumero())
-			.comDocumento(new CNPJFormatter().format(beneficiarioTitulo.getCpfCnpj()))
-//			.comDigitoNossoNumero(titulo.getDigitoNossoNumero())
-			.comEndereco(montarEndereco(beneficiarioTitulo.getEndereco()));
+			.comDocumento(new CNPJFormatter().format(beneficiarioTitulo.getBeneficiario().getCpfCnpj()))
+			.comEndereco(montarEndereco(beneficiarioTitulo.getBeneficiario().getEndereco()));
 
 		return beneficiario;
 
@@ -247,16 +206,13 @@ public class BoletoBuilderImpl implements BoletoBuilder {
 
 	private br.com.caelum.stella.boleto.Endereco montarEndereco(Endereco endereco) {
 
-		String descricaoEndereco = endereco.getLogradouro() +
-			(endereco.getNumero() == null ? "" : " Nº " + endereco.getNumero()) +
-			(endereco.getComplemento() == null ? "" : ", " + endereco.getComplemento());
-
 		return br.com.caelum.stella.boleto.Endereco.novoEndereco()
-			.comLogradouro(descricaoEndereco)
+			.comLogradouro(endereco.getDescricaoEndereco())
 			.comBairro(endereco.getBairro())
 			.comCep(endereco.getCep())
 			.comCidade(endereco.getMunicipio())
 			.comUf(endereco.getEstado());
 
 	}
+
 }

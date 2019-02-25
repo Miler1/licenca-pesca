@@ -36,7 +36,7 @@ public interface RegistroServiceFacade {
 
 	void atualizarCondicaoVencimento();
 
-	ProtocoloDTO renovarLicenca(RegistroResource resource);
+	ProtocoloDTO renovarLicenca(RegistroResource resource) throws Exception;
 
 	void atualizarCondicaoInvalido();
 
