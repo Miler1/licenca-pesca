@@ -43,12 +43,12 @@
             el-col(:span='24' :class="{'enabled': !desativar }")
               el-upload.upload-demo(drag='', 
                   ref='upload',
-                  :action='url + file' 
+                  :action='url' 
                   :on-remove='handleRemove' 
                   :on-success='success'
                   :auto-upload='false'
                   :limit='quantidadeUploadPorVez'
-                  accept=".pdf") 
+                  accept=".ret") 
                 el-tooltip(placement="top" content="Selecione um tipo de documento para de anexar arquivos!")
                   span.wrapper.el-button
                     el-button.btn.lnr.lnr-upload
@@ -125,7 +125,7 @@ export default {
 
     submitUpload() {
       this.$refs.upload.submit();
-      console.log(file.name);
+      // console.log(file.name);
       // this.$store.dispatch(UPLOAD_ARQUIVO_RETORNO, nomeArquivo);
     },
 

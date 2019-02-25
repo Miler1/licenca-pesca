@@ -82,6 +82,7 @@ public class BancoController {
 
 	}
 
+	@CrossOrigin("*")
 	@PostMapping("/upload-retorno")
 	public ResponseEntity<String> uploadArquivoRetorno(@RequestParam("file") MultipartFile multipartFile) throws Exception {
 
