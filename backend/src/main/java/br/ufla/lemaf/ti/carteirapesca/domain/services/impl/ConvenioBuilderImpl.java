@@ -63,7 +63,8 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 	@Override
 	public Convenio geraConvenio(Modalidade modalidade, Pessoa pessoa) {
 
-		TipoSegmento tipoSegmento = tipoSegmentoRepository.findByCodigo(TipoSegmentoEnum.ORGAO_GOVERNAMENTAL.getCodigo());
+		//TODO Hiago - Alterar tipo de segmento de "TipoSegmentoEnum.ENERGIA_GAS" para "TipoSegmentoEnum.ORGAO_GOVERNAMENTAL"
+		TipoSegmento tipoSegmento = tipoSegmentoRepository.findByCodigo(TipoSegmentoEnum.ENERGIA_GAS.getCodigo());
 		TipoValorEfetivo tipoValorEfetivo = tipoValorEfetivoRepository.findByCodigo(TipoValorEfetivoEnum.VALOR_REAIS_MODULO_10.getCodigo());
 		PagadorTitulo pagadorTitulo = pagadorBuilder.transformarPessoaEmPagador(pessoa);
 		Beneficiario beneficiario = beneficiarioRepository.findBySigla("IPAAM");
@@ -178,23 +179,25 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		Integer tamanhoMaximoCampoLivre = 25;
 
 		linhaDigitavel.append(idProduto)
-//			.append(convenio.getTipoSegmento().getCodigo())
-			//TODO Hiago - descomentar linha acima quando o codigo do convênio for disponibilizado e excluir abaixo
-			.append("3")
+			.append(convenio.getTipoSegmento().getCodigo())
 			.append(convenio.getTipoValorEfetivo().getCodigo())
-//			.append(calculaDigititoAutoConferenciaModuloDez(linhaDigitavel.toString()))
-			//TODO Hiago - descomentar linha acima quando o codigo do convênio for disponibilizado e excluir abaixo
-			.append("3")
 			.append(BancoUtils.completaStringComZerosEsquerda(11, valor))
 			.append(codigoEmpresa)
 			.append(dataVencimento)
 			.append(BancoUtils.completaStringComZerosEsquerda( tamanhoMaximoCampoLivre - dataVencimento.length(),
 				convenio.getNossoNumero().toString()));
 
-		String bloco1 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(0, 11));
-		String bloco2 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(11, 22));
-		String bloco3 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(22, 33));
-		String bloco4 = formatarLinhaDigitavelPorBloco(linhaDigitavel.toString().substring(33, 44));
+		Integer digitoAutoConferenciaGeral = calculaDigititoAutoConferenciaModuloDez(linhaDigitavel.toString());
+
+		/** Inseri digito de auto-conferencia geral*/
+		String linhaDigitavelCompleta = linhaDigitavel.toString().substring(0, 3) +
+			digitoAutoConferenciaGeral +
+			linhaDigitavel.toString().substring(3, 43);
+
+		String bloco1 = formatarLinhaDigitavelPorBloco(linhaDigitavelCompleta.substring(0, 11));
+		String bloco2 = formatarLinhaDigitavelPorBloco(linhaDigitavelCompleta.substring(11, 22));
+		String bloco3 = formatarLinhaDigitavelPorBloco(linhaDigitavelCompleta.substring(22, 33));
+		String bloco4 = formatarLinhaDigitavelPorBloco(linhaDigitavelCompleta.substring(33, 44));
 
 		return (bloco1 + bloco2 + bloco3 + bloco4).trim();
 
