@@ -1,10 +1,11 @@
 <template lang="pug">
 #enviar-retornar-remessa
+  div(v-if="listaRemessasPaginada")
     div.buscar
       h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRemessa`) }} 
       .right
         el-button(slot="append" icon="el-icon-refresh" @click="gerarArquivoRemessa" type="primary") {{ $t(`${remessa_prefix}gerarRemssa`) }}
-    card(v-if="listaRemessasPaginada")
+    card(v-if="listaRemessasPaginada ==! 0")
       el-row
         el-col.tabela(:span="24")
           table#tabela-paginada
@@ -30,7 +31,8 @@
                     :layout="paginacaoDados.layout"
                     :current-page.sync="pagina.atual")
             .infoPagina {{ $t(`${remessa_prefix}paginacao.exibir`) }} {{pagina.atual}} - {{listaRemessasPaginada.numberOfElements}} {{ $t(`${remessa_prefix}paginacao.de`) }}  {{listaRemessasPaginada.totalElements}} {{ $t(`${remessa_prefix}paginacao.qtdRegistros`) }} 
-      div.sem-remessa(v-if="!listaRemessasPaginada || listaRemessasPaginada.length <= 0")
+    card
+      div.sem-remessa(v-if="listaRemessasPaginada.content == 0")
         | {{ $t(`${remessa_prefix}semRemessa`) }}       
 
     h2.title-principal {{ $t(`${remessa_prefix}tituloRetorno`) }}
@@ -39,13 +41,20 @@
         .flex-item
           el-row
             el-col(:span='24' :class="{'enabled': !desativar }")
-              el-upload.upload-demo(drag='', ref='upload', :file-list='fileList', :auto-upload='false' :action='url' :on-remove='handleRemove' :on-success='success' accept=".pdf") 
+              el-upload.upload-demo(drag='', 
+                  ref='upload',
+                  :action='url + file' 
+                  :on-remove='handleRemove' 
+                  :on-success='success'
+                  :auto-upload='false'
+                  :limit='quantidadeUploadPorVez'
+                  accept=".pdf") 
                 el-tooltip(placement="top" content="Selecione um tipo de documento para de anexar arquivos!")
                   span.wrapper.el-button
                     el-button.btn.lnr.lnr-upload
                 .texto-interno {{ $t(`${remessa_prefix}uploadArquivo`) }}
           .retorno
-            el-button(v-if="fileList.length === 0" slot="append" icon="el-icon-upload" @click="submitUpload" type="primary" :disabled="fileList.length === 0") {{ $t(`${remessa_prefix}enviarArquivoRetorno`) }}
+            el-button(slot="append" icon="el-icon-upload" @click="submitUpload" size="small" type="primary") {{ $t(`${remessa_prefix}enviarArquivoRetorno`) }}
 </template>
 
 <script>
@@ -61,7 +70,7 @@ import { debuggerStatement } from 'babel-types';
 export default {
   name: "EnviarRetornarRemessa",
 
-  props: ['desativar', 'excluirAnexoDaSelecao', 'configuracao'],
+  props: ['desativar', 'configuracao'],
 
 
   computed: {
@@ -75,7 +84,7 @@ export default {
   data() {
     return {
       remessa_prefix: ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX,
-      url: `${Properties.BASE_URL}api/upload-retorno/file`,
+      url: `${Properties.BASE_URL}/api/upload-retorno/`,
       fileList: [],
       paginacaoDados: {
           pageSize: 1,
@@ -85,12 +94,29 @@ export default {
         atual: 1,
         total: 5 
       },
+      quantidadeUploadPorVez: 1
     };
   },
 
   methods: {
     handleRemove (file, fileList) {
-      this.excluirAnexoDaSelecao(file, fileList)
+      this.$confirm('Realmente deseja excluir o arquivo ' + file.name + '?', 'Atenção', {
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Não',
+        type: 'warning'
+      }).then(() => {
+        this.padronizarRetorno(fileList)
+        this.$message({
+          type: 'success',
+          message: 'Anexo excluído com sucesso!'
+        })
+      }).catch(() => {
+        fileList.push(file)
+      })
+    },
+
+    adicionadoAnexo (response, file, fileList) {
+      this.padronizarRetorno(fileList)
     },
 
     inicializaListaRemessas(pagina){
@@ -98,7 +124,9 @@ export default {
     },
 
     submitUpload() {
-        this.$refs.upload.submit();
+      this.$refs.upload.submit();
+      console.log(file.name);
+      // this.$store.dispatch(UPLOAD_ARQUIVO_RETORNO, nomeArquivo);
     },
 
     uploadArquivo(){

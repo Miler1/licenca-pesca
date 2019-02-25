@@ -1,4 +1,4 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS, DOWNLOAD_REMESSA, UPLOAD_ARQUIVO_RETORNO} from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, GERAR_REMESSAS, LISTAR_REMESSAS, UPLOAD_ARQUIVO_RETORNO} from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA, SET_LISTA_TODAS_LICENCAS, SET_LISTA_REMESSAS, SET_PAGINACAO } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
@@ -72,8 +72,6 @@ export const getters = {
 
   listaLicencas: state => state.listaLicencas,
 
-  listaTodasLicencas: state => state.listaTodasLicencas,
-
   listaRemessas: state => state.listaRemessas
 };
 
@@ -108,14 +106,14 @@ export const actions = {
     RegistroService.geraRemessa();
   },
 
-  [UPLOAD_ARQUIVO_RETORNO]: () => {
-    ArquivoService.upload();
+  [UPLOAD_ARQUIVO_RETORNO]: (file) => {
+    debugger
+    ArquivoService.upload(file);
   },
 
   [LISTAR_REMESSAS]:  ({commit}, pagina) => {
     ConsultaService.buscarRemessas(pagina)
     .then(({ data }) => {
-      debugger
       commit(SET_LISTA_REMESSAS, data);
     })
     .catch(error => {

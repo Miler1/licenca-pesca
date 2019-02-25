@@ -106,7 +106,7 @@ const GERAL = {
     },
     listagemRemessa: ["Listagem dos arquivos de remessa", "Listing of shipping files"],
     dataArquivoRemessa: ["Data de criação", "Creation date"],
-    semRemessa: ["Sem remessas registradas", ""],
+    semRemessa: ["Sem arquivos de remessas registrados", ""],
     acao: ["Ação", "Action"],
     botaoAcao: ["Download", "Download file"],
     uploadArquivo: ["Arraste e solte o(s) arquivo(s) nesta área ou clique no botão acima", "Drag and drop the file (s) to this area or click the button above"],
