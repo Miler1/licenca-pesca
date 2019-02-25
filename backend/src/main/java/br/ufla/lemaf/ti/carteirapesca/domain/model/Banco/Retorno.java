@@ -36,10 +36,10 @@ public class Retorno implements Entity<Retorno, Integer> {
 	private LocalDate dataProcessamento;
 
 	@Column(name = "qtd_registros")
-	private Integer qtdTitulosCobranca;
+	private Integer qtdRegistros;
 
 	@Column(name = "valor_registros")
-	private BigDecimal valorTitulosCobranca;
+	private BigDecimal valorRegistros;
 
 	@Column(name = "qtd_confirmacao_entrada")
 	private Integer qtdConfirmacaoEntrada;
@@ -111,8 +111,8 @@ public class Retorno implements Entity<Retorno, Integer> {
 		this.dataGravacaoBanco = cabecalho.getDataGravacaoArquivo();
 		this.dataProcessamento = LocalDate.now();
 
-		this.qtdTitulosCobranca = trailler.getQtdTitulosCobranca();
-		this.valorTitulosCobranca = trailler.getValorTotalCobranca();
+		this.qtdRegistros = trailler.getQtdTitulosCobranca();
+		this.valorRegistros = trailler.getValorTotalCobranca();
 		this.qtdConfirmacaoEntrada = trailler.getQtdConfirmacaoEntrada();
 		this.valorConfirmacaoEntrada = trailler.getValorConfirmacaoEntrada();
 		this.qtdLiquidacao = trailler.getQtdLiquidacao();
@@ -130,6 +130,15 @@ public class Retorno implements Entity<Retorno, Integer> {
 		this.qtdTotalRateioEfetuado = trailler.getQtdTotalRateioEfetuado();
 		this.valorTotalRateioEfetuado = trailler.getValorTotalRateioEfetuado();
 		this.numeroAvisoBancario = trailler.getNumeroAvisoBancario();
+
+	}
+
+	public void atualizaRetorno(br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.convenio.CabecalhoRetornoDTO cabecalho,
+								br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.convenio.TraillerRetornoDTO trailler) {
+
+		this.dataGravacaoBanco = cabecalho.getDataGeracaoArquivo();
+		this.qtdRegistros = trailler.getQtdRegistros();
+		this.valorRegistros = trailler.getVlrRegistros();
 
 	}
 

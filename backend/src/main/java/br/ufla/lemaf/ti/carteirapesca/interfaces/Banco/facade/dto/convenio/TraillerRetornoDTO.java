@@ -1,7 +1,10 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.convenio;
 
+import lombok.Getter;
+
 import java.math.BigDecimal;
 
+@Getter
 public class TraillerRetornoDTO {
 
 	private String codigoRegistro;

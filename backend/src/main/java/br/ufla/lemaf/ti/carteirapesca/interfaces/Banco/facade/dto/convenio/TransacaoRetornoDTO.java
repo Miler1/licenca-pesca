@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 public class TransacaoRetornoDTO {
 
-	private static final DateTimeFormatter MASCARA_DATA_RETORNO = DateTimeFormatter.ofPattern("YYYYMMdd");
+	private static final DateTimeFormatter MASCARA_DATA_RETORNO = DateTimeFormatter.ofPattern("yyyyMMdd");
 
 	private String codigoRegistro;
 	private String idAgenciaContaDigitoCreditada;

@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.repository;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Convenio;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -42,5 +43,6 @@ public interface LicencaRepository extends JpaRepository<Licenca, Integer> {
 	@Query("update Licenca l set l.status = 0 where l.dataVencimentoProvisoria < :date and l.status = 5")
 	void alterarAtivoAguardandoPagamento(Date date);
 
+	Licenca findByConvenio(Convenio convenio);
 
 }

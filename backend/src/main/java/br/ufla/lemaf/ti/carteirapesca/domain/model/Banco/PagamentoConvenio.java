@@ -2,6 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.convenio.TransacaoRetornoDTO;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -37,6 +38,24 @@ public class PagamentoConvenio implements Entity<PagamentoConvenio, Integer> {
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_arrecadacao", referencedColumnName="id")
 	private TipoArrecadacao tipoArrecadacao;
+
+	@OneToOne
+	@JoinColumn(name = "id_retorno")
+	private Retorno retorno;
+
+	public PagamentoConvenio(TransacaoRetornoDTO transacao,
+							 TipoArrecadacao tipoArrecadacao,
+							 TipoPagamento tipoPagamento,
+							 Retorno retorno) {
+
+		this.dataPagamento = transacao.getDataPamento();
+		this.dataCredito = transacao.getDataCredito();
+		this.valorRecebido = transacao.getValorRecebido();
+		this.valorTarifa = transacao.getValorTarifa();
+		this.tipoArrecadacao = tipoArrecadacao;
+		this.tipoPagamento = tipoPagamento;
+
+	}
 
 	@Override
 	public boolean sameIdentityAs(PagamentoConvenio other) {

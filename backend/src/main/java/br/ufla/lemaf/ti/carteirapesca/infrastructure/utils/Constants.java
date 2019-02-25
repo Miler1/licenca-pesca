@@ -1,5 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 
+import java.time.format.DateTimeFormatter;
+
 /**
  * Constantes da Aplicação.
  *
@@ -37,6 +39,8 @@ public final class Constants {
 	public static final String INTERVALO_ATUALIZACAO_AUTOMATICA = "0 0 0 1/1 * ?";
 
 	public static final Integer HORAS_BLOQUEIO_SOLICITANTE = 2;
+
+	public static final DateTimeFormatter FORMATO_DATA_PADRAO = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
 	/**
 	 * Para evitar instanciação.

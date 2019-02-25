@@ -293,7 +293,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		Titulo titulo = tituloBuilder.gerarDocumentoPagamento(licenca.getProtocolo(), licenca.modalidade(), pessoa);
 
-		licenca.setDataVencimentoBoleto();
+//		licenca.setDataVencimentoBoleto();
 		licenca.setTitulo(titulo);
 		licencaRepository.save(licenca);
 

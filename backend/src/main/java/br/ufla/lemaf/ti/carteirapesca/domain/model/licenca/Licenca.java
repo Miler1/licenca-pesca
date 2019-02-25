@@ -13,9 +13,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.var;
 import org.apache.commons.lang3.Validate;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -74,15 +76,18 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JoinColumn(name="id_solicitante")
 	private Solicitante solicitante;
 
+	@Setter
+	@Getter
 	@Column(name = "dt_vencimento")
-	private Date dataVencimento;
+	private LocalDate dataVencimento;
 
+	@Getter
 	@Column(name = "dt_vencimento_provisoria")
-	private Date dataVencimentoProvisoria;
+	private LocalDate dataVencimentoProvisoria;
 
-	@Column(name = "dt_vencimento_boleto")
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataVencimentoBoleto;
+//	@Column(name = "dt_vencimento_boleto")
+//	@JsonFormat(pattern = "dd/MM/yyyy")
+//	private Date dataVencimentoBoleto;
 
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_informacao_complementar")
@@ -115,7 +120,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.titulo = titulo;
 			this.convenio = convenio;
 			this.setDataVencimentoProvisoria();
-			this.setDataVencimentoBoleto();
 
 	}
 
@@ -141,44 +145,15 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		status = statusRepository.findById(Status.StatusEnum.INVALIDADO.id).get();
 	}
 
-	/**
-	 * Data vencimento date.
-	 *
-	 * @return Data de vencimento da Licença
-	 */
-	public Date getDataVencimento() {
-
-		return dataVencimento;
-	}
-
-	/**
-	 * @return Data de vencimento da Licença provisoria
-	 */
-	public Date getDataVencimentoProvisoria() {
-		return dataVencimentoProvisoria;
-	}
-
 	public InformacaoComplementar getInformacaoComplementar() {
 		return informacaoComplementar;
 	}
 
-	public void setDataVencimentoBoleto() {
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.MONTH, QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO);
-
-		this.dataVencimentoBoleto = calendar.getTime();
-
-	}
-
 	public void setDataVencimentoProvisoria() {
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.add(Calendar.MONTH, MES_VENCER_CARTEIRA_PROVISORIA);
+		LocalDate hoje = LocalDate.now();
+		this.dataVencimentoProvisoria = hoje.plusMonths(MES_VENCER_CARTEIRA_PROVISORIA);
 
-		this.dataVencimentoProvisoria = calendar.getTime();
 	}
 
 	public Boolean getPodeRenovar() {
@@ -188,14 +163,10 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		if (status.getId().equals(Status.StatusEnum.VENCIDO.id) && solicitante.pussuiLicencaAtiva(modalidade)){
 			return false;
 		}
+
 		var vencimento = this.getDataVencimento();
 		if(vencimento != null) {
-			var dataInicioRenovacao = new GregorianCalendar();
-			dataInicioRenovacao.setTime((Date) vencimento.clone());
-			dataInicioRenovacao.add(Calendar.MONTH, MES_ANTES_DE_VENCER);
-
-			var dataAtual = new Date();
-			return dataAtual.after(dataInicioRenovacao.getTime());
+			return LocalDate.now().isAfter(vencimento.minusMonths(MES_ANTES_DE_VENCER));
 		}
 
 		return false;

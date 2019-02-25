@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-public interface RetornoBuilder {
+public interface RetornoTituloBuilder {
 
 	Retorno salvaArquivo(MultipartFile multipartFile) throws Exception;
 
