@@ -127,7 +127,7 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 			grafics.drawString(campoCEP(endereco(pessoa)), EIXO_X_COLUNA_2, EIXO_Y_LINHA_4);
 
 			grafics.drawString("BRASIL", EIXO_X_COLUNA_1, EIXO_Y_LINHA_5);
-			grafics.drawString(campoLimiteCaptura(modalidade), EIXO_X_COLUNA_2, EIXO_Y_LINHA_5);
+			grafics.drawString(modalidade.getDescricaoQtdPeixesLimiteCaptura(), EIXO_X_COLUNA_2, EIXO_Y_LINHA_5);
 
 //			grafics.drawString(campoValorCarteira(modalidade), EIXO_X_COLUNA_1, EIXO_Y_LINHA_6);
 
@@ -230,47 +230,6 @@ public class CarteiraBuilderImpl implements CarteiraBuilder {
 	 */
 	public static String campoCEP(Endereco endereco) {
 		return endereco.cep != null ? endereco.cep : "-";
-	}
-
-	/**
-	 * Constroi o campo limite de captura.
-	 *
-	 * @param modalidade A modalidade da carteira
-	 * @return O campo de limite de captura
-	 */
-	public static String campoLimiteCaptura(Modalidade modalidade) {
-		if(modalidade.getId().equals(Modalidades.PESCA_ESPORTIVA.id)) {
-
-			return "0 (ZERO)";
-		} else if(modalidade.getId().equals(Modalidades.PESCA_REACREATIVA.id)) {
-
-			return "05 KG DE PEIXES INTEIROS";
-		} else {
-			return "";
-		}
-
-	}
-
-	/**
-	 * Constroi o campo valor carteira.
-	 * <p>
-	 *
-	 * @deprecated O campo valor será removido da carteira de pesca.
-	 * @param modalidade A modalidade da carteira
-	 * @return O campo de valor da carteira
-	 */
-	@Deprecated
-	private static String campoValorCarteira(Modalidade modalidade) {
-		if(modalidade.getId().equals(Modalidades.PESCA_ESPORTIVA.id)) {
-
-			return "R$41,20";
-		} else if(modalidade.getId().equals(Modalidades.PESCA_REACREATIVA.id)) {
-
-			return "R$57,21";
-		} else {
-			return "";
-		}
-
 	}
 
 	/**

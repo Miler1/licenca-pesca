@@ -1,4 +1,4 @@
-package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto;
+package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;

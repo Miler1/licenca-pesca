@@ -1,16 +1,16 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 
+
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 
 import javax.persistence.*;
 
 @Getter
 @javax.persistence.Entity
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "pagador")
-public class PagadorTitulo implements Entity<BeneficiarioTitulo, Integer> {
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "beneficiario")
+public class Beneficiario implements Entity<Beneficiario, Integer> {
 
 	@Id
 	@SuppressWarnings("unused")
@@ -20,32 +20,24 @@ public class PagadorTitulo implements Entity<BeneficiarioTitulo, Integer> {
 	@Column(name = "nome")
 	private String nome;
 
-	@Column(name = "cpf_passaporte")
-	private String cpfPassaporte;
+	@Column(name = "sigla")
+	private String sigla;
+
+	@Column(name = "cpf_cnpj")
+	private String cpfCnpj;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_endereco",
-		referencedColumnName="id")
+	@JoinColumn(name = "id_endereco", referencedColumnName="id")
 	private Endereco endereco;
 
 	@Override
-	public boolean sameIdentityAs(BeneficiarioTitulo other) {
+	public boolean sameIdentityAs(Beneficiario other) {
 		return false;
 	}
 
 	@Override
 	public Integer identity() {
 		return null;
-	}
-
-	public PagadorTitulo() {}
-
-	public PagadorTitulo(String nome, String cpfPassaporte, Endereco endereco) {
-
-		this.nome = nome;
-		this.cpfPassaporte = cpfPassaporte;
-		this.endereco = endereco;
-
 	}
 
 }

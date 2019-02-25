@@ -3,16 +3,10 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.web;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoBuilderImpl;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Image;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.BarcodeInter25;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfWriter;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoTituloBuilderImpl;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.Controller.DefaultController;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +32,16 @@ import java.io.*;
 @Controller
 @Transactional
 @RequestMapping("/api") // ALTERAR PARA /banco
-public class BancoController {
+public class BancoController extends DefaultController {
 
 	@Autowired
 	private RemessaBuilderImpl remessaBuilder;
 
 	@Autowired
-	private RetornoBuilderImpl retornoBuilder;
+	private RetornoTituloBuilderImpl retornoBuilder;
+
+	@Autowired
+	private ConvenioBuilderImpl convenioBuilder;
 
 	@CrossOrigin("*")
 	@GetMapping("/gera-remessa")
@@ -53,7 +50,7 @@ public class BancoController {
 		Remessa remessa = remessaBuilder.geraRemessa();
 
 		if (remessa != null) {
-			return preparaArquivoDownload(remessa.getArquivo());
+			return downloadArquivo(new File(remessa.getArquivo().getCaminhoArquivo()), remessa.getArquivo().getNome());
 		} else {
 			return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
 		}
@@ -66,22 +63,10 @@ public class BancoController {
 
 		Arquivo arquivoRemessa = remessaBuilder.getArquivoRemessa(idRemessa);
 
-		return preparaArquivoDownload(arquivoRemessa);
+		return downloadArquivo(new File(arquivoRemessa.getCaminhoArquivo()), arquivoRemessa.getNome());
 
 	}
-
-	private ResponseEntity<InputStreamResource> preparaArquivoDownload(Arquivo arquivo) throws FileNotFoundException {
-
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.parseMediaType("application/octet-stream"));
-		httpHeaders.setContentDispositionFormData("attachment", arquivo.getNome());
-
-		InputStreamResource isr = new InputStreamResource(new FileInputStream(new File(arquivo.getCaminhoArquivo())));
-
-		return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
-
-	}
-
+	
 	@CrossOrigin("*")
 	@PostMapping("/upload-retorno")
 	public ResponseEntity<String> uploadArquivoRetorno(@RequestParam("file") MultipartFile multipartFile) throws Exception {
@@ -101,69 +86,6 @@ public class BancoController {
 		Page<Remessa> remessas = remessaBuilder.listaRemessas(pageable);
 
 		return new ResponseEntity<>(remessas, HttpStatus.OK);
-
-	}
-
-	@CrossOrigin("*")
-	@GetMapping("/teste")
-	public ResponseEntity<InputStreamResource> teste() throws IOException, DocumentException {
-
-		Document document = new Document();
-
-		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("codebars_teste_123.pdf"));
-		document.open();
-		PdfContentByte cb = writer.getDirectContent();
-
-		document.add(new Paragraph("Barcode Interleaved 2 of 5 - Com START"));
-		BarcodeInter25 code25StartStop = new BarcodeInter25();
-		code25StartStop.setGenerateChecksum(false);
-		code25StartStop.setCode("83620000000-5 72950138000-4 26497378133-1 08070582559-6");
-		code25StartStop.setSize(9);
-		code25StartStop.setBarHeight(35);
-		code25StartStop.setBaseline(12);
-		code25StartStop.setTextAlignment(3);
-		code25StartStop.setStartStopText(true);
-		code25StartStop.setChecksumText(true);
-
-		BaseFont baseFontStartStop = BaseFont.createFont();
-		code25StartStop.setFont(baseFontStartStop);
-
-		java.awt.Image imagemAwt = code25StartStop.createAwtImage(Color.BLACK, Color.WHITE);
-
-		BufferedImage bimage = new BufferedImage(imagemAwt.getWidth(null), imagemAwt.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-		Graphics2D bGr = bimage.createGraphics();
-		bGr.drawImage(imagemAwt, 0, 0, null);
-		bGr.dispose();
-
-		File file  = new File("codigo_barras.png");
-		ImageIO.write(bimage, "png", file);
-
-		Image imageStartStop = code25StartStop.createImageWithBarcode(cb, Color.BLUE, Color.RED);
-
-
-		document.add(imageStartStop);
-
-		document.close();
-
-
-		var httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_PDF);
-
-		var isr = new InputStreamResource(new FileInputStream(file.getAbsoluteFile()));
-
-		return new ResponseEntity<>(null, httpHeaders, HttpStatus.OK);
-
-	}
-
-	private void gerarCodigoBarras() {
-
-		String idProduto;
-		String idSegmento;
-		String idValorReferencia;
-
-
-
 
 	}
 

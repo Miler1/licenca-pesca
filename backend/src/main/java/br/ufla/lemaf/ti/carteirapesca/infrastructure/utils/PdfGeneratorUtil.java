@@ -44,6 +44,7 @@ public class PdfGeneratorUtil {
 			ITextRenderer renderer = new ITextRenderer();
 			renderer.setDocumentFromString(processedHtml);
 			renderer.getFontResolver().addFont("/public/fonts/arial.ttf", true);
+			renderer.getFontResolver().addFont("/public/fonts/Roboto-Regular.ttf", true);
 			renderer.layout();
 			renderer.createPDF(os, false);
 			renderer.finishPDF();

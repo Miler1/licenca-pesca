@@ -3,8 +3,8 @@ package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.CabecalhoRetornoDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.TraillerRetornoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.CabecalhoRetornoDTO;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.TraillerRetornoDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,10 +35,10 @@ public class Retorno implements Entity<Retorno, Integer> {
 	@Column(name = "dt_processamento")
 	private LocalDate dataProcessamento;
 
-	@Column(name = "qtd_titulo_cobranca")
+	@Column(name = "qtd_registros")
 	private Integer qtdTitulosCobranca;
 
-	@Column(name = "valor_titulo_cobranca")
+	@Column(name = "valor_registros")
 	private BigDecimal valorTitulosCobranca;
 
 	@Column(name = "qtd_confirmacao_entrada")

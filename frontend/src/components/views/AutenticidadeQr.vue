@@ -1,5 +1,5 @@
 <template lang="pug">
-  #autenticidadeQr
+  #autenticidadeQr(v-if='licencaPesca')
     h2.title-autenticidadeQr {{ $t(`${autenticidadeQr_prefix}titulo.tituloInicial`) }}
     card.dadosPessoais
         h3.title {{ $t(`${autenticidadeQr_prefix}titulo.dadosPessoais`) }}
@@ -98,7 +98,7 @@ export default {
             this.$store.dispatch(FETCH_DADOS_CARTEIRA, this.$route.params.protocolo);
         },
         exist(attr) {
-        return attr === null || _.isNil(attr);
+            return attr === null || _.isNil(attr);
         },
 
         enderecoFormatado(){
