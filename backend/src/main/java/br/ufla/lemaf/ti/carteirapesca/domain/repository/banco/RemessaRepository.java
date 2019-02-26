@@ -1,7 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.repository.banco;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
-import org.omg.CORBA.INTERNAL;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

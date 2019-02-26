@@ -3,10 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoArquivoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.MotivoOcorrencia;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.TituloRetorno;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.MotivoOcorrenciaRepository;
@@ -21,6 +18,8 @@ import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +29,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -88,6 +88,11 @@ public class RetornoTituloBuilderImpl implements RetornoBuilder {
 
 		retornoRepository.save(retorno);
 
+	}
+
+	public Page<Arquivo> listaRetornos(Pageable pageable) {
+
+		return arquivoRepository.findAll(pageable);
 	}
 
 	private File salvaArquivoDiretorio(MultipartFile multipartFile) throws Exception {

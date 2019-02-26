@@ -2,10 +2,10 @@
 #enviar-retornar-remessa
   div(v-if="listaRemessasPaginada")
     div.buscar
-      h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRemessa`) }} 
+      h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRemessa`) }}
       .right
         el-button(slot="append" icon="el-icon-refresh" @click="gerarArquivoRemessa" type="primary") {{ $t(`${remessa_prefix}gerarRemssa`) }}
-    card(v-if="listaRemessasPaginada ==! 0")
+    card(v-if="listaRemessasPaginada.content != 0") 
       el-row
         el-col.tabela(:span="24")
           table#tabela-paginada
@@ -21,7 +21,7 @@
               td {{remessas.arquivo.nome}}
               td {{remessas.arquivo.dataCadastro | moment('DD/MM/YYYY')}}
               td.centralizar 
-                el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary") {{ $t(`${remessa_prefix}botaoAcao`) }}
+                el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary")
       .flex
         .flex-item
           .paginacao
@@ -31,17 +31,20 @@
                     :layout="paginacaoDados.layout"
                     :current-page.sync="pagina.atual")
             .infoPagina {{ $t(`${remessa_prefix}paginacao.exibir`) }} {{pagina.atual}} - {{listaRemessasPaginada.numberOfElements}} {{ $t(`${remessa_prefix}paginacao.de`) }}  {{listaRemessasPaginada.totalElements}} {{ $t(`${remessa_prefix}paginacao.qtdRegistros`) }} 
-    card
-      div.sem-remessa(v-if="listaRemessasPaginada.content == 0")
+    card(v-if="listaRemessasPaginada.content == 0")
+      div.sem-remessa
         | {{ $t(`${remessa_prefix}semRemessa`) }}       
 
+
+    //ARQUIVOS DE RETORNO
     h2.title-principal {{ $t(`${remessa_prefix}tituloRetorno`) }}
     card
       .flex
         .flex-item
           el-row
             el-col(:span='24' :class="{'enabled': !desativar }")
-              el-upload.upload-demo(drag='', 
+              el-upload.upload-demo(
+                  drag='', 
                   ref='upload',
                   :action='url' 
                   :on-remove='handleRemove' 
@@ -54,7 +57,40 @@
                     el-button.btn.lnr.lnr-upload
                 .texto-interno {{ $t(`${remessa_prefix}uploadArquivo`) }}
           .retorno
-            el-button(slot="append" icon="el-icon-upload" @click="submitUpload" size="small" type="primary") {{ $t(`${remessa_prefix}enviarArquivoRetorno`) }}
+            el-button(slot="append" icon="el-icon-upload" @click="submitUpload" type="primary") {{ $t(`${remessa_prefix}enviarArquivoRetorno`) }}
+
+      card(v-if="listaRemessasPaginada.content != 0") 
+        el-row
+          el-col.tabela(:span="24")
+            table#tabela-paginada
+              tr
+                th
+                  span {{ $t(`${remessa_prefix}nomeArquivoRemessa`) }} 
+                th
+                  span {{ $t(`${remessa_prefix}dataArquivoRemessa`) }}
+                th.centralizar
+                  span {{ $t(`${remessa_prefix}acao`) }}
+              
+              tr(v-for="remessas in listaRemessasPaginada.content")
+                td {{remessas.arquivo.nome}}
+                td {{remessas.arquivo.dataCadastro | moment('DD/MM/YYYY')}}
+                td.centralizar 
+                  el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary")
+        
+      .flex
+        .flex-item
+          .paginacao
+            el-pagination(@current-change="inicializaListaRetornos(pagina.atual)" 
+                    :page-size='paginacaoDados.pageSize', 
+                    :total='listaRemessasPaginada.totalPages' 
+                    :layout="paginacaoDados.layout"
+                    :current-page.sync="pagina.atual")
+            .infoPagina {{ $t(`${remessa_prefix}paginacao.exibir`) }} {{pagina.atual}} - {{listaRemessasPaginada.numberOfElements}} {{ $t(`${remessa_prefix}paginacao.de`) }}  {{listaRemessasPaginada.totalElements}} {{ $t(`${remessa_prefix}paginacao.qtdRegistros`) }} 
+    card(v-if="listaRemessasPaginada.content == 0")
+      div.sem-remessa
+        | {{ $t(`${remessa_prefix}semRemessa`) }} 
+
+
 </template>
 
 <script>
@@ -64,7 +100,7 @@ import Properties from "../../../properties";
 import moment from "moment";
 import { translate } from "../../../utils/helpers/internationalization";
 import { ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX } from '../../../utils/messages/interface/registrar/geral';
-import { BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS, DOWNLOAD_REMESSA, UPLOAD_ARQUIVO_RETORNO } from '../../../store/actions.type';
+import { BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS, DOWNLOAD_REMESSA, UPLOAD_ARQUIVO_RETORNO, LISTAR_RETORNOS } from '../../../store/actions.type';
 import { debuggerStatement } from 'babel-types';
 
 export default {
@@ -74,7 +110,7 @@ export default {
 
 
   computed: {
-    ...mapGetters(["listaRemessasPaginada"])
+    ...mapGetters(["listaRemessasPaginada", "listaArquivosRetornoPaginado"])
   },
 
   components: {
@@ -123,10 +159,12 @@ export default {
       this.$store.dispatch(LISTAR_REMESSAS, pagina);
     },
 
+    inicializaListaRetornos(pagina){
+      this.$store.dispatch(LISTAR_RETORNOS, pagina);
+    },
+
     submitUpload() {
       this.$refs.upload.submit();
-      // console.log(file.name);
-      // this.$store.dispatch(UPLOAD_ARQUIVO_RETORNO, nomeArquivo);
     },
 
     uploadArquivo(){
@@ -173,6 +211,7 @@ export default {
   
   created() {
     this.inicializaListaRemessas();
+    this.inicializaListaRetornos();
   }
 
 };

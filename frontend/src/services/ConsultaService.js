@@ -29,6 +29,9 @@ const ConsultaService = {
   buscarRemessas: paginaAtual => {
     return ApiService.getWithBlock(`${Properties.BASE_URL}/api/lista-remessa?page=` + (paginaAtual - 1));
   },
+  buscarArquivosRetornos: paginaAtual => {
+    return ApiService.getWithBlock(`${Properties.BASE_URL}/api/lista-retornos?page=` + (paginaAtual - 1));
+  },
   /**
    * Serviço para buscar dados da carteira
    * dado o protocolo.

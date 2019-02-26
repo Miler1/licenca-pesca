@@ -3,6 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.web;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoTituloBuilderImpl;
@@ -39,6 +40,9 @@ public class BancoController extends DefaultController {
 
 	@Autowired
 	private RetornoTituloBuilderImpl retornoBuilder;
+
+	@Autowired
+	private RetornoRepository retornoRepository;
 
 	@Autowired
 	private ConvenioBuilderImpl convenioBuilder;
@@ -86,6 +90,16 @@ public class BancoController extends DefaultController {
 		Page<Remessa> remessas = remessaBuilder.listaRemessas(pageable);
 
 		return new ResponseEntity<>(remessas, HttpStatus.OK);
+
+	}
+
+	@CrossOrigin("*")
+	@GetMapping("/lista-retornos")
+	public ResponseEntity<Page<Arquivo>> listaArquivosRetornoPaginado(@PageableDefault(size = 10) Pageable pageable) {
+
+		Page<Arquivo> arquivosRetorno = retornoBuilder.listaRetornos(pageable);
+
+		return new ResponseEntity<>(arquivosRetorno, HttpStatus.OK);
 
 	}
 
