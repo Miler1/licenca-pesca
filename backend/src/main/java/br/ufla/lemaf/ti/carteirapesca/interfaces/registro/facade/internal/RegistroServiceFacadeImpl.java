@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -100,23 +101,17 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	@Override
 	public void atualizarCondicaoInvalido() {
 
-		Date dataInvalidado = new Date();
+		LocalDate dataInvalidacao = LocalDate.now().minusDays(3);
 
-		Calendar c = Calendar.getInstance();
-		c.setTime(dataInvalidado);
-		c.add(Calendar.DATE, -3);
+		if (dataInvalidacao.getDayOfWeek().getValue() == Calendar.SUNDAY){
 
-		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+			dataInvalidacao.plusDays(1);
+		}else if(dataInvalidacao.getDayOfWeek().getValue() == Calendar.SATURDAY){
 
-		if(Calendar.SUNDAY == dayOfWeek ) {
-
-			c.add(Calendar.DATE, +1);
-		} else if(Calendar.SATURDAY == dayOfWeek) {
-
-			c.add(Calendar.DATE, 2);
+			dataInvalidacao.plusDays(2);
 		}
 
-		licencaRepository.alterarInvalidado(c.getTime());
+		licencaRepository.alterarInvalidado(dataInvalidacao);
 	}
 
 	/**

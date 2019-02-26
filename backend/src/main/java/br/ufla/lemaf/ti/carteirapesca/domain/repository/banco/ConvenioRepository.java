@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ConvenioRepository extends JpaRepository<Convenio, Integer> {
+
+	Convenio findByNossoNumero(Integer nossoNumero);
+
 }

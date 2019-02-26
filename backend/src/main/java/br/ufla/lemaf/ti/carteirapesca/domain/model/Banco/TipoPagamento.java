@@ -4,9 +4,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @javax.persistence.Entity
@@ -28,5 +26,4 @@ public class TipoPagamento implements Entity<TipoPagamento, Integer> {
 	public Integer identity() {
 		return null;
 	}
-
 }
