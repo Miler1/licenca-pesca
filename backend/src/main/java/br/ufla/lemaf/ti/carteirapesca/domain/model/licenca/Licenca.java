@@ -79,10 +79,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@Column(name = "dt_vencimento_provisoria")
 	private LocalDate dataVencimentoProvisoria;
 
-//	@Column(name = "dt_vencimento_boleto")
-//	@JsonFormat(pattern = "dd/MM/yyyy")
-//	private Date dataVencimentoBoleto;
-
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_informacao_complementar")
 	private InformacaoComplementar informacaoComplementar;

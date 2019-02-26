@@ -112,24 +112,6 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		}
 
 		licencaRepository.alterarInvalidado(dataInvalidacao);
-
-//		Date dataInvalidado = new Date();
-//
-//		Calendar c = Calendar.getInstance();
-//		c.setTime(dataInvalidado);
-//		c.add(Calendar.DATE, -3);
-//
-//		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-//
-//		if(Calendar.SUNDAY == dayOfWeek ) {
-//
-//			c.add(Calendar.DATE, +1);
-//		} else if(Calendar.SATURDAY == dayOfWeek) {
-//
-//			c.add(Calendar.DATE, 2);
-//		}
-//
-//		licencaRepository.alterarInvalidado(c.getTime());
 	}
 
 	/**
