@@ -12,15 +12,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.var;
-import org.apache.commons.lang3.Validate;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Uma Licença de Pesca.
@@ -39,9 +35,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	private static StatusRepository statusRepository;
 
 	// Anos para a licença vencer após ativada
-	private static final Integer ANOS_VENCIMENTO_LICENCA = 1;
-	private static final Integer MES_ANTES_DE_VENCER = -1;
-	private static final Integer QTD_MESES_VENCIMENTO_BOLETO_APOS_EMISSAO = 1;
+	private static final Integer MES_ANTES_DE_VENCER = 1;
 	private static final Integer MES_VENCER_CARTEIRA_PROVISORIA = 1;
 
 	@Id
@@ -156,20 +150,25 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 
 	}
 
-	public Boolean getPodeRenovar() {
-		if (!status.getId().equals(Status.StatusEnum.ATIVO.id) && !status.getId().equals(Status.StatusEnum.VENCIDO.id)) {
-			return false;
-		}
-		if (status.getId().equals(Status.StatusEnum.VENCIDO.id) && solicitante.pussuiLicencaAtiva(modalidade)){
-			return false;
-		}
 
-		var vencimento = this.getDataVencimento();
-		if(vencimento != null) {
-			return LocalDate.now().isAfter(vencimento.minusMonths(MES_ANTES_DE_VENCER));
+	public Boolean getPodeRenovar() {
+
+		if(this.status.getId() == Status.StatusEnum.ATIVO.id){
+
+			var vencimento = this.getDataVencimento();
+
+			if(vencimento != null) {
+				return LocalDate.now().isAfter(vencimento.minusMonths(MES_ANTES_DE_VENCER));
+			}
+
+			return false;
+
+		}else if(this.status.getId() == Status.StatusEnum.VENCIDO.id && !this.solicitante.pussuiLicencaAtiva(this.modalidade)){
+			return true;
 		}
 
 		return false;
+
 	}
 
 	public String mensagensDeAviso() {

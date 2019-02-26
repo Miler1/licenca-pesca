@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -35,8 +36,8 @@ public interface LicencaRepository extends JpaRepository<Licenca, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("update Licenca l set l.status = 2 where l.dataVencimentoBoleto < :date and l.status = 0")
-	void alterarInvalidado(Date date);
+	@Query("update Licenca l set l.status = 2 where l.convenio.dataVencimento < :date and l.status = 0")
+	void alterarInvalidado(LocalDate date);
 
 	@Transactional
 	@Modifying
@@ -44,5 +45,12 @@ public interface LicencaRepository extends JpaRepository<Licenca, Integer> {
 	void alterarAtivoAguardandoPagamento(Date date);
 
 	Licenca findByConvenio(Convenio convenio);
+
+
+	@Query(value = "SELECT * " +
+		"FROM carteira_pesca.licenca " +
+		"WHERE replace(replace(tx_protocolo, '-', ''), '/', '') = replace(replace(:protocolo, '-', ''), '/', '')",
+			nativeQuery = true)
+	Licenca buscaPeloProtocolo(String protocolo);
 
 }

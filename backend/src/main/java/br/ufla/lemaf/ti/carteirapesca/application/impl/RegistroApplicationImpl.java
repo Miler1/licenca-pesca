@@ -11,7 +11,6 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.TituloBuilder;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.CarteiraBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ProtocoloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
@@ -100,18 +99,19 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	}
 
 	@Override
-	public Protocolo renovarLicenca(RegistroResource resource, String codigoProtocolo) throws Exception {
+	public Protocolo renovarLicenca(RegistroResource resource, String codigoProtocolo) {
 
-		var solicitante = getSolicitante(resource);
-		Modalidade modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
+		var licenca = licencaRepository.buscaPeloProtocolo(codigoProtocolo);
 
-		if (!solicitante.pussuiLicencaAtiva(modalidade)) {
+		if (licenca.getPodeRenovar()) {
+
+			var solicitante = getSolicitante(resource);
 
 			String protocoloNovo = this.calcularNovoProtocolo(codigoProtocolo);
 
-			var licenca = criarLicenca(resource, protocoloNovo);
+			var novaLicenca = criarLicenca(resource, protocoloNovo);
 
-			Protocolo protocolo = solicitante.adicionarLicenca(licenca, true);
+			Protocolo protocolo = solicitante.adicionarLicenca(novaLicenca, true);
 
 			for(Licenca licenca1: solicitante.getLicenca()) {
 
