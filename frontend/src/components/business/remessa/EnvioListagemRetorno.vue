@@ -127,7 +127,7 @@ export default {
     },
     downloadArquivoRetorno(idRetorno){
     const href =
-    `${Properties.BASE_URL}/api/download-retorno/` + idRetorno;
+    `${Properties.BASE_URL}/banco/download-retorno/` + idRetorno;
 
     window.open(href, "_blank");
     },

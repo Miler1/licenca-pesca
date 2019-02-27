@@ -46,18 +46,18 @@ spring:
 
   security:
     fakeAuthentication: false
-    successRedirectUrl: http://localhost:8080/envio-retorno-remessa
+    successRedirectUrl: http://localhost:8080/listagem-remessa
     ipsAllowed: 127.0.0.1,::1
 
     entradaUnica:
 #       Módulo - LP0 - Gustavo
-#      client-id: bdcf104be109069d58a96d9bd08c7942313621cded01c2938c3be374d60ef61675ea1aa54d04dd7313a7f31519b87eacfd43d62ada3a1530f819b3865f6327ee
-#      client-secret: 24ec03485f4ddea41a51bf33d37ba1f0a5454568574197192161b859fb57b0b75ba086b3d6552f3490a3b5a55991c6d6513e56085dfe32355ffb94a22b4489bb
+      client-id: bdcf104be109069d58a96d9bd08c7942313621cded01c2938c3be374d60ef61675ea1aa54d04dd7313a7f31519b87eacfd43d62ada3a1530f819b3865f6327ee
+      client-secret: 24ec03485f4ddea41a51bf33d37ba1f0a5454568574197192161b859fb57b0b75ba086b3d6552f3490a3b5a55991c6d6513e56085dfe32355ffb94a22b4489bb
 
 
 #       Módulo - LP1 - Joyce
-      client-id: 398a20646b37c8f9ad8a4c1b53f7108e2b04c8d524b427d512ba2d99c3d002ac2b499098228200971a4e14fc0f1cdba67283bfef8154e7286d5882ee4266e3ce
-      client-secret: f463b60e0abfe70b31fe316cd548f7ca019115f1c8969bdfd1f57e3ca0708d5faaf7a0bbb0ede643bb31f7c442c5392eb801d792ebec0fddfa3e127b84aa2fdb
+#      client-id: 398a20646b37c8f9ad8a4c1b53f7108e2b04c8d524b427d512ba2d99c3d002ac2b499098228200971a4e14fc0f1cdba67283bfef8154e7286d5882ee4266e3ce
+#      client-secret: f463b60e0abfe70b31fe316cd548f7ca019115f1c8969bdfd1f57e3ca0708d5faaf7a0bbb0ede643bb31f7c442c5392eb801d792ebec0fddfa3e127b84aa2fdb
 
       # Módulo - LPH - Hiago
 #      client-id: 5835eed6bddf39b6a6844b5f9645e360b5c003bb9d65be17ef7cd5863f713b0e7bcfafaa691e4482af6a20c775c19dadcf22eb1e1edc0617c2ac06605e047b98

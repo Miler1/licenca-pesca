@@ -80,13 +80,14 @@ export default {
   methods: {
    
     inicializaListagem(pagina){
+      debugger
       this.$store.dispatch(LISTAR_REMESSAS, pagina);
     },
 
     downloadArquivoRemessa(idRemessa){
 
        const href =
-        `${Properties.BASE_URL}/api/download-remessa/` + idRemessa;
+        `${Properties.BASE_URL}/banco/download-remessa/` + idRemessa;
 
         window.open(href, "_blank");
     },

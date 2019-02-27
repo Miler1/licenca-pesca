@@ -30,9 +30,7 @@ public class AutenticacaoController {
 
 		Authentication autenticacao = autenticacaoBuilder.autenticar(token);
 
-		return new RedirectView("/");
-
-//		return new ResponseEntity<>(((AuthenticationToken) autenticacao).getUser(), HttpStatus.ACCEPTED);
+		return new RedirectView("http://localhost:8080/listagem-remessas");
 
 	}
 
