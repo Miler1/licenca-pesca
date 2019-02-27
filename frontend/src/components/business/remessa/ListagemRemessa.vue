@@ -73,15 +73,15 @@ export default {
         atual: 1,
         total: 5 
       },
-      quantidadeUploadPorVez: 1
+      quantidadeUploadPorVez: 1,
+      paginaPrincipal: 1,
     };
   },
 
   methods: {
    
-    inicializaListagem(pagina){
-      debugger
-      this.$store.dispatch(LISTAR_REMESSAS, pagina);
+    inicializaListagem(paginaPrincipal){
+      this.$store.dispatch(LISTAR_REMESSAS, paginaPrincipal);
     },
 
     downloadArquivoRemessa(idRemessa){
@@ -98,7 +98,7 @@ export default {
   },
   
   created() {
-    this.inicializaListagem();
+    this.inicializaListagem(this.paginaPrincipal);
   }
 
 };

@@ -15,7 +15,7 @@ const RegistroService = {
   },
   
   geraRemessa: () => {
-    return ApiService.getWithBlock(`${Properties.BASE_URL}/banco/gera-remessa`);
+    return ApiService.getWithBlock(`${Properties.BASE_URL}/banco/gera-remessa`, true);
   },
 
   renovar: registroResource => {

@@ -1,7 +1,7 @@
 {
 	"nome": "Licença de Pesca Runners",
-	"sigla": "LPR",
-	"url": "http://am.runners.ti.lemaf.ufla.br/carteira-pesca/",
+	"sigla": "LIC",
+	"url": "http://am.runners.ti.lemaf.ufla.br/carteira-pesca/api/autenticacao/entrada-unica",
 	"descricao": "Módulo de emissão de Licença de Pesca",
 	"cadastrarPerfis": true,
 	"ips": "177.105.35.22",
