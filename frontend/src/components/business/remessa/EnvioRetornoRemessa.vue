@@ -52,6 +52,7 @@
                   :on-remove='handleRemove' 
                   :on-success='success'
                   :auto-upload='false'
+                  :before-remove="beforeRemove"
                   :limit='quantidadeUploadPorVez'
                   accept=".ret") 
                 el-tooltip(placement="top" content="Selecione um tipo de documento para de anexar arquivos!")
@@ -104,6 +105,7 @@ import { translate } from "../../../utils/helpers/internationalization";
 import { ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX } from '../../../utils/messages/interface/registrar/geral';
 import { BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS, DOWNLOAD_REMESSA, UPLOAD_ARQUIVO_RETORNO, LISTAR_RETORNOS } from '../../../store/actions.type';
 import { debuggerStatement } from 'babel-types';
+import { createECDH } from 'crypto';
 
 export default {
   name: "EnviarRetornarRemessa",
@@ -138,19 +140,11 @@ export default {
 
   methods: {
     handleRemove (file, fileList) {
-      this.$confirm('Realmente deseja excluir o arquivo ' + file.name + '?', 'Atenção', {
-        confirmButtonText: 'Sim',
-        cancelButtonText: 'Não',
-        type: 'warning'
-      }).then(() => {
-        this.padronizarRetorno(fileList)
-        this.$message({
-          type: 'success',
-          message: 'Anexo excluído com sucesso!'
-        })
-      }).catch(() => {
-        fileList.push(file)
-      })
+      console.log(file, fileList);
+    },
+
+    beforeRemove(file, fileList){
+      return this.$confirm('Realmente deseja excluir o arquivo ' + file.name + '?', 'Atenção');
     },
 
     adicionadoAnexo (response, file, fileList) {

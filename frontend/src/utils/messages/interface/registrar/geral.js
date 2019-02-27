@@ -115,6 +115,10 @@ const GERAL = {
     licenca: {
       tituloLicenca: ["Licenças", "License"],
       listagemLicenca: ["Listagem das licenças", "List of licenses"]
+    },
+    cancelamento: {
+      mensagemCancelamento: ["Realmente deseja excluir o arquivo",""],
+      mensagemCancelamentoAviso: ["Atenção",""]
     }
   }
 };
