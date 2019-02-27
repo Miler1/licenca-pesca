@@ -92,7 +92,7 @@ public class RetornoTituloBuilderImpl implements RetornoBuilder {
 
 	public Page<Arquivo> listaRetornos(Pageable pageable) {
 
-		return arquivoRepository.findAll(pageable);
+		return arquivoRepository.findByTipoArquivo(tipoArquivoRepository.findByCodigo("RETORNO"), pageable);
 	}
 
 	private File salvaArquivoDiretorio(MultipartFile multipartFile) throws Exception {

@@ -17,5 +17,4 @@ public class RetornoConvenioBuilderImpl implements RetornoBuilder {
 	public void processarRetorno(Retorno retorno) throws IOException {
 
 	}
-
 }

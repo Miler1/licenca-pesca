@@ -11,7 +11,7 @@
           table#tabela-paginada
             tr
               th
-                span {{ $t(`${remessa_prefix}nomeArquivoRemessa`) }} 
+                span {{ $t(`${remessa_prefix}nomeArquivo`) }} 
               th
                 span {{ $t(`${remessa_prefix}dataArquivoRemessa`) }}
               th.centralizar
@@ -21,11 +21,11 @@
               td {{remessas.arquivo.nome}}
               td {{remessas.arquivo.dataCadastro | moment('DD/MM/YYYY')}}
               td.centralizar 
-                el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary")
+                el-button.download-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary")
       .flex
         .flex-item
           .paginacao
-            el-pagination(@current-change="inicializaListaRemessas(pagina.atual)" 
+            el-pagination(@current-change="inicializaListagem(pagina.atual)" 
                     :page-size='paginacaoDados.pageSize', 
                     :total='listaRemessasPaginada.totalPages' 
                     :layout="paginacaoDados.layout"
@@ -33,10 +33,12 @@
             .infoPagina {{ $t(`${remessa_prefix}paginacao.exibir`) }} {{pagina.atual}} - {{listaRemessasPaginada.numberOfElements}} {{ $t(`${remessa_prefix}paginacao.de`) }}  {{listaRemessasPaginada.totalElements}} {{ $t(`${remessa_prefix}paginacao.qtdRegistros`) }} 
     card(v-if="listaRemessasPaginada.content == 0")
       div.sem-remessa
-        | {{ $t(`${remessa_prefix}semRemessa`) }}       
+        | {{ $t(`${remessa_prefix}semRemessa`) }}  
+
 
 
     //ARQUIVOS DE RETORNO
+  div(v-if="listaArquivosRetornoPaginado")
     h2.title-principal {{ $t(`${remessa_prefix}tituloRetorno`) }}
     card
       .flex
@@ -58,36 +60,36 @@
                 .texto-interno {{ $t(`${remessa_prefix}uploadArquivo`) }}
           .retorno
             el-button(slot="append" icon="el-icon-upload" @click="submitUpload" type="primary") {{ $t(`${remessa_prefix}enviarArquivoRetorno`) }}
+            
 
-      card(v-if="listaRemessasPaginada.content != 0") 
+      div.tabela-retornos(v-if="listaArquivosRetornoPaginado.content != 0") 
         el-row
           el-col.tabela(:span="24")
             table#tabela-paginada
               tr
                 th
-                  span {{ $t(`${remessa_prefix}nomeArquivoRemessa`) }} 
+                  span {{ $t(`${remessa_prefix}nomeArquivo`) }} 
                 th
                   span {{ $t(`${remessa_prefix}dataArquivoRemessa`) }}
                 th.centralizar
                   span {{ $t(`${remessa_prefix}acao`) }}
               
-              tr(v-for="remessas in listaRemessasPaginada.content")
-                td {{remessas.arquivo.nome}}
-                td {{remessas.arquivo.dataCadastro | moment('DD/MM/YYYY')}}
+              tr(v-for="arquivoRetorno in listaArquivosRetornoPaginado.content")
+                td {{arquivoRetorno.nome}}
+                td {{arquivoRetorno.dataCadastro | moment('DD/MM/YYYY')}}
                 td.centralizar 
-                  el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary")
-        
+                  el-button.download-button(slot="append" icon="el-icon-download" @click="downloadArquivoRetorno(arquivoRetorno.id)" type="primary")
       .flex
         .flex-item
           .paginacao
-            el-pagination(@current-change="inicializaListaRetornos(pagina.atual)" 
+            el-pagination(@current-change="inicializaListagem(pagina.atual)" 
                     :page-size='paginacaoDados.pageSize', 
-                    :total='listaRemessasPaginada.totalPages' 
+                    :total='listaArquivosRetornoPaginado.totalPages' 
                     :layout="paginacaoDados.layout"
                     :current-page.sync="pagina.atual")
-            .infoPagina {{ $t(`${remessa_prefix}paginacao.exibir`) }} {{pagina.atual}} - {{listaRemessasPaginada.numberOfElements}} {{ $t(`${remessa_prefix}paginacao.de`) }}  {{listaRemessasPaginada.totalElements}} {{ $t(`${remessa_prefix}paginacao.qtdRegistros`) }} 
-    card(v-if="listaRemessasPaginada.content == 0")
-      div.sem-remessa
+            .infoPagina {{ $t(`${remessa_prefix}paginacao.exibir`) }} {{pagina.atual}} - {{listaArquivosRetornoPaginado.numberOfElements}} {{ $t(`${remessa_prefix}paginacao.de`) }}  {{listaArquivosRetornoPaginado.totalElements}} {{ $t(`${remessa_prefix}paginacao.qtdRegistros`) }} 
+    card(v-if="listaArquivosRetornoPaginado.content == 0")
+      div.sem-arquivo-retorno
         | {{ $t(`${remessa_prefix}semRemessa`) }} 
 
 
@@ -155,11 +157,8 @@ export default {
       this.padronizarRetorno(fileList)
     },
 
-    inicializaListaRemessas(pagina){
+    inicializaListagem(pagina){
       this.$store.dispatch(LISTAR_REMESSAS, pagina);
-    },
-
-    inicializaListaRetornos(pagina){
       this.$store.dispatch(LISTAR_RETORNOS, pagina);
     },
 
@@ -177,6 +176,14 @@ export default {
         `${Properties.BASE_URL}/api/download-remessa/` + idRemessa;
 
         window.open(href, "_blank");
+    },
+
+    downloadArquivoRetorno(idRetorno){
+
+    const href =
+    `${Properties.BASE_URL}/api/download-retorno/` + idRetorno;
+
+    window.open(href, "_blank");
     },
 
     gerarArquivoRemessa(){
@@ -210,8 +217,7 @@ export default {
   },
   
   created() {
-    this.inicializaListaRemessas();
-    this.inicializaListaRetornos();
+    this.inicializaListagem();
   }
 
 };
@@ -219,6 +225,7 @@ export default {
 
 <style lang="sass">
   @import "../../../theme/tools/variables"
+
   #tabela-paginada
     width: 100%
     padding: 5px
@@ -231,11 +238,6 @@ export default {
     border-bottom: 1px solid #ddd
     padding: 15px 8px
     word-break: break-word
-
-  .starBody
-    padding: 12px 12px
-    width: 42px
-    cursor: pointer
 
   tr
     border-bottom: 1px solid #ddd
@@ -259,11 +261,15 @@ export default {
   
     .download-button
       color: #409EFF
-      border-color: #c6e2ff
-      background-color: #ecf5ff
+      border-color: #fff !important
+      background-color: #fff !important
+      font-size: 18px
       &:hover
-        background-color: white
+        border-color: #409EFF !important
 
+    .tamanho-icone-download
+      font-size: 20px
+      
     .infoPagina    
       text-align: right
       margin-top: 10px
@@ -354,7 +360,12 @@ export default {
     .sem-remessa
       text-align: center
       font-size: 15px
-    
+
+    .sem-arquivo-retorno
+      text-align: center
+      font-size: 15px
+    .tabela-retornos
+      padding-top: 30px
     .paginacao    
       width: 100%
       font-family: 'Open Sans', sans-serif

@@ -98,7 +98,7 @@ const GERAL = {
   remessa: {
     tituloRetorno: ["Arquivos de retorno", "Return files"],
     tituloRemessa: ["Arquivos de remessa", "Shipping files"],
-    nomeArquivoRemessa: ["Nome do arquivo", "File name"],
+    nomeArquivo: ["Nome do arquivo", "File name"],
     paginacao: {
       exibir: ["Exibindo página",""],
       de: ["de",""],
