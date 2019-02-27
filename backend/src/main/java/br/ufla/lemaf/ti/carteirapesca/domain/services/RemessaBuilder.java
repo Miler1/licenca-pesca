@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public interface RemessaBuilder {
 
-	Remessa geraRemessa() throws IOException;
+	Remessa geraRemessa() throws Exception;
 
 	Arquivo getArquivoRemessa(Integer idRemessa);
 

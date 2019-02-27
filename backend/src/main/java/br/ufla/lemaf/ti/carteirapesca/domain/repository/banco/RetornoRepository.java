@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RetornoRepository extends JpaRepository<Retorno, Integer> {
+
+
 }

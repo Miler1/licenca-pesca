@@ -1,69 +1,12 @@
 <template lang="pug">
-#enviar-retornar-remessa
-  div(v-if="listaRemessasPaginada")
-    div.buscar
-      h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRemessa`) }}
-      .right
-        el-button(slot="append" icon="el-icon-refresh" @click="gerarArquivoRemessa" type="primary") {{ $t(`${remessa_prefix}gerarRemssa`) }}
-    card(v-if="listaRemessasPaginada.content != 0") 
-      el-row
-        el-col.tabela(:span="24")
-          table#tabela-paginada
-            tr
-              th
-                span {{ $t(`${remessa_prefix}nomeArquivo`) }} 
-              th
-                span {{ $t(`${remessa_prefix}dataArquivoRemessa`) }}
-              th.centralizar
-                span {{ $t(`${remessa_prefix}acao`) }}
-            
-            tr(v-for="remessas in listaRemessasPaginada.content")
-              td {{remessas.arquivo.nome}}
-              td {{remessas.arquivo.dataCadastro | moment('DD/MM/YYYY')}}
-              td.centralizar 
-                el-button.download-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary")
-      .flex
-        .flex-item
-          .paginacao
-            el-pagination(@current-change="inicializaListagem(pagina.atual)" 
-                    :page-size='paginacaoDados.pageSize', 
-                    :total='listaRemessasPaginada.totalPages' 
-                    :layout="paginacaoDados.layout"
-                    :current-page.sync="pagina.atual")
-            .infoPagina {{ $t(`${remessa_prefix}paginacao.exibir`) }} {{pagina.atual}} - {{listaRemessasPaginada.numberOfElements}} {{ $t(`${remessa_prefix}paginacao.de`) }}  {{listaRemessasPaginada.totalElements}} {{ $t(`${remessa_prefix}paginacao.qtdRegistros`) }} 
-    card(v-if="listaRemessasPaginada.content == 0")
-      div.sem-remessa
-        | {{ $t(`${remessa_prefix}semRemessa`) }}  
-
-
-
-    //ARQUIVOS DE RETORNO
+#enviar-retornar-listagem-retorno
   div(v-if="listaArquivosRetornoPaginado")
-    h2.title-principal {{ $t(`${remessa_prefix}tituloRetorno`) }}
+    div.buscar
+      h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRetorno`) }}
+      .right
+        el-button(slot="append" icon="el-icon-upload" @click='modalEnvioArquivoRetorno = true' type="primary") {{ $t(`${remessa_prefix}enviarArquivoRetorno`) }}
     card
-      .flex
-        .flex-item
-          el-row
-            el-col(:span='24' :class="{'enabled': !desativar }")
-              el-upload.upload-demo(
-                  drag='', 
-                  ref='upload',
-                  :action='url' 
-                  :on-remove='handleRemove' 
-                  :on-success='success'
-                  :auto-upload='false'
-                  :before-remove="beforeRemove"
-                  :limit='quantidadeUploadPorVez'
-                  accept=".ret") 
-                el-tooltip(placement="top" content="Selecione um tipo de documento para de anexar arquivos!")
-                  span.wrapper.el-button
-                    el-button.btn.lnr.lnr-upload
-                .texto-interno {{ $t(`${remessa_prefix}uploadArquivo`) }}
-          .retorno
-            el-button(slot="append" icon="el-icon-upload" @click="submitUpload" type="primary") {{ $t(`${remessa_prefix}enviarArquivoRetorno`) }}
-            
-
-      div.tabela-retornos(v-if="listaArquivosRetornoPaginado.content != 0") 
+      div(v-if="listaArquivosRetornoPaginado.content != 0") 
         el-row
           el-col.tabela(:span="24")
             table#tabela-paginada
@@ -71,7 +14,7 @@
                 th
                   span {{ $t(`${remessa_prefix}nomeArquivo`) }} 
                 th
-                  span {{ $t(`${remessa_prefix}dataArquivoRemessa`) }}
+                  span {{ $t(`${remessa_prefix}dataArquivo`) }}
                 th.centralizar
                   span {{ $t(`${remessa_prefix}acao`) }}
               
@@ -91,12 +34,38 @@
             .infoPagina {{ $t(`${remessa_prefix}paginacao.exibir`) }} {{pagina.atual}} - {{listaArquivosRetornoPaginado.numberOfElements}} {{ $t(`${remessa_prefix}paginacao.de`) }}  {{listaArquivosRetornoPaginado.totalElements}} {{ $t(`${remessa_prefix}paginacao.qtdRegistros`) }} 
     card(v-if="listaArquivosRetornoPaginado.content == 0")
       div.sem-arquivo-retorno
-        | {{ $t(`${remessa_prefix}semRemessa`) }} 
+        | {{ $t(`${remessa_prefix}semRetorno`) }}
+  
+    el-dialog(:visible.sync='modalEnvioArquivoRetorno')
+      .flex
+        .flex-item
+          el-row
+            el-col(:span='24' :class="{'enabled': !desativar }")
+              el-upload.upload-demo(
+                  drag='', 
+                  ref='upload',
+                  :action='url' 
+                  :on-remove='handleRemove' 
+                  :on-success='success'
+                  :on-error='erro'
+                  :auto-upload='false'
+                  :before-remove="beforeRemove"
+                  :limit='quantidadeUploadPorVez'
+                  accept=".ret") 
+                el-tooltip(placement="top" content="Selecione um tipo de documento para de anexar arquivos!")
+                  span.wrapper.el-button
+                    el-button.btn.lnr.lnr-upload
+                .texto-interno {{ $t(`${remessa_prefix}uploadArquivo`) }}
 
+      span.dialog-footer(slot='footer')
+        el-button(@click='modalEnvioArquivoRetorno = false') {{ $t(`${remessa_prefix}cancelar`) }}
+        el-button(slot="append" icon="el-icon-upload" @click="submitUpload" type="primary") {{ $t(`${remessa_prefix}enviarArquivo`) }}
 
 </template>
 
 <script>
+
+import Vue from 'vue'
 import { mapGetters } from "vuex";
 import Card from "../../layouts/Card";
 import Properties from "../../../properties";
@@ -126,6 +95,8 @@ export default {
       remessa_prefix: ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX,
       url: `${Properties.BASE_URL}/api/upload-retorno/`,
       fileList: [],
+      modalEnvioArquivoRetorno: false,
+      formLabelWidth: '100px',
       paginacaoDados: {
           pageSize: 1,
           layout: 'prev, pager, next'
@@ -140,54 +111,26 @@ export default {
 
   methods: {
     handleRemove (file, fileList) {
-      console.log(file, fileList);
     },
 
     beforeRemove(file, fileList){
       return this.$confirm('Realmente deseja excluir o arquivo ' + file.name + '?', 'Atenção');
-      // return this.$confirm(
-        // translate(`${this.remessa_prefix}cancelamento.mensagemCancelamento`),
-        // file.name,
-        // translate(`${this.remessa_prefix}cancelamento.mensagemCancelamentoAviso`));
     },
-
-    adicionadoAnexo (response, file, fileList) {
-      this.padronizarRetorno(fileList)
-    },
-
     inicializaListagem(pagina){
-      this.$store.dispatch(LISTAR_REMESSAS, pagina);
       this.$store.dispatch(LISTAR_RETORNOS, pagina);
     },
-
     submitUpload() {
       this.$refs.upload.submit();
     },
-
     uploadArquivo(){
       this.$store.dispatch(UPLOAD_ARQUIVO_RETORNO);
     },
-
-    downloadArquivoRemessa(idRemessa){
-
-       const href =
-        `${Properties.BASE_URL}/api/download-remessa/` + idRemessa;
-
-        window.open(href, "_blank");
-    },
-
     downloadArquivoRetorno(idRetorno){
-
     const href =
     `${Properties.BASE_URL}/api/download-retorno/` + idRetorno;
 
     window.open(href, "_blank");
     },
-
-    gerarArquivoRemessa(){
-      this.$store.dispatch(GERAR_REMESSAS);
-    },
-
     padronizarRetorno (keys) {
       let arquivos = []
 
@@ -203,15 +146,20 @@ export default {
       })
       this.documento.arquivos = arquivos
     },
-
-
     adicionadoAnexo (response, file, fileList) {
       this.padronizarRetorno(fileList)
     },
-
     success (response, file, fileList) {
       this.adicionadoAnexo(response, file, fileList)
     },
+    erro (err, file, fileList) {
+      if (err) {
+        Vue.prototype.$notify.error({
+          title: 'Erro',
+          message: err.message
+        })
+      }
+    }
   },
   
   created() {
@@ -247,7 +195,7 @@ export default {
   .centralizar
     text-align: center
 
-  #enviar-retornar-remessa
+  #enviar-retornar-listagem-retorno
     h1
       font-weight: 500
 
@@ -265,9 +213,6 @@ export default {
       &:hover
         border-color: #409EFF !important
 
-    .tamanho-icone-download
-      font-size: 20px
-      
     .infoPagina    
       text-align: right
       margin-top: 10px
@@ -301,12 +246,6 @@ export default {
         flex: 1
         margin-top: 6px
        
-    .title-principal-licencas
-        font-weight: 500
-        font-size: 25px
-        padding-bottom: 15px
-        padding-top: 15px
-
     .wrapper.el-button
       display: inline-block
       padding: 0
@@ -355,18 +294,18 @@ export default {
         &:hover
           border-color: $--cor-borda
 
-    .sem-remessa
-      text-align: center
-      font-size: 15px
-
     .sem-arquivo-retorno
       text-align: center
       font-size: 15px
+
     .tabela-retornos
       padding-top: 30px
+      
     .paginacao    
       width: 100%
       font-family: 'Open Sans', sans-serif
       font-size: 12px
       display: flex
+    .el-dialog__body
+      padding: 18px 5px
 </style>

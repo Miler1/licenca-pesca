@@ -3,6 +3,8 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.web;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
@@ -32,24 +34,24 @@ import java.io.*;
 @Slf4j
 @Controller
 @Transactional
-@RequestMapping("/api") // ALTERAR PARA /banco
+@RequestMapping("/api") // TODO ALTERAR PARA /banco
 public class BancoController extends DefaultController {
 
 	@Autowired
 	private RemessaBuilderImpl remessaBuilder;
 
 	@Autowired
+	TipoArquivoRepository tipoArquivoRepository;
+
+	@Autowired
 	private RetornoTituloBuilderImpl retornoBuilder;
 
 	@Autowired
-	private RetornoRepository retornoRepository;
-
-	@Autowired
-	private ConvenioBuilderImpl convenioBuilder;
+	ArquivoRepository arquivoRepository;
 
 	@CrossOrigin("*")
 	@GetMapping("/gera-remessa")
-	public ResponseEntity<InputStreamResource> geraRemessa() throws IOException {
+	public ResponseEntity<InputStreamResource> geraRemessa() throws Exception {
 
 		Remessa remessa = remessaBuilder.geraRemessa();
 
@@ -100,6 +102,16 @@ public class BancoController extends DefaultController {
 		Page<Arquivo> arquivosRetorno = retornoBuilder.listaRetornos(pageable);
 
 		return new ResponseEntity<>(arquivosRetorno, HttpStatus.OK);
+
+	}
+
+	@CrossOrigin("*")
+	@GetMapping("/download-retorno/{idRetorno}")
+	public ResponseEntity<InputStreamResource> downloadArquivoRetorno(@PathVariable("idRetorno") Integer idRetorno) throws FileNotFoundException {
+
+		Arquivo arquivoRetorno = retornoBuilder.getArquivoRetorno(idRetorno);
+
+		return downloadArquivo(new File(arquivoRetorno.getCaminhoArquivo()), arquivoRetorno.getNome());
 
 	}
 

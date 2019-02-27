@@ -110,7 +110,6 @@ export const actions = {
   },
 
   [UPLOAD_ARQUIVO_RETORNO]: (file) => {
-    debugger
     ArquivoService.upload(file);
   },
 
@@ -127,6 +126,7 @@ export const actions = {
   [LISTAR_RETORNOS]:  ({commit}, pagina) => {
     ConsultaService.buscarArquivosRetornos(pagina)
     .then(({ data }) => {
+      debugger
       commit(SET_LISTA_ARQUIVOS_RETORNOS, data);
     })
     .catch(error => {

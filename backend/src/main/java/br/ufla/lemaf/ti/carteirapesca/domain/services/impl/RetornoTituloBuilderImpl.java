@@ -3,7 +3,10 @@ package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoArquivoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.MotivoOcorrencia;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.TituloRetorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.MotivoOcorrenciaRepository;
@@ -29,7 +32,6 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -90,9 +92,17 @@ public class RetornoTituloBuilderImpl implements RetornoBuilder {
 
 	}
 
+	public Arquivo getArquivoRetorno(Integer idRetorno) {
+
+		Arquivo arquivo = arquivoRepository.findById(idRetorno).get();
+
+		return arquivo;
+
+	}
+
 	public Page<Arquivo> listaRetornos(Pageable pageable) {
 
-		return arquivoRepository.findByTipoArquivo(tipoArquivoRepository.findByCodigo("RETORNO"), pageable);
+		return arquivoRepository.findByTipoArquivo(tipoArquivoRepository.findByCodigo(TipoArquivoEnum.RETORNO.getCodigo()), pageable);
 	}
 
 	private File salvaArquivoDiretorio(MultipartFile multipartFile) throws Exception {

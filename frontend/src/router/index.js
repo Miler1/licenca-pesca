@@ -1,6 +1,7 @@
 import RegistrarLicenca from "../components/views/RegistrarLicenca";
 import BuscarLicenca from "../components/views/BuscarLicenca";
-import EnvioRetornoRemessa from "../components/business/remessa/EnvioRetornoRemessa";
+import ListagemRemessa from "../components/business/remessa/ListagemRemessa";
+import EnvioListagemRetorno from "../components/business/remessa/EnvioListagemRetorno";
 
 export const routes = [
   {
@@ -14,9 +15,14 @@ export const routes = [
     component: RegistrarLicenca
   },
   {
-    path: "/envio-retorno-remessa",
-    name: "envioRetornoRemessa",
-    component: EnvioRetornoRemessa
+    path: "/listagem-remessas",
+    name: "listagemRemessa",
+    component: ListagemRemessa
+  },
+  {
+    path: "/envio-retorno",
+    name: "envioListagemRetorno",
+    component: EnvioListagemRetorno
   },
   {
     path: "/informacao-carteira/:protocolo",

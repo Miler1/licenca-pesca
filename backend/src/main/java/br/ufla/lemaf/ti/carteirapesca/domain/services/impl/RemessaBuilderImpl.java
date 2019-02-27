@@ -47,7 +47,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 	TituloRepository tituloRepository;
 
 	@Override
-	public Remessa geraRemessa() throws IOException {
+	public Remessa geraRemessa() throws Exception {
 
 		List<Titulo> titulos = tituloRepository.buscaTitulosSemRemessaGerada();
 
@@ -64,7 +64,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 			return remessa;
 
 		} else {
-			return null;
+			throw new Exception("Não foi possível gerar a remessa pois não existem boletos.");
 		}
 
 	}

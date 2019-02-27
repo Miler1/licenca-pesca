@@ -10,15 +10,24 @@
 								| IPAAM
 							.completo
 								| Instituto de Proteção Ambiental do Amazonas
-					menu-item(v-if='acoesMenuRemessa()' titulo="Licenças"  @click="acessarLicencas" :active="!acessarLicencas")
-					menu-item(v-if='acoesMenuRemessa()' titulo="Arquivos"  @click="acessarArquivos" :active="acessarArquivos")
-					menu-item(v-if='acoesMenuRemessa()' titulo="Relatórios"  @click="acessarRelatorios" :active="!acessarRelatorios" )
+					el-menu.el-menu-demo(:default-active='activeIndex', mode='horizontal' v-if="acoesMenuArquivos()")
+						el-submenu(index='2')
+							template(slot='title') Arquivos
+							el-menu-item(index="2-1", @click="acessarArquivosRemessa") Remessa
+							el-menu-item(index="2-2", @click="acessarArquivosRetorno") Retorno
+				
+					//- TODO menus que serão implementados no futuro
+					//- menu-item(v-if='acoesMenuRemessa()' titulo="Licenças"  @click="acessarLicencas" :active="!acessarLicencas")
+					//- menu-item(v-if='acoesMenuRemessa()' titulo="Relatórios"  @click="acessarRelatorios" :active="!acessarRelatorios" )
+				
 			.right
 				.flex-item
 					.locale
 						i.mdi.mdi-translate
 						el-select(v-model="$i18n.locale" @change="handleLocale")
 							el-option(v-for="(lang, i) in langs" :key="i" :value="lang") {{ lang }}
+
+		
 
 
 </template>
@@ -32,16 +41,19 @@ export default {
   name: "MenuHeader",
   components: { MenuItem },
   mixins: [],
+  props: ['index'],
   data() {
 	return { 
 		langs: ["PT-BR", "EN"],
-		activeName: 'first' 
+		activeName: 'first' ,
+		activeIndex: '1'
 	};
   },
   methods: {
 	handleClick(tab, event) {
     	console.log(tab, event);
-    },
+	},
+
 	handleLocale() {
 	  localizeValidation();
 	},
@@ -50,15 +62,20 @@ export default {
 			this.$router.push({name: 'home'});
 		});
 	},
-	acoesMenuRemessa(){
-		//mudar nome de acordo com o da rota
-		return this.$router.history.current.name == 'envioRetornoRemessa'
+	acoesMenuArquivos(){
+		return this.$router.history.current.name == 'listagemRemessa'
 	},
-	acessarArquivos(){
+	acessarArquivosRetorno(){
 		this.$router.push({
-			name: 'envioRetornoRemessa'
+			name: 'envioListagemRetorno'
 		});
 	},
+	acessarArquivosRemessa(){
+		this.$router.push({
+			name: 'listagemRemessa'
+		});
+	},
+
 	acessarLicencas(){
 		this.$router.push({
 			// name: 'envioRetornoRemessa'
@@ -144,6 +161,25 @@ export default {
 
 					.el-select
 						width: 90px
+
+		.el-menu--horizontal .el-menu-item:not(.is-disabled):hover, .el-menu--horizontal .el-menu-item:not(.is-disabled):focus
+			color: #409EFF !important
+
+		.el-menu--horizontal > .el-submenu .el-submenu__title
+			font-size: 16px
+			height: 53px
+			color: black
+		
+		.el-menu--horizontal > .el-submenu .el-submenu__icon-arrow
+			color: #409EFF !important
+			font-size: 24px
+			padding-right: 0
+
+		.el-menu.el-menu--horizontal
+			border-bottom-color: #fff !important
+
+		.el-submenu.is-active .el-submenu__title
+			border-bottom-color: #fff !important
 
 		@media screen and (max-width: 600px) 
 			.menu 
