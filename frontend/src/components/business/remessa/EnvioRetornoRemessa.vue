@@ -145,6 +145,10 @@ export default {
 
     beforeRemove(file, fileList){
       return this.$confirm('Realmente deseja excluir o arquivo ' + file.name + '?', 'Atenção');
+      // return this.$confirm(
+        // translate(`${this.remessa_prefix}cancelamento.mensagemCancelamento`),
+        // file.name,
+        // translate(`${this.remessa_prefix}cancelamento.mensagemCancelamentoAviso`));
     },
 
     adicionadoAnexo (response, file, fileList) {
