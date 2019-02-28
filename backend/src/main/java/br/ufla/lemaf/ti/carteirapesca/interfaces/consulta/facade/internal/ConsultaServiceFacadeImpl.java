@@ -20,6 +20,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -166,30 +168,25 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		data.put("mensagensDeAviso", licenca.mensagensDeAviso());
 		data.put("descricaoCarteiraDefinitivaEProvisoria", licenca.descricaoCarteiraDefinitivaEProvisoria());
 
-		Date validade = licenca.getDataVencimento();
-
-		Date validadeProvisoria = licenca.getDataVencimentoProvisoria();
-
 		if(licenca.dataCriacao() == null && licenca.dataAtivacao() == null) {
 			data.put("emissao", "-");
+		}
 
-		}if(licenca.getStatus().getId().equals(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id)){
-
+		if(licenca.getStatus().getId().equals(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id)){
 			data.put("emissao", DateUtils.formatDate(licenca.dataCriacao(), Constants.DATE_FORMAT));
-
 		} else {
-
 			data.put("emissao", DateUtils.formatDate(licenca.dataAtivacao(), Constants.DATE_FORMAT));
 		}
 
+		LocalDate validade = licenca.getDataVencimento();
+		LocalDate validadeProvisoria = licenca.getDataVencimentoProvisoria();
+
 		if(validade == null && validadeProvisoria == null) {
 			data.put("validade", "-");
-
-		} if (validade == null && validadeProvisoria != null) {
-			data.put("validade", DateUtils.formatDate(validadeProvisoria, Constants.DATE_FORMAT));
-
+		} if(validade == null && validadeProvisoria != null) {
+			data.put("validade", validadeProvisoria.format(Constants.FORMATO_DATA_PADRAO));
 		} else {
-			data.put("validade", DateUtils.formatDate(validade, Constants.DATE_FORMAT));
+			data.put("validade", validade.format(Constants.FORMATO_DATA_PADRAO));
 		}
 
 		return pdfGenaratorUtil.createPdf("carteira",data);

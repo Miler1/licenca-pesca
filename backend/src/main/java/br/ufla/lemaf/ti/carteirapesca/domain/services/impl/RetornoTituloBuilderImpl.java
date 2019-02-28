@@ -12,14 +12,14 @@ import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.MotivoOcorrenciaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TituloRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoBuilder;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoTituloBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ArquivoUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.CabecalhoRetornoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.TraillerRetornoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.titulo.TransacaoRetornoDTO;
 import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class RetornoTituloBuilderImpl implements RetornoBuilder {
+public class RetornoTituloBuilderImpl implements RetornoTituloBuilder {
 
 	private static final String EXTENSAO_ARQUIVO_RETORNO = ".RET";
 
@@ -111,21 +111,12 @@ public class RetornoTituloBuilderImpl implements RetornoBuilder {
 
 		final DateTimeFormatter FORMATO_DATA_MES_ANO = DateTimeFormatter.ofPattern("MM-YYYY");
 
-		UUID nomeArquivo = UUID.randomUUID();
-
-		Path pathArquivoRetorno = Paths.get(Properties.pathArquivoRetorno() +
+		String pathSalvarArquivo = Properties.pathArquivoRetorno() +
+			File.separator + "titulo" +
 			File.separator + LocalDate.now().format(FORMATO_DATA_MES_ANO) +
-			File.separator + nomeArquivo + EXTENSAO_ARQUIVO_RETORNO);
+			File.separator + UUID.randomUUID() + EXTENSAO_ARQUIVO_RETORNO;
 
-		File arquivoRetorno = pathArquivoRetorno.toFile();
-
-		if (!arquivoRetorno.exists()) {
-			Files.createDirectories(pathArquivoRetorno.getParent());
-		}
-
-		FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), arquivoRetorno);
-
-		return arquivoRetorno;
+		return ArquivoUtils.salvaArquivoDiretorio(multipartFile, pathSalvarArquivo);
 
 	}
 
