@@ -10,7 +10,7 @@
 								| IPAAM
 							.completo
 								| Instituto de Proteção Ambiental do Amazonas
-					el-menu.el-menu-demo(:default-active='activeIndex', mode='horizontal' v-if="acoesMenuArquivos()")
+					el-menu.el-menu-demo(:default-active='activeIndex', mode='horizontal' v-if="$route.name == 'envioListagemRetorno' || $route.name == 'listagemRemessa' ")
 						el-submenu(index='2')
 							template(slot='title') Arquivos
 							el-menu-item(index="2-1", @click="acessarArquivosRemessa") Remessa
@@ -22,12 +22,10 @@
 				
 			.right
 				.flex-item
-					.locale
-						i.mdi.mdi-translate
+					.locale 
+						i.mdi.mdi-translate 
 						el-select(v-model="$i18n.locale" @change="handleLocale")
-							el-option(v-for="(lang, i) in langs" :key="i" :value="lang") {{ lang }}
-
-		
+							el-option(v-for="(lang, i) in langs" :key="i" :value="lang") {{ lang }}	
 
 
 </template>
@@ -62,13 +60,13 @@ export default {
 			this.$router.push({name: 'home'});
 		});
 	},
-	acoesMenuArquivos(){
-		return this.$router.history.current.name == 'listagemRemessa'
-	},
 	acessarArquivosRetorno(){
 		this.$router.push({
 			name: 'envioListagemRetorno'
 		});
+	},
+	teste(){
+		location.reload();
 	},
 	acessarArquivosRemessa(){
 		this.$router.push({
@@ -161,6 +159,31 @@ export default {
 
 					.el-select
 						width: 90px
+			.left-t
+				display: flex
+				align-items: center
+
+				.locale
+					display: flex
+					align-items: center
+
+					i
+						color: $--cor-tema-primario
+						font-size: $--fonte-titulo
+						padding-right: 0
+
+					.el-input__inner
+						border: none
+
+					.el-select
+						width: 90px
+
+		.el-menu--horizontal .el-menu .el-menu-item
+			color: #409EFF !important
+			font-size: 15px !important
+
+		.el-menu--horizontal .el-menu-item:not(.is-disabled):hover, .el-menu--horizontal .el-menu-item:not(.is-disabled):focus
+			background-color: #f5f7fa
 
 		.el-menu--horizontal .el-menu-item:not(.is-disabled):hover, .el-menu--horizontal .el-menu-item:not(.is-disabled):focus
 			color: #409EFF !important
@@ -169,11 +192,13 @@ export default {
 			font-size: 16px
 			height: 53px
 			color: black
+			font-weight: bold
 		
 		.el-menu--horizontal > .el-submenu .el-submenu__icon-arrow
 			color: #409EFF !important
 			font-size: 24px
 			padding-right: 0
+
 
 		.el-menu.el-menu--horizontal
 			border-bottom-color: #fff !important

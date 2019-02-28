@@ -5,8 +5,8 @@ const ArquivoService = {
   /**
    * Serviço de upload para arquivos.
   */
-  upload: multipartFile =>
-    ApiService.postWithBlock(`${Properties.BASE_URL}/api/upload-retorno/` + multipartFile)
+  upload: arquivo =>
+    ApiService.postWithBlock(`${Properties.BASE_URL}/api/upload-retorno/` + arquivo)
   };
 
 export default ArquivoService;

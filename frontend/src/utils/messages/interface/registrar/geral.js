@@ -100,28 +100,28 @@ const GERAL = {
     tituloRemessa: ["Arquivos de remessa", "Shipping files"],
     nomeArquivo: ["Nome do arquivo", "File name"],
     paginacao: {
-      exibir: ["Exibindo página",""],
-      de: ["de",""],
-      qtdRegistros: ["registros",""]
+      exibir: ["Exibindo página","Viewing page"],
+      de: ["de","in"],
+      qtdRegistros: ["registros","records"]
     },
     listagemRemessa: ["Listagem dos arquivos de remessa", "Listing of shipping files"],
     dataArquivo: ["Data de criação", "Creation date"],
-    semRemessa: ["Sem arquivos de remessas registrados", ""],
-    semRetorno: ["Sem arquivos de retorno registrados", ""],
+    semRemessa: ["Sem arquivos de remessas registrados", "No Registered Shipment Files"],
+    semRetorno: ["Sem arquivos de retorno registrados", "No registered return files"],
     acao: ["Download", "Action"],
     botaoAcao: ["Download", "Download file"],
-    uploadArquivo: ["Arraste e solte o(s) arquivo(s) nesta área ou clique no botão acima", "Drag and drop the file (s) to this area or click the button above"],
+    uploadArquivo: ["Clique no botão de cima para adcionar um arquivo de retorno", "Click the top button to add a return file"],
     gerarRemssa: ["Gerar remessa", "Generate Shipping"],
-    enviarArquivoRetorno: ["Enviar arquivo de retorno", ""],
-    enviarArquivo:["Enviar arquivo", ""],
-    cancelar: ["Cancelar", ""],
+    enviarArquivoRetorno: ["Enviar arquivo de retorno", "Send return file"],
+    enviarArquivo:["Enviar arquivo", "Send file"],
+    cancelar: ["Cancelar", "Cancel"],
     licenca: {
       tituloLicenca: ["Licenças", "License"],
       listagemLicenca: ["Listagem das licenças", "List of licenses"]
     },
     cancelamento: {
-      mensagemCancelamento: ["Realmente deseja excluir o arquivo",""],
-      mensagemCancelamentoAviso: ["Atenção",""]
+      mensagemCancelamento: ["Realmente deseja excluir o arquivo","Really want to delete file"],
+      mensagemCancelamentoAviso: ["Atenção","Attention"]
     }
   }
 };

@@ -5,8 +5,8 @@
       h2.title-principal-remessa {{ $t(`${remessa_prefix}tituloRetorno`) }}
       .right
         el-button(slot="append" icon="el-icon-upload" @click='modalEnvioArquivoRetorno = true' type="primary") {{ $t(`${remessa_prefix}enviarArquivoRetorno`) }}
-    card
-      div(v-if="listaArquivosRetornoPaginado.content != 0") 
+    card(v-if="listaArquivosRetornoPaginado.content != 0")
+      div 
         el-row
           el-col.tabela(:span="24")
             table#tabela-paginada
@@ -22,7 +22,7 @@
                 td {{arquivoRetorno.nome}}
                 td {{arquivoRetorno.dataCadastro | moment('DD/MM/YYYY')}}
                 td.centralizar 
-                  el-button.download-button(slot="append" icon="el-icon-download" @click="downloadArquivoRetorno(arquivoRetorno.id)" type="primary")
+                  el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRetorno(arquivoRetorno.id)" type="primary")
       .flex
         .flex-item
           .paginacao
@@ -47,18 +47,19 @@
                   :action='url' 
                   :on-remove='handleRemove' 
                   :on-success='success'
+                  :fileList="fileList"
                   :on-error='erro'
                   :auto-upload='false'
                   :before-remove="beforeRemove"
                   :limit='quantidadeUploadPorVez'
                   accept=".ret") 
-                el-tooltip(placement="top" content="Selecione um tipo de documento para de anexar arquivos!")
+                el-tooltip(placement="top" content="Selecione um documento de retorno!") 
                   span.wrapper.el-button
                     el-button.btn.lnr.lnr-upload
                 .texto-interno {{ $t(`${remessa_prefix}uploadArquivo`) }}
 
       span.dialog-footer(slot='footer')
-        el-button(@click='modalEnvioArquivoRetorno = false') {{ $t(`${remessa_prefix}cancelar`) }}
+        el-button(@click='modalEnvioArquivoRetornoLimpar()') {{ $t(`${remessa_prefix}cancelar`) }}
         el-button(slot="append" icon="el-icon-upload" @click="submitUpload" type="primary") {{ $t(`${remessa_prefix}enviarArquivo`) }}
 
 </template>
@@ -121,9 +122,7 @@ export default {
     },
     submitUpload() {
       this.$refs.upload.submit();
-    },
-    uploadArquivo(){
-      this.$store.dispatch(UPLOAD_ARQUIVO_RETORNO);
+      this.modalEnvioArquivoRetorno = false;
     },
     downloadArquivoRetorno(idRetorno){
     const href =
@@ -131,8 +130,14 @@ export default {
 
     window.open(href, "_blank");
     },
+
+    modalEnvioArquivoRetornoLimpar(){
+      this.modalEnvioArquivoRetorno = false;
+      this.fileList = []
+    },
+
     padronizarRetorno (keys) {
-      let arquivos = []
+      var arquivos = []
 
       keys.forEach(key => {
         let arquivo = {}
@@ -144,13 +149,21 @@ export default {
 
         arquivos.push(arquivo)
       })
-      this.documento.arquivos = arquivos
+      
     },
     adicionadoAnexo (response, file, fileList) {
       this.padronizarRetorno(fileList)
     },
     success (response, file, fileList) {
       this.adicionadoAnexo(response, file, fileList)
+      debugger
+      if (response == "") {
+        Vue.prototype.$notify.success({
+          title: 'Sucesso',
+          message: 'Arquivo de retorno enviado com sucesso'
+        })
+      }
+    
     },
     erro (err, file, fileList) {
       if (err) {
@@ -204,14 +217,6 @@ export default {
         .flex-item
             flex: 1
             display: grid
-  
-    .download-button
-      color: #409EFF
-      border-color: #fff !important
-      background-color: #fff !important
-      font-size: 18px
-      &:hover
-        border-color: #409EFF !important
 
     .infoPagina    
       text-align: right
@@ -301,6 +306,21 @@ export default {
     .tabela-retornos
       padding-top: 30px
       
+    .el-upload-list__item .el-icon-upload-success
+      font-size: 21px
+      padding-right: 17px
+    
+    .el-icon-close
+      font-size: 17px
+      padding-right: 17px
+    
+    .el-upload-list__item-name
+      font-size: 15px
+      padding-left: 22px
+
+    #enviar-retornar-listagem-retorno .el-icon-close 
+      font-size: 0px !important
+
     .paginacao    
       width: 100%
       font-family: 'Open Sans', sans-serif

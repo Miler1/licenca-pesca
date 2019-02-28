@@ -129,7 +129,6 @@ public class RetornoTituloBuilderImpl implements RetornoTituloBuilder {
 		if(arquivoRepository.findByNome(multipartFile.getOriginalFilename()) != null) {
 			throw new Exception("O arquivo de retorno selecionado já foi processado");
 		}
-
 	}
 
 	private List<TransacaoRetornoDTO> getTransacoes(final List<String> linhasArquivoRetorno) {

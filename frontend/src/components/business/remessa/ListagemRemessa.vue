@@ -21,7 +21,7 @@
               td {{remessas.arquivo.nome}}
               td {{remessas.arquivo.dataCadastro | moment('DD/MM/YYYY')}}
               td.centralizar 
-                el-button.download-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary")
+                el-button(slot="append" icon="el-icon-download" @click="downloadArquivoRemessa(remessas.id)" type="primary")
       .flex
         .flex-item
           .paginacao
@@ -139,13 +139,13 @@ export default {
             flex: 1
             display: grid
   
-    .download-button
-      color: #409EFF
-      border-color: #fff !important
-      background-color: #fff !important
-      font-size: 18px
-      &:hover
-        border-color: #409EFF !important
+    // .download-button
+    //   color: #409EFF
+    //   border-color: #fff !important
+    //   background-color: #fff !important
+    //   font-size: 18px
+    //   &:hover
+    //     border-color: #409EFF !important
 
     .infoPagina    
       text-align: right
