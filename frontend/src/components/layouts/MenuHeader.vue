@@ -10,11 +10,12 @@
 								| IPAAM
 							.completo
 								| Instituto de Proteção Ambiental do Amazonas
-					el-menu.el-menu-demo(:default-active='activeIndex', mode='horizontal' background-color='#f5f7fa',text-color='black' v-if="$route.name == 'envioListagemRetorno' || $route.name == 'listagemRemessa' ")
-						el-submenu(index='2')
-							template(slot='title') Arquivos
-							el-menu-item(index="2-1", @click="acessarArquivosRemessa") Remessa
-							el-menu-item(index="2-2", @click="acessarArquivosRetorno") Retorno
+					.menuRetornoRemessa(v-if="$route.name == 'envioListagemRetorno' || $route.name == 'listagemRemessa'")
+						el-menu.el-menu-demo(:default-active='activeIndex', mode='horizontal' background-color='#f5f7fa',text-color='black')
+							el-submenu(index='2')
+								template(slot='title') Arquivos
+								el-menu-item(index="2-1", @click="acessarArquivosRemessa") Remessa
+								el-menu-item(index="2-2", @click="acessarArquivosRetorno") Retorno
 				
 					//- TODO menus que serão implementados no futuro
 					//- menu-item(titulo="Remessas"  @click="acessarLicencas" :active="!acessarLicencas")
