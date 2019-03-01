@@ -126,7 +126,6 @@ export const actions = {
   [LISTAR_RETORNOS]:  ({commit}, pagina) => {
     ConsultaService.buscarArquivosRetornos(pagina)
     .then(({ data }) => {
-      debugger
       commit(SET_LISTA_ARQUIVOS_RETORNOS, data);
     })
     .catch(error => {

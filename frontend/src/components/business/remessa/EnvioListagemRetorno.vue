@@ -156,14 +156,13 @@ export default {
     },
     success (response, file, fileList) {
       this.adicionadoAnexo(response, file, fileList)
-      debugger
       if (response == "") {
         Vue.prototype.$notify.success({
           title: 'Sucesso',
           message: 'Arquivo de retorno enviado com sucesso'
         })
       }
-    
+      this.fileList = []
     },
     erro (err, file, fileList) {
       if (err) {
