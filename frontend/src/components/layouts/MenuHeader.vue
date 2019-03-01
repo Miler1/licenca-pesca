@@ -11,7 +11,7 @@
 							.completo
 								| Instituto de Proteção Ambiental do Amazonas
 					.menuRetornoRemessa(v-if="$route.name == 'envioListagemRetorno' || $route.name == 'listagemRemessa'")
-						el-menu.el-menu-demo(:default-active='activeIndex', mode='horizontal' background-color='#f5f7fa',text-color='black')
+						el-menu.el-menu-demo(:default-active='activeIndex', mode='horizontal')
 							el-submenu(index='2')
 								template(slot='title') Arquivos
 								el-menu-item(index="2-1", @click="acessarArquivosRemessa") Remessa
@@ -178,6 +178,9 @@ export default {
 
 					.el-select
 						width: 90px
+
+		/deep/.el-menu--horizontal .el-menu .el-menu-item.is-active, .el-menu--horizontal .el-menu .el-submenu.is-active > .el-submenu__title
+			color: #409EFF !important
 
 		.el-menu--horizontal .el-menu .el-menu-item
 			color: #409EFF !important

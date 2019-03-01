@@ -21,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -107,7 +106,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 	public FlatFile<Record> construirInformacoesRemessa(List<Titulo> titulos, Remessa novaRemessa) throws IOException {
 
 		ClassPathResource resource = new ClassPathResource(PATH_TEMPLATE_REMESSA);
-		FlatFile<Record> ff = Texgit.createFlatFile(resource.getFile());
+		FlatFile<Record> ff = Texgit.createFlatFile(resource.getInputStream());
 
 		ff.addRecord(geraCabecalho(ff, titulos.get(0), novaRemessa));
 
