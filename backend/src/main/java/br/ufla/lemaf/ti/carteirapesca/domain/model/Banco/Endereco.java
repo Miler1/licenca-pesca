@@ -56,7 +56,7 @@ public class Endereco implements Entity<Endereco, Integer> {
 	public Endereco(main.java.br.ufla.lemaf.beans.pessoa.Endereco endereco) {
 
 		this.logradouro = endereco.logradouro;
-		this.numero = endereco.numero.toString();
+		this.numero = (endereco.numero != null ? endereco.numero.toString() : "/SN");
 		this.complemento = endereco.complemento;
 		this.bairro = endereco.bairro;
 		this.cep = endereco.cep;

@@ -112,6 +112,9 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	 * @return Todas as Licencas do Solicitante
 	 */
 	public List<Licenca> buscarTodasLicencas() {
+
+//		licenca.sort(());
+
 		return licenca;
 	}
 

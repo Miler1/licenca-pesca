@@ -105,8 +105,17 @@ export const actions = {
       });
   },
 
-  [GERAR_REMESSAS]: () => {
-    RegistroService.geraRemessa();
+  [GERAR_REMESSAS]: ({ commit }) => {
+    RegistroService.geraRemessa()
+    .then(({ data }) => {
+      Vue.prototype.$notify.success({
+        title: 'Sucesso',
+        message: `Remessa gerada com sucesso.`
+      });
+    })
+    .catch(error => {
+      commit(SET_ERROR, error.message);
+    });
   },
 
   [UPLOAD_ARQUIVO_RETORNO]: (file) => {
@@ -176,7 +185,10 @@ export const actions = {
           commit(SET_ERROR_TELA_BUSCA, error.response.data.message);
           commit(CLEAN_SOLICITANTE);
         }else {
-          commit(SET_ERROR_TELA_BUSCA, "Não foi possível conectar ao servidor.")
+          Vue.prototype.$notify.error({
+            title: 'Error',
+            message: `Não foi possível conectar ao servidor.`
+          });
         }
       });
   },

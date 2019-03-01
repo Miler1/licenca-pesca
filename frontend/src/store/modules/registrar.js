@@ -117,7 +117,7 @@ export const actions = {
       informacaoComplementar: registroResource.informacoesComplementares
     }).then(({ data }) => {
       commit(SET_PROTOCOLO, data.numero);
-      Vue.prototype.$message.success(
+      Vue.prototype.$notify.success(
         `A licença ${data.numero} foi criada com sucesso.`
       );
       return data.numero;
@@ -133,12 +133,12 @@ export const actions = {
       protocolo: registroResource.protocolo
     }).then(({ data }) => {
       commit(SET_PROTOCOLO, data.numero);
-      Vue.prototype.$message.success(
+      Vue.prototype.$notify.success(
         `A licença ${data.numero} foi renovada com sucesso.`
       );
       return data.numero;
     }).catch(error => {
-      Vue.prototype.$message.error(
+      Vue.prototype.$notify.error(
         `Não foi possível conectar ao servidor.`
       );
     });

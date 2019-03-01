@@ -79,7 +79,7 @@ public class RemessaBuilderImpl implements RemessaBuilder {
 
 	@Override
 	public Page<Remessa> listaRemessas(Pageable pageable) {
-		return remessaRepository.findAll(pageable);
+		return remessaRepository.findAllOrOrderBy(pageable);
 	}
 
 	public Remessa inicializaNovaRemessa() {

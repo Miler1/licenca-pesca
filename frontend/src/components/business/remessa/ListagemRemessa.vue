@@ -51,9 +51,6 @@ import { createECDH } from 'crypto';
 export default {
   name: "EnviarRetornarRemessa",
 
-  // props: ['desativar', 'configuracao'],
-
-
   computed: {
     ...mapGetters(["listaRemessasPaginada"])
   },
