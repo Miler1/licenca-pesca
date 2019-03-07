@@ -64,7 +64,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 	public Convenio geraConvenio(Modalidade modalidade, Pessoa pessoa) {
 
 		//TODO Hiago - Alterar tipo de segmento de "TipoSegmentoEnum.ENERGIA_GAS" para "TipoSegmentoEnum.ORGAO_GOVERNAMENTAL"
-		TipoSegmento tipoSegmento = tipoSegmentoRepository.findByCodigo(TipoSegmentoEnum.ENERGIA_GAS.getCodigo());
+		TipoSegmento tipoSegmento = tipoSegmentoRepository.findByCodigo(TipoSegmentoEnum.DEMAIS_EMPRESAS.getCodigo());
 		TipoValorEfetivo tipoValorEfetivo = tipoValorEfetivoRepository.findByCodigo(TipoValorEfetivoEnum.VALOR_REAIS_MODULO_10.getCodigo());
 		PagadorTitulo pagadorTitulo = pagadorBuilder.transformarPessoaEmPagador(pessoa);
 		Beneficiario beneficiario = beneficiarioRepository.findBySigla("IPAAM");
@@ -173,10 +173,11 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		String valor = BancoUtils.removeFormatacaoValorMonetario(convenio.getValor());
 		String dataVencimento = convenio.getDataVencimento().format(FORMATO_DATA_CODIGO_BARRAS);
 
-		//TODO Hiago - inserir codigo do convênio do IPAAM disponibilizado pelo Bradesco
-		String codigoEmpresa = "0138";
+		/** Código da empresa deverá ser os 8 primeiros digítos do CNPJ (antes da '/')*/
+		String codigoEmpresa = convenio.getBeneficiario().getCpfCnpj().substring(0, 8);
 
-		Integer tamanhoMaximoCampoLivre = 25;
+		/** Tamanho máximo campo livre será de 21 quando o CNPJ for utilizado como código da empresa (antes da '/')*/
+		Integer tamanhoMaximoCampoLivre = 21;
 
 		linhaDigitavel.append(idProduto)
 			.append(convenio.getTipoSegmento().getCodigo())

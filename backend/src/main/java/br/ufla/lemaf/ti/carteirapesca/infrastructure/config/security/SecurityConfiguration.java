@@ -85,6 +85,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("*/api/**").permitAll()
 				.antMatchers("*/external/**").access(externalIpsAllowed())
+				.antMatchers("*/images/**").access(externalIpsAllowed())
 				.antMatchers("*/**").authenticated()
 			.and()
 				.logout()
