@@ -105,7 +105,7 @@ export const actions = {
       });
   },
 
-  [GERAR_REMESSAS]: ({ commit }) => {
+  [GERAR_REMESSAS]: ({ commit, data }) => {
     RegistroService.geraRemessa()
     .then(() => {
       Vue.prototype.$notify.success({
@@ -169,7 +169,11 @@ export const actions = {
         if(!data.maes){
           commit(SET_SOLICITANTE, data);
           commit(ACTIVE_CADASTRO, data);
-          commit(SET_ERROR_TELA_BUSCA, "");
+          // commit(SET_ERROR_TELA_BUSCA, "");
+          Vue.prototype.$notify.error({
+            title: 'Erro',
+            message: `Pessoa não encontrada.`
+          });
           commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
           commit(SET_CPF_PESQUISA, data.cpf);
           commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
@@ -186,7 +190,7 @@ export const actions = {
           commit(CLEAN_SOLICITANTE);
         }else {
           Vue.prototype.$notify.error({
-            title: 'Error',
+            title: 'Erro',
             message: `Não foi possível conectar ao servidor.`
           });
         }

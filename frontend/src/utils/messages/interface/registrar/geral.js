@@ -93,6 +93,11 @@ const GERAL = {
     titulo: ["Buscar Licença de Pesca Amadora (Esportiva ou Recreativa)", "Search Amadora Fishing License (Sportive or Recreational)"],
     botoes: {
       cadastrar: ["Cadastrar licença", "Register license"]
+    },
+    menuArquivos: {
+      tituloGeral: ["Arquivos", "Files"],
+      remessa: ["Remessa", "Shipping"],
+      retorno: ["Retorno", "Return"]
     }
   },
   remessa: {

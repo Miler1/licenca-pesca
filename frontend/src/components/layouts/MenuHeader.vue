@@ -13,13 +13,9 @@
 					.menuRetornoRemessa(v-if="$route.name == 'envioListagemRetorno' || $route.name == 'listagemRemessa'")
 						el-menu.el-menu-demo(:default-active='activeIndex', mode='horizontal')
 							el-submenu(index='2')
-								template(slot='title') Arquivos
-								el-menu-item(index="2-1", @click="acessarArquivosRemessa") Remessa
-								el-menu-item(index="2-2", @click="acessarArquivosRetorno") Retorno
-				
-					//- TODO menus que serão implementados no futuro
-					//- menu-item(titulo="Remessas"  @click="acessarLicencas" :active="!acessarLicencas")
-					//- menu-item( titulo="Retorno"  @click="acessarRelatorios" :active="!acessarRelatorios" )
+								template(slot='title') {{ $t(`${consultar_prefix}menuArquivos.tituloGeral`) }}
+								el-menu-item(index="2-1", @click="acessarArquivosRemessa") {{ $t(`${consultar_prefix}menuArquivos.remessa`) }}
+								el-menu-item(index="2-2", @click="acessarArquivosRetorno") {{ $t(`${consultar_prefix}menuArquivos.retorno`) }}
 				
 			.right
 				.flex-item
@@ -34,6 +30,7 @@
 <script>
 import { localizeValidation } from "../../configs/validator";
 import  MenuItem  from "./MenuItem" ;
+import { CONSULTAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
 import { CANCELAR } from "../../store/actions.type";
 
 export default {
@@ -43,6 +40,7 @@ export default {
   props: ['index'],
   data() {
 	return { 
+		consultar_prefix: CONSULTAR_GERAL_MESSAGES_PREFIX,
 		langs: ["PT-BR", "EN"],
 		activeName: 'first' ,
 		activeIndex: '1'
