@@ -115,7 +115,6 @@ export default {
       } else {
         passaporte = resource;
       }
-      debugger
       return { cpf, passaporte };
     },
    
@@ -124,8 +123,6 @@ export default {
     },
     limparMensagemErro() {
       this.$store.dispatch(SET_ERROR_TELA, "");
-      // SET_ERROR_TELA_BUSCA
-      // return this.errorTelaInicial = ""
     }
   }
 };
