@@ -165,7 +165,7 @@ export const actions = {
   
   [BUSCA_DADOS_VALIDACAO]: ({ commit }, acessoResource) => {
     AcessoService.buscarDados(acessoResource)
-      .then(({ data, error }) => {
+      .then(({ data }) => {
         if(!data.maes){
           commit(SET_SOLICITANTE, data);
           commit(ACTIVE_CADASTRO, data);
@@ -181,8 +181,7 @@ export const actions = {
         }
       })
       .catch(error => {
-        if (error.response) {
-          commit(SET_ERROR_TELA_BUSCA, error.response.data.message);
+        if (error.message) {
           commit(CLEAN_SOLICITANTE);
         }else {
           Vue.prototype.$notify.error({

@@ -107,6 +107,7 @@ export default {
     },
 
     generateAcessoResource(resource) {
+      
       let cpf = null;
       let passaporte = null;
       if (this.type_acesso === "CPF") {
@@ -114,6 +115,7 @@ export default {
       } else {
         passaporte = resource;
       }
+      debugger
       return { cpf, passaporte };
     },
    
@@ -121,7 +123,6 @@ export default {
       this.$store.dispatch(CANCELAR);
     },
     limparMensagemErro() {
-
       this.$store.dispatch(SET_ERROR_TELA, "");
       // SET_ERROR_TELA_BUSCA
       // return this.errorTelaInicial = ""
