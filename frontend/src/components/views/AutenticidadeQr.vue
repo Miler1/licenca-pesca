@@ -1,11 +1,11 @@
 <template lang="pug">
   #autenticidadeQr(v-if='licencaPesca')
-    h2.title-autenticidadeQr {{ $t(`${autenticidadeQr_prefix}titulo.tituloInicial`) }}
+    h2.title-autenticidadeQr(:class="{'not-informed': exist(licencaPesca.licenca.emissao)}") {{ tituloInicial() }}
     card.dadosPessoais
         h3.title {{ $t(`${autenticidadeQr_prefix}titulo.dadosPessoais`) }}
             .flex
                 .flex-item
-                    h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.nome`) }}
+                    h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.nome`) }} 
                     h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.nome)}") {{ licencaPesca.pessoa.nome | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
                 .flex-item
                     h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.cpf`) }}
@@ -13,7 +13,7 @@
 
     card.dadosLicenca
 
-        h3.title {{ $t(`${autenticidadeQr_prefix}titulo.dadosLicenca`) }}
+        h3.title {{ $t(`${autenticidadeQr_prefix}titulo.dadosLicenca`) }} 
 
         .flex
             .flex-item
@@ -131,6 +131,17 @@ export default {
             }else {
                 return translate(
                     `${this.autenticidadeQr_prefix}titulo.modalidades.esportiva`
+                );
+            }
+        },
+        tituloInicial(){
+            if(this.licencaPesca.licenca.status.codigo == 'ATIVO_AGUARDANDO_PAGAMENTO'){
+                return translate(
+                    `${this.autenticidadeQr_prefix}titulo.tituloInicialProvisoria`
+                );
+            }else {
+                return translate(
+                   `${this.autenticidadeQr_prefix}titulo.tituloInicial`
                 );
             }
         },

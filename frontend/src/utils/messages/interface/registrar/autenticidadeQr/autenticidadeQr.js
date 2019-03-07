@@ -10,7 +10,8 @@ const AUTENTICIDADE = {
     titulo: {
       dadosPessoais: ["Dados pessoais", "Personal data"],
       dadosLicenca: ["Dados da licença", "License information"],
-      tituloInicial: ["Licença de Pesca", "Fishing License"],
+      tituloInicial: ["Licença de pesca", "Fishing license"],
+      tituloInicialProvisoria: ["Licença de pesca provisória", "Provisional fishing license"],
       enderecoPrincipal: ["Endereço Principal", "Main Address"],
       enderecoCorrespondencia: ["Endereço de Correspondência", "Mailing Address"],
       label: {

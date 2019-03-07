@@ -107,7 +107,7 @@ export const actions = {
 
   [GERAR_REMESSAS]: ({ commit }) => {
     RegistroService.geraRemessa()
-    .then(({ data }) => {
+    .then(() => {
       Vue.prototype.$notify.success({
         title: 'Sucesso',
         message: `Remessa gerada com sucesso.`
