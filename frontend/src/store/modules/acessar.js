@@ -1,4 +1,4 @@
-import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, GERAR_REMESSAS, LISTAR_REMESSAS, UPLOAD_ARQUIVO_RETORNO, LISTAR_RETORNOS} from "../actions.type";
+import { ACESSAR, CANCELAR, BUSCAR_LICENCAS, BUSCA_DADOS_VALIDACAO, GERAR_REMESSAS, LISTAR_REMESSAS, UPLOAD_ARQUIVO_RETORNO, LISTAR_RETORNOS, SET_ERROR_TELA} from "../actions.type";
 import { Solicitante, toSolicitanteDTO } from "../../model/Solicitante";
 import { SET_DADOS_SOLICITANTE_CONFIRMAR, ACTIVE_CADASTRO, SET_ERROR, SET_ERROR_TELA_BUSCA, SET_SOLICITANTE, SET_LISTA_LICENCAS, CLEAN_SOLICITANTE, CLEAN_REGISTRO, SET_PASSAPORTE_PESQUISA, SET_CPF_PESQUISA, SET_BUSCA_MAES, CLEAN_PESQUISA, CLEAN_CPF_PESQUISA, SET_LISTA_TODAS_LICENCAS, SET_LISTA_REMESSAS, SET_PAGINACAO, SET_LISTA_ARQUIVOS_RETORNOS } from "../mutations.type";
 import AcessoService from "../../services/AcessoService";
@@ -105,7 +105,7 @@ export const actions = {
       });
   },
 
-  [GERAR_REMESSAS]: ({ commit, data }) => {
+  [GERAR_REMESSAS]: ({ commit }) => {
     RegistroService.geraRemessa()
     .then(() => {
       Vue.prototype.$notify.success({
@@ -169,11 +169,7 @@ export const actions = {
         if(!data.maes){
           commit(SET_SOLICITANTE, data);
           commit(ACTIVE_CADASTRO, data);
-          // commit(SET_ERROR_TELA_BUSCA, "");
-          Vue.prototype.$notify.error({
-            title: 'Erro',
-            message: `Pessoa não encontrada.`
-          });
+          commit(SET_ERROR_TELA_BUSCA, "Pessoa não encontrada.");
           commit(SET_DADOS_SOLICITANTE_CONFIRMAR, false);
           commit(SET_CPF_PESQUISA, data.cpf);
           commit(SET_PASSAPORTE_PESQUISA, data.passaporte);
@@ -185,16 +181,19 @@ export const actions = {
         }
       })
       .catch(error => {
-        if (error.response) {
-          commit(SET_ERROR_TELA_BUSCA, error.response.data.message);
+        if (error.message) {
           commit(CLEAN_SOLICITANTE);
         }else {
           Vue.prototype.$notify.error({
-            title: 'Erro',
+            title: 'Erro do sistema',
             message: `Não foi possível conectar ao servidor.`
           });
         }
       });
+  },
+  
+  [SET_ERROR_TELA]:({ commit }) => {
+    commit(SET_ERROR_TELA_BUSCA, "");
   },
 
   [CANCELAR]: ({ commit }) => {

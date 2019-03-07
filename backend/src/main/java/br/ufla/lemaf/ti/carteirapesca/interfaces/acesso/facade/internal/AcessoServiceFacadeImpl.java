@@ -69,7 +69,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		AcessoResource acessoResource;
 
 		// CPF e Passaporte não podem ser ambos nulos.
-		if (resource.getCpf() == null && resource.getPassaporte() == null)
+		if (resource.getCpf() == null && resource.getPassaporte().isEmpty())
 			throw new ValidationException("acesso.resourceInvalid.cpfAndPassaporte");
 
 		/* Valida e desformata CPF se não

@@ -15,7 +15,7 @@
           v-if="type_acesso === 'CPF'"
           :mask="maskCPF"
           @enter="acessar")
-            el-select(v-model="type_acesso" slot="prepend" @change="resource = ''")
+            el-select(v-model="type_acesso" slot="prepend" @change="limparMensagemErro")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
@@ -25,12 +25,11 @@
           v-if="type_acesso !== 'CPF'"
           :mask="maskPassport"
           @enter="acessar")
-            el-select(v-model="type_acesso" slot="prepend" @change="resource = ''")
+            el-select(v-model="type_acesso" slot="prepend" @change="limparMensagemErro")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
               el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
             el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
-	
-        .block
+        .block(v-if="$route.name == 'home'")
           .error-pagina-inicial
             | {{errorTelaInicial}}     
             
@@ -44,7 +43,7 @@
 import { mapGetters } from "vuex";
 import Tabela from "../elements/Table";
 import Card from "../layouts/Card";
-import { buscar, BUSCA_DADOS_VALIDACAO } from "../../store/actions.type";
+import { buscar, BUSCA_DADOS_VALIDACAO, SET_ERROR_TELA } from "../../store/actions.type";
 import Properties from "../../properties";
 import InputElement from "../elements/InputElement";
 import { REGISTRAR, CANCELAR, BUSCAR_LICENCAS} from "../../store/actions.type";
@@ -55,7 +54,7 @@ import VisualizarDadosPessoa from "../business/identificacao/dadosPessoa/Visuali
 import ListaLicencas from "../business/identificacao/dadosPessoa/ListaLicencas";
 import ValidacaoPerguntas from "../elements/ValidacaoPerguntas";
 import { debug } from 'util';
-import { returnStatement } from 'babel-types';
+import { returnStatement, debuggerStatement } from 'babel-types';
 
 export default {
   name: "BuscarLicenca",
@@ -108,6 +107,7 @@ export default {
     },
 
     generateAcessoResource(resource) {
+      
       let cpf = null;
       let passaporte = null;
       if (this.type_acesso === "CPF") {
@@ -118,8 +118,11 @@ export default {
       return { cpf, passaporte };
     },
    
-    fecharSolicitante(){
+    fecharSolicitante() {
       this.$store.dispatch(CANCELAR);
+    },
+    limparMensagemErro() {
+      this.$store.dispatch(SET_ERROR_TELA, "");
     }
   }
 };

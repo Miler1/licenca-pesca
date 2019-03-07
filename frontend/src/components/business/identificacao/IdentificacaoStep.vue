@@ -23,7 +23,7 @@
 						el-option(:label="$t('interface.registrar.identificacao.acesso.select.cpf')" value="CPF")
 						el-option(:label="$t('interface.registrar.identificacao.acesso.select.passaporte')" value="PASSAPORTE")
 					el-button.search-button(slot="append" icon="el-icon-search" @click="acessar" type="primary" :disabled="resource === ''")
-			.block
+			.block(v-if="$route.name == 'home'")
 				.error-pagina-inicial
 					| {{errorTelaInicial}}
 			.data
@@ -58,6 +58,7 @@ export default {
     return {
       resource: "",
       type_acesso: "CPF",
+      errorTelaInicial: "",
       maskCPF: CPF_MASK,
       maskPassport: PASSAPORT_MASK
     };
@@ -110,7 +111,6 @@ export default {
       } else {
         passaporte = resource;
       }
-
       return { cpf, passaporte };
     },
     showCadastro() {
