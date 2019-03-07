@@ -167,7 +167,7 @@ export default {
     erro (err, file, fileList) {
       if (err) {
         Vue.prototype.$notify.error({
-          title: 'Erro',
+          title: 'Erro do sistema',
           message: err.message
         })
       }

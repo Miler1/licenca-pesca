@@ -64,9 +64,6 @@ export default {
 			name: 'envioListagemRetorno'
 		});
 	},
-	teste(){
-		location.reload();
-	},
 	acessarArquivosRemessa(){
 		this.$router.push({
 			name: 'listagemRemessa'
