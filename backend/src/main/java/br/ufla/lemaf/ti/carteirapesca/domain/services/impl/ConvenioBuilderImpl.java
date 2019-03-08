@@ -104,9 +104,8 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		dadosDocumento.put("nomePagador", pagador.getNome());
 		dadosDocumento.put("cpfPassaportePagador", (pagador.getCpfPassaporte().length() == 11 ? CPFUtils.format(pagador.getCpfPassaporte()) : pagador.getCpfPassaporte()));
 		dadosDocumento.put("enderecoPagador", pagador.getEndereco().getDescricaoEndereco());
-		dadosDocumento.put("municipioUfPagador", pagador.getEndereco().getMunicipio() + "/" + pagador.getEndereco().getEstado());
+		dadosDocumento.put("municipioUfPagador", pagador.getEndereco().getMunicipio() + "/" + pagador.getEndereco().getEstado()) ;
 		dadosDocumento.put("cepPagador", pagador.getEndereco().getCep());
-
 		dadosDocumento.put("codigoLicenca", licenca.getProtocolo().toString());
 		dadosDocumento.put("modalidaLicenca", licenca.getModalidade().getNomePT());
 		dadosDocumento.put("limiteCapturaLicenca", licenca.getModalidade().getDescricaoQtdPeixesLimiteCaptura());
