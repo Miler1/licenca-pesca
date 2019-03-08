@@ -16,7 +16,6 @@
 								template(slot='title') {{ $t(`${consultar_prefix}menuArquivos.tituloGeral`) }}
 								el-menu-item(index="2-1", @click="acessarArquivosRemessa") {{ $t(`${consultar_prefix}menuArquivos.remessa`) }}
 								el-menu-item(index="2-2", @click="acessarArquivosRetorno") {{ $t(`${consultar_prefix}menuArquivos.retorno`) }}
-				
 			.right
 				.flex-item
 					.locale 

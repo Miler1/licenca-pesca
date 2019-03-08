@@ -65,23 +65,28 @@
 </template>
 
 <script>
-
-import Vue from 'vue'
+import Vue from "vue";
 import { mapGetters } from "vuex";
 import Card from "../../layouts/Card";
 import Properties from "../../../properties";
 import moment from "moment";
 import { translate } from "../../../utils/helpers/internationalization";
-import { ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX } from '../../../utils/messages/interface/registrar/geral';
-import { BUSCAR_REMESSAS, GERAR_REMESSAS, LISTAR_REMESSAS, DOWNLOAD_REMESSA, UPLOAD_ARQUIVO_RETORNO, LISTAR_RETORNOS } from '../../../store/actions.type';
-import { debuggerStatement } from 'babel-types';
-import { createECDH } from 'crypto';
+import { ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX } from "../../../utils/messages/interface/registrar/geral";
+import {
+  BUSCAR_REMESSAS,
+  GERAR_REMESSAS,
+  LISTAR_REMESSAS,
+  DOWNLOAD_REMESSA,
+  UPLOAD_ARQUIVO_RETORNO,
+  LISTAR_RETORNOS
+} from "../../../store/actions.type";
+import { debuggerStatement } from "babel-types";
+import { createECDH } from "crypto";
 
 export default {
   name: "EnviarRetornarRemessa",
 
-  props: ['desativar', 'configuracao'],
-
+  props: ["desativar", "configuracao"],
 
   computed: {
     ...mapGetters(["listaRemessasPaginada", "listaArquivosRetornoPaginado"])
@@ -97,87 +102,89 @@ export default {
       url: `${Properties.BASE_URL}/api/upload-retorno/`,
       fileList: [],
       modalEnvioArquivoRetorno: false,
-      formLabelWidth: '100px',
+      formLabelWidth: "100px",
       paginacaoDados: {
-          pageSize: 1,
-          layout: 'prev, pager, next'
-        },
-      pagina: { 
+        pageSize: 1,
+        layout: "prev, pager, next"
+      },
+      pagina: {
         atual: 1,
-        total: 5 
+        total: 5
       },
       quantidadeUploadPorVez: 1
     };
   },
 
   methods: {
-    handleRemove (file, fileList) {
+    handleRemove(file, fileList) {},
+
+    beforeRemove(file, fileList) {
+      return this.$confirm(
+        "Realmente deseja excluir o arquivo " + file.name + "?",
+        "Atenção"
+      );
     },
 
-    beforeRemove(file, fileList){
-      return this.$confirm('Realmente deseja excluir o arquivo ' + file.name + '?', 'Atenção');
-    },
-    inicializaListagem(pagina){
+    inicializaListagem(pagina) {
       this.$store.dispatch(LISTAR_RETORNOS, pagina);
     },
+
     submitUpload() {
       this.$refs.upload.submit();
+     
+    },
+
+    downloadArquivoRetorno(idRetorno) {
+      const href = `${Properties.BASE_URL}/api/download-retorno/` + idRetorno;
+
+      window.open(href, "_blank");
+    },
+
+    modalEnvioArquivoRetornoLimpar() {
       this.modalEnvioArquivoRetorno = false;
-    },
-    downloadArquivoRetorno(idRetorno){
-    const href =
-    `${Properties.BASE_URL}/api/download-retorno/` + idRetorno;
-
-    window.open(href, "_blank");
+      this.fileList = [];
     },
 
-    modalEnvioArquivoRetornoLimpar(){
-      this.modalEnvioArquivoRetorno = false;
-      this.fileList = []
-    },
-
-    padronizarRetorno (keys) {
-      var arquivos = []
+    padronizarRetorno(keys) {
+      var arquivos = [];
 
       keys.forEach(key => {
-        let arquivo = {}
-
-        arquivo.id = key.id
-        arquivo.chave = key.response
-        arquivo.caminho = key.name
-        arquivo.nome = key.name
-
-        arquivos.push(arquivo)
-      })
-      
+        let arquivo = {};
+        arquivo.id = key.id;
+        arquivo.chave = key.response;
+        arquivo.caminho = key.name;
+        arquivo.nome = key.name;
+        arquivos.push(arquivo);
+      });
     },
-    adicionadoAnexo (response, file, fileList) {
-      this.padronizarRetorno(fileList)
+    adicionadoAnexo(response, file, fileList) {
+      this.padronizarRetorno(fileList);
     },
-    success (response, file, fileList) {
-      this.adicionadoAnexo(response, file, fileList)
+    success(response, file, fileList) {
+      this.adicionadoAnexo(response, file, fileList);
       if (response == "") {
         Vue.prototype.$notify.success({
-          title: 'Sucesso',
-          message: 'Arquivo de retorno enviado com sucesso'
-        })
+          title: "Sucesso",
+          message: "Arquivo de retorno enviado com sucesso"
+        });
       }
-      this.fileList = []
+      this.modalEnvioArquivoRetorno = false;
+      this.$store.dispatch(LISTAR_RETORNOS, 1);
+      this.fileList = [];
     },
-    erro (err, file, fileList) {
+    erro(err, file, fileList) {
       if (err) {
         Vue.prototype.$notify.error({
-          title: 'Erro do sistema',
+          title: "Erro do sistema",
           message: err.message
-        })
+        });
       }
     }
   },
-  
+
   created() {
     this.inicializaListagem();
   }
-
 };
 </script>
 

@@ -192,7 +192,7 @@ const ApiService = {
       loading.hide();
       return Promise.reject(new HttpException.init(error, true));
     });
-  }
+  }    
 };
 
 export default ApiService;

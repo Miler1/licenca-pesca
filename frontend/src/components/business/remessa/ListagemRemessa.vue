@@ -90,7 +90,7 @@ export default {
 
     gerarArquivoRemessa(){
       this.$store.dispatch(GERAR_REMESSAS);
-    },
+    }
   },
   
   created() {

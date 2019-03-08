@@ -105,21 +105,24 @@ export const actions = {
       });
   },
 
-  [GERAR_REMESSAS]: ({ commit }) => {
+  [GERAR_REMESSAS]: ({ commit }, pagina) => {
     RegistroService.geraRemessa()
     .then(() => {
       Vue.prototype.$notify.success({
         title: 'Sucesso',
         message: `Remessa gerada com sucesso.`
       });
+      ConsultaService.buscarRemessas(pagina)
+        .then(({ data }) => {
+          commit(SET_LISTA_REMESSAS, data);
+        })
+        .catch(error => {
+          commit(SET_ERROR, error);
+        });
     })
     .catch(error => {
       commit(SET_ERROR, error.message);
     });
-  },
-
-  [UPLOAD_ARQUIVO_RETORNO]: (file) => {
-    ArquivoService.upload(file);
   },
 
   [LISTAR_REMESSAS]:  ({commit}, pagina) => {
