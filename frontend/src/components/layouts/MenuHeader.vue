@@ -21,7 +21,9 @@
 					.locale 
 						i.mdi.mdi-translate 
 						el-select(v-model="$i18n.locale" @change="handleLocale")
-							el-option(v-for="(lang, i) in langs" :key="i" :value="lang") {{ lang }}	
+							el-option(v-for="(lang, i) in langs" :key="i" :value="lang") {{ lang }}
+						.logout
+							i.mdi.mdi-logout(v-if="$route.name == 'envioListagemRetorno' || $route.name == 'listagemRemessa'" v-on:click="logout()") 	
 
 
 </template>
@@ -30,7 +32,8 @@
 import { localizeValidation } from "../../configs/validator";
 import  MenuItem  from "./MenuItem" ;
 import { CONSULTAR_GERAL_MESSAGES_PREFIX } from "../../utils/messages/interface/registrar/geral";
-import { CANCELAR } from "../../store/actions.type";
+import { CANCELAR} from "../../store/actions.type";
+import Properties from '../../properties';
 
 export default {
   name: "MenuHeader",
@@ -58,6 +61,14 @@ export default {
 			this.$router.push({name: 'home'});
 		});
 	},
+
+	logout() {
+
+		const href = `${Properties.BASE_URL}/api/logout`;
+
+		window.open(href, "_self");
+	},
+
 	acessarArquivosRetorno(){
 		this.$router.push({
 			name: 'envioListagemRetorno'
@@ -203,6 +214,9 @@ export default {
 
 		.el-submenu.is-active .el-submenu__title
 			border-bottom-color: #fff !important
+
+		.logout
+			cursor: pointer
 
 		@media screen and (max-width: 600px) 
 			.menu 

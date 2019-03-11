@@ -21,7 +21,6 @@ const AcessoService = {
   buscarDados: acessoResource => {
     return ApiService.postWithBlock(`${Properties.BASE_URL}/api/buscarDados`, acessoResource, false);
   },
-
   /**
    * Serviço que busca os munícípios de cada UF.
    */

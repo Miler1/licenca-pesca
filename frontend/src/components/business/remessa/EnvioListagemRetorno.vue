@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       remessa_prefix: ENVIAR_RECEBER_REMESSA_MESSAGES_PREFIX,
-      url: `${Properties.BASE_URL}/api/upload-retorno/`,
+      url: `${Properties.BASE_URL}/banco/upload-retorno/`,
       fileList: [],
       modalEnvioArquivoRetorno: false,
       formLabelWidth: "100px",
@@ -135,7 +135,7 @@ export default {
     },
 
     downloadArquivoRetorno(idRetorno) {
-      const href = `${Properties.BASE_URL}/api/download-retorno/` + idRetorno;
+      const href = `${Properties.BASE_URL}/banco/download-retorno/` + idRetorno;
 
       window.open(href, "_blank");
     },

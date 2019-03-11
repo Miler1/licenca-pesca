@@ -94,8 +94,4 @@ public final class Properties {
 		return environment.getProperty("spring.application.urlBase");
 	}
 
-	public static String baseUrlAutenticacao() {
-		return environment.getProperty("spring.application.urBaseAutenticacao");
-	}
-
 }
