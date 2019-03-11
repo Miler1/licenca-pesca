@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.autenticacao.web;
 
 import br.ufla.lemaf.ti.carteirapesca.domain.services.autenticacao.impl.AutenticacaoBuilderImpl;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,9 +31,7 @@ public class AutenticacaoController {
 
 		Authentication autenticacao = autenticacaoBuilder.autenticar(token);
 
-		return new RedirectView("/");
-
-//		return new ResponseEntity<>(((AuthenticationToken) autenticacao).getUser(), HttpStatus.ACCEPTED);
+		return new RedirectView(Properties.baseUrl() + "lista-remessas");
 
 	}
 

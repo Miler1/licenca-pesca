@@ -27,10 +27,10 @@ const ConsultaService = {
     ApiService.query(`${Properties.BASE_URL}/api/carteira`, { protocolo }),
 
   buscarRemessas: paginaAtual => {
-    return ApiService.getWithBlock(`${Properties.BASE_URL}/api/lista-remessa?page=` + (paginaAtual - 1));
+    return ApiService.getWithBlock(`${Properties.BASE_URL}/banco/lista-remessa?page=` + (paginaAtual - 1), true);
   },
   buscarArquivosRetornos: paginaAtual => {
-    return ApiService.getWithBlock(`${Properties.BASE_URL}/api/lista-retornos?page=` + (paginaAtual - 1));
+    return ApiService.getWithBlock(`${Properties.BASE_URL}/banco/lista-retornos?page=` + (paginaAtual - 1), true);
   },
   /**
    * Serviço para buscar dados da carteira

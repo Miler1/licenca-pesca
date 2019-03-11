@@ -50,13 +50,9 @@ spring:
     successRedirectUrl: /
 
     entradaUnica:
-      # Módulo - JAVA3-5
-      #client-id: c8671b62b00f2c32015f78fac719a7e7e6da4f423366dd6b43f02e1536ac26cdc91b9c8c38a7b5ce1747495cf32bbf915e58281063dac35449d6a9542b215ea3
-      #client-secret: 1c19f894bde9b539ad174308d8dbd02f7d26e03f0cbfbe4cf8295b7beaeee4a81c234e1b738daeef3bfbe1e55615901d028fdc7264de157f00b1212c63dc792e
-
       # Módulo - RUNNERS
-      client-id: aa4dea461daa4a10afbbb3b727d52f10547544fd127a0f620523c81e6a0da561ae00d31aa355d27b3638ba18afcbda63951ab03f8a2547e97b52bffb4df43457
-      client-secret: 759f3c7be525ca9af70597d5e77a7c55b31ded334d517ac2dcdd3dfffcaf4df33cbce32e5bab856f418c5083dff56e027d682fda6bdab5d78858e59c60ae2b87
+      client-id: c6d78ffb11a81a8bad0b0f2d0c74fb1e61a71347d9dc57dc63dc9748c987e2c2472ce51a21d42a433a0469a901ece061e8d0eeb2f6de65c513f9921067276d72
+      client-secret: 1e29b8683d462d6bd93689e567c337131eeef2ac8f9b200695d9cda50a124663a694009f24c7b29c46a2a09f0eab4037416f32882becc0059bcaf4132675371d
 
       portal-seguranca:
         url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca

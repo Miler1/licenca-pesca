@@ -139,6 +139,7 @@ export default {
 
       window.open(href, "_blank");
     },
+    
 
     modalEnvioArquivoRetornoLimpar() {
       this.modalEnvioArquivoRetorno = false;
@@ -185,6 +186,7 @@ export default {
   created() {
     this.inicializaListagem();
   }
+
 };
 </script>
 
@@ -223,7 +225,7 @@ export default {
         .flex-item
             flex: 1
             display: grid
-
+  
     .infoPagina    
       text-align: right
       margin-top: 10px

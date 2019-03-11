@@ -125,8 +125,8 @@ export const actions = {
     });
   },
 
-  [LISTAR_REMESSAS]:  ({commit}, pagina) => {
-    ConsultaService.buscarRemessas(pagina)
+  [LISTAR_REMESSAS]:  ({commit}, paginaPrincipal) => {
+    ConsultaService.buscarRemessas(paginaPrincipal)
     .then(({ data }) => {
       commit(SET_LISTA_REMESSAS, data);
     })

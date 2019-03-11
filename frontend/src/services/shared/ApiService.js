@@ -60,9 +60,9 @@ const ApiService = {
     });
   },
 
-  async getWithBlock(resource) {
+  async getWithBlock(resource, withCredentials = false) {
     loading.show();
-    return Vue.axios.get(`${resource}`).then(response => {
+    return Vue.axios.get(`${resource}`, {withCredentials: withCredentials}).then(response => {
       loading.hide();
       return response;
     }).catch(error => {

@@ -70,20 +70,21 @@ export default {
         atual: 1,
         total: 5 
       },
-      quantidadeUploadPorVez: 1
+      quantidadeUploadPorVez: 1,
+      paginaPrincipal: 1,
     };
   },
 
   methods: {
    
-    inicializaListagem(pagina){
-      this.$store.dispatch(LISTAR_REMESSAS, pagina);
+    inicializaListagem(paginaPrincipal){
+      this.$store.dispatch(LISTAR_REMESSAS, paginaPrincipal);
     },
 
     downloadArquivoRemessa(idRemessa){
 
        const href =
-        `${Properties.BASE_URL}/api/download-remessa/` + idRemessa;
+        `${Properties.BASE_URL}/banco/download-remessa/` + idRemessa;
 
         window.open(href, "_blank");
     },
@@ -94,7 +95,7 @@ export default {
   },
   
   created() {
-    this.inicializaListagem();
+    this.inicializaListagem(this.paginaPrincipal);
   }
 
 };

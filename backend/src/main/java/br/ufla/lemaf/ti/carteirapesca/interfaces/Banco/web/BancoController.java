@@ -34,7 +34,7 @@ import java.io.*;
 @Slf4j
 @Controller
 @Transactional
-@RequestMapping("/api") // TODO ALTERAR PARA /banco
+@RequestMapping("/banco") // TODO ALTERAR PARA /banco
 public class BancoController extends DefaultController {
 
 	@Autowired
