@@ -11,8 +11,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -80,7 +87,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.frameOptions()
 					.disable()
 			.and()
-				.csrf()
+			.csrf()
 					.disable()
 			.authorizeRequests()
 				.antMatchers("*/api/**").permitAll()
@@ -88,12 +95,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("*/images/**").access(externalIpsAllowed())
 				.antMatchers("/banco/lista-remessa", "/banco/lista-retornos", "/banco/download-retorno/", "/banco/upload-retorno", "/banco/download-remessa/", "/banco/gera-remessa" ).authenticated()
 			.and()
-				.logout()
-				.logoutSuccessUrl(this.urlEntradaUnica)
+			.logout()
+				.clearAuthentication(true)
+				.deleteCookies("JSESSIONID", "io")
+				.logoutUrl("/logout")
+				.logoutSuccessHandler(new ExitSucessHandler())
 			.and()
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
-
 	}
 
 	private String externalIpsAllowed() {

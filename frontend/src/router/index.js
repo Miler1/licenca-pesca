@@ -36,10 +36,10 @@ export const routes = [
     // Lazy loading
     component: () => import("../components/views/ConsultarLicenca")
   },
-
   {
     path: "/renovar/:protocolo",
     name: "renovar",
     component: () => import("../components/views/RenovarLicenca")
   }
+
 ];

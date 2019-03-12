@@ -12,12 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.io.IOException;
-import java.util.Date;
 
 @Slf4j
 @Controller
@@ -32,9 +27,10 @@ public class AutenticacaoController {
 	@GetMapping("/entrada-unica/{token}")
 	public RedirectView autenticacaoEntradaUnica(@PathVariable("token") String token) {
 
-		Authentication autenticacao = autenticacaoBuilder.autenticar(token);
+		autenticacaoBuilder.autenticar(token);
 
 		return new RedirectView(Properties.baseUrl() + "listagem-remessas");
 
 	}
+
 }

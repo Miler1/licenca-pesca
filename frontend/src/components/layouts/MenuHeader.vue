@@ -63,8 +63,7 @@ export default {
 	},
 
 	logout() {
-
-		const href = `${Properties.BASE_URL}/api/logout`;
+		const href = `${Properties.BASE_URL}/logout`;
 
 		window.open(href, "_self");
 	},
