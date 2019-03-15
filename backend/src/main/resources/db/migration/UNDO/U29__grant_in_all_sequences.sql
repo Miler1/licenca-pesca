@@ -1,0 +1,1 @@
+REVOKE SELECT, USAGE ON ALL SEQUENCES IN SCHEMA carteira_pesca FROM carteira_pesca;
