@@ -43,7 +43,7 @@ COMMENT ON COLUMN carteira_pesca.beneficiario.sigla IS 'Sigla do nome beneficiá
 COMMENT ON COLUMN carteira_pesca.beneficiario.cpf_cnpj IS 'CPF/CNPJ do beneficiário (sem máscara).';
 COMMENT ON COLUMN carteira_pesca.beneficiario.id_endereco IS 'Identificador único da entidade endereço que faz o relacionamento entre endereço e beneficiario.';
 
-CREATE TABLE carteira_pesca.carteira_pesca.convenio (
+CREATE TABLE carteira_pesca.convenio (
   id SERIAL NOT NULL, 
   id_tipo_segmento INTEGER NOT NULL,
   id_tipo_valor_efetivo INTEGER NOT NULL, 
