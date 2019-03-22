@@ -1,0 +1,1 @@
+GRANT SELECT, USAGE ON ALL SEQUENCES IN SCHEMA carteira_pesca TO carteira_pesca;
