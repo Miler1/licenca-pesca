@@ -72,7 +72,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		Convenio convenio = new Convenio(tipoSegmento, tipoValorEfetivo, pagadorTitulo, beneficiario, modalidade.getValor());
 
 		convenio.setNossoNumero(convenioRepository.count());
-		convenio.setCodigoBarras(geraLinhaDigitavel(convenio));
+		convenio.setLinhaDigitavel(geraLinhaDigitavel(convenio));
 
 		return convenio;
 
@@ -110,7 +110,7 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 		dadosDocumento.put("modalidaLicenca", licenca.getModalidade().getNomePT());
 		dadosDocumento.put("limiteCapturaLicenca", licenca.getModalidade().getDescricaoQtdPeixesLimiteCaptura());
 
-		dadosDocumento.put("linhaDigitavel", convenio.getCodigoBarras());
+		dadosDocumento.put("linhaDigitavel", convenio.getLinhaDigitavel());
 		dadosDocumento.put("imagemCodigoBarras", ImagemUtils.converBase64(geraImagemCodigoBarras(convenio.getCodigoBarras()), ESTENSAO_IMAGEM) );
 
 		return pdfGenaratorUtil.createPdf("cobranca", dadosDocumento);
@@ -194,6 +194,10 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 			digitoAutoConferenciaGeral +
 			linhaDigitavel.toString().substring(3, 43);
 
+		/**O conteúdo do código de barras deve ser informado sem o DV*/
+		convenio.setCodigoBarras(linhaDigitavelCompleta);
+
+		/**Criando os blocos da linha digitável formatado e com DV */
 		String bloco1 = formatarLinhaDigitavelPorBloco(linhaDigitavelCompleta.substring(0, 11));
 		String bloco2 = formatarLinhaDigitavelPorBloco(linhaDigitavelCompleta.substring(11, 22));
 		String bloco3 = formatarLinhaDigitavelPorBloco(linhaDigitavelCompleta.substring(22, 33));
@@ -213,16 +217,16 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 			.append(" ");
 
 		return linhaDigitavelFormatada.toString();
-		
+
 	}
-	
+
 	private BufferedImage geraImagemCodigoBarras(String linhaDigitavel) throws IOException, DocumentException {
 
 		BarcodeInter25 codigoBarras = new BarcodeInter25();
 		codigoBarras.setGenerateChecksum(false);
 		codigoBarras.setCode(linhaDigitavel);
 		codigoBarras.setSize(9);
-		codigoBarras.setBarHeight(35);
+		codigoBarras.setBarHeight(33);
 		codigoBarras.setBaseline(12);
 		codigoBarras.setTextAlignment(3);
 		codigoBarras.setStartStopText(true);

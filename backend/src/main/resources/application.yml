@@ -37,8 +37,8 @@ spring:
         ddl-auto: validate
 
   flyway:
-    enabled: false
-    baseline-on-migrate: false
+    enabled: true
+    baseline-on-migrate: true
 
   jackson:
     time-zone: UTC
@@ -51,8 +51,8 @@ spring:
 
     entradaUnica:
 #       Módulo - LP0 - Gustavo
-      client-id: bdcf104be109069d58a96d9bd08c7942313621cded01c2938c3be374d60ef61675ea1aa54d04dd7313a7f31519b87eacfd43d62ada3a1530f819b3865f6327ee
-      client-secret: 24ec03485f4ddea41a51bf33d37ba1f0a5454568574197192161b859fb57b0b75ba086b3d6552f3490a3b5a55991c6d6513e56085dfe32355ffb94a22b4489bb
+#      client-id: bdcf104be109069d58a96d9bd08c7942313621cded01c2938c3be374d60ef61675ea1aa54d04dd7313a7f31519b87eacfd43d62ada3a1530f819b3865f6327ee
+#      client-secret: 24ec03485f4ddea41a51bf33d37ba1f0a5454568574197192161b859fb57b0b75ba086b3d6552f3490a3b5a55991c6d6513e56085dfe32355ffb94a22b4489bb
 
 
 #       Módulo - LP1 - Joyce
@@ -60,8 +60,8 @@ spring:
 #      client-secret: f463b60e0abfe70b31fe316cd548f7ca019115f1c8969bdfd1f57e3ca0708d5faaf7a0bbb0ede643bb31f7c442c5392eb801d792ebec0fddfa3e127b84aa2fdb
 
       # Módulo - LPH - Hiago
-#      client-id: 5835eed6bddf39b6a6844b5f9645e360b5c003bb9d65be17ef7cd5863f713b0e7bcfafaa691e4482af6a20c775c19dadcf22eb1e1edc0617c2ac06605e047b98
-#      client-secret: c726ad09489baacd3af62843ee514a95e9af9ff2a28bc2babbffc1554d69502a299a093f34ab5cefbf78001e8e7873a532bca90ec3f8e4b7b8a8f2fdf145e05f
+      client-id: 5835eed6bddf39b6a6844b5f9645e360b5c003bb9d65be17ef7cd5863f713b0e7bcfafaa691e4482af6a20c775c19dadcf22eb1e1edc0617c2ac06605e047b98
+      client-secret: c726ad09489baacd3af62843ee514a95e9af9ff2a28bc2babbffc1554d69502a299a093f34ab5cefbf78001e8e7873a532bca90ec3f8e4b7b8a8f2fdf145e05f
 
       portal-seguranca:
         url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca

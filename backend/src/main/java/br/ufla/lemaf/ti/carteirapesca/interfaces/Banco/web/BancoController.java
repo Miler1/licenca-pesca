@@ -5,13 +5,10 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Remessa;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoTituloBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.Controller.DefaultController;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -19,17 +16,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 @Slf4j
 @Controller
@@ -72,7 +66,7 @@ public class BancoController extends DefaultController {
 		return downloadArquivo(new File(arquivoRemessa.getCaminhoArquivo()), arquivoRemessa.getNome());
 
 	}
-	
+
 	@CrossOrigin("*")
 	@PostMapping("/upload-retorno")
 	public ResponseEntity<String> uploadArquivoRetorno(@RequestParam("file") MultipartFile multipartFile) throws Exception {

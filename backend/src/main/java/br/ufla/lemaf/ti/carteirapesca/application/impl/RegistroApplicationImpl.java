@@ -66,7 +66,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	private ConvenioBuilderImpl convenioBuilder;
 
 	@Override
-	public Protocolo registrar(final RegistroResource resource) throws Exception {
+	public Protocolo registrar(final RegistroResource resource) {
 
 		WebServiceUtils.validarWebService();
 

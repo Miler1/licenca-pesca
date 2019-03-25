@@ -50,7 +50,11 @@ public class Convenio implements Entity<Convenio, Integer> {
 	private Integer nossoNumero;
 
 	@Setter
-	@Column(name = "codigo_barra")
+	@Column(name = "linha_digitavel")
+	private String linhaDigitavel;
+
+	@Setter
+	@Column(name = "codigo_barras")
 	private String codigoBarras;
 
 	@Setter
