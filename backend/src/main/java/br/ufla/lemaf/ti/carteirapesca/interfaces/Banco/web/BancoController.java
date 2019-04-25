@@ -27,8 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @Slf4j
 @Controller
@@ -116,36 +114,6 @@ public class BancoController extends DefaultController {
 		Arquivo arquivoRetorno = retornoBuilder.getArquivoRetorno(idRetorno);
 
 		return downloadArquivo(new File(arquivoRetorno.getCaminhoArquivo()), arquivoRetorno.getNome());
-
-	}
-
-	@CrossOrigin("*")
-	@PostMapping("/upload-retorno-convenio")
-	public ResponseEntity<String> uploadArquivoRetornoConvenio(@RequestParam("file") MultipartFile multipartFile) throws Exception {
-
-//		Retorno retorno = retornoConvenioBuilder.salvaArquivo(multipartFile);
-
-		String pathArquivoRetorno = "/home/hiagosouza/Downloads/";
-
-		Files.newDirectoryStream(Paths.get(pathArquivoRetorno), path -> path.toString().endsWith(".RET"))
-			.forEach(p -> {
-
-
-				try {
-
-					File arquivoRetorno = new File(p.toString());
-
-					retornoConvenioBuilder.processaRetorno(arquivoRetorno);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			});
-
-//		retornoConvenioBuilder.processaRetorno(multipartFile);
-
-		return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
 
 	}
 

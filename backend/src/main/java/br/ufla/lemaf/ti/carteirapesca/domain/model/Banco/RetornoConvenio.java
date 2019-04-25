@@ -40,6 +40,8 @@ public class RetornoConvenio implements Entity<RetornoConvenio, Integer> {
 	@Column(name = "valor_recebido", nullable = false)
 	private BigDecimal valorRecebido;
 
+	public RetornoConvenio() {}
+
 	public RetornoConvenio(CabecalhoRetornoDTO cabecalho, TraillerRetornoDTO trailler, Arquivo arquivo) {
 
 		this.arquivo = arquivo;

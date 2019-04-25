@@ -19,12 +19,15 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.convenio.Cabec
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.convenio.TraillerRetornoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.convenio.TransacaoRetornoDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -61,14 +64,34 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 	@Autowired
 	ArquivoRepository arquivoRepository;
 
-	@Override
+	public void buscaArquivoRetornoProcessamento() throws IOException {
+
+		Path pathArquivoRetorno = Paths.get(Properties.pathArquivoRetornoDisponilizadoBanco());
+
+		Files.newDirectoryStream(pathArquivoRetorno, path -> path.toString().endsWith(EXTENSAO_ARQUIVO_RETORNO))
+			.forEach(p -> {
+
+				try {
+
+					File arquivoRetorno = new File(p.toString());
+
+					processaRetorno(arquivoRetorno);
+
+					FileUtils.forceDelete(arquivoRetorno);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			});
+
+	}
+
 	public void processaRetorno(File arquivoRetorno) throws Exception {
 
 		Arquivo arquivo = salvaArquivo(arquivoRetorno);
 
-		String pathArquivo = arquivo.getCaminhoArquivo() + File.separator + arquivo.getNome();
-
-		List<String> linhasArquivoRetorno = Files.lines(Paths.get(pathArquivo))
+		List<String> linhasArquivoRetorno = Files.lines(Paths.get(arquivo.getCaminhoArquivo()))
 			.collect(Collectors.toList());
 
 		new CabecalhoRetornoDTO().validaCabecalho(linhasArquivoRetorno.get(0));
@@ -116,7 +139,7 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 			File.separator + UUID.randomUUID() +
 			File.separator;
 
-		return ArquivoUtils.moveArquivoParaDiretorio(arquivoRetorno, pathSalvarArquivo);
+		return ArquivoUtils.salvaArquivoDiretorio(arquivoRetorno, pathSalvarArquivo);
 
 	}
 

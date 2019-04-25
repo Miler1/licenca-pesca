@@ -38,6 +38,8 @@ public final class Constants {
 
 	public static final String INTERVALO_ATUALIZACAO_AUTOMATICA = "0 0 0 1/1 * ?";
 
+	public static final String INTERVALO_PROCESSAMENTO_JOB = "0 0 7 1/1 * ?";
+
 	public static final Integer HORAS_BLOQUEIO_SOLICITANTE = 2;
 
 	public static final DateTimeFormatter FORMATO_DATA_PADRAO = DateTimeFormatter.ofPattern(DATE_FORMAT);

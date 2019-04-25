@@ -73,6 +73,7 @@ spring:
     path-arquivo-boleto: arquivos/boleto/
     path-arquivo-remessa: arquivos/remessa/
     path-arquivo-retorno: arquivos/retorno/
+    path-arquivo-retorno-disponibilizado-banco: /home/hiagosouza/Downloads/
 
   arquivos:
     base-path-arquivos-dados: src/main/resources/gerador/

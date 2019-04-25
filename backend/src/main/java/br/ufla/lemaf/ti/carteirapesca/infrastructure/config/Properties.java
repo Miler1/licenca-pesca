@@ -82,6 +82,10 @@ public final class Properties {
 		return environment.getProperty("spring.carteira-pesca.path-arquivo-retorno");
 	}
 
+	public static String pathArquivoRetornoDisponilizadoBanco() {
+		return environment.getProperty("spring.carteira-pesca.path-arquivo-retorno-disponibilizado-banco");
+	}
+
 	/**
 	 * @return O caminho da do boleto da licença de pesca
 	 */
