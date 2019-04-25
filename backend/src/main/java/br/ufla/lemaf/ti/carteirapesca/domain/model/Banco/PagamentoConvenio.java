@@ -41,12 +41,14 @@ public class PagamentoConvenio implements Entity<PagamentoConvenio, Integer> {
 
 	@OneToOne
 	@JoinColumn(name = "id_retorno")
-	private Retorno retorno;
+	private RetornoConvenio retorno;
+
+	public PagamentoConvenio() {}
 
 	public PagamentoConvenio(TransacaoRetornoDTO transacao,
 							 TipoArrecadacao tipoArrecadacao,
 							 TipoPagamento tipoPagamento,
-							 Retorno retorno) {
+							 RetornoConvenio retorno) {
 
 		this.dataPagamento = transacao.getDataPamento();
 		this.dataCredito = transacao.getDataCredito();
@@ -54,6 +56,7 @@ public class PagamentoConvenio implements Entity<PagamentoConvenio, Integer> {
 		this.valorTarifa = transacao.getValorTarifa();
 		this.tipoArrecadacao = tipoArrecadacao;
 		this.tipoPagamento = tipoPagamento;
+		this.retorno = retorno;
 
 	}
 

@@ -6,9 +6,12 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Retorno;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RemessaBuilderImpl;
+import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.RetornoTituloBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.Controller.DefaultController;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -24,12 +27,16 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Slf4j
 @Controller
 @Transactional
 @RequestMapping("/banco") // TODO ALTERAR PARA /banco
 public class BancoController extends DefaultController {
+
+	private static final Logger logger = LoggerFactory.getLogger(BancoController.class);
 
 	@Autowired
 	private RemessaBuilderImpl remessaBuilder;
@@ -39,6 +46,9 @@ public class BancoController extends DefaultController {
 
 	@Autowired
 	private RetornoTituloBuilderImpl retornoBuilder;
+
+	@Autowired
+	private RetornoConvenioBuilderImpl retornoConvenioBuilder;
 
 	@Autowired
 	ArquivoRepository arquivoRepository;
@@ -106,6 +116,36 @@ public class BancoController extends DefaultController {
 		Arquivo arquivoRetorno = retornoBuilder.getArquivoRetorno(idRetorno);
 
 		return downloadArquivo(new File(arquivoRetorno.getCaminhoArquivo()), arquivoRetorno.getNome());
+
+	}
+
+	@CrossOrigin("*")
+	@PostMapping("/upload-retorno-convenio")
+	public ResponseEntity<String> uploadArquivoRetornoConvenio(@RequestParam("file") MultipartFile multipartFile) throws Exception {
+
+//		Retorno retorno = retornoConvenioBuilder.salvaArquivo(multipartFile);
+
+		String pathArquivoRetorno = "/home/hiagosouza/Downloads/";
+
+		Files.newDirectoryStream(Paths.get(pathArquivoRetorno), path -> path.toString().endsWith(".RET"))
+			.forEach(p -> {
+
+
+				try {
+
+					File arquivoRetorno = new File(p.toString());
+
+					retornoConvenioBuilder.processaRetorno(arquivoRetorno);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			});
+
+//		retornoConvenioBuilder.processaRetorno(multipartFile);
+
+		return new ResponseEntity<>(new HttpHeaders(), HttpStatus.OK);
 
 	}
 

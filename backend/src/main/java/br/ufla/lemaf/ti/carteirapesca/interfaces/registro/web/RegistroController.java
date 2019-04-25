@@ -1,11 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.LicencaException;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.RegistroServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
-
 import java.io.IOException;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;

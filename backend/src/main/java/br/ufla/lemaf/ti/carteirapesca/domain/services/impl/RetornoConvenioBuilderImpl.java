@@ -5,10 +5,11 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.ConvenioRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoConvenioRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoArrecadacaoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoPagamentoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoConvenioBuilder;
@@ -20,6 +21,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.Banco.facade.dto.convenio.Trans
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -36,6 +38,8 @@ import java.util.stream.Collectors;
 @Service
 public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 
+	private static final String EXTENSAO_ARQUIVO_RETORNO = ".RET";
+
 	@Autowired
 	ConvenioRepository convenioRepository;
 
@@ -49,23 +53,31 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 	TipoArquivoRepository tipoArquivoRepository;
 
 	@Autowired
-	RetornoRepository retornoRepository;
+	RetornoConvenioRepository retornoRepository;
 
 	@Autowired
 	LicencaRepository licencaRepository;
 
+	@Autowired
+	ArquivoRepository arquivoRepository;
+
 	@Override
 	public void processaRetorno(File arquivoRetorno) throws Exception {
 
-		Retorno retorno = salvaArquivo(arquivoRetorno);
+		Arquivo arquivo = salvaArquivo(arquivoRetorno);
 
-		List<String> linhasArquivoRetorno = Files.lines(Paths.get(retorno.getArquivo().getCaminhoArquivo()))
+		String pathArquivo = arquivo.getCaminhoArquivo() + File.separator + arquivo.getNome();
+
+		List<String> linhasArquivoRetorno = Files.lines(Paths.get(pathArquivo))
 			.collect(Collectors.toList());
+
+		new CabecalhoRetornoDTO().validaCabecalho(linhasArquivoRetorno.get(0));
+		new TraillerRetornoDTO().validaTrailler(linhasArquivoRetorno.get(linhasArquivoRetorno.size() - 1));
 
 		CabecalhoRetornoDTO cabecalho = new CabecalhoRetornoDTO(linhasArquivoRetorno.get(0));
 		TraillerRetornoDTO trailler  = new TraillerRetornoDTO(linhasArquivoRetorno.get(linhasArquivoRetorno.size() - 1));
 
-		retorno.atualizaRetorno(cabecalho, trailler);
+		RetornoConvenio retorno = new RetornoConvenio(cabecalho, trailler, arquivo);
 
 		retorno = retornoRepository.save(retorno);
 
@@ -73,17 +85,25 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 
 	}
 
-	private Retorno salvaArquivo(File arquivoRetorno) throws Exception {
+	private Arquivo salvaArquivo(File arquivoRetorno) throws Exception {
 
-		arquivoRetorno = salvaArquivoDiretorio(arquivoRetorno);
+		File arquivoRetornoSalvo = salvaArquivoDiretorio(arquivoRetorno);
 
-		TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.RETORNO.getCodigo());
+		TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.RETORNO_ARRECADACAO.getCodigo());
 
-		Arquivo arquivo = new Arquivo(arquivoRetorno.getPath(), arquivoRetorno.getName(), tipoArquivo);
-		Retorno retorno = new Retorno(arquivo);
+		return new Arquivo(arquivoRetornoSalvo.getPath(), arquivoRetorno.getName(), tipoArquivo);
 
-		return retorno;
+	}
 
+	private void validaArquivo(MultipartFile multipartFile) throws Exception {
+
+		if(!multipartFile.getOriginalFilename().endsWith(EXTENSAO_ARQUIVO_RETORNO)) {
+			throw new Exception("A extensão do arquivo informado deve ser " + EXTENSAO_ARQUIVO_RETORNO);
+		}
+
+		if(arquivoRepository.findByNome(multipartFile.getOriginalFilename()) != null) {
+			throw new Exception("O arquivo de retorno selecionado já foi processado");
+		}
 	}
 
 	private File salvaArquivoDiretorio(File arquivoRetorno) throws Exception {
@@ -93,34 +113,43 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 		String pathSalvarArquivo = Properties.pathArquivoRetorno() +
 			File.separator + "convenio" +
 			File.separator + LocalDate.now().format(FORMATO_DATA_MES_ANO) +
-			File.separator + UUID.randomUUID();
+			File.separator + UUID.randomUUID() +
+			File.separator;
 
-		return ArquivoUtils.salvaArquivoDiretorio(arquivoRetorno, pathSalvarArquivo);
+		return ArquivoUtils.moveArquivoParaDiretorio(arquivoRetorno, pathSalvarArquivo);
 
 	}
 
-	private void processaRegistros(List<String> linhasArquivoRetorno, Retorno retorno) {
+	private void processaRegistros(List<String> linhasArquivoRetorno, RetornoConvenio retorno) {
 
 		List<TransacaoRetornoDTO> transacoes = getTransacoes(linhasArquivoRetorno);
 
 		transacoes.forEach(t -> {
 
-			Convenio convenio = convenioRepository.findByNossoNumero(1);
+			Convenio convenio = convenioRepository.findByNossoNumeroAndCodigoBarras(t.getNumeroSequencialRegistro(), t.getCodigoBarras());
 
 			Licenca licenca = licencaRepository.findByConvenio(convenio);
 
 			if(convenio != null) {
 
 				TipoArrecadacao tipoArrecadacao = tipoArrecadacaoRepository.findByCodigo(t.getFormaArrecadacao());
-				Optional<TipoPagamento> tipoPagamento = tipoPagamentoRepository.findById(t.getFormaParamento());
 
-				PagamentoConvenio pagamento = new PagamentoConvenio(t, tipoArrecadacao, tipoPagamento.get(), retorno);
+				PagamentoConvenio pagamento;
+
+				if(t.getFormaParamento() == null) {
+					pagamento = new PagamentoConvenio(t, tipoArrecadacao, null, retorno);
+				} else {
+
+					Optional<TipoPagamento> tipoPagamento = tipoPagamentoRepository.findById(t.getFormaParamento());
+					pagamento = new PagamentoConvenio(t, tipoArrecadacao, tipoPagamento.get(), retorno);
+
+				}
 
 				licenca.getConvenio().setPagamento(pagamento);
 
 				licenca.setDataVencimento(pagamento.getDataCredito());
 
-				convenioRepository.save(convenio);
+				licencaRepository.save(licenca);
 
 			}
 

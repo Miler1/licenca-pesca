@@ -36,8 +36,13 @@ public class TransacaoRetornoDTO {
 		this.numeroSequencialRegistro = Integer.valueOf(transacao.substring(100, 108));
 		this.codigoAgenciaArreacadadora = transacao.substring(108, 116);
 		this.formaArrecadacao = transacao.substring(116, 117);
-		this.codigoTransacao = transacao.substring(117, 140);
-		this.formaParamento = Integer.valueOf(transacao.substring(140, 141));
+
+		if(transacao.length() > 128) {
+
+			this.codigoTransacao = transacao.substring(117, 140);
+			this.formaParamento = Integer.valueOf(transacao.substring(140, 141));
+
+		}
 
 	}
 

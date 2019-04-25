@@ -1,6 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.Banco;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import lombok.Getter;
@@ -74,7 +73,8 @@ public class Convenio implements Entity<Convenio, Integer> {
 		this.tipoValorEfetivo = tipoValorEfetivo;
 		this.pagador = pagador;
 		this.beneficiario = beneficiario;
-		this.valor = valor;
+//		this.valor = valor;
+		this.valor = new BigDecimal(0.10);
 		this.dataEmissao = LocalDate.now();
 		this.dataVencimento = LocalDate.of(this.dataEmissao.getYear(), 12, 31);
 
