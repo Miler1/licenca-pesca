@@ -20,7 +20,7 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://pg.java3-5.ti.lemaf.ufla.br:5432/carteira_pesca
+    url: jdbc:postgresql://runners.ti.lemaf.ufla.br:5432/carteira_pesca
     username: carteira_pesca
     password: carteira_pesca
 
