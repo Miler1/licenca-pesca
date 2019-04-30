@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,6 +74,8 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 
 					File arquivoRetorno = new File(p.toString());
 
+					validaArquivo(arquivoRetorno);
+
 					processaRetorno(arquivoRetorno);
 
 					FileUtils.forceDelete(arquivoRetorno);
@@ -87,7 +88,7 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 
 	}
 
-	public void processaRetorno(File arquivoRetorno) throws Exception {
+	private void processaRetorno(File arquivoRetorno) throws Exception {
 
 		Arquivo arquivo = salvaArquivo(arquivoRetorno);
 
@@ -118,13 +119,11 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 
 	}
 
-	private void validaArquivo(MultipartFile multipartFile) throws Exception {
+	private void validaArquivo(File arquivoRetorno) throws Exception {
 
-		if(!multipartFile.getOriginalFilename().endsWith(EXTENSAO_ARQUIVO_RETORNO)) {
-			throw new Exception("A extensão do arquivo informado deve ser " + EXTENSAO_ARQUIVO_RETORNO);
-		}
+		TipoArquivo tipoArquivo = tipoArquivoRepository.findByCodigo(TipoArquivoEnum.RETORNO_ARRECADACAO.getCodigo());
 
-		if(arquivoRepository.findByNome(multipartFile.getOriginalFilename()) != null) {
+		if(arquivoRepository.findByNomeAndTipoArquivo(arquivoRetorno.getName(), tipoArquivo) != null) {
 			throw new Exception("O arquivo de retorno selecionado já foi processado");
 		}
 	}

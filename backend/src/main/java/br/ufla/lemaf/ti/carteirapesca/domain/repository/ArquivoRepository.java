@@ -13,6 +13,7 @@ public interface ArquivoRepository extends JpaRepository<Arquivo, Integer> {
 
 	Arquivo findByNome(String nomeArquivo);
 
+	Arquivo findByNomeAndTipoArquivo(String nomeArquivo, TipoArquivo tipoArquivo);
 
 	@Query(value = "SELECT * " +
 		"FROM carteira_pesca.arquivo " +

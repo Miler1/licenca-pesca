@@ -47,6 +47,7 @@ public class RetornoConvenio implements Entity<RetornoConvenio, Integer> {
 		this.arquivo = arquivo;
 		this.dataGeracaoArquivo = cabecalho.getDataGeracaoArquivo();
 		this.numeroArquivo = cabecalho.getSequencialArquivo();
+		this.dataProcessamento = LocalDate.now();
 
 		this.qtdRegistros = trailler.getQtdRegistros();
 		this.valorRecebido = trailler.getVlrRegistros();

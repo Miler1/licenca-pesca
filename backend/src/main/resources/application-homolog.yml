@@ -7,7 +7,7 @@ logging:
   level:
     br.ufla.lemaf.ti: DEBUG
     org.hibernate: DEBUG
-  file: /dados/var/spring/carteira-pesca/logs/carteira_pesca.log
+  file: /dados/logs/carteira-pesca/carteira_pesca.log
 
 spring:
 
