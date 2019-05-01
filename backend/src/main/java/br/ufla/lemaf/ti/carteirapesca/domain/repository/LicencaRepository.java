@@ -39,13 +39,7 @@ public interface LicencaRepository extends JpaRepository<Licenca, Integer> {
 	@Query("update Licenca l set l.status = 2 where l.convenio.dataVencimento < :date and l.status = 0")
 	void alterarInvalidado(LocalDate date);
 
-	@Transactional
-	@Modifying
-	@Query("update Licenca l set l.status = 0 where l.dataVencimentoProvisoria < :date and l.status = 5")
-	void alterarAtivoAguardandoPagamento(Date date);
-
 	Licenca findByConvenio(Convenio convenio);
-
 
 	@Query(value = "SELECT * " +
 		"FROM carteira_pesca.licenca " +

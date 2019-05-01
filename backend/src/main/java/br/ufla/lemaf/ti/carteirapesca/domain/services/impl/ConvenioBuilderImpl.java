@@ -1,14 +1,12 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.enuns.CondicaoConvenioEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoSegmentoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoValorEfetivoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.BeneficiarioRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.ConvenioRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoSegmentoRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoValorEfetivoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.ConvenioBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.BancoUtils;
@@ -60,16 +58,24 @@ public class ConvenioBuilderImpl implements ConvenioBuilder {
 	@Autowired
 	ConvenioRepository convenioRepository;
 
+	@Autowired
+	CondicaoConvenioRepository condicaoRepository;
+
 	@Override
 	public Convenio geraConvenio(Modalidade modalidade, Pessoa pessoa) {
 
-		//TODO Hiago - Alterar tipo de segmento de "TipoSegmentoEnum.ENERGIA_GAS" para "TipoSegmentoEnum.ORGAO_GOVERNAMENTAL"
 		TipoSegmento tipoSegmento = tipoSegmentoRepository.findByCodigo(TipoSegmentoEnum.DEMAIS_EMPRESAS.getCodigo());
 		TipoValorEfetivo tipoValorEfetivo = tipoValorEfetivoRepository.findByCodigo(TipoValorEfetivoEnum.VALOR_REAIS_MODULO_10.getCodigo());
 		PagadorTitulo pagadorTitulo = pagadorBuilder.transformarPessoaEmPagador(pessoa);
 		Beneficiario beneficiario = beneficiarioRepository.findBySigla("IPAAM");
+		CondicaoConvenio condicaoConvenio = condicaoRepository.findByCodigo(CondicaoConvenioEnum.AGUARDANDO_PAGAMENTO.getCodigo());
 
-		Convenio convenio = new Convenio(tipoSegmento, tipoValorEfetivo, pagadorTitulo, beneficiario, modalidade.getValor());
+		Convenio convenio = new Convenio(tipoSegmento,
+			tipoValorEfetivo,
+			pagadorTitulo,
+			beneficiario,
+			modalidade.getValor(),
+			condicaoConvenio);
 
 		convenio.setNossoNumero(convenioRepository.count());
 		convenio.setLinhaDigitavel(geraLinhaDigitavel(convenio));

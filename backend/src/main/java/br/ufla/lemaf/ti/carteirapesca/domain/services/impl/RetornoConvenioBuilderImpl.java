@@ -1,5 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 
+import br.ufla.lemaf.ti.carteirapesca.domain.enuns.CondicaoConvenioEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.enuns.TipoArquivoEnum;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
@@ -8,10 +9,7 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.ConvenioRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.RetornoConvenioRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoArrecadacaoRepository;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.TipoPagamentoRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoConvenioBuilder;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ArquivoUtils;
@@ -62,6 +60,9 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 
 	@Autowired
 	ArquivoRepository arquivoRepository;
+
+	@Autowired
+	CondicaoConvenioRepository condicaoConvenioRepository;
 
 	public void buscaArquivoRetornoProcessamento() throws IOException {
 
@@ -146,6 +147,8 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 
 		List<TransacaoRetornoDTO> transacoes = getTransacoes(linhasArquivoRetorno);
 
+		CondicaoConvenio condicaoConvenio = condicaoConvenioRepository.findByCodigo(CondicaoConvenioEnum.PAGO.getCodigo());
+
 		transacoes.forEach(t -> {
 
 			Convenio convenio = convenioRepository.findByNossoNumeroAndCodigoBarras(t.getNumeroSequencialRegistro(), t.getCodigoBarras());
@@ -168,6 +171,7 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 				}
 
 				licenca.getConvenio().setPagamento(pagamento);
+				licenca.getConvenio().setCondicao(condicaoConvenio);
 
 				licenca.setDataVencimento(pagamento.getDataCredito());
 

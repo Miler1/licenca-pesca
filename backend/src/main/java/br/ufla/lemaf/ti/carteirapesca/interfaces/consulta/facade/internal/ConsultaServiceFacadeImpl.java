@@ -5,25 +5,19 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.CarteiraBuilderImpl;
+import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.*;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.ConsultaServiceFacade;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTOAssembler;
-import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.var;
 import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -136,7 +130,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 	@Override
 	public File gerarCarteira(Protocolo protocolo, Licenca licenca, Pessoa pessoa) throws Exception {
 
-		Map<String,String> data = new HashMap<String,String>();
+		Map<String,String> data = new HashMap<>();
 
 		var qrcode = QRCodeUtils.createQRCodeImage(Properties.baseUrl() + "informacao-carteira" + "/" + protocolo.getProtocoloNaoFormatado());
 
@@ -179,14 +173,11 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 		}
 
 		LocalDate validade = licenca.getDataVencimento();
-		LocalDate validadeProvisoria = licenca.getDataVencimentoProvisoria();
 
-		if(validade == null && validadeProvisoria == null) {
-			data.put("validade", "-");
-		} if(validade == null && validadeProvisoria != null) {
-			data.put("validade", validadeProvisoria.format(Constants.FORMATO_DATA_PADRAO));
-		} else {
+		if(licenca.getConvenio().getPagamento() != null) {
 			data.put("validade", validade.format(Constants.FORMATO_DATA_PADRAO));
+		} else {
+			throw new ValidationException("Não é possivel emitir a licença, pois ainda não houve confirmação de pagamento do boleto.");
 		}
 
 		return pdfGenaratorUtil.createPdf("carteira",data);

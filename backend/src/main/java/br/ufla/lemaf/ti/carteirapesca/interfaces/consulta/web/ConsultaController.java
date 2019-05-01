@@ -118,6 +118,7 @@ public class ConsultaController extends DefaultController {
 		} else {
 			cpf = null;
 		}
+
 		if(licenca.solicitante().getIdentity().passaporte() != null){
 			passaporte = licenca.solicitante().getIdentity().passaporte().getNumero();
 		} else {
@@ -176,11 +177,17 @@ public class ConsultaController extends DefaultController {
 
 				var formatterNovo = new ProtocoloFormatter("$1-$2/$3-$4", ProtocoloValidator.FORMATED_RENOVADO, "$1$2$3$4", ProtocoloValidator.UNFORMATED_RENOVADO);
 				protocoloObj = new Protocolo(protocolo, formatterNovo);
+
 			} else {
 				protocoloObj = new Protocolo(protocolo);
 			}
 
 			var licenca = consultaApplication.consulta(protocoloObj);
+
+			if(licenca.getConvenio().getPagamento() == null) {
+				throw new Exception("O pagamento não foi efetuado ou processado pelo banco.");
+			}
+
 			var solicitante = licenca.solicitante();
 			var pessoa = registroApplication.buscarDadosSolicitante(solicitante);
 			var carteira = facade.gerarCarteira(protocoloObj, licenca, pessoa);
@@ -200,26 +207,12 @@ public class ConsultaController extends DefaultController {
 
 	}
 
-	@CrossOrigin("*")
-	@GetMapping("/teste")
-	public ResponseEntity<InputStreamResource> downloadCarteira() throws Exception {
-
-//		Licenca licenca = facade.consultar("LPE-0000/19");
-		Licenca licenca = facade.consultar("LPR-0000/19");
-
-		File documentoArrecadacao = convenioBuilder.geraDocumentoArrecadacao(licenca);
-
-		return downloadArquivo(documentoArrecadacao, NOME_BOLETO_COM_EXTENSAO);
-
-	}
-
 	/**
 	 * Autenticidade da carteira, trazer todos os dados da carteira, menos limite de captura
 	 * code do QR que é o numero da licença
 	 * pessoa: Nome, CPF/CNPJ, enderecos{CEP, PAIS, MUNICIPIO}
 	 * licenca: protocolo(numero da licenca), modalidade, emissao(dataCriacao), validade
 	 * */
-
 	@CrossOrigin("*")
 	@GetMapping("/informacao-carteira")
 	public ResponseEntity<LicencaPescaDTO> buscarDadosCarteira(

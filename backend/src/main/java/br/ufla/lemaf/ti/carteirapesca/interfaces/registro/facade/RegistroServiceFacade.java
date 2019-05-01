@@ -1,7 +1,6 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ProtocoloDTO;
-import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
 
 /**
@@ -40,5 +39,4 @@ public interface RegistroServiceFacade {
 
 	void atualizarCondicaoInvalido();
 
-	void atualizarCondicaoLicencaProvisoria();
 }

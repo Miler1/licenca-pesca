@@ -22,10 +22,10 @@
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.vencimento`)}}
                     span.item-content {{setDataVencimento(lista) | moment('DD/MM/YYYY') }}
 
-                .flex-item  
+                .flex-item
                     span.item-title {{ $t(`${consultar_prefix}listaLicenca.situacao.titulo`) }}
-                    span.item-content 
-                        status-card(:situacao="lista.status.codigo") 
+                    span.item-content
+                        status-card(:situacao="lista.status.codigo")
                 .flex-item
                     span.item-title-acoes {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                     span.item-content-acoes
@@ -34,7 +34,6 @@
                                 i.el-icon-arrow-down.el-icon--right
                             el-dropdown-menu(slot="dropdown")
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarDocumentoPagamento`) }}
-                                el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteiraProvisoria`) }}                                
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarDocumentoPagamento`) }}
                                 el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
                                 el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
@@ -130,7 +129,7 @@ export default {
                 return lista.dataVencimentoProvisoria;
             }else {
                 return lista.dataVencimento;
-            }          
+            }
         }else {
             return "-";
         }
@@ -163,7 +162,7 @@ export default {
     .sem-licenca
         text-align: center
         font-size: 15px
-    
+
     .title
         margin-bottom: 20px
 
@@ -174,7 +173,7 @@ export default {
 
     .listMargin
         margin-top: 10px
-    
+
     .licencas
         margin-bottom: 20px
 
@@ -193,11 +192,11 @@ export default {
         .flex-item
             flex: 1
             display: grid
-            
+
             .item-title
                 font-weight: 500
                 margin-bottom: 10px
-            
+
             .item-title-acoes
                 font-weight: 500
                 margin-bottom: 10px

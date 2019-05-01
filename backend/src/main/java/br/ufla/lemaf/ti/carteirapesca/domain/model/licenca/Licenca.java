@@ -70,14 +70,9 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JoinColumn(name="id_solicitante")
 	private Solicitante solicitante;
 
-	@Setter
 	@Getter
 	@Column(name = "dt_vencimento")
 	private LocalDate dataVencimento;
-
-	@Getter
-	@Column(name = "dt_vencimento_provisoria")
-	private LocalDate dataVencimentoProvisoria;
 
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_informacao_complementar")
@@ -109,40 +104,19 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.informacaoComplementar = informacaoComplementar;
 			this.titulo = titulo;
 			this.convenio = convenio;
-			this.setDataVencimentoProvisoria();
+//			this.setDataVencimentoProvisoria();
 
-	}
-
-	/**
-	 * Ativa Licença. Caso o Status seja AGUARDANDO será ativado.
-	 * Mas se o Status for ATIVO ou INVALIDADO a operação será anulada.
-	 */
-	public void ativar() {
-		if (!status.getId().equals(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id)) {
-			throw new LicencaException("licenca.statusInvalido.ativar", status.getDescricao());
-		}
-		status = statusRepository.findById(Status.StatusEnum.ATIVO.id).get();
-		dataAtivacao = new Date();
-	}
-
-	/**
-	 * Invalidar uma licença. A mesma já não pode ser inválida.
-	 */
-	public void invalidar() {
-		if (status.getId().equals(statusRepository.findById(Status.StatusEnum.INVALIDADO.id).get().getId())) {
-			throw new LicencaException("licenca.statusInvalido.invalidar");
-		}
-		status = statusRepository.findById(Status.StatusEnum.INVALIDADO.id).get();
 	}
 
 	public InformacaoComplementar getInformacaoComplementar() {
 		return informacaoComplementar;
 	}
 
-	public void setDataVencimentoProvisoria() {
+	public void setDataVencimento(LocalDate dataPagamentoTaxa) {
 
-		LocalDate hoje = LocalDate.now();
-		this.dataVencimentoProvisoria = hoje.plusMonths(MES_VENCER_CARTEIRA_PROVISORIA);
+		Long qtdDiasVencimentoCarteira = 365l;
+
+		this.dataVencimento = dataPagamentoTaxa.plusDays(qtdDiasVencimentoCarteira);
 
 	}
 

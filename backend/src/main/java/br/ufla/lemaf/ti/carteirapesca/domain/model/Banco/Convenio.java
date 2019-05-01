@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 @Getter
@@ -61,13 +62,19 @@ public class Convenio implements Entity<Convenio, Integer> {
 	@JoinColumn(name = "id_pagamento", referencedColumnName="id")
 	private PagamentoConvenio pagamento;
 
+	@Setter
+	@OneToOne
+	@JoinColumn(name = "id_condicao", referencedColumnName="id", nullable = false)
+	private CondicaoConvenio condicao;
+
 	public Convenio() {}
 
 	public Convenio(TipoSegmento tipoSegmento,
 					TipoValorEfetivo tipoValorEfetivo,
 					PagadorTitulo pagador,
 					Beneficiario beneficiario,
-					BigDecimal valor) {
+					BigDecimal valor,
+					CondicaoConvenio condicaoConvenio) {
 
 		this.tipoSegmento = tipoSegmento;
 		this.tipoValorEfetivo = tipoValorEfetivo;
@@ -76,12 +83,29 @@ public class Convenio implements Entity<Convenio, Integer> {
 //		this.valor = valor;
 		this.valor = new BigDecimal(0.10);
 		this.dataEmissao = LocalDate.now();
-		this.dataVencimento = LocalDate.of(this.dataEmissao.getYear(), 12, 31);
+		this.setDataVencimento();
+		this.condicao = condicaoConvenio;
 
 	}
 
 	public void setNossoNumero(Long qtdCadastrados) {
 		this.nossoNumero =  qtdCadastrados.intValue() + 1;
+	}
+
+	public void setDataVencimento() {
+
+		Long qtdDiasVencimentoAposEmissao = 3l;
+
+		LocalDate vencimento = LocalDate.now().plusDays(qtdDiasVencimentoAposEmissao);
+
+		if(vencimento.getDayOfWeek() == DayOfWeek.SATURDAY) {
+			vencimento = vencimento.plusDays(2);
+		} else if(vencimento.getDayOfWeek() == DayOfWeek.SATURDAY) {
+			vencimento = vencimento.plusDays(1);
+		}
+
+		this.dataVencimento = vencimento;
+
 	}
 
 	@Override

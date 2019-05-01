@@ -172,21 +172,38 @@
 
 			<span>Dados do pagamento</span>
 			<div class="dados-pagamento">
-				<ul class="w100">
-					<li class="w40">Pagável apenas através do banco Bradesco</li>
-					<li class="w19">
-						<div class="bold">Emissão:</div>
-						<div th:text="${dataEmissao}"></div>
-					</li>
-					<li class="w19">
-						<div class="bold">Vencimento:</div>
-						<div th:text="${dataVencimento}"></div>
-					</li>
-					<li class="w19">
-						<div class="bold">Valor:</div>
-						<div th:text="${valor}"></div>
-					</li>
-				</ul>
+				<div>
+					<ul class="w100">
+						<li class="w100">
+							<div class="bold">Linha digitável:</div>
+							<div th:text="${linhaDigitavel}"></div>
+						</li>
+					</ul>
+				</div>
+
+				<div>
+					<ul class="w100">
+						<li class="w33">
+							<div class="bold">Emissão:</div>
+							<div th:text="${dataEmissao}"></div>
+						</li>
+
+						<li class="w33">
+							<div class="bold">Vencimento:</div>
+							<div th:text="${dataVencimento}"></div>
+						</li>
+
+						<li class="w33">
+							<div class="bold">Valor:</div>
+							<div th:text="${valor}"></div>
+						</li>
+					</ul>
+				</div>
+
+				<div>
+					*Recebível apenas no banco Bradesco
+				</div>
+
 			</div>
 
 			<span>Dados pessoais</span>
@@ -243,10 +260,14 @@
 			<span>Informações</span>
 			<div class="informacoes">
 				<div>
-					Você poderá obter sua Licença de Pesca provisória no momento do cadastro. Quando solicitada, a Licença de Pesca Provisória precisa estar acompanhada do comprovante de pagamento deste documento.
+					Este documento de Arrecadação, acompanhado de seu comprovante de pagamento,
+					habilita o pescador durante o período de 7 (sete) dias após sua quitação.
+					Após este prazo, é obrigatória a apresentação da Carteira de Pesca.
 				</div>
 				<div>
-					Em até 3 dias utéis após o pagamento deste documento, o sistema de emissão de Carteira de Pesca irá disponibilizar a Licença definitiva, a qual não necessita do comprovante de pagamento.
+					Em até 3 dias utéis após o pagamento deste documento,
+					o sistema de emissão de Carteira de Pesca irá disponibilizar a Licença definitiva,
+					a qual não necessita do comprovante de pagamento.
 				</div>
 				<div>
 					Para acompanhar o status da sua Carteira de Pesca, acesse: www.sistemas.ipaam.am.gov.br/carteira-pesca
@@ -283,6 +304,9 @@
 							<div th:text="${valor}"></div>
 						</li>
 					</ul>
+				</div>
+				<div>
+					*Importante: Não receber após o vencimento.
 				</div>
 			</div>
 			<ul class="w100">

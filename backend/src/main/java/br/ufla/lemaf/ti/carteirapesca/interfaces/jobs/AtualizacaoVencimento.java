@@ -18,7 +18,8 @@ public class AtualizacaoVencimento {
 
 	@Scheduled(cron = Constants.INTERVALO_ATUALIZACAO_AUTOMATICA)
 	public void atualizacaoAutomatica() {
-		log.info("Atualização automática");
+
+		log.info(" ----- INICIO - ATUALIZACAO AUTOMATICA ----- ");
 
 		// Verifica vencimento
 		registroServiceFacade.atualizarCondicaoVencimento();
@@ -26,8 +27,7 @@ public class AtualizacaoVencimento {
 		// Verifica invalido
 		registroServiceFacade.atualizarCondicaoInvalido();
 
-		// Verifica a data provisoria
-		registroServiceFacade.atualizarCondicaoLicencaProvisoria();
+		log.info(" ----- FIM - ATUALIZACAO AUTOMATICA ----- ");
 
 	}
 }
