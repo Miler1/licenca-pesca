@@ -1,5 +1,5 @@
 CREATE TABLE carteira_pesca.condicao_convenio (
-  id SERIAL NOT NULL, 
+  id SERIAL NOT NULL,
   codigo CHARACTER VARYING(20),
   descricao CHARACTER VARYING(50),
   CONSTRAINT pk_condicao_convenio PRIMARY KEY (id)
@@ -28,3 +28,5 @@ ALTER TABLE carteira_pesca.convenio
         REFERENCES carteira_pesca.condicao_convenio (id);
 
 COMMENT ON COLUMN carteira_pesca.convenio.id_condicao IS 'Indica a condição do convênio.';
+
+ALTER TABLE carteira_pesca.licenca DROP COLUMN dt_vencimento_provisoria;
