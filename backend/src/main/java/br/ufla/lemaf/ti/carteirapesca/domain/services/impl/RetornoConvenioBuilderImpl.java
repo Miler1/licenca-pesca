@@ -151,7 +151,7 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 
 		transacoes.forEach(t -> {
 
-			Convenio convenio = convenioRepository.findByNossoNumeroAndCodigoBarras(t.getNumeroSequencialRegistro(), t.getCodigoBarras());
+			Convenio convenio = convenioRepository.findByCodigoBarras(t.getCodigoBarras());
 
 			Licenca licenca = licencaRepository.findByConvenio(convenio);
 

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface ConvenioRepository extends JpaRepository<Convenio, Integer> {
 
-	Convenio findByNossoNumeroAndCodigoBarras(Integer nossoNumero, String codigoBarras);
+	Convenio findByCodigoBarras(String codigoBarras);
 
 	@Transactional
 	@Modifying
