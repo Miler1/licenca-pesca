@@ -24,7 +24,7 @@ INSERT INTO carteira_pesca.condicao_convenio (id, codigo, descricao) VALUES
 
 ALTER TABLE carteira_pesca.convenio
     ADD COLUMN id_condicao INTEGER NOT NULL,
-    ADD CONSTRAINT fk_c_condicao_convenio FOREIGN KEY (id_condicao)
+    ADD CONSTRAINT fk_condicao_convenio_c FOREIGN KEY (id_condicao)
         REFERENCES carteira_pesca.condicao_convenio (id);
 
 COMMENT ON COLUMN carteira_pesca.convenio.id_condicao IS 'Indica a condição do convênio.';
