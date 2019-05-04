@@ -13,24 +13,10 @@ import org.springframework.stereotype.Service;
 public class PessoaFisicaService {
 	@Value("${spring.security.entradaunica.cadastro-unificado.url}")
 	private String urlCadastroUnificado;
-//
-//	@Autowired
-//	private OAuthClientCadastroUnificado oAuthClientCadastroUnificado;
 
 	public Pessoa findByUsuario(Usuario usuario) {
 
 		String requestUrl = urlCadastroUnificado + "/external/pessoaFisica/buscarPorCpf/" + usuario.login;
-
-		Pessoa pessoa;
-		pessoa = WebServiceUtils.webServiceEU().executeRequestGet(requestUrl, Pessoa.class);
-
-		return pessoa;
-
-	}
-
-	public Pessoa findById(Integer id) {
-
-		String requestUrl = urlCadastroUnificado + "/external/pessoaFisica/" + id;
 
 		Pessoa pessoa;
 		pessoa = WebServiceUtils.webServiceEU().executeRequestGet(requestUrl, Pessoa.class);

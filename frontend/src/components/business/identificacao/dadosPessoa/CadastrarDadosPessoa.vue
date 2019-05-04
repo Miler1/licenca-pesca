@@ -24,8 +24,8 @@
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.dataNascimento`)" prop="dataNascimento")
-            el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${cadastrar_prefix}format.data`)") 
-              
+            el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${cadastrar_prefix}format.data`)")
+
 
         el-col(:span="6")
           el-form-item(:label="$t(`${cadastrar_prefix}labels.sexo`)" prop="sexo")
@@ -151,18 +151,18 @@
             el-form-item(:label="$t(`${cadastrar_prefix}labels.uf`)" prop="enderecoCorrespondencia.uf")
               el-select(v-model="pessoa.enderecoCorrespondencia.uf" :loading="ufSelectLoader" @change="fetchMunicipiosEnderecoCorrespondencia" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
                 el-option(v-for="uf in ufs" :key="uf.id" :value="uf.sigla" :label="uf.sigla")
-        
+
           el-col(:span="6")
             el-form-item(:label="$t(`${cadastrar_prefix}labels.municipio`)" prop="enderecoCorrespondencia.municipio")
               el-select(v-model="pessoa.enderecoCorrespondencia.municipio" ref="enderecoCorrespondencia" :loading="municipioSelectLoader" :placeholder="$t(`${cadastrar_prefix}placeholders.select.geral`)")
                 el-option(v-for="municipio in municipiosCorrespondencia" :key="municipio.id" :value="municipio.id" :label="municipio.nome")
-      
+
       div(v-if="pessoa.passaporte", ref="enderecoEstrangeiro")
         el-row(:gutter="20")
 
           el-col(:span="24")
             h3.titulo {{ $t(`${cadastrar_prefix}titulos.enderecoEstrangeiro`) }}
-          
+
         el-row(:gutter="20")
 
           el-col(:span="9")
@@ -173,7 +173,7 @@
           el-col(:span="15")
             el-form-item(:label="$t(`${cadastrar_prefix}labels.descricaoEndereco`)" prop="enderecoEstrangeiro.descricaoEndereco")
               el-input(v-model="pessoa.enderecoEstrangeiro.descricaoEndereco")
-        
+
         el-row(:gutter="20")
 
           el-col(:span="12")
@@ -183,7 +183,7 @@
           el-col(:span="12")
             el-form-item(:label="$t(`${cadastrar_prefix}labels.estado`)" prop="enderecoEstrangeiro.estado")
               el-input(v-model="pessoa.enderecoEstrangeiro.estado")
-        
+
         el-row(:gutter="20")
           el-col(:span="9")
             el-form-item(:label="$t(`${cadastrar_prefix}labels.pais`)" prop="enderecoEstrangeiro.pais")
@@ -276,7 +276,7 @@ export default {
   computed: {
     ...mapGetters(["municipios", "municipiosCorrespondencia", "ufs", "cpfPesquisa", "passaportePesquisa", "nacionalidades", "paises"])
   },
- 
+
   methods: {
     instantiate() {
       Vue.prototype.$cadastroPessoa = this;
@@ -291,7 +291,7 @@ export default {
     getValidate() {
       return this.valid;
     },
-    
+
     atualizarCpfPesquisado(resource) {
       this.pessoa.cpf = resource.cpf;
       this.pessoa.passaporte = resource.passaporte;
@@ -339,10 +339,10 @@ export default {
     },
     tratarMunicipio() {
       if(this.pessoa.enderecoPrincipal.municipio){
-        this.pessoa.enderecoPrincipal.municipio = this.pessoa.enderecoPrincipal.municipio.id; 
+        this.pessoa.enderecoPrincipal.municipio = this.pessoa.enderecoPrincipal.municipio.id;
       }
       if(this.pessoa.enderecoCorrespondencia.municipio){
-        this.pessoa.enderecoCorrespondencia.municipio = this.pessoa.enderecoCorrespondencia.municipio.id; 
+        this.pessoa.enderecoCorrespondencia.municipio = this.pessoa.enderecoCorrespondencia.municipio.id;
       }
     },
     changeSemNumeroEndPrincipal() {

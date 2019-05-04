@@ -66,8 +66,7 @@ public class RegistroController {
 
 		try {
 
-			var protocoloLicenca = registroServiceFacade
-				.registrar(registroResource);
+			var protocoloLicenca = registroServiceFacade.registrar(registroResource);
 
 			protocoloLicenca.add(linkTo(methodOn(RegistroController.class)
 				.registrar(registroResource))
@@ -75,7 +74,7 @@ public class RegistroController {
 
 			return new ResponseEntity<>(protocoloLicenca, HttpStatus.ACCEPTED);
 
-		}catch (IOException | NullPointerException e) {
+		} catch(IOException | NullPointerException e) {
 
 			throw new BaseException("entradaUnica.servicoIndisponivel");
 		}

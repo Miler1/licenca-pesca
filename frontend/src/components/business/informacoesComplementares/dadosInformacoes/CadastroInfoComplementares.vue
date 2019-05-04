@@ -233,9 +233,10 @@ export default {
 		.label-tipo-isca
 			padding: 5px
 			height: 20px
-			font-size: 14px;
+			font-size: 13px;
 			line-height: 20px;
 			margin-top: 5px;
+			font-style: italic;
 
 		.el-radio-button__orig-radio:disabled:checked + .el-radio-button__inner
 			background-color: #409EFF

@@ -43,22 +43,32 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Setter
+	@Getter
 	@Embedded
 	@AttributeOverride(name = "codigoFormatado", column = @Column(name = "tx_protocolo"))
 	private Protocolo protocolo;
 
+	@Getter
+	@Setter
 	@ManyToOne
 	@JoinColumn(name="id_modalidade")
 	private Modalidade modalidade;
 
+	@Getter
+	@Setter
 	@Column(name = "dt_criacao")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataCriacao;
 
+	@Getter
+	@Setter
 	@ManyToOne
 	@JoinColumn(name="id_status")
 	private Status status;
 
+	@Getter
+	@Setter
 	@Column(name = "dt_ativacao")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataAtivacao;
@@ -66,6 +76,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@Column(name = "tx_caminho_carteira")
 	private String caminhoCarteira;
 
+	@Setter
 	@ManyToOne
 	@JoinColumn(name="id_solicitante")
 	private Solicitante solicitante;
@@ -104,7 +115,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 			this.informacaoComplementar = informacaoComplementar;
 			this.titulo = titulo;
 			this.convenio = convenio;
-//			this.setDataVencimentoProvisoria();
 
 	}
 
@@ -123,7 +133,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 
 	public Boolean getPodeRenovar() {
 
-		if(this.status.getId() == Status.StatusEnum.ATIVO.id){
+		if(this.getStatus().getId() == Status.StatusEnum.ATIVO.id){
 
 			var vencimento = this.getDataVencimento();
 
@@ -133,7 +143,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 
 			return false;
 
-		}else if(this.status.getId() == Status.StatusEnum.VENCIDO.id && !this.solicitante.pussuiLicencaAtiva(this.modalidade)){
+		}else if(this.getStatus().getId() == Status.StatusEnum.VENCIDO.id && !this.solicitante.pussuiLicencaAtiva(this.modalidade)){
 			return true;
 		}
 
@@ -238,47 +248,4 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 		return protocolo;
 	}
 
-	public Protocolo getProtocolo() {
-		return protocolo;
-	}
-
-	public void setProtocolo(Protocolo protocolo) {
-		this.protocolo = protocolo;
-	}
-
-	public Modalidade getModalidade() {
-		return modalidade;
-	}
-
-	public void setModalidade(Modalidade modalidade) {
-		this.modalidade = modalidade;
-	}
-
-	public Date getDataCriacao() {
-		return dataCriacao;
-	}
-
-	public void setDataCriacao(Date dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public Date getDataAtivacao() {
-		return dataAtivacao;
-	}
-
-	public void setDataAtivacao(Date dataAtivacao) {
-		this.dataAtivacao = dataAtivacao;
-	}
-
-	public void setSolicitante(Solicitante solicitante) {
-		this.solicitante = solicitante;
-	}
 }

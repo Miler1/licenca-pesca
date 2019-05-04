@@ -122,7 +122,7 @@ export const actions = {
       );
       return data.numero;
     }).catch(error => {
-      Exception({ message: "Não foi possível conectar-se ao servidor. Por favor, verifique sua conexão com a internet e tente novamente.", show: true });
+      // Exception({ message: "Não foi possível conectar-se ao servidor. Por favor, verifique sua conexão com a internet e tente novamente.", show: true });
     });
   },
 
@@ -165,7 +165,7 @@ export const actions = {
         commit(SET_ERROR, error);
       });
   },
-  
+
   [FETCH_MUNICIPIOS_CORRESPONDENCIA]: ({ commit }, uf) => {
     AcessoService.fetchMunicipios(uf)
       .then(({ data }) => {

@@ -5,8 +5,8 @@ server:
 
 logging:
   level:
-    br.ufla.lemaf.ti: DEBUG
-    org.hibernate: DEBUG
+    br.ufla.lemaf.ti: ERROR
+    org.hibernate: ERROR
   file: /dados/logs/carteira-pesca/carteira_pesca.log
 
 spring:

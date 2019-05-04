@@ -6,8 +6,10 @@ import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.Arquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Arquivo.TipoArquivo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.ArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TipoArquivoRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.banco.*;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.RetornoConvenioBuilder;
@@ -28,10 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -63,6 +62,9 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 
 	@Autowired
 	CondicaoConvenioRepository condicaoConvenioRepository;
+
+	@Autowired
+	StatusRepository statusRepository;
 
 	public void buscaArquivoRetornoProcessamento() throws IOException {
 
@@ -103,7 +105,6 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 		TraillerRetornoDTO trailler  = new TraillerRetornoDTO(linhasArquivoRetorno.get(linhasArquivoRetorno.size() - 1));
 
 		RetornoConvenio retorno = new RetornoConvenio(cabecalho, trailler, arquivo);
-
 		retorno = retornoRepository.save(retorno);
 
 		processaRegistros(linhasArquivoRetorno, retorno);
@@ -148,6 +149,7 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 		List<TransacaoRetornoDTO> transacoes = getTransacoes(linhasArquivoRetorno);
 
 		CondicaoConvenio condicaoConvenio = condicaoConvenioRepository.findByCodigo(CondicaoConvenioEnum.PAGO.getCodigo());
+		Optional<Status> status = statusRepository.findById(Status.StatusEnum.ATIVO.id);
 
 		transacoes.forEach(t -> {
 
@@ -173,6 +175,8 @@ public class RetornoConvenioBuilderImpl implements RetornoConvenioBuilder {
 				licenca.getConvenio().setPagamento(pagamento);
 				licenca.getConvenio().setCondicao(condicaoConvenio);
 
+				licenca.setStatus(status.get());
+				licenca.setDataAtivacao(new Date());
 				licenca.setDataVencimento(pagamento.getDataCredito());
 
 				licencaRepository.save(licenca);

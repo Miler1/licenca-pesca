@@ -38,10 +38,9 @@ public class TransacaoRetornoDTO {
 		this.formaArrecadacao = transacao.substring(116, 117);
 
 		if(transacao.length() > 128) {
-
 			this.codigoTransacao = transacao.substring(117, 140);
+		} else if(transacao.length() > 140) {
 			this.formaParamento = Integer.valueOf(transacao.substring(140, 141));
-
 		}
 
 	}

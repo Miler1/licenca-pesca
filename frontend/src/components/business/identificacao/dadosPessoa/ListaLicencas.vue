@@ -128,7 +128,7 @@ export default {
             if(lista.dataVencimento == null && lista.dataVencimentoProvisoria != null){
                 return lista.dataVencimentoProvisoria;
             }else {
-                return lista.dataVencimento;
+                return (lista.dataVencimento ? lista.dataVencimento : '-');
             }
         }else {
             return "-";

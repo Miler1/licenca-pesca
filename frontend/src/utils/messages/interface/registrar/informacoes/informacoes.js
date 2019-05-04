@@ -85,8 +85,8 @@ const INFORMACOES = {
       ]
     },
     informacaoTipoIsca: {
-      natural: ["Para isca viva deve haver comprovação de que ela foi adquirida em empreendimento agrícola licenciado pelo órgão ambiental competente",
-        "For live bait there must be proof that it was acquired in an agricultural enterprise licensed by the competent environmental agency"]
+      natural: ["Para isca viva deve haver comprovação de que ela foi adquirida em empreendimento agrícola licenciado pelo órgão ambiental competente.",
+        "For live bait there must be proof that it was acquired in an agricultural enterprise licensed by the competent environmental agency."]
     },
     dia: ["dia", "day", "día"],
     naoInformado: ["Não informado", "Uninformed", "No informado"]
