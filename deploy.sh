@@ -5,11 +5,10 @@
 
 case $1 in
 
-test)
+teste)
 
     echo "Preparando os arquivos do frontend..."
     npm --prefix ./frontend run build
-
 
     echo "Preparando os arquivos do backend..."
     cd backend
@@ -25,13 +24,10 @@ test)
 
     echo "Deploy realizado com sucesso no ambiente de teste!" ;;
 
-homolog)
-
-
+homologacao)
 
     echo "Preparando os arquivos do frontend..."
     npm --prefix ./frontend run build
-
 
     echo "Preparando os arquivos do backend..."
     cd backend
@@ -40,10 +36,9 @@ homolog)
     mvn package -DskipTests
     cd ..
 
-
     echo "Executando operações no servidor..."
 
-    scp backend/target/backend-1.0.0-SNAPSHOT.jar lemaf@177.105.35.45:/home/lemaf/releases_homolog/AM/carteira-pesca/
+    scp backend/target/backend-1.0.0-SNAPSHOT.jar lemaf@177.105.35.45:/home/lemaf/releases_homolog/
 
     echo "Arquivo enviado com sucesso para o servidor!" ;;
 
