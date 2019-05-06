@@ -72,17 +72,17 @@ export default {
 
     prevStep() {
       if(this.activeStep('INFORMACOES_COMPLEMENTARES')) {
-        
+
         this.$refs.identificationStep.prepararDados();
       }
       if (this.step-- <= 0) this.step = 0;
     },
     checkValidationInformacoesComplementares() {
-      
+
       return this.$refs.informacoesComplementaresStep.validate();
     },
     checkValidation() {
-      
+
       return this.$refs.identificationStep.getValidated();
     },
 
@@ -109,11 +109,13 @@ export default {
           let registro = this.registroResource;
 
           this.$store.dispatch(REGISTRAR, registro).then(p => {
-            let protocolo = p.replace("/", "").replace("-", "");
-            this.$router.push({
-              name: "consultar",
-              params: { protocolo: protocolo }
-            });
+            if(p) {
+              let protocolo = p.replace("/", "").replace("-", "");
+              this.$router.push({
+                name: "consultar",
+                params: { protocolo: protocolo }
+              });
+            }
           });
         })
         .catch(() => {

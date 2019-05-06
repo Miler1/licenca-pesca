@@ -122,7 +122,9 @@ export const actions = {
       );
       return data.numero;
     }).catch(error => {
-      // Exception({ message: "Não foi possível conectar-se ao servidor. Por favor, verifique sua conexão com a internet e tente novamente.", show: true });
+      if(!error.message) {
+        Exception({ message: "Não foi possível conectar-se ao servidor. Por favor, verifique sua conexão com a internet e tente novamente.", show: true });
+      }
     });
   },
 
