@@ -5,10 +5,10 @@
 
 case $1 in
 
-teste)
+runners)
 
     echo "Preparando os arquivos do frontend..."
-    npm --prefix ./frontend run build
+    npm --prefix ./frontend run runners
 
     echo "Preparando os arquivos do backend..."
     cd backend
@@ -27,7 +27,7 @@ teste)
 homologacao)
 
     echo "Preparando os arquivos do frontend..."
-    npm --prefix ./frontend run build
+    npm --prefix ./frontend run build:homolog
 
     echo "Preparando os arquivos do backend..."
     cd backend
@@ -42,10 +42,29 @@ homologacao)
 
     echo "Arquivo enviado com sucesso para o servidor!" ;;
 
+producao)
+
+    echo "Preparando os arquivos do frontend..."
+    npm --prefix ./frontend run build:homolog
+
+    echo "Preparando os arquivos do backend..."
+    cd backend
+    mvn clean
+    mvn compile
+    mvn package -DskipTests
+    cd ..
+
+    echo "Executando operações no servidor..."
+
+    scp backend/target/backend-1.0.0-SNAPSHOT.jar lemaf@177.105.35.45:/home/lemaf/releases_prod/
+
+    echo "Arquivo enviado com sucesso para o servidor!" ;;
+
 *)
     echo "Opcao Invalida!"
-    echo "Escreva './deploy test' para realizar o deploy em ambiente de teste."
-    echo "Escreva './deploy homolog' para realizar o deploy em ambiente de homologação.";;
+    echo "Escreva './deploy runners' para realizar o deploy em ambiente de teste."
+    echo "Escreva './deploy homologacao' para realizar o deploy em ambiente de homologação."
+    echo "Escreva './deploy producao' para realizar o deploy em ambiente de producao.";;
 esac
 
 

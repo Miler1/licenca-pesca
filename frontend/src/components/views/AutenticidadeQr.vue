@@ -5,7 +5,7 @@
         h3.title {{ $t(`${autenticidadeQr_prefix}titulo.dadosPessoais`) }}
             .flex
                 .flex-item
-                    h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.nome`) }} 
+                    h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.nome`) }}
                     h4.informacoes(:class="{'not-informed': exist(licencaPesca.pessoa.nome)}") {{ licencaPesca.pessoa.nome | placeholder($t(`${autenticidadeQr_prefix}naoInformado`)) }}
                 .flex-item
                     h4.align {{ $t(`${autenticidadeQr_prefix}titulo.label.cpf`) }}
@@ -13,7 +13,7 @@
 
     card.dadosLicenca
 
-        h3.title {{ $t(`${autenticidadeQr_prefix}titulo.dadosLicenca`) }} 
+        h3.title {{ $t(`${autenticidadeQr_prefix}titulo.dadosLicenca`) }}
 
         .flex
             .flex-item
@@ -35,9 +35,9 @@
             .flex-item
                 h4.status {{ $t(`${autenticidadeQr_prefix}titulo.label.situacao`) }}
                 status-card(:situacao="licencaPesca.licenca.status.codigo")
-                
+
     card.dadosEndereco
-        
+
         h3.title {{ $t(`${autenticidadeQr_prefix}titulo.enderecoPrincipal`) }}
 
         .flex
@@ -81,7 +81,7 @@ export default {
         Card,
         StatusCard
     },
-    
+
     data() {
         return {
             autenticidadeQr_prefix: INTERFACE_AUTENTICIDADE_PREFIX,
@@ -90,9 +90,9 @@ export default {
 
     computed: {
         ...mapGetters(["licencaPesca", "listaLicencas"])
-       
+
     },
-    
+
     methods: {
         fetchData() {
             this.$store.dispatch(FETCH_DADOS_CARTEIRA, this.$route.params.protocolo);
@@ -105,7 +105,7 @@ export default {
            if(this.licencaPesca){
                if(this.licencaPesca.pessoa.enderecos[1]) {
                     var enderecoCompleto = this.licencaPesca.pessoa.enderecos[1].logradouro + ", Nº " + this.licencaPesca.pessoa.enderecos[1].numero;
-                       
+
                }if(this.licencaPesca.pessoa.enderecos[1]){
                    var enderecoSemComplemento = (this.licencaPesca.pessoa.enderecos[1].complemento ? ", " + this.licencaPesca.pessoa.enderecos[1].complemento : '') + ", " + this.licencaPesca.pessoa.enderecos[1].bairro
                }
@@ -119,8 +119,10 @@ export default {
             }
         },
         cpfFormatado() {
-            if(this.licencaPesca){
-                return this.licencaPesca.pessoa.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4")
+            if(this.licencaPesca && this.licencaPesca.pessoa.cpf){
+                return this.licencaPesca.pessoa.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+            } else if(this.licencaPesca && this.licencaPesca.pessoa.passaporte){
+                return this.licencaPesca.pessoa.passaporte;
             }
         },
         modalidade(){
@@ -152,7 +154,7 @@ export default {
                 return this.licencaPesca.licenca.dataVencimentoProvisoria;
             }else {
                 return this.licencaPesca.licenca.dataVencimento;
-            }  
+            }
         }
      },
 
@@ -164,7 +166,7 @@ export default {
 
 <style lang="sass">
   @import "../../theme/tools/variables"
-  
+
   #autenticidadeQr
     h1
       font-weight: 500
@@ -189,7 +191,7 @@ export default {
       flex-direction: column
       padding-top: 20px
       font-weight: bold
-    
+
     .status
         padding-bottom: 4px;
         display: flex
@@ -211,7 +213,7 @@ export default {
       .footer-label
         font-size: $--fonte-pequena
         color: $--cor-texto-secundario
-    
+
     .flex
         display: flex
 
@@ -219,7 +221,7 @@ export default {
             flex: 1
             display: grid
 
-    @media screen and (max-width: 600px) 
+    @media screen and (max-width: 600px)
         .flex
             display: flex
             flex-flow:  column-reverse

@@ -16,7 +16,7 @@ const AUTENTICIDADE = {
       enderecoCorrespondencia: ["Endereço de Correspondência", "Mailing Address"],
       label: {
         nome: ["Nome ", "Name "],
-        cpf: ["CPF/CNPJ ", "CPF/CNPJ "],
+        cpf: ["CPF/Passaporte ", "CPF/Passport "],
         numeroLicenca: ["Número da licença ", "License number"],
         modalidade: ["Modalidade ", "Modality"],
         emissao: ["Emissão ", "Emission"],

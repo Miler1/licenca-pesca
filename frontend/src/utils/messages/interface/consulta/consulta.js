@@ -22,9 +22,9 @@ const CONSULTA = {
         "Descargar la cartera de pesca"
       ],
       downloadBoleto: [
-        "Baixar o boleto",
-        "Download the ticket",
-        "Descargar el boleto"
+        "Baixar o documento de arrecadação",
+        "Download the collection document",
+        "Descargar el documento de recaudación"
       ]
     }
   }

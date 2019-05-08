@@ -1,7 +1,7 @@
 const handleEnvironment = (devProperty, prodProperty, homologProperty) => {
   if (process.env.NODE_ENV === "production") {
     return prodProperty;
-  } else if (process.env.NODE_ENV === "homologacao") {
+  } else if (process.env.NODE_ENV === "homologation") {
     return homologProperty;
   } else {
     return devProperty;
@@ -26,8 +26,8 @@ const Properties = {
   },
   BASE_URL: handleEnvironment(
     "http://localhost:9666",
-    "http://am.runners.ti.lemaf.ufla.br/carteira-pesca",
-    "http://homologacao.ipaam.lemaf.com.br/carteira-pesca",
+    "http://sistemas.ipaam.am.gov.br/carteira-pesca",
+    "http://sistemas.ipaam.am.gov.br/carteira-pesca",
     "http://sistemas.ipaam.am.gov.br/carteira-pesca"
   ),
   IBGE_API: "https://servicodados.ibge.gov.br/api/v1/localidades"
