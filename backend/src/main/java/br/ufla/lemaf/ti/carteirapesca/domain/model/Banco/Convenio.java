@@ -80,8 +80,7 @@ public class Convenio implements Entity<Convenio, Integer> {
 		this.tipoValorEfetivo = tipoValorEfetivo;
 		this.pagador = pagador;
 		this.beneficiario = beneficiario;
-//		this.valor = valor;
-		this.valor = new BigDecimal(0.10);
+		this.valor = valor;
 		this.dataEmissao = LocalDate.now();
 		this.setDataVencimento();
 		this.condicao = condicaoConvenio;

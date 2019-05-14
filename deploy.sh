@@ -7,64 +7,64 @@ case $1 in
 
 runners)
 
-    echo "Preparando os arquivos do frontend..."
-    npm --prefix ./frontend run runners
+	echo "Preparando os arquivos do frontend..."
+	npm --prefix ./frontend run build
 
-    echo "Preparando os arquivos do backend..."
-    cd backend
-    mvn clean install
-    cd ..
+	echo "Preparando os arquivos do backend..."
+	cd backend
+	mvn clean install
+	cd ..
 
-    echo "Executando operações no servidor..."
-    scp backend/target/backend-1.0.0-SNAPSHOT.jar  deploy@runners.ti.lemaf.ufla.br:/var/spring/deploy
+	echo "Executando operações no servidor..."
+	scp backend/target/backend-1.0.0-SNAPSHOT.jar  deploy@runners.ti.lemaf.ufla.br:/var/spring/deploy
 
-    ssh -t deploy@runners.ti.lemaf.ufla.br 'sudo systemctl stop carteira-pesca.service | sudo mv /var/spring/deploy/backend-1.0.0-SNAPSHOT.jar  /var/spring/carteira-pesca/carteira-pesca-1.0.0-SNAPSHOT.jar'
+	ssh -t deploy@runners.ti.lemaf.ufla.br 'sudo systemctl stop carteira-pesca.service | sudo mv /var/spring/deploy/backend-1.0.0-SNAPSHOT.jar  /var/spring/carteira-pesca/carteira-pesca-1.0.0-SNAPSHOT.jar'
 
-    ssh -t deploy@runners.ti.lemaf.ufla.br 'sudo systemctl start carteira-pesca.service'
+	ssh -t deploy@runners.ti.lemaf.ufla.br 'sudo systemctl start carteira-pesca.service'
 
-    echo "Deploy realizado com sucesso no ambiente de teste!" ;;
+	echo "Deploy realizado com sucesso no ambiente de teste!" ;;
 
 homologacao)
 
-    echo "Preparando os arquivos do frontend..."
-    npm --prefix ./frontend run build:homolog
+	echo "Preparando os arquivos do frontend..."
+	npm --prefix ./frontend run build
 
-    echo "Preparando os arquivos do backend..."
-    cd backend
-    mvn clean
-    mvn compile
-    mvn package -DskipTests
-    cd ..
+	echo "Preparando os arquivos do backend..."
+	cd backend
+	mvn clean
+	mvn compile
+	mvn package -DskipTests
+	cd ..
 
-    echo "Executando operações no servidor..."
+	echo "Executando operações no servidor..."
 
-    scp backend/target/backend-1.0.0-SNAPSHOT.jar lemaf@177.105.35.45:/home/lemaf/releases_homolog/
+	scp backend/target/backend-1.0.0-SNAPSHOT.jar lemaf@177.105.35.45:/home/lemaf/releases_homolog/
 
-    echo "Arquivo enviado com sucesso para o servidor!" ;;
+	echo "Arquivo enviado com sucesso para o servidor!" ;;
 
 producao)
 
-    echo "Preparando os arquivos do frontend..."
-    npm --prefix ./frontend run build:homolog
+	echo "Preparando os arquivos do frontend..."
+	npm --prefix ./frontend run build
 
-    echo "Preparando os arquivos do backend..."
-    cd backend
-    mvn clean
-    mvn compile
-    mvn package -DskipTests
-    cd ..
+	echo "Preparando os arquivos do backend..."
+	cd backend
+	mvn clean
+	mvn compile
+	mvn package -DskipTests
+	cd ..
 
-    echo "Executando operações no servidor..."
+	echo "Executando operações no servidor..."
 
-    scp backend/target/backend-1.0.0-SNAPSHOT.jar lemaf@177.105.35.45:/home/lemaf/releases_prod/
+	scp backend/target/backend-1.0.0-SNAPSHOT.jar lemaf@177.105.35.45:/home/lemaf/releases_prod/
 
-    echo "Arquivo enviado com sucesso para o servidor!" ;;
+	echo "Arquivo enviado com sucesso para o servidor!" ;;
 
 *)
-    echo "Opcao Invalida!"
-    echo "Escreva './deploy runners' para realizar o deploy em ambiente de teste."
-    echo "Escreva './deploy homologacao' para realizar o deploy em ambiente de homologação."
-    echo "Escreva './deploy producao' para realizar o deploy em ambiente de producao.";;
+	echo "Opcao Invalida!"
+	echo "Escreva './deploy runners' para realizar o deploy em ambiente de teste."
+	echo "Escreva './deploy homologacao' para realizar o deploy em ambiente de homologação."
+	echo "Escreva './deploy producao' para realizar o deploy em ambiente de producao.";;
 esac
 
 
