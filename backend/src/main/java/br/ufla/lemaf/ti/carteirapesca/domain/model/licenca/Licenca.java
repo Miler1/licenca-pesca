@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Uma Licença de Pesca.
@@ -100,6 +101,9 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_convenio")
 	private Convenio convenio;
+
+	@OneToMany(mappedBy = "licenca")
+	private List<TaxaLicenca> taxa;
 
 	public Licenca(final Protocolo protocolo,
 				   final Modalidade modalidade,
