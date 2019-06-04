@@ -31,6 +31,8 @@ COMMENT ON COLUMN carteira_pesca.taxa_licenca.codigo_barras IS 'Código de barra
 COMMENT ON COLUMN carteira_pesca.taxa_licenca.fl_pago IS 'Indica se o pagamento da taxa foi efetuado.';
 COMMENT ON COLUMN carteira_pesca.taxa_licenca.fl_vencido IS 'Indica se a taxa está vencida vecimento.';
 
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA carteira_pesca TO carteira_pesca;
+
 ALTER TABLE carteira_pesca.licenca DROP COLUMN id_convenio;
 ALTER TABLE carteira_pesca.licenca DROP COLUMN id_titulo;
 ALTER TABLE carteira_pesca.licenca DROP COLUMN dt_vencimento_boleto;
