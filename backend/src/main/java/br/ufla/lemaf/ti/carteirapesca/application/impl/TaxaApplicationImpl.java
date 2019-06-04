@@ -53,7 +53,7 @@ public class TaxaApplicationImpl implements TaxaApplication {
 	@Override
 	public TaxaLicenca geraDocumentoArrecadacao(Licenca licenca) {
 
-		Pessoa pessoa = registroApplication.buscarDadosSolicitante(licenca.getSolicitante());
+		Pessoa pessoa = registroApplication.buscarDadosSolicitante(licenca.solicitante());
 
 		DocumentoArrecadacaoDTO documentoArrecadacao = dadosDocumentoArrecadacao(licenca, pessoa);
 
@@ -72,7 +72,7 @@ public class TaxaApplicationImpl implements TaxaApplication {
 		TaxaLicenca taxaLicenca = taxaLicencaRepository.findBylicencaAndVencido(licenca, false);
 
 		if(taxaLicenca == null) {
-//			taxaLicenca = geraDocumentoArrecadacao(licenca);
+			taxaLicenca = geraDocumentoArrecadacao(licenca);
 		}
 
 		ArquivoDocumentoArrecadacaoDTO arquivoDocumentoArrecadacao = new DocumentoArrecadacaoService(Properties.gestaoPagamentosUrl(), Properties.gestaoPagamentosCodigoModulo())

@@ -75,7 +75,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@Column(name = "tx_caminho_carteira")
 	private String caminhoCarteira;
 
-	@Getter
+//	@Getter
 	@Setter
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id_solicitante")
