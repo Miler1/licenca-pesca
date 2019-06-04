@@ -3,8 +3,8 @@ package br.ufla.lemaf.ti.carteirapesca.application.impl;
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Pais;
-import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.PaisRepository;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
@@ -64,7 +64,7 @@ public class ConsultaAplicationImpl implements ConsultaApplication {
 
 		if (licenca == null) return null;
 
-		return licenca.getTitulo().getArquivoBoleto().getCaminhoArquivo();
+		return null; // licenca.getTitulo().getArquivoBoleto().getCaminhoArquivo();
 
 	}
 

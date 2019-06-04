@@ -57,9 +57,6 @@ spring:
 
   carteira-pesca:
     base-path: /dados/carteira-pesca/carteira/
-    path-arquivo-boleto: /dados/carteira-pesca/boleto/
-    path-arquivo-remessa: /dados/carteira-pesca/remessa/
-    path-arquivo-retorno: /dados/carteira-pesca/retorno/
 
 
 

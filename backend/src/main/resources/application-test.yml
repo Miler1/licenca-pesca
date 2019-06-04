@@ -61,7 +61,3 @@ spring:
 
   carteira-pesca:
     base-path: var/dados/amazonas/arquivos/carteira-pesca/carteira/
-    path-arquivo-boleto: var/dados/amazonas/arquivos/carteira-pesca/boleto/
-    path-arquivo-remessa: var/dados/amazonas/arquivos/carteira-pesca/remessa/
-    path-arquivo-retorno: var/dados/amazonas/arquivos/carteira-pesca/retorno/
-    path-arquivo-retorno-disponibilizado-banco: var/dados/amazonas/dadosWebTA/Retorno/

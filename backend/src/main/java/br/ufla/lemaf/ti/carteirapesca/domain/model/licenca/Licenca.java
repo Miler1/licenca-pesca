@@ -1,7 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Convenio;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.Banco.Titulo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
@@ -77,8 +75,9 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@Column(name = "tx_caminho_carteira")
 	private String caminhoCarteira;
 
+	@Getter
 	@Setter
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id_solicitante")
 	private Solicitante solicitante;
 
@@ -90,35 +89,19 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@JoinColumn(name="id_informacao_complementar")
 	private InformacaoComplementar informacaoComplementar;
 
-	@Setter
-	@Getter
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="id_titulo")
-	private Titulo titulo;
-
-	@Setter
-	@Getter
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="id_convenio")
-	private Convenio convenio;
-
 	@OneToMany(mappedBy = "licenca")
 	private List<TaxaLicenca> taxa;
 
 	public Licenca(final Protocolo protocolo,
 				   final Modalidade modalidade,
 				   final InformacaoComplementar informacaoComplementar,
-				   final Status status,
-				   final Titulo titulo,
-				   final Convenio convenio) {
+				   final Status status) {
 
 			this.protocolo = protocolo;
 			this.modalidade = modalidade;
 			this.dataCriacao = new Date();
 			this.status = status;
 			this.informacaoComplementar = informacaoComplementar;
-			this.titulo = titulo;
-			this.convenio = convenio;
 
 	}
 

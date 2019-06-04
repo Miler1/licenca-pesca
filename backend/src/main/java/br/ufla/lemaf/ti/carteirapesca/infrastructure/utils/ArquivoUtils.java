@@ -3,11 +3,11 @@ package br.ufla.lemaf.ti.carteirapesca.infrastructure.utils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 public class ArquivoUtils {
 
@@ -40,6 +40,17 @@ public class ArquivoUtils {
 		FileUtils.copyInputStreamToFile(new FileInputStream(file), arquivoRetorno);
 
 		return arquivoRetorno;
+
+	}
+
+	public static void converteBase64ParaArquivo(String base64, File arquivo) throws IOException {
+
+		byte[] decodedBytes = Base64.getDecoder().decode(base64);
+
+		FileOutputStream fos = new FileOutputStream(arquivo);
+		fos.write(decodedBytes);
+		fos.flush();
+		fos.close();
 
 	}
 

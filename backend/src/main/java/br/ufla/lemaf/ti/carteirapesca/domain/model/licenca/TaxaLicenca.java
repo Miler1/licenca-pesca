@@ -1,15 +1,20 @@
 package br.ufla.lemaf.ti.carteirapesca.domain.model.licenca;
 
+import arrecadacao.dtos.RetornoArrecadacaoDTO;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.shared.Entity;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
+@Getter
 @javax.persistence.Entity
-@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "licenca")
+@Table(schema = Constants.SCHEMA_CARTEIRA_PESCA, name = "taxa_licenca")
 public class TaxaLicenca implements Entity<TaxaLicenca, Protocolo> {
 
 	@Id
@@ -33,11 +38,13 @@ public class TaxaLicenca implements Entity<TaxaLicenca, Protocolo> {
 	@Column(name = "codigo_barras")
 	private String codigoBarras;
 
-	@Column(name = "fl_pago")
+	@Setter
+	@Column(name = "fl_pago", insertable = false)
 	private Boolean pago;
 
-	@Column(name = "data_pagamento")
-	private LocalDate dataPagamento;
+	@Setter
+	@Column(name = "fl_vencido", insertable = false)
+	private Boolean vencido;
 
 	@Override
 	public boolean sameIdentityAs(TaxaLicenca other) {
@@ -48,4 +55,19 @@ public class TaxaLicenca implements Entity<TaxaLicenca, Protocolo> {
 	public Protocolo identity() {
 		return null;
 	}
+
+	public TaxaLicenca() {}
+
+	public TaxaLicenca(Licenca licenca, RetornoArrecadacaoDTO arrecadacao) {
+
+		this.licenca = licenca;
+
+		this.idGestaoPagamentos = arrecadacao.idDocumentoArrecadacao;
+		this.dataVencimento = arrecadacao.dataVecimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.codigoBarras = arrecadacao.codigoBarras;
+		this.pago = arrecadacao.pago;
+		this.valor = arrecadacao.valor;
+
+	}
+
 }

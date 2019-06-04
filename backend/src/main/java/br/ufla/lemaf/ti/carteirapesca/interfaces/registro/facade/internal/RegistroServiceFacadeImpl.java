@@ -72,7 +72,7 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	@Override
 	public void atualizarCondicaoVencimento() {
 		licencaRepository.alterarVencimento(new Date());
-		return ;
+		return;
 	}
 
 	@Override
@@ -90,22 +90,6 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 				resource.getInformacaoComplementar(), resource.getProtocolo()
 			),resource.getProtocolo()));
 
-	}
-
-	@Override
-	public void atualizarCondicaoInvalido() {
-
-		LocalDate dataInvalidacao = LocalDate.now().minusDays(3);
-
-		if (dataInvalidacao.getDayOfWeek().getValue() == Calendar.SUNDAY){
-
-			dataInvalidacao.plusDays(1);
-		}else if(dataInvalidacao.getDayOfWeek().getValue() == Calendar.SATURDAY){
-
-			dataInvalidacao.plusDays(2);
-		}
-
-		licencaRepository.alterarInvalidado(dataInvalidacao);
 	}
 
 	/**

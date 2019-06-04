@@ -59,7 +59,3 @@ spring:
 
   carteira-pesca:
     base-path: /dados/var/arquivos/carteira-pesca/carteira/
-    path-arquivo-boleto: /dados/var/arquivos/carteira-pesca/boleto/
-    path-arquivo-remessa: /dados/var/arquivos/carteira-pesca/remessa/
-    path-arquivo-retorno: /dados/var/arquivos/carteira-pesca/retorno/
-    path-arquivo-retorno-disponibilizado-banco: /dados/var/dadosWebTA/Retorno/

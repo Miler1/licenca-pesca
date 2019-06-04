@@ -2,10 +2,10 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.web;
 
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.application.TaxaApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Pais;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
-import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.ConvenioBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloFormatter;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.ProtocoloValidator;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.facade.AcessoServiceFacade;
@@ -65,7 +65,7 @@ public class ConsultaController extends DefaultController {
 	private RegistroApplication registroApplication;
 
 	@Autowired
-	private ConvenioBuilderImpl convenioBuilder;
+	private TaxaApplication taxaApplication;
 
 	/**
 	 * Injetando dependências.
@@ -154,7 +154,7 @@ public class ConsultaController extends DefaultController {
 			throw new Exception("Não foi encontrada nenhuma licença com o protocolo informado");
 		}
 
-		File documentoArrecadacao = convenioBuilder.geraDocumentoArrecadacao(licenca);
+		File documentoArrecadacao = taxaApplication.downloadDocumentoArrecadacao(licenca);
 
 		return downloadArquivo(documentoArrecadacao, NOME_BOLETO_COM_EXTENSAO);
 
@@ -184,9 +184,9 @@ public class ConsultaController extends DefaultController {
 
 			var licenca = consultaApplication.consulta(protocoloObj);
 
-			if(licenca.getConvenio().getPagamento() == null) {
-				throw new Exception("O pagamento não foi efetuado ou processado pelo banco.");
-			}
+//			if(licenca.getConvenio().getPagamento() == null) {
+//				throw new Exception("O pagamento não foi efetuado ou processado pelo banco.");
+//			}
 
 			var solicitante = licenca.solicitante();
 			var pessoa = registroApplication.buscarDadosSolicitante(solicitante);

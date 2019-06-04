@@ -70,11 +70,12 @@ spring:
 
   carteira-pesca:
     base-path: arquivos/carteira/
-    path-arquivo-boleto: arquivos/boleto/
-    path-arquivo-remessa: arquivos/remessa/
-    path-arquivo-retorno: arquivos/retorno/
-    path-arquivo-retorno-disponibilizado-banco: /home/hiagosouza/Downloads/
 
   arquivos:
     base-path-arquivos-dados: src/main/resources/gerador/
+    temporario: /tmp/
 
+  gestao-pagamentos:
+    codigo-modulo: LICENCA_PESCA
+    codigo-beneficiario: IPAAM
+    url: http://localhost:9913/gestao-pagamentos

@@ -3,7 +3,9 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.internal;
 import br.ufla.lemaf.ti.carteirapesca.application.ConsultaApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.TaxaLicenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.TaxaLicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.CarteiraBuilderImpl;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.Properties;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.*;
@@ -35,6 +37,9 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 
 	@Autowired
 	PdfGeneratorUtil pdfGenaratorUtil;
+
+	@Autowired
+	TaxaLicencaRepository taxaLicencaRepository;
 
 	/**
 	 * Injetando dependências.
@@ -172,10 +177,13 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 			data.put("emissao", DateUtils.formatDate(licenca.dataAtivacao(), Constants.DATE_FORMAT));
 		}
 
-		LocalDate validade = licenca.getDataVencimento();
+		TaxaLicenca taxaLicenca = taxaLicencaRepository.findByLicencaAndPago(licenca, true);
 
-		if(licenca.getConvenio().getPagamento() != null) {
+		if(taxaLicenca != null) {
+
+			LocalDate validade = licenca.getDataVencimento();
 			data.put("validade", validade.format(Constants.FORMATO_DATA_PADRAO));
+
 		} else {
 			throw new ValidationException("Não é possivel emitir a licença, pois ainda não houve confirmação de pagamento do boleto.");
 		}

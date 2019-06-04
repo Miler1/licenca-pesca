@@ -74,25 +74,21 @@ public final class Properties {
 		return environment.getProperty("spring.carteira-pesca.base-path");
 	}
 
-	public static String pathArquivoRemessa() {
-		return environment.getProperty("spring.carteira-pesca.path-arquivo-remessa");
+	public static String gestaoPagamentosCodigoModulo() {
+		return environment.getProperty("spring.gestao-pagamentos.codigo-modulo");
 	}
 
-	public static String pathArquivoRetorno() {
-		return environment.getProperty("spring.carteira-pesca.path-arquivo-retorno");
+	public static String gestaoPagamentosCodigoBeneficiario() {
+		return environment.getProperty("spring.gestao-pagamentos.codigo-beneficiario");
 	}
 
-	public static String pathArquivoRetornoDisponilizadoBanco() {
-		return environment.getProperty("spring.carteira-pesca.path-arquivo-retorno-disponibilizado-banco");
+	public static String gestaoPagamentosUrl() {
+		return environment.getProperty("spring.gestao-pagamentos.url");
 	}
 
-	/**
-	 * @return O caminho da do boleto da licença de pesca
-	 */
-	public static String pathBoletoPagamentoCarteiraPesca() {
-		return environment.getProperty("spring.carteira-pesca.path-arquivo-boleto");
+	public static String pathArquivoTemporario() {
+		return environment.getProperty("spring.arquivos.temporario");
 	}
-
 
 	public static String baseUrl() {
 		return environment.getProperty("spring.application.urlBase");

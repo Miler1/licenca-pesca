@@ -272,6 +272,13 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
 
+        <!--Cadastro Unificado-->
+        <dependency>
+            <groupId>br.ufla.lemaf</groupId>
+            <artifactId>gestao-pagamentos-client</artifactId>
+            <version>0.2</version>
+        </dependency>
+
     </dependencies>
 
     <!--Build-->

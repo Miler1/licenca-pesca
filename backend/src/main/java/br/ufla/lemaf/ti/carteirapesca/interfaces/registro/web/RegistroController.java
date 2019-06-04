@@ -76,6 +76,8 @@ public class RegistroController {
 
 		} catch(IOException | NullPointerException e) {
 
+			e.printStackTrace();
+
 			throw new BaseException("entradaUnica.servicoIndisponivel");
 		}
 
