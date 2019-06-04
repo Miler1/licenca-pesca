@@ -74,9 +74,6 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		if(!solicitante.pussuiLicencaAtiva(modalidade)) {
 
 			licenca = criarLicenca(resource, null);
-			licenca.protocolo();
-
-//			protocolo = solicitante.adicionarLicenca(licenca, false);
 
 		} else if(!solicitante.pussuiLicencaAtiva(modalidade)) {
 			throw new SolicitanteException("solicitante.licenca.ativa");
@@ -102,44 +99,34 @@ public class RegistroApplicationImpl implements RegistroApplication {
 	@Override
 	public Protocolo renovarLicenca(RegistroResource resource, String codigoProtocolo) {
 
-		var licenca = licencaRepository.buscaPeloProtocolo(codigoProtocolo);
+		Licenca licencaSalva = licencaRepository.buscaPeloProtocolo(codigoProtocolo);
 
-		if (licenca.getPodeRenovar()) {
+		if(licencaSalva.getPodeRenovar()) {
 
-			var solicitante = getSolicitante(resource);
+			Status statusRenovado = statusRepository.findById(Status.StatusEnum.RENOVADO.id).get();
+
+			licencaSalva.setStatus(statusRenovado);
+			licencaRepository.save(licencaSalva);
+
+			Solicitante solicitante = getSolicitante(resource);
 
 			String protocoloNovo = this.calcularNovoProtocolo(codigoProtocolo);
 
-			var novaLicenca = criarLicenca(resource, protocoloNovo);
+			Licenca novaLicenca = criarLicenca(resource, protocoloNovo);
 
-			Protocolo protocolo = solicitante.adicionarLicenca(novaLicenca, true);
+			novaLicenca.setSolicitante(solicitante);
 
-			for(Licenca licenca1: solicitante.getLicenca()) {
+			licencaRepository.save(novaLicenca);
 
-				String protocoloSemFormatacao = licenca1.getProtocolo().getCodigoFormatado().replace("-", "").replace("/", "");
+			taxaApplication.geraDocumentoArrecadacao(novaLicenca);
 
-				if(protocoloSemFormatacao.equals(codigoProtocolo)) {
-					licenca1.setStatus(statusRepository.findById(Status.StatusEnum.RENOVADO.id).get());
-				}
-
-			}
-
-			solicitanteRopository.save(solicitante);
-
-			licenca.setSolicitante(solicitante);
-
-			taxaApplication.geraDocumentoArrecadacao(licenca);
-
-			return protocolo;
+			return novaLicenca.getProtocolo();
 
 		} else {
-
 			throw new SolicitanteException("solicitante.licenca.ativa");
 		}
 
 	}
-
-
 
 	private String calcularNovoProtocolo(String protocolo){
 

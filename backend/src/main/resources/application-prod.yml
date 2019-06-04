@@ -58,5 +58,7 @@ spring:
   carteira-pesca:
     base-path: /dados/carteira-pesca/carteira/
 
-
-
+  gestao-pagamentos:
+    codigo-modulo: LICENCA_PESCA
+    codigo-beneficiario: IPAAM
+    url: http://192.168.100.8/gestao-pagamentos

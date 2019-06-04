@@ -38,6 +38,8 @@ public final class Constants {
 
 	public static final String INTERVALO_ATUALIZACAO_AUTOMATICA = "0 0 0 1/1 * ?";
 
+	public static final String INTERVALO_VERIFICACAO_PAGAMENTOS = "0 0/1 * 1/1 * ?";
+
 	public static final String INTERVALO_PROCESSAMENTO_JOB = "0 0 7 1/1 * ?";
 
 	public static final String INTERVALO_VALIDACAO_BOLETOS_JOB = "0 0 0 1/1 * ?";

@@ -34,3 +34,20 @@ COMMENT ON COLUMN carteira_pesca.taxa_licenca.fl_vencido IS 'Indica se a taxa es
 ALTER TABLE carteira_pesca.licenca DROP COLUMN id_convenio;
 ALTER TABLE carteira_pesca.licenca DROP COLUMN id_titulo;
 ALTER TABLE carteira_pesca.licenca DROP COLUMN dt_vencimento_boleto;
+
+DROP TABLE carteira_pesca.convenio;
+DROP TABLE carteira_pesca.condicao_convenio;
+DROP TABLE carteira_pesca.pagamento_convenio;
+DROP TABLE carteira_pesca.retorno_convenio;
+DROP TABLE carteira_pesca.tipo_arrecadacao;
+DROP TABLE carteira_pesca.tipo_pagamento;
+DROP TABLE carteira_pesca.tipo_segmento;
+DROP TABLE carteira_pesca.tipo_valor_efetivo;
+DROP TABLE carteira_pesca.titulo_remessa;
+DROP TABLE carteira_pesca.titulo_retorno;
+DROP TABLE carteira_pesca.titulo;
+DROP TABLE carteira_pesca.beneficiario_titulo;
+DROP TABLE carteira_pesca.beneficiario;
+DROP TABLE carteira_pesca.motivo_ocorrencia;
+DROP TABLE carteira_pesca.motivo;
+DROP TABLE carteira_pesca.ocorrencia;

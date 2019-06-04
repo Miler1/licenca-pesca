@@ -93,22 +93,6 @@ public class Solicitante implements Entity<Solicitante, SolicitanteId> {
 	}
 
 	/**
-	 * Adiciona uma licença ao solicitante se não
-	 * houver uma liceça ativa.
-	 *
-	 * @param licencaAdd A licença
-	 * @return O protocolo da licença
-	 */
-	public Protocolo adicionarLicenca(Licenca licencaAdd, Boolean renovando) {
-		if (renovando || !pussuiLicencaAtiva(licencaAdd.modalidade())) {
-			licenca.add(licencaAdd);
-			return licencaAdd.protocolo();
-		} else {
-			return null;
-		}
-	}
-
-	/**
 	 * @return Todas as Licencas do Solicitante
 	 */
 	public List<Licenca> buscarTodasLicencas() {

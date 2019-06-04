@@ -61,3 +61,8 @@ spring:
 
   carteira-pesca:
     base-path: var/dados/amazonas/arquivos/carteira-pesca/carteira/
+
+  gestao-pagamentos:
+    codigo-modulo: LICENCA_PESCA
+    codigo-beneficiario: IPAAM
+    url: http://am.runners.ti.lemaf.ufla.br/gestao-pagamentos

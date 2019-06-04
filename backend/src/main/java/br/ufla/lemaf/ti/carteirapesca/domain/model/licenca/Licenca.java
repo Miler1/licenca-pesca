@@ -75,7 +75,6 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 	@Column(name = "tx_caminho_carteira")
 	private String caminhoCarteira;
 
-//	@Getter
 	@Setter
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id_solicitante")
@@ -130,7 +129,7 @@ public class Licenca implements Entity<Licenca, Protocolo> {
 
 			return false;
 
-		}else if(this.getStatus().getId() == Status.StatusEnum.VENCIDO.id && !this.solicitante.pussuiLicencaAtiva(this.modalidade)){
+		} else if(this.getStatus().getId() == Status.StatusEnum.VENCIDO.id && !this.solicitante.pussuiLicencaAtiva(this.modalidade)){
 			return true;
 		}
 

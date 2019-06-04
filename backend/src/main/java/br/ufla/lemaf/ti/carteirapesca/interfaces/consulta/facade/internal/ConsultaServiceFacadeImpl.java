@@ -185,7 +185,7 @@ public class ConsultaServiceFacadeImpl implements ConsultaServiceFacade {
 			data.put("validade", validade.format(Constants.FORMATO_DATA_PADRAO));
 
 		} else {
-			throw new ValidationException("Não é possivel emitir a licença, pois ainda não houve confirmação de pagamento do boleto.");
+			throw new ValidationException("Não é possivel emitir a licença, pois ainda não houve confirmação de pagamento.");
 		}
 
 		return pdfGenaratorUtil.createPdf("carteira",data);

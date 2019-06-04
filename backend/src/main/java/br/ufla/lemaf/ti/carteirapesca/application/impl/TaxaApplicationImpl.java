@@ -2,7 +2,7 @@ package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import arrecadacao.dtos.ArquivoDocumentoArrecadacaoDTO;
 import arrecadacao.dtos.DocumentoArrecadacaoDTO;
-import arrecadacao.dtos.PageableDocumentoArrecadacao;
+import arrecadacao.dtos.DocumentosArrecadacao;
 import arrecadacao.dtos.RetornoArrecadacaoDTO;
 import arrecadacao.enuns.CondicaoArrecadacaoEnum;
 import arrecadacao.services.DocumentoArrecadacaoService;
@@ -88,8 +88,10 @@ public class TaxaApplicationImpl implements TaxaApplication {
 	@Override
 	public void buscaDocumentosArrecadacaoPagos() {
 
-		PageableDocumentoArrecadacao documentosArrecadacao = new DocumentoArrecadacaoService(Properties.gestaoPagamentosUrl(), Properties.gestaoPagamentosCodigoModulo())
+		DocumentosArrecadacao documentosArrecadacao = new DocumentoArrecadacaoService(Properties.gestaoPagamentosUrl(), Properties.gestaoPagamentosCodigoModulo())
 			.listaUltimosDocumentosArrecadacaoPagos();
+
+		Status statusAtivo = statusRepository.findByCodigo(Status.StatusEnum.ATIVO.codigo);
 
 		documentosArrecadacao.content.forEach(d -> {
 
@@ -100,13 +102,16 @@ public class TaxaApplicationImpl implements TaxaApplication {
 				taxaLicenca.setPago(d.pago);
 				taxaLicenca.setVencido(false);
 
+				taxaLicenca.getLicenca().setDataAtivacao(new Date());
+				taxaLicenca.getLicenca().setDataVencimento(LocalDate.now());
+				taxaLicenca.getLicenca().setStatus(statusAtivo);
+
 				taxaLicencaRepository.save(taxaLicenca);
 
 			}
 
 
 		});
-
 
 	}
 
@@ -122,7 +127,9 @@ public class TaxaApplicationImpl implements TaxaApplication {
 			RetornoArrecadacaoDTO retorno = new DocumentoArrecadacaoService(Properties.gestaoPagamentosUrl(), Properties.gestaoPagamentosCodigoModulo())
 				.buscaDocumentoArrecadacaoPorId(t.getIdGestaoPagamentos());
 
-			if(retorno != null && retorno.condicao.codigo.equals(CondicaoArrecadacaoEnum.VENCIDO)) {
+			if(retorno != null
+				&& (retorno.condicao.codigo.equals(CondicaoArrecadacaoEnum.VENCIDO.codigo)
+					|| retorno.condicao.codigo.equals(CondicaoArrecadacaoEnum.VENCIDO_AGUARDANDO_PAGAMENTO.codigo))) {
 
 				t.setVencido(true);
 				t.getLicenca().setStatus(statusInvalidado);

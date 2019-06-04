@@ -22,7 +22,7 @@ public class TaxaLicenca implements Entity<TaxaLicenca, Protocolo> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_licenca", referencedColumnName="id")
 	private Licenca licenca;
 
