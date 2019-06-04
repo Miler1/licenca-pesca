@@ -56,9 +56,9 @@ public class Modalidade {
 	public BigDecimal getValor() {
 
 		if(this.id == Modalidade.Modalidades.PESCA_ESPORTIVA.id) {
-			return new BigDecimal(41.21);
+			return new BigDecimal(45.19);
 		} else if(this.id == Modalidade.Modalidades.PESCA_REACREATIVA.id) {
-			return new BigDecimal(57.21);
+			return new BigDecimal(59.50);
 		} else {
 			return new BigDecimal(0);
 		}

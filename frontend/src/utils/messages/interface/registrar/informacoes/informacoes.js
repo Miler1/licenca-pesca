@@ -72,8 +72,8 @@ const INFORMACOES = {
     },
     valoresCarteira: {
       modalidades: {
-        esportiva: ["Valor total a pagar: R$ 41.21", "Total amount to pay: R$ 41.21"],
-        recreativa: ["Valor total a pagar: R$ 57.21", "Total amount to pay: R$ 57.21"],
+        esportiva: ["Valor total a pagar: R$ 45.19", "Total amount to pay: R$ 45.19"],
+        recreativa: ["Valor total a pagar: R$ 59.50", "Total amount to pay: R$ 59.50"],
         mensagemInicial: ["Selecione uma modalidade para ver o valor da respectiva carteira", "Select a mode to see the value"]
       }
     },
