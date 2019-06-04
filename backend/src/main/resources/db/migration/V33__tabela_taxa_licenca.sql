@@ -53,3 +53,9 @@ DROP TABLE carteira_pesca.beneficiario;
 DROP TABLE carteira_pesca.motivo_ocorrencia;
 DROP TABLE carteira_pesca.motivo;
 DROP TABLE carteira_pesca.ocorrencia;
+
+DROP TABLE carteira_pesca.remessa;
+DROP TABLE carteira_pesca.retorno;
+DROP TABLE carteira_pesca.banco;
+DROP TABLE carteira_pesca.especie_documento;
+DROP TABLE carteira_pesca.pagador;
