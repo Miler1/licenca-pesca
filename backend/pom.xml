@@ -249,7 +249,7 @@
             <version>3.2.1</version>
             <scope>compile</scope>
         </dependency>
-     	
+
 	    <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -276,7 +276,7 @@
         <dependency>
             <groupId>br.ufla.lemaf</groupId>
             <artifactId>gestao-pagamentos-client</artifactId>
-            <version>0.4</version>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>
