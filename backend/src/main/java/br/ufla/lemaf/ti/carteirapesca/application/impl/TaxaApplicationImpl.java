@@ -1,15 +1,13 @@
 package br.ufla.lemaf.ti.carteirapesca.application.impl;
 
 import arrecadacao.dtos.ArquivoDocumentoArrecadacaoDTO;
+import arrecadacao.dtos.CustomizacaoDocCarteiraPesca;
 import arrecadacao.dtos.DocumentoArrecadacaoDTO;
-import arrecadacao.dtos.DocumentosArrecadacao;
 import arrecadacao.dtos.RetornoArrecadacaoDTO;
-import arrecadacao.enuns.CondicaoArrecadacaoEnum;
 import arrecadacao.services.DocumentoArrecadacaoService;
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.TaxaApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.TaxaLicenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TaxaLicencaRepository;
@@ -30,7 +28,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -75,70 +72,21 @@ public class TaxaApplicationImpl implements TaxaApplication {
 			taxaLicenca = geraDocumentoArrecadacao(licenca);
 		}
 
+		CustomizacaoDocCarteiraPesca docCarteiraPesca = new CustomizacaoDocCarteiraPesca();
+		docCarteiraPesca.idDocumentoArreacadacao = taxaLicenca.getIdGestaoPagamentos();
+
+		docCarteiraPesca.numeroLicenca = taxaLicenca.getLicenca().getProtocolo().toString();
+		docCarteiraPesca.modalidade = licenca.getModalidade().getNomePT();
+		docCarteiraPesca.limiteCaptura = licenca.getModalidade().getDescricaoQtdPeixesLimiteCaptura();
+
 		ArquivoDocumentoArrecadacaoDTO arquivoDocumentoArrecadacao = new DocumentoArrecadacaoService(Properties.gestaoPagamentosUrl(), Properties.gestaoPagamentosCodigoModulo())
-			.downloadDocumentoArrecadacao(taxaLicenca.getIdGestaoPagamentos());
+			.downloadDocumentoArrecadacaoCarteiraPesca(docCarteiraPesca);
 
 		File documentoArrecadacao = new File(Properties.pathArquivoTemporario() + UUID.randomUUID() + EXTENSAO_DOCUMENTO_ARRECADACAO);
 
 		ArquivoUtils.converteBase64ParaArquivo(arquivoDocumentoArrecadacao.documentoBase64, documentoArrecadacao);
 
 		return documentoArrecadacao;
-	}
-
-	@Override
-	public void buscaDocumentosArrecadacaoPagos() {
-
-		DocumentosArrecadacao documentosArrecadacao = new DocumentoArrecadacaoService(Properties.gestaoPagamentosUrl(), Properties.gestaoPagamentosCodigoModulo())
-			.listaUltimosDocumentosArrecadacaoPagos();
-
-		Status statusAtivo = statusRepository.findByCodigo(Status.StatusEnum.ATIVO.codigo);
-
-		documentosArrecadacao.content.forEach(d -> {
-
-			TaxaLicenca taxaLicenca = taxaLicencaRepository.findByIdGestaoPagamentos(d.idDocumentoArrecadacao);
-
-			if(taxaLicenca != null) {
-
-				taxaLicenca.setPago(d.pago);
-				taxaLicenca.setVencido(false);
-
-				taxaLicenca.getLicenca().setDataAtivacao(new Date());
-				taxaLicenca.getLicenca().setDataVencimento(LocalDate.now());
-				taxaLicenca.getLicenca().setStatus(statusAtivo);
-
-				taxaLicencaRepository.save(taxaLicenca);
-
-			}
-
-
-		});
-
-	}
-
-	@Override
-	public void verificaValidadeTaxas() {
-
-		List<TaxaLicenca> taxas = taxaLicencaRepository.findByDataVencimentoLessThanAndPagoAndVencido(LocalDate.now(), false, false);
-
-		Status statusInvalidado = statusRepository.findByCodigo(Status.StatusEnum.INVALIDADO.codigo);
-
-		taxas.forEach(t -> {
-
-			RetornoArrecadacaoDTO retorno = new DocumentoArrecadacaoService(Properties.gestaoPagamentosUrl(), Properties.gestaoPagamentosCodigoModulo())
-				.buscaDocumentoArrecadacaoPorId(t.getIdGestaoPagamentos());
-
-			if(retorno != null
-				&& (retorno.condicao.codigo.equals(CondicaoArrecadacaoEnum.VENCIDO.codigo)
-					|| retorno.condicao.codigo.equals(CondicaoArrecadacaoEnum.VENCIDO_AGUARDANDO_PAGAMENTO.codigo))) {
-
-				t.setVencido(true);
-				t.getLicenca().setStatus(statusInvalidado);
-				taxaLicencaRepository.save(t);
-
-			}
-
-		});
-
 	}
 
 	private DocumentoArrecadacaoDTO dadosDocumentoArrecadacao(Licenca licenca, Pessoa pessoa) {

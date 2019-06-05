@@ -9,22 +9,21 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AtualizacaoVencimento {
+public class VencimentoLicenca {
 
 	@Autowired
 	private RegistroServiceFacade registroServiceFacade;
 
-	private static final Logger log = LoggerFactory.getLogger(AtualizacaoVencimento.class);
+	private static final Logger log = LoggerFactory.getLogger(VencimentoLicenca.class);
 
-	@Scheduled(cron = Constants.INTERVALO_ATUALIZACAO_AUTOMATICA)
-	public void atualizacaoAutomatica() {
+	@Scheduled(cron = Constants.JOB_VENCIMENTO_LICENCA)
+	public void vencimentoLicenca() {
 
-		log.info(" ----- INICIO - ATUALIZACAO AUTOMATICA ----- ");
+		log.info(" ----- Verifica validade licenças - INICIO ----- ");
 
-		// Verifica vencimento
 		registroServiceFacade.atualizarCondicaoVencimento();
 
-		log.info(" ----- FIM - ATUALIZACAO AUTOMATICA ----- ");
+		log.info(" ----- Verifica validade licenças - FIM ----- ");
 
 	}
 }

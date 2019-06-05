@@ -12,8 +12,4 @@ public interface TaxaApplication {
 
 	File downloadDocumentoArrecadacao(Licenca licenca) throws IOException;
 
-	void buscaDocumentosArrecadacaoPagos();
-
-	void verificaValidadeTaxas();
-
 }

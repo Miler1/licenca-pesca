@@ -36,13 +36,11 @@ public final class Constants {
 
 	public static final Integer NUMERO_TENTATIVAS_BLOQUEIO_SOLICITANTE = 3;
 
-	public static final String INTERVALO_ATUALIZACAO_AUTOMATICA = "0 0 0 1/1 * ?";
+	public static final String JOB_VENCIMENTO_LICENCA = "0 0 0 1/1 * ?";
 
-	public static final String INTERVALO_VERIFICACAO_PAGAMENTOS = "0 0/1 * 1/1 * ?";
+	public static final String JOB_PAGAMENTOS_TAXAS = "0 0 8 1/1 * ?";
 
-	public static final String INTERVALO_PROCESSAMENTO_JOB = "0 0 7 1/1 * ?";
-
-	public static final String INTERVALO_VALIDACAO_BOLETOS_JOB = "0 0 0 1/1 * ?";
+	public static final String JOB_VALIDADE_TAXAS = "0 0 1 1/1 * ?";
 
 	public static final Integer HORAS_BLOQUEIO_SOLICITANTE = 2;
 
