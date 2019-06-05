@@ -63,4 +63,4 @@ spring:
   gestao-pagamentos:
     codigo-modulo: LICENCA_PESCA
     codigo-beneficiario: IPAAM
-    url: http://192.168.100.6/gestao-pagamentos
+    url: http://192.168.100.6:9602/gestao-pagamentos
