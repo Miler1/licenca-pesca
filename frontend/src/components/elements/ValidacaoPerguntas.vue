@@ -9,21 +9,21 @@
                     h3.title.display {{ $t(`${validacao_prefix}titulo.nomeMae`) }}
                         div(style='margin-top: 20px')
                             el-radio-group(v-for="nomesMae in buscaMaes", :key="nomesMae" v-model="pessoa.nomeMae" )
-                                el-radio.custom(:label='nomesMae' border required) {{nomesMae}}         
-        .flex-item   
-            .espaco-cards   
+                                el-radio.custom(:label='nomesMae' border required) {{nomesMae}}
+        .flex-item
+            .espaco-cards
                 el-card.box-card.column
                     h3.title {{ $t(`${validacao_prefix}titulo.dataNascimento`) }}
                         div(style='margin-top: 20px')
                         el-form(v-model="pessoa" ref="pessoa" label-position="top")
-                            el-form-item(prop="dataNascimento")                           
+                            el-form-item(prop="dataNascimento")
                                 el-date-picker(v-model="pessoa.dataNascimento" :format="$t(`${validacao_prefix}format.data`)")
     .buttons
         .left
             el-button(icon="el-icon-close" @click="cancelarValidacao") {{ $t(`${validacao_prefix}botoes.cancelar`) }}
             el-button.right(icon="el-icon-check" v-if="!visualizarBotaoValidar()" type="primary" @click="confirmacaoDadosAoBuscar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
             el-button.right(icon="el-icon-check" v-if="visualizarBotaoValidar()" type="primary" @click="confirmacaoDadosAoRegistrar" ) {{ $t(`${validacao_prefix}botoes.validar`) }}
-                         
+
 </template>
 
 <script>
@@ -43,14 +43,14 @@ import { PESSOA_RULES } from '../../utils/validations/pessoa/pessoa_rules';
 
 export default {
   name: "ValidacaoPerguntas",
-    
+
 
     components: {
         Card,
         StatusCard
     },
-   
-    
+
+
     data() {
         return {
             validacao_prefix: INTERFACE_VALIDACAO_PREFIX,
@@ -71,7 +71,7 @@ export default {
         if(mutation.type === "CLEAN_PESQUISA" || mutation.type === "SET_BUSCA_MAES" ){
             this.pessoa.dataNascimento = null;
             this.pessoa.nomeMae = null;
-        } 
+        }
         });
     },
     methods: {
@@ -150,11 +150,12 @@ export default {
   @import "../../theme/tools/variables"
 
   #validacao-perguntas
+
     h1
       font-weight: 500
-    
-    .subtitulo    
-        font-size: 15px;
+
+    .subtitulo
+        font-size: 15px
 
     .title
       font-weight: bold
@@ -176,14 +177,14 @@ export default {
         padding-top: 50px
         padding-bottom: 10px
         font-size: 21px
-    
+
     .el-radio--mini.is-bordered .el-radio__label
         font-size: 14px
-    
+
     .el-radio-group
         display: grid;
         margin-bottom: 8px;
-    
+
     .footer-card
       margin-top: 30px
       border-top: $--cor-borda 1px solid
@@ -195,7 +196,7 @@ export default {
       .footer-label
         font-size: $--fonte-pequena
         color: $--cor-texto-secundario
-    
+
     .espaco-cards
         margin: 20px
 

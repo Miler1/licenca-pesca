@@ -33,6 +33,20 @@ export default {
 		-moz-osx-font-smoothing: grayscale
 		color: $--cor-texto-primario
 
+		.el-date-picker
+
+			.el-date-picker__header
+				margin-bottom: 0
+
+			.el-picker-panel__content
+				margin-top: 0
+
+				.el-date-table__row
+					font-size: 10px
+
+					div
+						height: 20px
+
 	// Cores
 	.alerta
 		background-color: $--cor-realce-vermelho
