@@ -64,22 +64,13 @@ public class RegistroController {
 
 		WebServiceUtils.validarWebService();
 
-		try {
+		var protocoloLicenca = registroServiceFacade.registrar(registroResource);
 
-			var protocoloLicenca = registroServiceFacade.registrar(registroResource);
+		protocoloLicenca.add(linkTo(methodOn(RegistroController.class)
+			.registrar(registroResource))
+			.withSelfRel());
 
-			protocoloLicenca.add(linkTo(methodOn(RegistroController.class)
-				.registrar(registroResource))
-				.withSelfRel());
-
-			return new ResponseEntity<>(protocoloLicenca, HttpStatus.ACCEPTED);
-
-		} catch(IOException | NullPointerException e) {
-
-			e.printStackTrace();
-
-			throw new BaseException("entradaUnica.servicoIndisponivel");
-		}
+		return new ResponseEntity<>(protocoloLicenca, HttpStatus.ACCEPTED);
 
 	}
 

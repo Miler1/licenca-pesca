@@ -1,6 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.internal;
 
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Constants;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.Message;
@@ -55,17 +56,17 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 	@Override
 	public ProtocoloDTO registrar(final RegistroResource resource) throws Exception {
 
-		val assembler = new ProtocoloDTOAssembler();
+		ProtocoloDTOAssembler assembler = new ProtocoloDTOAssembler();
 
 		validateResource(resource);
 
-		val pessoaValidada = new PessoaDTO(resource.getPessoa());
+		PessoaDTO pessoaValidada = new PessoaDTO(resource.getPessoa());
 
-		return assembler.toDTO(registroApplication.registrar(
-			new RegistroResource(
-				pessoaValidada,
-				resource.getInformacaoComplementar(), null
-			)));
+		RegistroResource registro = new RegistroResource(pessoaValidada,resource.getInformacaoComplementar(), null);
+
+		Protocolo protocolo = registroApplication.registrar(registro);
+
+		return assembler.toDTO(protocolo);
 
 	}
 
@@ -77,18 +78,18 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 
 	@Override
 	public ProtocoloDTO renovarLicenca(RegistroResource resource) throws Exception {
-		val assembler = new ProtocoloDTOAssembler();
+
+		ProtocoloDTOAssembler assembler = new ProtocoloDTOAssembler();
 
 		validateResource(resource);
 
-		val pessoaValidada = new PessoaDTO(resource.getPessoa());
+		PessoaDTO pessoaValidada = new PessoaDTO(resource.getPessoa());
 
+		RegistroResource registro = new RegistroResource(pessoaValidada, resource.getInformacaoComplementar(), resource.getProtocolo());
 
-		return assembler.toDTO(registroApplication.renovarLicenca(
-			new RegistroResource(
-				pessoaValidada,
-				resource.getInformacaoComplementar(), resource.getProtocolo()
-			),resource.getProtocolo()));
+		Protocolo protocolo = registroApplication.renovarLicenca(registro, resource.getProtocolo());
+
+		return assembler.toDTO(protocolo);
 
 	}
 

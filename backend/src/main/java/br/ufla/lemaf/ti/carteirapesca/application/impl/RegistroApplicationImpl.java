@@ -18,6 +18,7 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.InformacaoComplementarService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaEUDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.web.RegistroResource;
+import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.BaseException;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -27,6 +28,8 @@ import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
 
 /**
  * Implementação do serviço de registro da camada de aplicação.
@@ -66,7 +69,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		WebServiceUtils.validarWebService();
 
-		var solicitante = getSolicitante(resource);
+		Solicitante solicitante = getSolicitante(resource);
 
 		Modalidade modalidade = gerarModalidade(resource.getInformacaoComplementar().getModalidadePesca());
 		Licenca licenca;
@@ -89,7 +92,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		licenca.setSolicitante(solicitante);
 
-		licencaRepository.save(licenca);
+		licenca = licencaRepository.save(licenca);
 
 		taxaApplication.geraDocumentoArrecadacao(licenca);
 
@@ -116,7 +119,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 			novaLicenca.setSolicitante(solicitante);
 
-			licencaRepository.save(novaLicenca);
+			novaLicenca = licencaRepository.save(novaLicenca);
 
 			taxaApplication.geraDocumentoArrecadacao(novaLicenca);
 
@@ -195,16 +198,26 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		filtroPessoa.passaporte = pessoa.getPassaporte();
 		filtroPessoa.isUsuario = false;
 
-		var pessoaEU = WebServiceUtils
-			.webServiceEU()
-			.buscarPessoaComFiltro(filtroPessoa);
+		try {
 
-		if (pessoaEU == null || pessoaEU.nome == null) {
-
-			WebServiceUtils
+			var pessoaEU = WebServiceUtils
 				.webServiceEU()
-				.cadastrarPessoa(pessoa);
+				.buscarPessoaComFiltro(filtroPessoa);
+
+			if (pessoaEU == null || pessoaEU.nome == null) {
+
+				WebServiceUtils
+					.webServiceEU()
+					.cadastrarPessoa(pessoa);
+			}
+
+		} catch(Exception e) {
+
+			e.printStackTrace();
+
+			throw new BaseException("entradaUnica.servicoIndisponivel");
 		}
+
 	}
 
 	/**
