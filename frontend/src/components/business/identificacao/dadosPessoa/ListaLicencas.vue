@@ -33,10 +33,22 @@
                             span.el-dropdown-link.el-button.el-button--primary {{ $t(`${consultar_prefix}listaLicenca.acoes`) }}
                                 i.el-icon-arrow-down.el-icon--right
                             el-dropdown-menu(slot="dropdown")
-                                el-dropdown-item(type="primary", v-if="lista.status.codigo === 'AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarDocumentoPagamento`) }}
-                                el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",  @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarDocumentoPagamento`) }}
-                                el-dropdown-item(type="primary", v-if="lista.status.codigo === 'ATIVO'",  @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
-                                el-dropdown-item(type="primary", v-if="verificarRenovacao(lista)", @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
+                                el-dropdown-item(type="primary",
+                                    v-if="lista.status.codigo === 'AGUARDANDO_PAGAMENTO' || lista.status.codigo === 'INVALIDADO'",
+                                    @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarDocumentoPagamento`) }}
+
+                                el-dropdown-item(type="primary",
+                                    v-if="lista.status.codigo === 'ATIVO_AGUARDANDO_PAGAMENTO'",
+                                    @click.native="gerarBoleto(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.gerarDocumentoPagamento`) }}
+
+                                el-dropdown-item(type="primary",
+                                    v-if="lista.status.codigo === 'ATIVO'",
+                                    @click.native="gerarCarteira(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.baixarCarteira`) }}
+
+                                el-dropdown-item(type="primary",
+                                    v-if="verificarRenovacao(lista)",
+                                    @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
+
                         span(v-if="lista.status.codigo === 'INVALIDADO' || lista.status.codigo === 'RENOVADO'") -
                         span(v-if="!verificaCondicoesParaBotaoDeAcoes(lista)") -
 
@@ -138,7 +150,7 @@ export default {
         if(lista.status.codigo === 'VENCIDO'){
             return lista.podeRenovar;
         }
-        return (lista.status.codigo !== 'INVALIDADO' && lista.status.codigo !== 'RENOVADO')
+        return (lista.status.codigo !== 'RENOVADO')
     }
   }
 };
