@@ -29,8 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-
 /**
  * Implementação do serviço de registro da camada de aplicação.
  *
@@ -284,21 +282,6 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		return WebServiceUtils
 			.webServiceEU()
 			.buscarPessoaComFiltro(filtroPessoa);
-	}
-
-	@Override
-	public String regerarBoleto(Licenca licenca) {
-
-//		taxaApplication.geraDocumentoArrecadacao(licenca);
-
-//		Pessoa pessoa = buscarDadosSolicitante(licenca.solicitante());
-//
-//		Titulo titulo = tituloBuilder.gerarDocumentoPagamento(licenca.getProtocolo(), licenca.modalidade(), pessoa);
-//
-//		licenca.setTitulo(titulo);
-//		licencaRepository.save(licenca);
-
-		return null; //titulo.getArquivoBoleto().getCaminhoArquivo();
 	}
 
 }

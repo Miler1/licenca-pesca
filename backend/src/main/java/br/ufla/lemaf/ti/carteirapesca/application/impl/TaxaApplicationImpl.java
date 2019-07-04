@@ -8,7 +8,9 @@ import arrecadacao.services.DocumentoArrecadacaoService;
 import br.ufla.lemaf.ti.carteirapesca.application.RegistroApplication;
 import br.ufla.lemaf.ti.carteirapesca.application.TaxaApplication;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Status;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.TaxaLicenca;
+import br.ufla.lemaf.ti.carteirapesca.domain.repository.LicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.StatusRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.repository.TaxaLicencaRepository;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.impl.EnderecoBuilderImpl;
@@ -47,6 +49,9 @@ public class TaxaApplicationImpl implements TaxaApplication {
 	@Autowired
 	StatusRepository statusRepository;
 
+	@Autowired
+	LicencaRepository licencaRepository;
+
 	@Override
 	public TaxaLicenca geraDocumentoArrecadacao(Licenca licenca) {
 
@@ -66,11 +71,7 @@ public class TaxaApplicationImpl implements TaxaApplication {
 	@Override
 	public File downloadDocumentoArrecadacao(Licenca licenca) throws IOException {
 
-		TaxaLicenca taxaLicenca = taxaLicencaRepository.findBylicencaAndVencido(licenca, false);
-
-		if(taxaLicenca == null) {
-			taxaLicenca = geraDocumentoArrecadacao(licenca);
-		}
+		TaxaLicenca taxaLicenca = buscaTaxaLicenca(licenca);
 
 		CustomizacaoDocCarteiraPesca docCarteiraPesca = new CustomizacaoDocCarteiraPesca();
 		docCarteiraPesca.idDocumentoArreacadacao = taxaLicenca.getIdGestaoPagamentos();
@@ -87,6 +88,25 @@ public class TaxaApplicationImpl implements TaxaApplication {
 		ArquivoUtils.converteBase64ParaArquivo(arquivoDocumentoArrecadacao.documentoBase64, documentoArrecadacao);
 
 		return documentoArrecadacao;
+	}
+
+	private TaxaLicenca buscaTaxaLicenca(Licenca licenca) {
+
+		TaxaLicenca taxaLicenca = taxaLicencaRepository.findBylicencaAndVencido(licenca, false);
+
+		if(taxaLicenca == null) {
+
+			Status statusAguardandoVencimento = statusRepository.findByCodigo(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.codigo);
+
+			licenca.setStatus(statusAguardandoVencimento);
+
+			licencaRepository.save(licenca);
+
+			taxaLicenca = geraDocumentoArrecadacao(licenca);
+		}
+
+		return taxaLicenca;
+
 	}
 
 	private DocumentoArrecadacaoDTO dadosDocumentoArrecadacao(Licenca licenca, Pessoa pessoa) {

@@ -1,6 +1,5 @@
 package br.ufla.lemaf.ti.carteirapesca.application;
 
-import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Modalidade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.solicitante.Solicitante;
@@ -31,8 +30,6 @@ public interface RegistroApplication {
 	Modalidade gerarModalidade(Integer tipo);
 
 	Pessoa buscarDadosSolicitante(Solicitante solicitante);
-
-	String regerarBoleto(Licenca licenca);
 
 	Protocolo renovarLicenca(RegistroResource resource, String protocolo) throws Exception;
 
