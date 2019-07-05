@@ -49,7 +49,7 @@
                                     v-if="verificarRenovacao(lista)",
                                     @click.native="renovar(lista)") {{ $t(`${consultar_prefix}listaLicenca.acoesOpcoes.renovarLicenca`) }}
 
-                        span(v-if="lista.status.codigo === 'INVALIDADO' || lista.status.codigo === 'RENOVADO'") -
+                        span(v-if="lista.status.codigo === 'RENOVADO'") -
                         span(v-if="!verificaCondicoesParaBotaoDeAcoes(lista)") -
 
     .sem-licenca.withDivisor(v-if="!listaLicencas || listaLicencas.length <= 0")
