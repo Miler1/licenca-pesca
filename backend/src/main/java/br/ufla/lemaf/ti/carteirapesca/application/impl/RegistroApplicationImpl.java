@@ -174,7 +174,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 			protocolo = new Protocolo(codigoProtocolo);
 		}
 
-		Status status = statusRepository.findById(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.id).get();
+		Status status = statusRepository.findById(Status.StatusEnum.AGUARDANDO_PAGAMENTO.id).get();
 
 		InformacaoComplementar informacaoComplementar = informacaoComplementarService.toInformacaoComplementar(resource.getInformacaoComplementar());
 
