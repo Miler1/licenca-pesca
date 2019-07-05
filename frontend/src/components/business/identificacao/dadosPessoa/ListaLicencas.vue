@@ -114,7 +114,7 @@ export default {
         let protocoloDesformatado = protocolo.replace("/", "").replace("-", "").replace("-", "");
 
         const href = `${Properties.BASE_URL}/api/boleto?protocolo=` + protocoloDesformatado;
-        lista.protocolo.codigoFormatado = "ATIVO_AGUARDANDO_PAGAMENTO";
+        lista.status.codigo = "AGUARDANDO_PAGAMENTO";
 
         window.open(href, "_blank");
 
