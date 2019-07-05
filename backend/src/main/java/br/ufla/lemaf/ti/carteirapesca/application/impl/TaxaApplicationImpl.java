@@ -96,7 +96,7 @@ public class TaxaApplicationImpl implements TaxaApplication {
 
 		if(taxaLicenca == null) {
 
-			Status statusAguardandoVencimento = statusRepository.findByCodigo(Status.StatusEnum.ATIVO_AGUARDANDO_PAGAMENTO.codigo);
+			Status statusAguardandoVencimento = statusRepository.findByCodigo(Status.StatusEnum.AGUARDANDO_PAGAMENTO.codigo);
 
 			licenca.setStatus(statusAguardandoVencimento);
 
