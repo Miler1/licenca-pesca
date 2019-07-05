@@ -113,10 +113,11 @@ export default {
         let protocolo = lista.protocolo.codigoFormatado;
         let protocoloDesformatado = protocolo.replace("/", "").replace("-", "").replace("-", "");
 
-        const href =
-            `${Properties.BASE_URL}/api/boleto?protocolo=` + protocoloDesformatado;
+        const href = `${Properties.BASE_URL}/api/boleto?protocolo=` + protocoloDesformatado;
+        lista.protocolo.codigoFormatado = "ATIVO_AGUARDANDO_PAGAMENTO";
 
         window.open(href, "_blank");
+
     },
     gerarCarteira(lista) {
         let protocolo = lista.protocolo.codigoFormatado;
