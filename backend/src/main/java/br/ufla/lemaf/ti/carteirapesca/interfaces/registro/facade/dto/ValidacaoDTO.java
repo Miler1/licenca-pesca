@@ -16,6 +16,8 @@ public class ValidacaoDTO {
 
 	private Date dataNascimento;
 
+	private String dataNascimentoString;
+
 	private String nomeMae;
 
 	public AcessoResource getAcessoResource() {
@@ -24,8 +26,10 @@ public class ValidacaoDTO {
 
 	@JsonCreator
 	public ValidacaoDTO(@JsonProperty("dataNascimento") Date dataNascimento,
-						@JsonProperty("nomeMae") String nomeMae) {
+						@JsonProperty("dataNascimentoString") String dataNascimentoString,
+	                    @JsonProperty("nomeMae") String nomeMae) {
 		this.dataNascimento = dataNascimento;
+		this.dataNascimentoString = dataNascimentoString;
 		this.nomeMae = nomeMae;
 	}
 

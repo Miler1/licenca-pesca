@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -35,6 +36,8 @@ import java.util.List;
  * @author Highlander Paiva
  * @since 1.0
  */
+
+
 @Service
 public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 
@@ -255,17 +258,19 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		Calendar dateCalendar = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		pessoa.dataNascimento = dateCalendar.getTime();
 
+		try{
+			calendar.setTime( new SimpleDateFormat("dd/MM/yyyy").parse(validacaoDTO.getDataNascimentoString()));
+		} catch (Exception e) {}
 
-		calendar.setTime(validacaoDTO.getDataNascimento());
+//		calendar.setTime(validacaoDTO.getDataNascimento());
 		Calendar calendar1 = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		validacaoDTO.setDataNascimento(calendar1.getTime());
 
-		
 		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0 || !pessoa.nomeMae.toUpperCase().equals(validacaoDTO.getNomeMae().toUpperCase()) ){
 
 			return false;
 		}
-		
+
 		return true;
 
 	}

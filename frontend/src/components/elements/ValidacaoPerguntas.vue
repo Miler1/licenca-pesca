@@ -56,6 +56,7 @@ export default {
             validacao_prefix: INTERFACE_VALIDACAO_PREFIX,
             pessoa: {
                 dataNascimento: null,
+                dataNascimentoString: null,
                 cpf: null,
                 nomeMae: null
             }
@@ -87,6 +88,7 @@ export default {
                     passaporte: this.pessoa.passaporte
                 },
                 dataNascimento: this.pessoa.dataNascimento,
+                dataNascimentoString: this.pessoa.dataNascimento.toLocaleDateString(),
                 nomeMae: this.pessoa.nomeMae
             }
             this.$store.dispatch(BUSCAR_LICENCAS, dto);
@@ -99,6 +101,7 @@ export default {
                     passaporte: this.pessoa.passaporte
                 },
                 dataNascimento: this.pessoa.dataNascimento,
+                dataNascimentoString: this.pessoa.dataNascimento.toLocaleDateString(),
                 nomeMae: this.pessoa.nomeMae
             }
             this.$store.dispatch(ACESSAR, dto).then();
