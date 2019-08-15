@@ -223,6 +223,7 @@ export default {
         cpf: null,
         passaporte: null,
         dataNascimento: null,
+        dataNascimentoString: null,
         sexo: null,
         nomeMae: null,
         email: null,
@@ -332,6 +333,9 @@ export default {
         this.pessoa.enderecoEstrangeiro.nacionalidade.id = nacionalidadeId;
         this.pessoa.enderecoEstrangeiro.nacionalidadeNome = this.$refs["nacionalidade"].selectedLabel;
 
+      }
+      if (this.pessoa.dataNascimento !== null) {
+          this.pessoa.dataNascimentoString = this.pessoa.dataNascimento.toLocaleDateString();
       }
       // this.pessoa.cpf = this.pessoaCpf;
       // this.pessoa.passaporte = this.pessoaPassaporte;

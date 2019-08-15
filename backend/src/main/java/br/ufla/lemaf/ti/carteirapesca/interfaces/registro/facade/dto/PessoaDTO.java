@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import org.springframework.hateoas.ResourceSupport;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -29,6 +30,8 @@ public final class PessoaDTO extends ResourceSupport {
 	private String passaporte;
 
 	private Date dataNascimento;
+
+	private String dataNascimentoString;
 
 	private Integer sexo;
 
@@ -63,6 +66,7 @@ public final class PessoaDTO extends ResourceSupport {
 	          @JsonProperty("cpf") final String cpf,
 	          @JsonProperty("passaporte") final String passaporte,
 	          @JsonProperty("dataNascimento") final Date dataNascimento,
+	          @JsonProperty("dataNascimentoString") final String dataNascimentoString,
 	          @JsonProperty("sexo") final Integer sexo,
 	          @JsonProperty("nomeMae") final String nomeMae,
 	          @JsonProperty("email") final String email,
@@ -73,7 +77,8 @@ public final class PessoaDTO extends ResourceSupport {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.passaporte = passaporte;
-		setDataNascimento(dataNascimento);
+		setDataNascimento(dataNascimento, dataNascimentoString);
+		this.dataNascimentoString = dataNascimentoString;
 		this.sexo = sexo;
 		this.nomeMae = nomeMae;
 		this.email = email;
@@ -94,7 +99,8 @@ public final class PessoaDTO extends ResourceSupport {
 		this.nome = pessoa.nome;
 		this.cpf = (pessoa.getCpf() != null ? CPFUtils.unformat(pessoa.getCpf()) : null);
 		this.passaporte = pessoa.passaporte;
-		setDataNascimento(pessoa.dataNascimento);
+		setDataNascimento(pessoa.dataNascimento, null);
+		this.dataNascimentoString = pessoa.dataNascimentoString;
 		this.sexo = pessoa.sexo;
 		this.nomeMae = pessoa.nomeMae;
 		this.email = pessoa.email;
@@ -150,9 +156,18 @@ public final class PessoaDTO extends ResourceSupport {
 	 * @return O data de nascimento
 	 */
 	public Date getDataNascimento() {
-		return this.dataNascimento == null
-			? null
-			: new Date(dataNascimento.getTime());
+		if (this.dataNascimento == null) {
+			return null;
+		} else if (this.dataNascimentoString != null) {
+			try {
+				this.dataNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(this.dataNascimentoString);
+				return this.dataNascimento;
+			} catch (Exception e) {
+				return new Date(dataNascimento.getTime());
+			}
+		}
+		return new Date(dataNascimento.getTime());
+
 	}
 
 	/**
@@ -207,9 +222,17 @@ public final class PessoaDTO extends ResourceSupport {
 	 *
 	 * @param dataNascimento A data de nascimento.
 	 */
-	private void setDataNascimento(Date dataNascimento) {
+	private void setDataNascimento(Date dataNascimento, String dataNascimentoString) {
 		if (dataNascimento == null) {
 			this.dataNascimento = null;
+		} else if (dataNascimentoString != null) {
+
+			try {
+				this.dataNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(dataNascimentoString);
+			}catch (Exception e){
+				this.dataNascimento = new Date(dataNascimento.getTime());
+			}
+
 		} else {
 			this.dataNascimento = new Date(dataNascimento.getTime());
 		}
@@ -223,6 +246,7 @@ public final class PessoaDTO extends ResourceSupport {
 			+ ", cpf='" + cpf + '\''
 			+ ", passaporte='" + passaporte + '\''
 			+ ", dataNascimento=" + dataNascimento
+			+ ", dataNascimentoString=" + dataNascimentoString
 			+ ", sexo=" + sexo
 			+ ", nomeMae='" + nomeMae + '\''
 			+ ", email=" + email

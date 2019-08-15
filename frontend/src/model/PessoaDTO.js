@@ -14,6 +14,7 @@ export const PessoaDTO = {
   cpf: null,
   passaporte: null,
   dataNascimento: null,
+  dataNascimentoString: null,
   sexo: null,
   nomeMae: null,
   email: null,

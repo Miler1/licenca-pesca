@@ -161,7 +161,11 @@ public class TaxaApplicationImpl implements TaxaApplication {
 
 		EnderecoDTO endereco = new EnderecoDTO();
 		endereco.logradouro = enderecoEU.logradouro;
-		endereco.numero = enderecoEU.numero.toString();
+
+		if (enderecoEU.numero != null) {
+			endereco.numero = enderecoEU.numero.toString();
+		}
+
 		endereco.bairro = enderecoEU.bairro;
 		endereco.complemento = enderecoEU.complemento;
 		endereco.cep = enderecoEU.cep;

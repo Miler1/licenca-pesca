@@ -10,6 +10,7 @@ export const Solicitante = {
   cpf: null,
   passaporte: null,
   dataNascimento: null,
+  dataNascimentoString: null,
   sexo: null,
   nomeMae: null,
   email: null,
@@ -44,6 +45,9 @@ export const Solicitante = {
 };
 
 export const toSolicitanteDTO = solicitante => {
+  if (solicitante.dataNascimento !== null) {
+    solicitante.dataNascimentoString = solicitante.dataNascimento.toLocaleString();
+  }
   return {
     estrangeiro:
       solicitante.estrangeiro === null ? false : solicitante.estrangeiro,
@@ -51,6 +55,7 @@ export const toSolicitanteDTO = solicitante => {
     cpf: solicitante.cpf,
     passaporte: solicitante.passaporte,
     dataNascimento: solicitante.dataNascimento,
+    dataNascimentoString: solicitante.dataNascimentoString,
     sexo: solicitante.sexo,
     nomeMae: solicitante.nomeMae,
     email: solicitante.email,

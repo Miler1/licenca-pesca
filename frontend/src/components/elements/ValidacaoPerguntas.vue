@@ -88,8 +88,10 @@ export default {
                     passaporte: this.pessoa.passaporte
                 },
                 dataNascimento: this.pessoa.dataNascimento,
-                dataNascimentoString: this.pessoa.dataNascimento.toLocaleDateString(),
                 nomeMae: this.pessoa.nomeMae
+            }
+            if (this.pessoa.dataNascimento) {
+                dto.dataNascimentoString = this.pessoa.dataNascimento.toLocaleDateString();
             }
             this.$store.dispatch(BUSCAR_LICENCAS, dto);
         },
@@ -101,8 +103,11 @@ export default {
                     passaporte: this.pessoa.passaporte
                 },
                 dataNascimento: this.pessoa.dataNascimento,
-                dataNascimentoString: this.pessoa.dataNascimento.toLocaleDateString(),
+                dataNascimentoString: null,
                 nomeMae: this.pessoa.nomeMae
+            }
+            if (this.pessoa.dataNascimento) {
+                dto.dataNascimentoString = this.pessoa.dataNascimento.toLocaleDateString();
             }
             this.$store.dispatch(ACESSAR, dto).then();
         },

@@ -33,6 +33,7 @@ public class PessoaDTOAssembler {
 			pessoa.cpf,
 			setPassaporte(pessoa.passaporte),
 			pessoa.dataNascimento,
+			null,
 			setSexo(pessoa.sexo),
 			pessoa.nomeMae,
 			setEmail(pessoa.contatos),
