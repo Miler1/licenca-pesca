@@ -255,6 +255,11 @@ public class RegistroApplicationImpl implements RegistroApplication {
 
 		if (solicitante == null) {
 			solicitante = new Solicitante(cpf, passaporte);
+		}
+
+		Pessoa pessoa = buscarDadosSolicitante(solicitante);
+
+		if(pessoa == null || (pessoa.dataAtualizacao == null && pessoa.dataCadastro == null)) {
 			cadastrarPessoa(resource.getPessoa().toPessoaEUDTO());
 		}
 
