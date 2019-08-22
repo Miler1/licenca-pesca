@@ -200,7 +200,7 @@ public class ConsultaController extends DefaultController {
 			return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 			return new ResponseEntity<>((InputStreamResource) null, HttpStatus.NOT_FOUND);
 
 		}

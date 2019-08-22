@@ -148,9 +148,13 @@ public class RegistroServiceFacadeImpl implements RegistroServiceFacade {
 		if (Validate.isNull(pessoa.getNomeMae()))
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "nome da mãe"));
 
-		if (Validate.isNull(pessoa.getEmail())) {
+		/*if (Validate.isNull(pessoa.getEmail())) {
 			camposInvalidos.add(Message.get(REQUIRED_MESSAGE, "email"));
 		} else if (!Validate.isEmail(pessoa.getEmail())) {
+			camposInvalidos.add(Message.get(REGISTRO_ERROR_PREFIX + "emailInvalid", pessoa.getEmail()));
+		}*/
+
+		if (!Validate.isNull(pessoa.getEmail()) && !Validate.isEmail(pessoa.getEmail())) {
 			camposInvalidos.add(Message.get(REGISTRO_ERROR_PREFIX + "emailInvalid", pessoa.getEmail()));
 		}
 
