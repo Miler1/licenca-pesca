@@ -266,7 +266,7 @@ public class AcessoServiceFacadeImpl implements AcessoServiceFacade {
 		Calendar calendar1 = new GregorianCalendar(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		validacaoDTO.setDataNascimento(calendar1.getTime());
 
-		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0 || !pessoa.nomeMae.toUpperCase().equals(validacaoDTO.getNomeMae().toUpperCase()) ){
+		if(pessoa.dataNascimento.compareTo(validacaoDTO.getDataNascimento()) != 0 || !pessoa.nomeMae.toUpperCase().trim().equals(validacaoDTO.getNomeMae().toUpperCase().trim()) ){
 
 			return false;
 		}
