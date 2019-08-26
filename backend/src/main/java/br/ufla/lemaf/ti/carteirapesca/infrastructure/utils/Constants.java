@@ -38,7 +38,7 @@ public final class Constants {
 
 	public static final String JOB_VENCIMENTO_LICENCA = "0 0 0 1/1 * ?";
 
-	public static final String JOB_PAGAMENTOS_TAXAS = "0 0 8 1/1 * ?";
+	public static final String JOB_PAGAMENTOS_TAXAS = "0 0 0/1 1/1 * ?";
 
 	public static final String JOB_VALIDADE_TAXAS = "0 0 1 1/1 * ?";
 
