@@ -1,9 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure.config.security;
 
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
-import main.java.br.ufla.lemaf.OAuthClientCadastroUnificado;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
-import main.java.br.ufla.lemaf.beans.pessoa.Usuario;
+import br.ufla.lemaf.OAuthClientCadastroUnificado;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -200,7 +200,7 @@
         <dependency>
             <groupId>br.ufla.lemaf</groupId>
             <artifactId>cadastro-unificado-oauth-client</artifactId>
-            <version>2.0.0</version>
+            <version>2.1.5</version>
         </dependency>
 
         <!--Stella (lib de utils Brasileira)-->
@@ -314,6 +314,7 @@
                             <overwrite>true</overwrite>
                             <resources>
                                 <resource>
+                                    <!--suppress UnresolvedMavenProperty -->
                                     <directory>${project.parent.basedir}/frontend/target/dist</directory>
                                     <includes>
                                         <include>static/</include>

@@ -18,7 +18,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.ValidacaoDT
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.val;
 import lombok.var;
-import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
+import br.ufla.lemaf.beans.pessoa.FiltroPessoa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

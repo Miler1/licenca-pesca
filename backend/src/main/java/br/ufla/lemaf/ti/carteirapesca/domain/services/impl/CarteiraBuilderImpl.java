@@ -13,8 +13,8 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFou
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import lombok.var;
-import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Endereco;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 

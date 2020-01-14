@@ -3,8 +3,8 @@ server:
 
 logging:
   level:
-    br.ufla.lemaf.ti: DEBUG
-    org.hibernate: DEBUG
+    br.ufla.lemaf.ti: INFO
+    org.hibernate: ERROR
   file: /var/log/application/carteira_pesca.log
 
 spring:
@@ -21,7 +21,7 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/carteira_pesca
+    url: jdbc:postgresql://runners.ti.lemaf.ufla.br:5432/carteira_pesca
     username: carteira_pesca
     password: carteira_pesca
 
@@ -29,8 +29,8 @@ spring:
     properties:
 
       hibernate:
-        show_sql: true
-        format_sql: true
+        show_sql: false
+        format_sql: false
         type: trace
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc.lob.non_contextual_creation: true
@@ -50,18 +50,9 @@ spring:
     ipsAllowed: 127.0.0.1,::1
 
     entradaUnica:
-#       Módulo - LP0 - Gustavo
-#      client-id: bdcf104be109069d58a96d9bd08c7942313621cded01c2938c3be374d60ef61675ea1aa54d04dd7313a7f31519b87eacfd43d62ada3a1530f819b3865f6327ee
-#      client-secret: 24ec03485f4ddea41a51bf33d37ba1f0a5454568574197192161b859fb57b0b75ba086b3d6552f3490a3b5a55991c6d6513e56085dfe32355ffb94a22b4489bb
-
-
-#       Módulo - LP1 - Joyce
-#      client-id: 398a20646b37c8f9ad8a4c1b53f7108e2b04c8d524b427d512ba2d99c3d002ac2b499098228200971a4e14fc0f1cdba67283bfef8154e7286d5882ee4266e3ce
-#      client-secret: f463b60e0abfe70b31fe316cd548f7ca019115f1c8969bdfd1f57e3ca0708d5faaf7a0bbb0ede643bb31f7c442c5392eb801d792ebec0fddfa3e127b84aa2fdb
-
-      # Módulo - LPH - Hiago
-      client-id: 5835eed6bddf39b6a6844b5f9645e360b5c003bb9d65be17ef7cd5863f713b0e7bcfafaa691e4482af6a20c775c19dadcf22eb1e1edc0617c2ac06605e047b98
-      client-secret: c726ad09489baacd3af62843ee514a95e9af9ff2a28bc2babbffc1554d69502a299a093f34ab5cefbf78001e8e7873a532bca90ec3f8e4b7b8a8f2fdf145e05f
+      # Módulo - RUNNERS
+      client-id: c6d78ffb11a81a8bad0b0f2d0c74fb1e61a71347d9dc57dc63dc9748c987e2c2472ce51a21d42a433a0469a901ece061e8d0eeb2f6de65c513f9921067276d72
+      client-secret: 1e29b8683d462d6bd93689e567c337131eeef2ac8f9b200695d9cda50a124663a694009f24c7b29c46a2a09f0eab4037416f32882becc0059bcaf4132675371d
 
       portal-seguranca:
         url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
@@ -78,4 +69,4 @@ spring:
   gestao-pagamentos:
     codigo-modulo: LICENCA_PESCA
     codigo-beneficiario: IPAAM
-    url: http://localhost:9913/gestao-pagamentos
+    url: http://am.runners.ti.lemaf.ufla.br/gestao-pagamentos

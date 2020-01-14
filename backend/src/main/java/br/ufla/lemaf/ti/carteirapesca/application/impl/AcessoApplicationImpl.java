@@ -4,8 +4,8 @@ import br.ufla.lemaf.ti.carteirapesca.application.AcessoApplication;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
 import lombok.extern.slf4j.Slf4j;
-import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.FiltroPessoa;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

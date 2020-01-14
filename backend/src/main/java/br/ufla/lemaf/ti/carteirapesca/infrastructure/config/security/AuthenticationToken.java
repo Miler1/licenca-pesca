@@ -1,9 +1,9 @@
 package br.ufla.lemaf.ti.carteirapesca.infrastructure.config.security;
 
-import main.java.br.ufla.lemaf.beans.pessoa.Perfil;
-import main.java.br.ufla.lemaf.beans.pessoa.Permissao;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
-import main.java.br.ufla.lemaf.beans.pessoa.Usuario;
+import br.ufla.lemaf.beans.pessoa.Perfil;
+import br.ufla.lemaf.beans.pessoa.Permissao;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Usuario;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

@@ -10,13 +10,13 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFou
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import lombok.var;
-import main.java.br.ufla.lemaf.beans.Message;
-import main.java.br.ufla.lemaf.beans.PessoaFiltroResult;
-import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
-import main.java.br.ufla.lemaf.beans.pessoa.Municipio;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
-import main.java.br.ufla.lemaf.beans.pessoa.Usuario;
-import main.java.br.ufla.lemaf.services.CadastroUnificadoPessoaService;
+import br.ufla.lemaf.beans.Message;
+import br.ufla.lemaf.beans.PessoaFiltroResult;
+import br.ufla.lemaf.beans.pessoa.FiltroPessoa;
+import br.ufla.lemaf.beans.pessoa.Municipio;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Usuario;
+import br.ufla.lemaf.services.CadastroUnificadoPessoaService;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -236,7 +236,7 @@ public final class CadastroUnificadoService extends CadastroUnificadoPessoaServi
 				pessoa.passaporte = filtro.passaporte;
 
 			} else {
-				pessoa = pessoas.pageItems.get(0);
+				return pessoas.pageItems.get(0);
 			}
 
 			return pessoa;

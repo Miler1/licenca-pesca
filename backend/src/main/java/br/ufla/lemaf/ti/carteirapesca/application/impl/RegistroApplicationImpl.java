@@ -23,8 +23,8 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.validators.Validate;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import lombok.var;
-import main.java.br.ufla.lemaf.beans.pessoa.FiltroPessoa;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.FiltroPessoa;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,7 +83,9 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		}
 
 		if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
-			solicitante.setEnderecoEstrangeiro(resource.getPessoa().getEnderecoEstrangeiro());
+			if(!solicitante.getEnderecoEstrangeiro().getId().equals(resource.getPessoa().getEnderecoEstrangeiro().getId())){
+				solicitante.setEnderecoEstrangeiro(resource.getPessoa().getEnderecoEstrangeiro());
+			}
 		} else {
 			solicitante.setEnderecoEstrangeiro(null);
 		}

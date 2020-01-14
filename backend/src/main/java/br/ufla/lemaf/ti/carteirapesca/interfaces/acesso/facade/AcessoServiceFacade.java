@@ -30,7 +30,7 @@ public interface AcessoServiceFacade {
 	 * em que a camada de application possa entender. Ou seja,
 	 * dado o {@link AcessoResource}, valida cada um de seus parâmetros
 	 * e ao receber o dado da service de application no formato
-	 * {@link main.java.br.ufla.lemaf.beans.pessoa.Pessoa} converte-o
+	 * {@link br.ufla.lemaf.beans.pessoa.Pessoa} converte-o
 	 * em {@link PessoaDTO} com o
 	 * {@link br.ufla.lemaf.ti.carteirapesca.interfaces.registro.facade.dto.PessoaDTOAssembler}.
 	 *

@@ -14,7 +14,7 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTOAssembler;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ValidationException;
 import lombok.var;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

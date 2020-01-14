@@ -1,7 +1,7 @@
 package br.ufla.lemaf.ti.carteirapesca.application;
 
 import br.ufla.lemaf.ti.carteirapesca.interfaces.acesso.web.AcessoResource;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
 
 /**
  * Serviço de Acesso da camada de application.

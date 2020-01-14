@@ -3,8 +3,8 @@ package br.ufla.lemaf.ti.carteirapesca.domain.services.impl;
 import br.ufla.lemaf.ti.carteirapesca.domain.services.EnderecoBuilder;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Endereco;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 

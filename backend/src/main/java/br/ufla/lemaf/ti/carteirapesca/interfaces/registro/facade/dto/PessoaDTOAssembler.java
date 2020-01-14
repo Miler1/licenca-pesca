@@ -5,7 +5,7 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.webservices.CadastroUnificadoService;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFoundException;
 import lombok.var;
-import main.java.br.ufla.lemaf.beans.pessoa.*;
+import br.ufla.lemaf.beans.pessoa.*;
 
 import java.util.ArrayList;
 import java.util.List;

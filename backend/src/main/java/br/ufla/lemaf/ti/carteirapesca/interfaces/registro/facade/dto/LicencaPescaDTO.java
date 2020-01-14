@@ -6,8 +6,8 @@ import br.ufla.lemaf.ti.carteirapesca.interfaces.shared.exception.ResourceNotFou
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import main.java.br.ufla.lemaf.beans.pessoa.Endereco;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Endereco;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
 import org.apache.commons.lang3.StringUtils;
 
 @Getter

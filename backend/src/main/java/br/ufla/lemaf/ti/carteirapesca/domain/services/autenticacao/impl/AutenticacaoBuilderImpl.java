@@ -4,8 +4,8 @@ import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.security.Authenticat
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.config.security.PessoaFisicaService;
 import br.ufla.lemaf.ti.carteirapesca.infrastructure.utils.WebServiceUtils;
 import lombok.extern.slf4j.Slf4j;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
-import main.java.br.ufla.lemaf.beans.pessoa.Usuario;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

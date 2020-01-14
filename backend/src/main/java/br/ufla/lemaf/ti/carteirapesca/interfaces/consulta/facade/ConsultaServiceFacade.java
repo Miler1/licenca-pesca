@@ -3,7 +3,7 @@ package br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.licenca.Licenca;
 import br.ufla.lemaf.ti.carteirapesca.domain.model.protocolo.Protocolo;
 import br.ufla.lemaf.ti.carteirapesca.interfaces.consulta.facade.dto.LicencaDTO;
-import main.java.br.ufla.lemaf.beans.pessoa.Pessoa;
+import br.ufla.lemaf.beans.pessoa.Pessoa;
 
 import java.io.File;
 
