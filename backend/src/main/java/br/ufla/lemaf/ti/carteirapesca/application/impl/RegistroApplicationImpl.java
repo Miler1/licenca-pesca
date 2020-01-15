@@ -83,7 +83,7 @@ public class RegistroApplicationImpl implements RegistroApplication {
 		}
 
 		if(resource.getPessoa().getEnderecoEstrangeiro() != null && !resource.getPessoa().getEnderecoEstrangeiro().isEmpty()){
-			if(!solicitante.getEnderecoEstrangeiro().getId().equals(resource.getPessoa().getEnderecoEstrangeiro().getId())){
+			if(solicitante.getId() == null || !solicitante.getEnderecoEstrangeiro().getId().equals(resource.getPessoa().getEnderecoEstrangeiro().getId())){
 				solicitante.setEnderecoEstrangeiro(resource.getPessoa().getEnderecoEstrangeiro());
 			}
 		} else {
