@@ -1,1 +1,0 @@
-ALTER TABLE carteira_pesca.informacao_complementar DROP COLUMN id_faixa_etaria;
