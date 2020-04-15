@@ -1,4 +1,8 @@
-CREATE DATABASE carteira_pesca ENCODING='UTF8' LC_COLLATE='pt_BR.UTF-8' LC_CTYPE='pt_BR.UTF-8' TEMPLATE=template0;
+CREATE DATABASE carteira_pesca_ap
+ENCODING='UTF8' 
+LC_COLLATE='pt_BR.UTF-8' 
+LC_CTYPE='pt_BR.UTF-8' 
+TEMPLATE=template0;
 
 CREATE ROLE carteira_pesca LOGIN
   ENCRYPTED PASSWORD 'carteira_pesca'
