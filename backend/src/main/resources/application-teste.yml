@@ -11,7 +11,7 @@ spring:
 
   application:
     name: Sistema de emissão de Licença de Pesca
-    urlBase: http://am.runners.ti.lemaf.ufla.br/carteira-pesca/
+    urlBase: http://ap.puma.ti.lemaf.ufla.br/carteira-pesca/
 
   servlet:
     multipart:
@@ -20,7 +20,7 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://runners.ti.lemaf.ufla.br:5432/carteira_pesca
+    url: jdbc:postgresql://ap.puma.ti.lemaf.ufla.br:5432/carteira_pesca_ap
     username: carteira_pesca
     password: carteira_pesca
 
@@ -51,18 +51,18 @@ spring:
 
     entradaUnica:
       # Módulo - RUNNERS
-      client-id: c6d78ffb11a81a8bad0b0f2d0c74fb1e61a71347d9dc57dc63dc9748c987e2c2472ce51a21d42a433a0469a901ece061e8d0eeb2f6de65c513f9921067276d72
-      client-secret: 1e29b8683d462d6bd93689e567c337131eeef2ac8f9b200695d9cda50a124663a694009f24c7b29c46a2a09f0eab4037416f32882becc0059bcaf4132675371d
+      client-id: 638aea9e01a6c8040a49010e677010eb5fddb42701481aa7eaca7af3b3459fd7637844f0ced5a14fa689b40f1e3d73fbd4f942ab5fb5ee8f925381d8f82da58a
+      client-secret: c09b4f67370f2f21fe1574e82f5e0200560ff0fb6c883bc99c698068151d99ffba08f545fc140783e2bd08bc2a196ec7305e112c200942c4435bb38e8a752315
 
       portal-seguranca:
-        url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
+        url: http://ap.puma.ti.lemaf.ufla.br/portal-seguranca
       cadastro-unificado:
-        url: http://am.runners.ti.lemaf.ufla.br/cadastro-unificado
+        url: http://ap.puma.ti.lemaf.ufla.br/cadastro-unificado
 
   carteira-pesca:
-    base-path: var/dados/amazonas/arquivos/carteira-pesca/carteira/
+    base-path: var/dados/amapa/arquivos/carteira-pesca/carteira/
 
   gestao-pagamentos:
     codigo-modulo: LICENCA_PESCA
-    codigo-beneficiario: IPAAM
-    url: http://am.runners.ti.lemaf.ufla.br/gestao-pagamentos
+    codigo-beneficiario: SEMA
+    url: http://ap.puma.ti.lemaf.ufla.br/gestao-pagamentos

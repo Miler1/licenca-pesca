@@ -1,7 +1,7 @@
 {
   "name": "carteira-pesca",
   "version": "1.0.0",
-  "description": "Sistema de Emissão de Licença de Pesca do Amazonas.",
+  "description": "Sistema de Emissão de Licença de Pesca do Amapá.",
   "author": "Highlander Paiva <highlanderpaiva.lemaf@gmail.com>",
   "private": true,
   "scripts": {

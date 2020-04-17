@@ -9,7 +9,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>carteira-pesca</name>
-    <description>Sistema de Emissão de Licença de Pesca do Amazonas.</description>
+    <description>Sistema de Emissão de Licença de Pesca do Amapá.</description>
 
     <!--Equipe de Desenvolvimento backend-->
     <developers>

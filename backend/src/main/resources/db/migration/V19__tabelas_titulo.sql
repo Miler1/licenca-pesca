@@ -232,10 +232,10 @@ COMMENT ON COLUMN carteira_pesca.titulo.dt_geracao_remessa IS 'Data de geração
 
 INSERT INTO carteira_pesca.banco (id, codigo, nome) VALUES (1, '237', 'Banco Bradesco S.A.');
 
-INSERT INTO carteira_pesca.endereco(logradouro, numero, complemento, bairro, cep, municipio, estado) VALUES ('Av Mário Ypiranga', '3280', NULL, 'Parque Dez de Novembro', '69050-030', 'Manaus', 'AM');
+INSERT INTO carteira_pesca.endereco(logradouro, numero, complemento, bairro, cep, municipio, estado) VALUES ('Av. Mendonça Furtado', '53', NULL, 'Central', '68900-060', 'Macapá', 'AP');
 
 INSERT INTO carteira_pesca.beneficiario_titulo (nome, sigla, cpf_cnpj, id_banco, id_endereco, codigo_beneficiario, digito_codigo_beneficiario, agencia, digito_agencia, conta_corrente, digito_conta_corrente, convenio, carteira, fl_ativo)
-  VALUES ('Instituto de Proteção Ambiental do Amazonas', 'IPAAM', '04624888000194', 1, 1, '16065', '2', '3739', '7', '16065', '2', '4928031', '09', TRUE);
+  VALUES ('Secretaria De Estado Do Meio Ambiente', 'SEMA', '01249331000122', 1, 1, '16065', '2', '3739', '7', '16065', '2', '4928031', '09', TRUE);
 
 INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (1, 'DM', '01', 'Duplicata Mercantil');
 INSERT INTO carteira_pesca.especie_documento (id, codigo, codigo_remessa, descricao) VALUES (2, 'NP', '02','Nota Promissória');

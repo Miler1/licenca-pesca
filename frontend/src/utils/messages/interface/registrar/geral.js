@@ -58,9 +58,9 @@ const GERAL = {
         "Confirmar la conclusión"
       ],
       mensagem: [
-        "Declaro, para os devidos fins e efeitos legais, serem pessoais e verdadeiras as informações inseridas na solicitação da carteira de pesca ao IPAAM, sobre as quais assumo todas as responsabilidades, sob pena de incorrer nas sanções previstas nos artigos 299 e 307 do Código Penal (falsidade ideológica e falsa identidade).",
-        "I declare, for the proper purposes and legal effects, the information included in the application for the fishing license to the IPAAM, for which I assume all the responsibilities, to be personal and true, under penalty of incurring the penalties provided for in articles 299 and 307 of the Brazilian Penal Code ( false ideology and false identity).",
-        "Declaro, para los debidos fines y efectos legales, ser personales y verdaderas las informaciones insertadas en la solicitud de la cartera de pesca al IPAAM, sobre las cuales asumo todas las responsabilidades, so pena de incurrir en las sanciones previstas en los artículos 299 y 307 del Código Penal brasileño (falsedad ideológica y falsa identidad)."
+        "Declaro, para os devidos fins e efeitos legais, serem pessoais e verdadeiras as informações inseridas na solicitação da carteira de pesca à SEMA, sobre as quais assumo todas as responsabilidades, sob pena de incorrer nas sanções previstas nos artigos 299 e 307 do Código Penal (falsidade ideológica e falsa identidade).",
+        "I declare, for the proper purposes and legal effects, the information included in the application for the fishing license to the SEMA, for which I assume all the responsibilities, to be personal and true, under penalty of incurring the penalties provided for in articles 299 and 307 of the Brazilian Penal Code ( false ideology and false identity).",
+        "Declaro, para los debidos fines y efectos legales, ser personales y verdaderas las informaciones insertadas en la solicitud de la cartera de pesca a SEMA, sobre las cuales asumo todas las responsabilidades, so pena de incurrir en las sanciones previstas en los artículos 299 y 307 del Código Penal brasileño (falsedad ideológica y falsa identidad)."
       ],
       botoes: {
         confirm: ["Confirmar", "Confirm", "Confirmar"],

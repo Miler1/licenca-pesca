@@ -5,7 +5,7 @@
 
 case $1 in
 
-runners)
+teste)
 
 	echo "Preparando os arquivos do frontend..."
 	npm --prefix ./frontend run build
@@ -16,11 +16,11 @@ runners)
 	cd ..
 
 	echo "Executando operações no servidor..."
-	scp backend/target/backend-1.0.0-SNAPSHOT.jar  deploy@runners.ti.lemaf.ufla.br:/var/spring/deploy
+	scp backend/target/backend-1.0.0-SNAPSHOT.jar  sysadmin@ap.puma.ti.lemaf.ufla.br:/var/spring/deploy
 
-	ssh -t deploy@runners.ti.lemaf.ufla.br 'sudo systemctl stop carteira-pesca.service | sudo mv /var/spring/deploy/backend-1.0.0-SNAPSHOT.jar  /var/spring/carteira-pesca/carteira-pesca-1.0.0-SNAPSHOT.jar'
+	ssh -t sysadmin@ap.puma.ti.lemaf.ufla.br 'sudo systemctl stop carteira-pesca.service | sudo mv /var/spring/deploy/backend-1.0.0-SNAPSHOT.jar  /var/spring/carteira-pesca/carteira-pesca-1.0.0-SNAPSHOT.jar'
 
-	ssh -t deploy@runners.ti.lemaf.ufla.br 'sudo systemctl start carteira-pesca.service'
+	ssh -t sysadmin@ap.puma.ti.lemaf.ufla.br 'sudo systemctl start carteira-pesca.service'
 
 	echo "Deploy realizado com sucesso no ambiente de teste!" ;;
 

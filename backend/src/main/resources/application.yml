@@ -21,7 +21,7 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://runners.ti.lemaf.ufla.br:5432/carteira_pesca
+    url: jdbc:postgresql://localhost:5432/carteira_pesca_ap
     username: carteira_pesca
     password: carteira_pesca
 
@@ -50,14 +50,14 @@ spring:
     ipsAllowed: 127.0.0.1,::1
 
     entradaUnica:
-      # Módulo - RUNNERS
-      client-id: c6d78ffb11a81a8bad0b0f2d0c74fb1e61a71347d9dc57dc63dc9748c987e2c2472ce51a21d42a433a0469a901ece061e8d0eeb2f6de65c513f9921067276d72
-      client-secret: 1e29b8683d462d6bd93689e567c337131eeef2ac8f9b200695d9cda50a124663a694009f24c7b29c46a2a09f0eab4037416f32882becc0059bcaf4132675371d
+      # Módulo - PUMA
+      client-id: 2994fd5c58de22ac4451638586441c6d6729bc0c2b0c9993f91dfda8d62dc00d47d0097636930f9bb4d76ea4b83056532724bdbcaf942c64049be1b6e1633611
+      client-secret: 4bafb48e14e76b04e3d4e674722db8022c3510670188e1ff8f4d1d6f0fa44dba7f5bb1ac9929a7e4c6aa018424a097c82d01bd88c98a47d786b24c26d281fd5e
 
       portal-seguranca:
-        url: http://am.runners.ti.lemaf.ufla.br/portal-seguranca
+        url: http://localhost:9900
       cadastro-unificado:
-        url: http://am.runners.ti.lemaf.ufla.br/cadastro-unificado
+        url: http://localhost:9901
 
   carteira-pesca:
     base-path: arquivos/carteira/
@@ -68,5 +68,5 @@ spring:
 
   gestao-pagamentos:
     codigo-modulo: LICENCA_PESCA
-    codigo-beneficiario: IPAAM
-    url: http://am.runners.ti.lemaf.ufla.br/gestao-pagamentos
+    codigo-beneficiario: SEMA
+    url: http://localhost:9913

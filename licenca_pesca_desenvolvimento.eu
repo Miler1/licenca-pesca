@@ -1,10 +1,10 @@
 {
-	"nome": "Licença de Pesca Gustavo",
+	"nome": "Licença de Pesca",
 	"sigla": "LPG",
 	"url": "http://localhost:9666/",
 	"descricao": "Módulo de emissão de Licença de Pesca",
 	"cadastrarPerfis": true,
-	"ips": "177.105.35.22",
+	"ips": "177.105.34.141",
 	"permissoes": [
 
 			{

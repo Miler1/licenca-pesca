@@ -7,9 +7,9 @@
 						.logo-image
 						.logo-text 
 							.sigla
-								| IPAAM
+								| SEMA
 							.completo
-								| Instituto de Proteção Ambiental do Amazonas
+								| Secretaria de Estado do Meio Ambiente
 					.menuRetornoRemessa(v-if="$route.name == 'envioListagemRetorno' || $route.name == 'listagemRemessa'")
 						el-menu.el-menu-demo(:default-active='activeIndex', mode='horizontal')
 							el-submenu(index='2')
@@ -126,7 +126,7 @@ export default {
 
 				.logo-image
 					color: white
-					height: 100px
+					height: 60px
 					width: 170px
 					margin-right: 10px
 					margin-left: 10px

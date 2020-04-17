@@ -12,7 +12,7 @@ logging:
 spring:
 
   application:
-    urlBase: http://homologacao.ipaam.lemaf.com.br/carteira-pesca/
+    urlBase: http://homologacao.sistemas.sema.ap.gov.br/carteira-pesca/
     name: Glide
     version: @project.version@
 
@@ -23,7 +23,7 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://192.168.100.7:5432/carteira_pesca
+    url: jdbc:postgresql://192.168.251.19:5432/carteira_pesca
     username: carteira_pesca
     password: carteira_pesca
 
@@ -53,9 +53,9 @@ spring:
       client-id: ebedfe0542593eb5425336eecf2e302bc131c0106a1d5d85e0ffd6ea81c8d96c368008ea9cce972cbc757df6972b3c047550eecd40c5655c038fed28f6ff8931
       client-secret: 2bce259d3ad1a1290b32914985aad6f5a8cec5e341c8694bf69e23ab747739415a11db2b3cef837c6d53e2263319e1e037ecad85e4f699dab5b5bce73a97eeee
       portal-seguranca:
-        url: http://homologacao.ipaam.lemaf.com.br/portal-seguranca
+        url: http://homologacao.sistemas.sema.ap.gov.br/portal-seguranca
       cadastro-unificado:
-        url: http://homologacao.ipaam.lemaf.com.br/cadastro-unificado
+        url: http://homologacao.sistemas.sema.ap.gov.br/cadastro-unificado
 
   carteira-pesca:
     base-path: /dados/var/arquivos/carteira-pesca/carteira/
@@ -63,4 +63,4 @@ spring:
   gestao-pagamentos:
     codigo-modulo: LICENCA_PESCA
     codigo-beneficiario: IPAAM
-    url: http://192.168.100.6:9602/gestao-pagamentos
+    url: http://192.168.252.150:9602/gestao-pagamentos
