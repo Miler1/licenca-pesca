@@ -1,6 +1,6 @@
 # Projeto Licença de Pesca do Amazonas
 
-![](../../blob/master/images/myimage.jpg)
+![](https://gitlab.ti.lemaf.ufla.br/uploads/-/system/project/avatar/655/ipaam-400x400.png?width=64)
 
 _(Work In Progress)_
 
